@@ -35,7 +35,7 @@ public class  GroupController{
         model.addAttribute("groupAddList", groupService.groupAddList(game_title, limit, offset));
         model.addAttribute("gameTitle", groupService.selectGameTitle());
         model.addAttribute("totalCnt" , groupService.groupAddListCnt(game_title));
-        return "/educator/group/groupAddList";
+        return "/learning/group/groupAddList";
     }
 
     //그룹 등록 가능한 게임 콘텐츠 목록(추가 데이터 불러오기)

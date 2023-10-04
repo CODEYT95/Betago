@@ -28,7 +28,7 @@ public class EdupostController {
     //학습자료 등록
     @GetMapping("/insert")
     public String eduInsert() {
-        return "operate/edupost/eduboard";
+        return "admin/edupost/eduboard";
     }
     @PostMapping("/insert")
     public String eduInsertin(@ModelAttribute("dto") EdupostDTO dto) {
@@ -59,14 +59,14 @@ public class EdupostController {
         EdupostDTO post = edupostService.findPostId(edupost_no);
         model.addAttribute("post", post);
         System.out.println("조회 값 : "+post);
-        return "operate/edupost/eduboarddetail";
+        return "admin/edupost/eduboarddetail";
     }
     @GetMapping("/update/{edupost_no}")
     public String updateForm(@PathVariable("edupost_no") final Long edupost_no, Model model) {
         EdupostDTO post = edupostService.findPostId(edupost_no);
         model.addAttribute("post", post);
         System.out.println("조회 값 : "+post);
-        return "operate/edupost/eduboardupdate";
+        return "admin/edupost/eduboardupdate";
     }
     //학습자료 게시판 수정
     @PostMapping("/update/{edupost_no}")
@@ -96,7 +96,7 @@ public class EdupostController {
 
         }catch (Exception e) {
             logger.log(Level.SEVERE, "에러 메시지", e);
-            return "operate/edupost/eduboardupdate";
+            return "admin/edupost/eduboardupdate";
         }
     }
         //파일 업로드

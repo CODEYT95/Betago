@@ -39,7 +39,7 @@ public class EducatorTaskController {
         model.addAttribute("listCount", listCount);
         model.addAttribute("taskPageDTO", taskPageDTO);
 
-        return "educator/task/saveTask";
+        return "learning/task/educator/saveTask";
     }
 
     //숙제 생성하기
@@ -65,7 +65,7 @@ public class EducatorTaskController {
 
             int result = taskService.createTask(taskDTO);
             if (result == 1) {
-                return "redirect:/educator/saveTaskForm";
+                return "redirect:learning/task/educator/saveTaskForm";
             } else {
                 model.addAttribute("errorMessage", "다시 시도해주세요.");
             }
@@ -74,7 +74,7 @@ public class EducatorTaskController {
             e.printStackTrace();
         }
 
-        return "educator/task/saveTask";
+        return "learning/task/educator/saveTask";
     }
 
 }

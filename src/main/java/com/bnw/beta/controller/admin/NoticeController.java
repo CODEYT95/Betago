@@ -23,13 +23,13 @@ public class NoticeController {
     public String noticeList(Model model, NoticeDTO noticeDTO ){
         List<NoticeDTO> noticeList = noticeService.noticeList(noticeDTO);
         model.addAttribute("noticeList",noticeList);
-        return "guide/notice/noticeList";
+        return "admin/notice/noticeList";
     }
 
     //공지게시판 글작성 폼
     @GetMapping("/write")
     public String noticeWriteForm(){
-        return "guide/notice/noticeWrite";
+        return "admin/notice/noticeWrite";
     }
 
     //공지게시판 글작성 처리
@@ -55,7 +55,7 @@ public class NoticeController {
         NoticeDTO noticeDTO = noticeService.detail(notice_no);
         model.addAttribute("noticeDTO",noticeDTO);
         System.out.println("컨트롤DTO="+noticeDTO);
-        return "guide/notice/noticeDetail";
+        return "admin/notice/noticeDetail";
     }
 
     //공지게시판 수정폼
@@ -63,7 +63,7 @@ public class NoticeController {
     public String edit(@PathVariable("notice_no") Long notice_no, Model model){
         NoticeDTO noticeDTO = noticeService.detail(notice_no);
         model.addAttribute("noticeDTO",noticeDTO);
-        return "guide/notice/noticeUpdate";
+        return "admin/notice/noticeUpdate";
     }
 
     //공지게시판 수정처리

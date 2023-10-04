@@ -26,6 +26,6 @@ public class StudentTaskController {
         List<TaskDTO> taskList = taskService.selectTaskById(member_no);
         System.out.println(taskList);
         model.addAttribute("taskList", taskList);
-        return "student/task/submitTask";
+        return "learning/task/student/submitTask";
     }
 }

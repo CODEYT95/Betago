@@ -36,20 +36,20 @@ public class GameController {
     //게임콘텐츠 조회
     @GetMapping("/list")
     public String selectAll() {
-        return "operate/game/gameList";
+        return "admin/game/gameList";
 
     }
 
     //월간 (일일 단위 매출조회)
     @GetMapping("/dailyList")
     public String selectDailySales() {
-        return "operate/game/gameSales";
+        return "admin/game/gameSales";
     }
 
     //년간 (월 단위 매출조회)
     @GetMapping("/monthlyList")
     public String selectMonthlySales() {
-        return "operate/game/gameSales";
+        return "admin/game/gameSales";
     }
 
 }
