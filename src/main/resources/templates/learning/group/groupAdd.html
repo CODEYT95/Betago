@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>학습 그룹 등록</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
+    <script type="text/javascript" th:src="@{/js/common/educator_sidebar.js}"></script>
+</head>
+<style>
+    .header-container{
+        display: flex;
+    }
+    .content-header{
+        display: flex;
+        height: 41px;
+        padding: 16px;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .header-container{
+        display: flex;
+        height: 40px;
+        border-radius: 10px;
+        padding: 20px;
+        width: 77.5%;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0px 0px 13px -11px;
+    }
+    .main-container{
+        width: 75%;
+        position: relative;
+        border-radius: 10px;
+        height: auto;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: white;
+        box-shadow: 0px 1px 7px -5px;
+    }
+    .title{
+        display: flex;
+        height: 62px;
+        align-content: flex-start;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .write-container{
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+        flex-wrap: wrap;
+    }
+    .write-container > div, .write-container > div > div{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .write-container > div > span{
+            width: 14%;
+            display: flex;
+            height: 40px;
+            font-size: 17px;
+            float: left;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    .other-items-wrap > div > span{
+        width: 14%;
+        display: flex;
+        float: left;
+        justify-content: flex-start;
+    }
+    .other-items{
+        display: flex;
+        flex-direction: column;
+        align-content: space-between;
+        flex-wrap: wrap;
+    }
+    .educator-name{
+        display: flex;
+        border-radius: 8px;
+        height: 40px;
+        border: 1px solid;
+        width: auto;
+        padding: 10px;
+        box-shadow: -1px 1px 4px rgba(0,0,0,0.3);
+    }
+    .group-name{
+        display: flex;
+        border-radius: 8px;
+        border: none;
+        height: 40px;
+        border: 1px solid;
+        width: 50%;
+        padding: 10px;
+        box-shadow: -1px 1px 4px rgba(0,0,0,0.3);
+    }
+    .group-people{
+        display: flex;
+        border-radius: 8px;
+        border: none;
+        height: 40px;
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: -1px 1px 4px rgba(0,0,0,0.3);
+    }
+    .date-wrap{
+        display: flex;
+        float: left;
+        flex-direction: column;
+        margin-right: 10px;
+    }
+    .date-wrap span{
+        width: 100%;
+        margin-bottom: 5px;
+        padding: 2px;
+        font-weight: bold;
+    }
+    .period-wrap > span {
+        height: 65px !important;
+    }
+    .startDate, .endDate{
+        display: flex;
+        border-radius: 7px;
+        border: none;
+        height: 40px;
+        width: 92%;
+        color: #8f8f8f;
+        font-weight: bold;
+        padding: 10px;
+        background: #F6F6F6;
+    }
+    .other-items-wrap input{
+        display: flex;
+        border-radius: 8px;
+        border: none;
+        height: 40px;
+        border: 1px solid;
+        width: 50%;
+        padding: 10px;
+        box-shadow: -1px 1px 4px rgba(0,0,0,0.3);
+    }
+    .other-items-wrap span{
+        height: 40px !important;
+        display: flex;
+        font-size: 17px;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .addBtn-container{
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .addBtn-container button{
+        border: none;
+        border-radius: 7px;
+        width: 20%;
+        height: 38px;
+        cursor: pointer;
+    }
+</style>
+
+
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content" th:each="groupInfo : ${gameGroupInfo}">
+    <div th:replace="~{common/sidebar/educator_sidebar :: educator_sidebarFragment}"></div>
+        <div class="content-wrap">
+            <form th:action="@{/educator/group/addInsert}" method="post">
+            <input type="hidden" name="game_no" th:value="${groupInfo.game_no}">
+            <header class="content-header">
+                <div class="header-container">
+                <span>게임 콘텐츠명 : <span th:text="${groupInfo.game_title}"></span></span>
+                <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.game_total}"></span></span>
+                <span>그룹 총배정인원 : <span class="currentNum" th:text="${groupInfo.group_nowcnt}"></span></span>
+                </div>
+            </header>
+            <div class="main-container">
+            <div class="main-content">
+                <div class="title">
+                <span>그룹 상세 정보</span>
+                </div>
+            </div>
+
+            <div class="write-container">
+                <div class="educator-name-wrap">
+                    <span>교육자명</span>
+                    <label>
+                        <input class= "educator-name" type="text" name="name" value="홍길동" readonly>
+                    </label>
+                </div>
+                <div class="group-name-wrap">
+                    <span>그룹명</span>
+                    <label>
+                        <input class="group-name" type="text" name="groupName" placeholder="그룹명을 입력해주세요.(최대 20자)" maxlength="20">
+                    </label>
+                </div>
+                <div class="group-people-wrap">
+                    <span>그룹 인원</span>
+                    <label>
+                        <select class="group-people"  name="count" placeholder="숫자로 입력해주세요.">
+                            <option>인원 선택</option>
+                        </select>
+                    </label>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                    var gameTotalElement = document.querySelector(".totalNum");
+                    var gameNowCntElement = document.querySelector(".currentNum");
+                    var select = document.querySelector(".group-people");
+
+                    // 가져온 값은 텍스트로 되어 있으므로 정수로 변환합니다.
+                    var gameTotal = parseInt(gameTotalElement.innerText);
+                    var gameNowCnt = parseInt(gameNowCntElement.innerText);
+
+                    for (var i = 1; i <= (gameTotal - gameNowCnt); i++) {
+                        var option = document.createElement("option");
+                        option.text = i + "명"; // "명"을 붙여 표시
+                        option.value = i; // 옵션의 값을 설정
+                        select.appendChild(option);
+                    }
+                });
+                </script>
+                <div class="period-wrap">
+                    <span>구독 기간</span>
+                    <label>
+                        <div class="date-wrap">
+                        <span>시작일</span>
+                        <input class="startDate" type="date" name="sdate">
+                        </div>
+                        <div class="date-wrap">
+                        <span>종료일</span>
+                        <input class="endDate" type="date" name="edate">
+                        </div>
+                    </label>
+                </div>
+                <div class="other-items-wrap">
+                    <div class="items1">
+                    <span>기타 항목1</span>
+                    <label>
+                        <input type="text">
+                    </label>
+                    </div>
+                    <div class="items2">
+                    <span>기타 항목2</span>
+                    <label>
+                        <input type="text">
+                    </label>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="addBtn-container">
+            <button id="submitButton" type="submit">학습 그룹 등록하기</button>
+            </div>
+            </form>
+        </div>
+    </div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var groupNameInput = document.querySelector(".group-name");
+      var groupPeopleSelect = document.querySelector(".group-people");
+      var startDateInput = document.querySelector(".startDate");
+      var endDateInput = document.querySelector(".endDate");
+      var submitButton = document.getElementById("submitButton");
+
+      // 입력 필드와 셀렉트 박스의 변경을 감지하는 함수
+      function checkFields() {
+        var groupName = groupNameInput.value.trim(); // 공백 제거
+        var groupPeople = groupPeopleSelect.value.trim(); // 공백 제거
+        var startDate = startDateInput.value;
+        var endDate = endDateInput.value;
+
+        if (groupName === "" || groupPeople === "" || startDate === "" || endDate === "") {
+          submitButton.disabled = true; // 버튼 비활성화
+          submitButton.style.backgroundColor = "gray"; // 버튼 색상 변경
+        } else {
+          submitButton.disabled = false; // 버튼 활성화
+          submitButton.style.backgroundColor = "blue"; // 버튼 색상 변경
+        }
+      }
+
+      // 필드 값 변경 이벤트를 감지하도록 각 필드에 이벤트 리스너를 추가합니다.
+      groupNameInput.addEventListener("input", checkFields);
+      groupPeopleSelect.addEventListener("change", checkFields);
+      startDateInput.addEventListener("input", checkFields);
+      endDateInput.addEventListener("input", checkFields);
+
+      // 초기 로드시에도 필드 확인을 실행합니다.
+      checkFields();
+
+      // 버튼 클릭 시 모든 필드가 비어있는지 확인하고 알림을 표시합니다.
+      submitButton.addEventListener("click", function(e) {
+        var groupName = groupNameInput.value.trim();
+        var groupPeople = groupPeopleSelect.value.trim();
+        var startDate = startDateInput.value;
+        var endDate = endDateInput.value;
+
+        if (groupName === "" || groupPeople === "" || startDate === "" || endDate === "") {
+          e.preventDefault(); // 버튼 클릭 동작 중지
+          alert("기타 항목을 제외한 나머지 항목을 채워주세요");
+        }
+      });
+    });
+</script>
+</html>

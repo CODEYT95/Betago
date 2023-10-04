@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- 스타일 시트 파일 경로 -->
+
+    <!-- 페이지 제목 -->
+    <title>Betago 웹사이트</title>
+</head>
+<body>
+<!-- 헤더 프래그먼트 시작 -->
+<th:block th:fragment="headerFragment">
+    <nav>
+        <section class="header-navi">
+            <i id="main_sideBtn" class='bx bx-menu'></i>
+            <section class="header_top">
+                <span class="top_info">Betago를 보다 편리하고 안전하게 이용하세요.</span>
+                <a href="" class="loginBtn">로그인/회원가입</a>
+            </section>
+            <div class="logo"><a href="#">둑며들다</a></div>
+            <span>바둑에 스며들다</span>
+            <div class="navi_links">
+                <div class="sidebar-logo">
+                    <span class="logo-name">Betago</span>
+                    <i class='bx bx-x'></i>
+                </div>
+                <ul class="links">
+                    <li class="first_li"><a href="#">홈</a></li>
+                    <li class="first_li">
+                        <a href="#">이용안내</a>
+                        <i class='bx bxs-chevron-down useInfo-arrow arrow'></i>
+                        <ul class="useInfo-sub-menu sub-menu">
+                            <li><a href="#">사이트 소개</a></li>
+                            <li><a href="#">이용 가이드</a></li>
+                            <li class="more">
+                                <a href="#">컨텐츠소개</a>
+                                <i class='bx bxs-chevron-right arrow more-arrow'></i>
+                                <ul class="more-sub-menu sub-menu">
+                                    <li><a href="#">바둑 게임(앱)</a></li>
+                                    <li><a href="#">튜토리얼</a></li>
+                                    <li><a href="#">바둑 영상</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">공지사항</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Q&A</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_li">
+                        <a href="#">구독서비스</a>
+                        <i class='bx bxs-chevron-down subscribe-arrow arrow'></i>
+                        <ul class="subscribe-sub-menu sub-menu">
+                            <li><a href="#">게임 컨텐츠 구매</a></li>
+                            <li><a href="#">내 게임 컨텐츠 조회</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_li">
+                        <a href="#">학습서비스</a><i class='bx bxs-chevron-down learning-arrow arrow'></i>
+                        <ul class="learning-sub-menu sub-menu">
+                            <li><a href="#">학습그룹 가입신청</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_li">
+                        <a href="#">교육자마당</a><i class='bx bxs-chevron-down educator-arrow arrow'></i>
+                        <ul id="service" class="educator-sub-menu sub-menu">
+                            <li><a href="#">학습그룹 등록</a></li>
+                            <li><a href="#">학습그룹 조회</a></li>
+                            <li><a href="#">학습그룹 가입 승인</a></li>
+                            <li><a href="#">숙제 생성</a></li>
+                            <li><a href="#">숙제 배포</a></li>
+                            <li><a href="#">숙제 학습진도 조회</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_li">
+                        <a href="#">운영마당</a><i class='bx bxs-chevron-down admin-arrow arrow'></i>
+                        <ul class="admin-sub-menu sub-menu">
+                            <li><a href="#">게임컨텐츠 등록</a></li>
+                            <li><a href="#">교육자료 등록</a></li>
+                            <li><a href="#">게시물 등록</a></li>
+                            <li><a href="#">매출조회</a></li>
+                            <li><a href="#">회원조회</a></li>
+                            <li><a href="#">숙제 학습진도 조회</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </nav>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,22 @@
+package com.bnw.beta.service.admin.game;
+
+
+import com.bnw.beta.domain.admin.dto.GameDTO;
+
+import java.util.Date;
+import java.util.List;
+
+public interface GameService {
+
+    //게임콘텐츠 등록
+    public int insertGame(GameDTO dto);
+
+    //게임콘텐츠 조회
+   public List<GameDTO> selectAll();
+
+    //월간 (일일 단위 매출조회)
+    public List<GameDTO> selectDailySales(Date startsearch, Date endsearch);
+
+    //년간 (월 단위 매출조회)
+    public List<GameDTO> selectMonthlySales(Date startsearch, Date endsearch);
+}

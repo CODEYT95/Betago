@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bnw.beta.domain.member.dao.MemberDAO">
+
+    <!--약관동의-->
+    <insert id="memberAgree" parameterType="com.bnw.beta.domain.member.dto.MemberDTO">
+        <![CDATA[
+        INSERT INTO termsrecord(terms_record, member_id)
+        VALUES (#{terms_record}, #{member_id})
+        ]]>
+    </insert>
+
+    <!--회원가입-->
+    <insert id="memberJoin" parameterType="com.bnw.beta.domain.member.dto.MemberDTO">
+        <![CDATA[
+        INSERT INTO member (member_id, member_pw, member_name, member_birth, member_email, member_gender, member_phone, member_tell, member_agree_m, member_agree_p, member_isshow, role)
+        VALUES (#{member_id}, #{member_pw}, #{member_name}, #{member_birth}, #{member_email}, #{member_gender}, #{member_phone}, #{member_tell}, #{member_agreeM}, #{member_agreeP}, 'Y',#{role})
+        ]]>
+    </insert>
+
+    <!--아이디중복체크-->
+    <select id="idCheck" parameterType="String" resultType="int">
+        <![CDATA[
+        SELECT COUNT(member_id) FROM member WHERE member_id = #{id}
+        ]]>
+    </select>
+
+    <!--이메일중복체크-->
+    <select id="emailCheck" parameterType="String" resultType="int">
+        <![CDATA[
+        SELECT COUNT(member_email) FROM member WHERE member_email = #{email}
+        ]]>
+    </select>
+
+    <!--핸드폰중복체크-->
+    <select id="phoneCheck" parameterType="String" resultType="int">
+        <![CDATA[
+        SELECT COUNT(member_phone) FROM member WHERE member_phone = #{phone}
+        ]]>
+    </select>
+
+</mapper>

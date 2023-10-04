@@ -1,0 +1,332 @@
+@charset "UTF-8";
+
+.main-content{
+width: 100%;
+height: auto;
+display: flex;
+flex-direction: column;
+}
+
+.form-container{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 40px;
+width: 100%;
+margin-top:10px;
+}
+
+.mycontents-date{
+display: flex;
+justify-content: flex-start;
+align-items: center;
+width: 100%;
+height: 40px;
+gap: 16px;
+font-weight: bold;
+font-size: 20px;
+margin-left: 30px;
+}
+
+input{
+height: 30px;
+width: 200px;
+text-align: center;
+}
+
+.submit-button{
+width: 150px;
+height: 32px;
+}
+
+    .checkbox{
+    margin: 0;
+    margin-bottom: 25px;
+}
+
+.checkbox-input {
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+
+  &:checked + .checkbox-title {
+   border-color: #2260ff;
+   box-shadow: 0 5px 10px rgba(#000, 0.1);
+   color: #2260ff;
+   &:before {
+    transform: scale(1);
+    opacity: 1;
+    background-color: #2260ff;
+    border-color: #2260ff;
+   }
+
+   .checkbox-icon, .checkbox-label {
+    color: #2260ff;
+   }
+  }
+
+  &:focus + .checkbox-title {
+   box-shadow: 0 5px 10px rgba(#000, 0.1), 0 0 0 4px #b5c9fc;
+   &:before {
+    transform: scale(1);
+    opacity: 1;
+   }
+  }
+}
+
+.checkbox-title {
+      display: flex;
+    flex-direction: row;
+    width: auto;
+    border-radius: 11px;
+    border: 3px solid #b5bfd9;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(#000, 0.1);
+    transition: 0.15s ease;
+    cursor: pointer;
+    position: relative;
+
+  &:before {
+   content: "";
+   position: absolute;
+   display: block;
+   width: 1.25rem;
+   height: 1.25rem;
+   border: 2px solid #b5bfd9;
+   background-color: #fff;
+   border-radius: 50%;
+   top: 0.25rem;
+   left: 0.25rem;
+   transition: 0.25s ease;
+   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
+   background-size: 12px;
+   background-repeat: no-repeat;
+   background-position: 50% 50%;
+   z-index: 3;
+  }
+
+  &:hover {
+   border-color: #2260ff;
+   &:before {
+    transform: scale(1);
+    opacity: 1;
+   }
+  }
+}
+
+.checkbox-icon {
+  transition: .375s ease;
+  color: #494949;
+  svg {
+   width: 3rem;
+   height: 3rem;
+  }
+}
+
+.checkbox-label {
+  color: #707070;
+  transition: .375s ease;
+  text-align: center;
+}
+
+.contents-container{
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 30px 0 30px;
+    margin-top:50px;
+}
+
+.card {
+position: relative;
+width: 125%;
+height: auto;
+border-radius: 6px;
+overflow: hidden;
+box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
+.card-details{
+margin-top:12px;
+}
+
+.poster{
+margin: 10px;
+width: auto;
+height: auto;
+object-fit: cover;
+transition: .3s;
+}
+
+img{
+display: flex;
+justify-content: center;
+margin-left: auto;
+margin-right: auto;
+width: 80%;
+}
+
+.details {
+position: absolute;
+bottom: -101%;
+left: 0;
+width: 100%;
+height: 100%;
+padding: 1.5em 1.5em 2em;
+background: #000a;
+backdrop-filter: blur(16px) saturate(120%);
+color: #fff;
+z-index: 2;
+font-size: 20px;
+transition: .3s;
+}
+
+.card:hover .details {
+bottom: 0;
+}
+
+h1, h2, h3, h4{
+font-size: 17px;
+display: flex;
+justify-content: flex-start;
+}
+
+.modal-bg {
+    display:none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 86%);
+    z-index: 1000;
+}
+
+.modal {
+position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    z-index: 1001;
+    width: 37%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 5px;
+}
+
+.close {
+color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    height:40px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal-title{
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.modal-guidtitle{
+       display: flex;
+       text-align: center;
+       margin: 10px;
+       font-size: 16px;
+       font-weight: bold;
+       justify-content: center;
+}
+.modal-guid{
+    display: grid;
+    gap: 30px;
+    rw-gap: 2;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+    margin-top: 26px;
+}
+
+.modal-buttons{
+       display: flex;
+       justify-content: center;
+       text-align: center;
+       align-items: center;
+       gap: 60px;
+       margin-top: 24px;
+}
+.modal-guid1{
+}
+.modal-guid2{
+}
+.modal-guid3{
+}
+.modal-guid4{
+color:red;
+}
+
+
+.yes{
+width: 110px;
+    height: 24px;
+    border-radius:5px;
+}
+
+.no{
+width: 110px;
+    height: 24px;
+    border-radius:5px;
+}
+
+#deleteForm{
+column-count:3;
+}
+
+.scroll-to-top {
+position: fixed;
+bottom: 50px;
+right: 40px;
+display: none;
+width:154px;
+color:white;
+}
+
+.scroll-to-top a {
+text-decoration: none;
+padding: 15px 15px;
+background-color: #5073FB;
+border-radius: 45px;
+font-size: 24px;
+}
+
+.scroll-to-top a:hover {
+background-color: #395cdd;
+}
+
+#deleteForm{
+display: flex;
+justify-content: flex-start;
+flex-wrap: wrap;
+gap: 35px;
+}

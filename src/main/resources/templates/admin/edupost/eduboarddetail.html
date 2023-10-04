@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>학습등록 상세페이지</title>
+</head>
+<body>
+<h2 class="border-bottom py-2" th:text="${post.edupost_title}"></h2>
+    <div>
+        <label for="edupost_title" class="">학습자료명</label>
+        <input type="text" th:value="${post.edupost_title}"  id="edupost_title" name="edupost_title" readonly/>
+    </div>
+    <div>
+        <label for="edupost_category" >자료구분</label>
+        <select id="edupost_category" th:value="${post.edupost_category}" name="edupost_category" readonly class="">
+            <option value="튜토리얼">튜토리얼</option>
+            <option value="교육영상">교육영상</option>
+        </select>
+    </div>
+    <div>
+        <label for="edupost_type">자료유형</label>
+        <select id="edupost_type" name="edupost_type" th:value="${post.edupost_type}" readonly class="">
+            <option value="묘수풀이">묘수풀이</option>
+            <option value="사활">사활</option>
+            <option value="영토">영토</option>
+        </select>
+    </div>
+    <div>
+        <label for="edupost_fileadd">자료file주소</label>
+        <input type="text" th:value="${post.edupost_fileadd}" id="edupost_fileadd" name="edupost_fileadd" readonly/>
+    </div>
+    <div>
+        <label for="edupost_service">서비스구분</label>
+        <select id="edupost_service" th:value="${post.edupost_service}" name="edupost_service" readonly class="">
+            <option value="유료">유료</option>
+            <option value="무료">무료</option>
+        </select>
+    </div>
+    <div>
+        <label for="edupost_content">자료 내용</label>
+        <textarea id="edupost_content" th:text="${post.edupost_content}" name="edupost_content" readonly></textarea>
+    </div>
+    <div>
+        <table class="tb tb_row">
+            <tbody>
+                <tr>
+                    <th scope="row">첨부파일</th>
+                    <td id="files" colspan="3">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <a th:href="@{|/edupost/update/${edupost_no}|}" class="btns del_btn">수정하기</a>
+<!--        <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>삭제</span></button>-->
+<!--        <input type="submit" onclick="">-->
+<script th:src="@{/js/edupost/function.js}"></script>
+<script th:src="@{/js/edupost/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/js/edupost/common.js}"></script>
+</body>
+<script>
+    window.onload = () => {
+        findAllFile();
+
+    }
+    //전체 파일 조회
+    function findAllFile() {
+
+        // 1. API 호출
+        const edupost_no = [[ ${edupost_no}]];
+        const response = getJson(`/eduposts/${edupost_no}/files`);
+
+        // 2. 로직 종료
+        if ( !response.length ) {
+            return false;
+        }
+
+        // 3. 파일 영역 추가
+        let fileHtml = '<div class="file_down"><div class="cont">';
+        response.forEach(row => {
+            fileHtml += `<a href="javascript:alert('준비 중입니다.');"><span class="icons"><i class="fas fa-folder-open"></i></span>${row.edupost_name}</a>`;
+        })
+        fileHtml += '</div></div>';
+
+        // 4. 파일 HTML 렌더링
+        document.getElementById('files').innerHTML = fileHtml;
+    }
+
+</script>
+</html>

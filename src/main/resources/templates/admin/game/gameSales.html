@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 공통으로 쓰이는 CSS 및 JS 파일 -->
+    <script src="/js.common/header.js"></script>
+    <script src="/js.common/sidebar.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/common/footer.css">
+    <link rel="stylesheet" type="text/css" href="../css/common/header.css">
+    <link rel="stylesheet" type="text/css" href="../css/common/edu_sidebar.css">
+    <link rel="stylesheet" type="text/css" href="../css/operate/game/gameSales.css">
+    <link th:replace="~{common/fragments/config :: configFragment}"/>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="sales">
+            <div class="salesContent" style="margin-top: 88px; padding-bottom: 55px">
+                <div class="side-content" style="margin-bottom: 73px;">
+                    <form name="gameContent" th:action="@{/game/gameSales}" method="get" style="margin-top: -95px;">
+                        <div class="period">
+                            <div class="searchPeriod">
+                                <div>조회기간</div>
+                                <div>
+                                    <input type="date" class="game_startsearch" id="game_startsearch">
+                                    <input type="date" class="game_endsearch" id="game_endsearch">
+                                </div>
+                            </div>
+                            <div class="unit">
+                                <input type="radio" name="period" value="daily" id="daily" checked>
+                                <label for="daily">일단위</label><br>
+                                <input type="radio" name="period" value="monthly" id="monthly">
+                                <label for="monthly">월단위</label><br>
+                            </div>
+                        </div>
+                        <div>
+                            <div th:each="game : ${salesList}" class="game">
+                                <div class="game_amount">총 매출액 :
+                                    <input type="number" class="game_amount" readonly th:value="${game.game_sell * game.game_sales}"/>
+                                    <span>원</span>
+                                </div>
+                                <div class="game_sales">건수 :
+                                    <input type="number" class="game_sales" readonly th:value="${game.game_sales}" />
+                                    <span>개</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="button">
+                                <input type="button" value="검색" id="searchButton">
+                                <input type="button" value="그래프 보기">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="li_table">
+                    <ul class="subject">
+                        <li class="col">
+                            <span class="cell">No</span>
+                            <span class="cell">일/월</span>
+                            <span class="cell">건수</span>
+                            <span class="cell">매출금액</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="col">
+                            <span class="cell">1</span>
+                            <span class="cell"></span>
+                            <span class="cell"></span>
+                            <span class="cell"></span>
+                        </li>
+                    </ul>
+                    <!-- 나머지 li 태그들 추가 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

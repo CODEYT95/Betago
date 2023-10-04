@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnw.beta.domain.operate.game.dao.GameDAO">
+<!--게임콘텐츠 모든 목록 조회-->
+    <select id="selectAllGame" resultType="com.bnw.beta.domain.operate.game.dto.GameDTO">
+        <![CDATA[
+        SELECT game_no, game_title, game_level, game_startdate, game_enddate, game_total, game_price, game_discount,
+               game_sell, game_content, member_id
+        FROM game
+        ORDER BY game_no desc;
+        ]]>
+    </select>
+    <!--게임콘텐츠 등록-->
+    <insert  id="insertGame" parameterType="com.bnw.beta.domain.operate.game.dto.GameDTO">
+            <![CDATA[
+                insert into game (game_title, game_level, game_startdate, game_enddate, game_total, game_price, game_discount,
+                game_sell, game_content, member_id) values (#{game_title}, #{game_level}, #{game_startdate}, #{game_enddate}, #{game_total}
+                , #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id});
+                ]]>
+    </insert>
+    <!--월간 (일일 단위 매출조회)-->
+   <select id="selectDailySales" resultType="com.bnw.beta.domain.operate.game.dto.GameDTO">
+        <![CDATA[
+            select game_startsearch, game_sales, SUM(game_sales * game_sell) AS game_dailyamount
+            from game
+            where game_startsearch between #{startsearch} and #{endsearch}
+            group by game_startsearch
+            order by game_startsearch desc;
+        ]]>
+   </select>
+    <!--년간 (월 단위 매출조회)-->
+    <select id="selectMonthlySales" resultType="com.bnw.beta.domain.operate.game.dto.GameDTO">
+        <![CDATA[
+            select DATE_FORMAT(game_startsearch, '%Y-%m') AS game_startsearch, game_sales, SUM(game_sales*game_sell)
+            AS game_monthlyamount
+            from game
+            where game_startsearch between #{game_startsearch} and #{game_endsearch}
+            group by DATE_FORMAT(game_startsearch, '%Y-%m')
+            order by game_startsearch desc;
+        ]]>
+    </select>
+</mapper>
+
+

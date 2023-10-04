@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 상세보기</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div class="content-wrap">
+        <form enctype="multipart/form-data">
+            <input type="hidden" name="member_id" th:value="${member_id}">
+            <label> 공지구분
+                <input th:value="${noticeDTO.getNotice_category()}">
+            </label><br/>
+
+            <span>제목 <input type="text" name="notice_title" th:value="${noticeDTO.getNotice_title()}"></span><br/>
+
+            <textarea rows="10" cols="50" name="notice_content" th:value="${noticeDTO.getNotice_content()}"></textarea><br/>
+            <input th:value="${noticeDTO.getNotice_regdate()}">
+            <div th:each="noticefile, loop : ${noticeDTO.getNoticeFiles()}" >
+                <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300">
+            </div><br/>
+
+            <a th:href="@{'/notice/update/' + ${noticeDTO.getNotice_no}}">
+                <button type="button">수정</button>
+            </a>
+
+            <a th:href="@{'/notice/delete/' + ${noticeDTO.getNotice_no}}">
+                <button type="button">삭제</button>
+            </a>
+
+            <a th:href="@{'/notice/list'}">
+                <button type="button">목록</button>
+            </a>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

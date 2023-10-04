@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnw.beta.domain.educator.group.dao.GroupDAO">
+
+    <!-- 그룹등록 가능한 게임콘텐츠 Cnt -->
+    <select id="groupAddListCnt" parameterType="String" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM game
+        ]]>
+        <if test="game_title != null and game_title != ''">
+            WHERE game_title = #{game_title}
+        </if>
+        <![CDATA[
+        ORDER BY game_no DESC
+        ]]>
+    </select>
+
+    <!-- 게임 콘텐츠 title 조회 -->
+    <select id="selectGameTitle" resultType="GroupDTO">
+        <![CDATA[
+        SELECT DISTINCT game_title
+        FROM game;
+        ]]>
+    </select>
+
+    <!-- 그룹등록 가능한 게임콘텐츠 조회(무한 스크롤) -->
+    <select id="groupAddList" parameterType="GroupDTO" resultType="GroupDTO">
+        <![CDATA[
+        SELECT *
+        FROM game
+        ]]>
+            <if test="game_title != null and game_title != ''">
+                WHERE game_title = #{game_title}
+            </if>
+        <![CDATA[
+        ORDER BY game_no DESC
+        LIMIT #{LIMIT} OFFSET #{OFFSET};
+        ]]>
+    </select>
+
+    <!-- 그룹 등록을 위한 게임 콘텐츠 정보 불러오기 -->
+    <select id="gameGroupInfo" parameterType="Integer" resultType="GroupDTO">
+        <![CDATA[
+        SELECT g.game_no, g.game_title, g.game_total, SUM(s.group_cnt) AS group_nowcnt
+        FROM game g
+        JOIN studygroup s ON g.game_no = s.game_no
+        WHERE g.game_no = #{game_no};
+        ]]>
+    </select>
+
+    <!-- 학습 그룹 등록(상세) -->
+    <insert id="insertGroup" parameterType="GroupDTO">
+        INSERT INTO studygroup (game_no, group_name, member_id, group_cnt, group_startdate, group_enddate)
+        VALUES (#{game_no}, #{group_name}, #{member_id}, #{group_cnt}, #{group_startdate}, #{group_enddate});
+    </insert>
+
+    <!-- 학습 그룹 조회 목록 불러오기 -->
+    <select id="groupListSelect" parameterType="GroupDTO" resultType="GroupDTO">
+        <![CDATA[
+        SELECT sg.group_no, sg.group_name, sg.group_startdate, sg.group_enddate, sg.group_cnt, sg.group_nowcnt, g.game_title
+        FROM studygroup AS sg
+        JOIN game AS g ON sg.game_no = g.game_no
+        WHERE sg.member_id = #{member_id};
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            WHERE sg.group_name = #{group_name}
+        </if>
+    </select>
+
+    <!-- 학습 그룹 name 조회 -->
+    <select id="selectGroupName" parameterType="String" resultType="GroupDTO">
+        <![CDATA[
+        SELECT DISTINCT group_name
+        FROM studygroup
+        WHERE member_id = #{member_id};
+        ]]>
+    </select>
+</mapper>

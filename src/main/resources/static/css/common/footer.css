@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+#footer {
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e5e5e5;
+  background: #fff;
+  font-family: NanumSquareWebFont-R, "NanumSquareWebFont", "나눔고딕", NanumGothic, "맑은 고딕", Malgun Gothic, "Apple SD Gothic Neo", "돋움", dotum, Helvetica, arial, sans-serif;
+  z-index: 10;
+}
+
+.f_layout {
+  padding: 0 36px;
+  margin: 0 auto;
+  position: relative;
+  max-width: 1332px;
+  min-width: 1052px;
+  height: 175px;
+  font-size: 12px;
+  color: #999;
+}
+
+.f_team {
+  padding-top: 26px;
+  line-height: 16px;
+}
+
+.f_team li {
+  display: inline-block;
+  color: #333;
+  font-weight: 600;
+}
+
+.f_team li a {
+  color: #333;
+  font-size: 14px;
+}
+
+#footer .f_terms {
+  padding-top: 24px;
+  line-height: 13px;
+}
+
+#footer .f_terms a {
+  font-weight: bold;
+  display: inline-block;
+  white-space: pre;
+  color: #333;
+}
+
+#footer .f_terms .bar {
+  margin: -1px 11px 1px 12px;
+  display: inline-block;
+  width: 1px;
+  height: 11px;
+  background-color: #cdcdcd;
+  vertical-align: middle;
+  font-size: 0;
+  line-height: 900em;
+  overflow: hidden;
+}
+
+#footer .f_terms_addres_box {
+  overflow: hidden;
+  margin-top: 8px;
+  font-family: NanumSquareWebFont-R, "NanumSquareWebFont", "나눔고딕", NanumGothic, "맑은 고딕", Malgun Gothic, "Apple SD Gothic Neo", "돋움", dotum, Helvetica, arial, sans-serif;
+}
+
+#footer .f_terms_addres_box .addres_list {
+  width: 672px;
+  margin: -4px 0 0 -8px;
+  overflow: hidden;
+}
+
+#footer .f_terms_addres_box .addres_list li {
+  float: left;
+  position: relative;
+  margin-top: 6px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #999;
+  letter-spacing: -1px;
+  line-height: 14px;
+}
+
+#footer .f_terms_addres_box .addres_list li:before {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 10px;
+  margin-top: -5px;
+  background-color: #e9ebec;
+  vertical-align: top;
+  content: '';
+}
+
+#footer .copyright {
+  margin-top: 16px;
+  font-family: Helvetica, arial, "Apple SD Gothic Neo", sans-serif;
+  color: #666;
+  line-height: 14px;
+}

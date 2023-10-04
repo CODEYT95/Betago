@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnw.beta.domain.operate.edupost.dao.FilepostDAO">
+    <!-- 파일 정보 저장 -->
+ <!--   <insert id="saveAll" useGeneratedKeys="true" keyProperty="filepost_no" parameterType="java.util.List">
+        <![CDATA[ INSERT INTO filepost (edupost_no, edupost_name,edupost_rename,edupost_size)
+                  VALUES
+                      (#{edupost_no},#{edupost_name},#{edupost_rename},#{edupost_size})
+        ]]>
+    </insert>-->
+    <insert id="saveAll" parameterType="list">
+        INSERT INTO filepost (edupost_no, filepost_no, edupost_name, edupost_rename, edupost_size)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.edupost_no}, #{item.filepost_no}, #{item.edupost_name}, #{item.edupost_rename}, #{item.edupost_size})
+        </foreach>
+    </insert>
+
+    <select id="findByNo" parameterType="long" resultType="com.bnw.beta.domain.operate.edupost.dto.FilepostDTO">
+        select edupost_no, edupost_name, filepost_no, edupost_rename
+        from filepost
+        where edupost_no = #{value}
+        ORDER BY
+            filepost_no
+    </select>
+
+    <select id="findById" parameterType="list" resultType="com.bnw.beta.domain.operate.edupost.dto.FilepostDTO">
+        select edupost_no, edupost_name, filepost_no, edupost_rename
+        from filepost
+        where filepost_no IN
+        <foreach item="filepost_no" collection="list" open="(" separator="," close=")">
+        #{filepost_no}
+        </foreach>
+        ORDER BY
+            filepost_no
+    </select>
+
+    <delete id="deleteByNo" parameterType="list">
+        DELETE
+        FROM filepost
+        where
+            filepost_no IN
+        <foreach item="filepost_no" collection="list" open="(" separator="," close=")">
+            #{filepost_no}
+        </foreach>
+    </delete>
+</mapper>

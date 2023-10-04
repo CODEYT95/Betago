@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member/join/join.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="container right-panel-active">
+    <div class="container__form container--signup">
+        <form id="joinForm" class="form" th:action="@{/member/join}" th:object="${joinForm}" method="post">
+            <input type="hidden" name="member_name" th:value="${name}">
+            <input type="hidden" name="member_email" th:value="${email}">
+            <input type="hidden" name="member_phone" th:value="${phone}">
+
+            <h2 class="form__title">인증 정보</h2>
+            <div class="page1">
+                <div class="span">
+                    <label>이름: <span th:text="${name}"></span></label>
+                    <div id="emailInfo">
+                        <label>이메일: <span id="emailInfo2" th:text="${email}"></span></label>
+                    </div>
+                    <div id="phoneInfo">
+                        <label>폰번호: <span id="phoneInfo2" th:text="${phone}"></span></label>
+                    </div>
+                </div>
+            </div>
+            <h2 class="form__title">정보 입력</h2>
+            <div class="inputInfo">
+                <input type="text" class="input" id="id" th:field="*{member_id}" onchange = "checkId()" placeholder="아이디를 입력하세요.">
+                <span class="id_ok">사용 가능한 아이디입니다.</span>
+                <span class="id_already">이미 사용중인 아이디입니다.</span>
+                <br/>
+
+                <input type="password" id="pw" class="input" th:field="*{member_pw}" placeholder="비밀번호를 입력하세요."><br/>
+
+                <input type="password" id="repw" class="input" th:field="*{member_repw}" onchange = "checkPwd()" placeholder="비밀번호를 확인해주세요."><br/>
+                <span class="pwCheck">입력하신 비밀번호와 일치하지 않습니다.</span><br/>
+
+                <input type="hidden" name="member_birth" id="member_birth" th:field="*{member_birth}">
+                <select name="yy" id="year"><option disabled selected>출생 연도</option></select>
+                <select name="mm" id="month"><option disabled selected>월</option></select>
+                <select name="dd" id="day"><option disabled selected>일</option></select><br/>
+
+                <!--  인증 정보에 없는 값의 input이 보여져야함.  -->
+                <div id="phoneField">
+                    <input type="text" class="input" th:field="*{member_phone}" placeholder="휴대폰번호를 입력해주세요."><br/>
+                </div>
+
+                <div id="emailField">
+                    <input type="text" class="input" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
+                </div>
+
+                <label>
+                    <select th:field="*{role}" class="role">
+                        <option value="">회원 유형을 선택해주세요.</option>
+                        <option value="ROLE_ADMIN">관리자</option>
+                        <option value="ROLE_TEACHER">선생님</option>
+                        <option value="ROLE_USER">학생</option>
+                    </select>
+                </label><br/>
+                <div class="radiodiv">
+                    <label for="male" class="radio">
+                        <input type="radio" id="male" th:field="*{member_gender}" value="male" checked>
+                        <span>남자</span></label>
+                    <label for="female" class="radio">
+                        <input type="radio" id="female" th:field="*{member_gender}" value="female">
+                        <span>여자</span></label><br/>
+                </div>
+                <div class="abver1">
+                    <select id="telNumberSelect" class="input">
+                        <option value="">전화번호를 입력해주세요.</option>
+                        <option value="none">없음</option>
+                        <option value="custom">직접입력</option>
+                    </select>
+                    <input type="text" class="input" id="customTelNumber" th:field="*{member_tell}" placeholder="전화번호를 입력해주세요." style="display: none;">
+                </div>
+                <label class="abver">
+                    <span >이벤트, 커리큘럼, 신규콘텐츠 등 광고 메세지 수신</span>
+                    <input type="checkbox" th:field="*{member_agreeM}" value="동의">이메일
+                    <input type="checkbox" th:field="*{member_agreeP}" value="동의">SMS
+                </label><br/>
+            </div>
+
+            <div>
+                <button type="submit" class="btn" onclick="birth()">회원가입</button>
+                <input type="hidden" name="next" value="2">
+            </div>
+    </form>
+</div>
+</div>
+</body>
+</html>
+
+<script>
+    //본인 인증 값에 따라 input 변경
+    $(document).ready(function () {
+        $("#phoneInfo").hide();
+        $("#emailInfo").hide();
+
+        $("#emailField").hide();
+        $("#phoneField").hide()
+
+        var phone = $("span#phoneInfo2").text();
+        var email = $("span#emailInfo2").text();
+
+
+        if (email !== "") {
+            $("#emailInfo").show();
+            $("#phoneField").show();
+        }
+        if (phone !== "") {
+            $("#phoneInfo").show();
+            $("#emailField").show();
+        }
+    });
+
+    //생년월일 드롭다운
+    $(document).ready(function () {
+        var now = new Date();
+        var year = now.getFullYear();
+        var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
+        var day = (now.getDate()) > 9 ? '' + (now.getDate()) : '0' + (now.getDate());
+
+        //년도
+        for (var i = 1900; i <= year; i++) {
+            $('#year').append('<option value="' + i + '">' + i + '년</option>');
+
+        }
+
+        //월
+        for (var i = 1; i <= 12; i++) {
+            var mm = i > 9 ? i : "0" + i;
+            $('#month').append('<option value="' + mm + '">' + mm + '월</option>');
+        }
+
+        //일
+        for (var i = 1; i <= 31; i++) {
+            var dd = i > 9 ? i : "0" + i;
+            $('#day').append('<option value="' + dd + '">' + dd + '일</option>');
+        }
+        $("#year > option[value=" + year + "]").attr("selected", "true");
+        $("#month > option[value=" + mon + "]").attr("selected", "true");
+        $("#day > option[value=" + day + "]").attr("selected", "true");
+
+        // 각 드롭다운을 "출생 연도", "월", "일"로 기본 값으로 설정
+        $('#year').val('출생 연도'); // "출생 연도"로 설정
+        $('#month').val('월'); // "월"로 설정
+        $('#day').val('일'); // "일"로 설정
+    });
+
+    //생년월일 합치기
+    function birth() {
+        const year = document.getElementById("year").value;
+        const month = document.getElementById("month").value;
+        const day = document.getElementById("day").value;
+
+        // 년, 월, 일을 하나의 문자열로 합칩니다. (예: "2023-09-26")
+        const birth = year + "-" + month + "-" + day;
+
+        // member_birth 필드에 값을 설정합니다.
+        document.getElementById("member_birth").value = birth;
+
+    }
+
+
+    // 집전화 드롭다운 변경 이벤트 감지
+    var telNumberSelect = document.getElementById("telNumberSelect");
+    var customTelNumber = document.getElementById("customTelNumber");
+
+    telNumberSelect.addEventListener("change", function() {
+        if (this.value === "custom") {
+            customTelNumber.style.display = "block"; // 입력란을 보이도록 설정
+            telNumberSelect.style.display = "none"; // 드롭다운을 숨김 처리
+        } else {
+            customTelNumber.style.display = "none"; // 입력란을 숨김 처리
+            telNumberSelect.style.display = "block"; // 드롭다운을 보이도록 설정
+        }
+    });
+
+    //아이디 동기화방식 중복체크
+    function checkId(){
+        var id = $('#id').val();
+        $.ajax({
+            url:'idCheck', //controller요청주소
+            type:'post',
+            data:{id:id},
+            success:function (cnt){
+                console.log(cnt)
+                if(cnt == 0){ //cnt 1 = 중복 0 사용가능
+                    $('.id_ok').css("display","inline-block");
+                    $('.id_already').css("display","none");
+                }else{
+                    $('.id_already').css("display","inline-block");
+                    $('.id_ok').css("display","none");
+                    $('#id').val('');
+                }
+            },
+            error:function (){
+                alert("error")
+            }
+        });
+    }
+
+    //비밀번호 일치여부 확인
+    function checkPwd(){
+        var pw = $("#pw").val();
+        var repw = $('#repw').val();
+
+        if(pw !== repw){
+            $('.pwCheck').css("display","inline-block");
+        }else {
+            $('.pwCheck').css("display","none");
+        }
+    }
+
+    //
+</script>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bnw.beta.domain.subscribe.dao.subContentsDAO">
+    <!--나의 구독상품 조회-->
+    <select id="selectContents" parameterType="com.bnw.beta.domain.subscribe.dto.subContentsDTO" resultType="com.bnw.beta.domain.subscribe.dto.subContentsDTO">
+        <![CDATA[
+        SELECT
+        g.game_no, p.pay_no, g.game_title, p.pay_date, g.game_price, g.game_startdate AS game_startdate, g.game_enddate AS game_enddate, s.group_name, p.member_id
+        FROM
+        game g
+        JOIN
+        pay p ON g.game_no = p.game_no
+        JOIN
+        studygroup s ON g.game_no = s.game_no
+        WHERE
+        1=1
+        ]]>
+        <if test="member_id != null">
+            AND p.member_id = #{member_id}
+        </if>
+
+        <if test="startDate != null and endDate != null">
+            AND p.pay_date BETWEEN #{startDate} AND #{endDate}
+        </if>
+    </select>
+
+    <!-- 나의 구독상품 삭제 -->
+    <delete id="deleteContents" parameterType="int">
+        <![CDATA[
+        DELETE FROM pay
+        WHERE pay_no = #{pay_no};
+        ]]>
+    </delete>
+
+</mapper>

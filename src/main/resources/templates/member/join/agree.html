@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>약관동의 및 본인인증</title>
+    <!--    alter 커스텀-->
+    <!--    <script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member/join/agree.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="container right-panel-active">
+    <div class="container__form container--signup">
+        <form id="joinForm" class="form" th:action="@{/member/agree}" th:object="${joinForm}" method="post">
+            <input type="hidden" name="check_3" id="check_3_hidden">
+            <input type="hidden" name="check_4" id="check_4_hidden">
+            <input type="hidden" name="check_5" id="check_5_hidden">
+
+            <h2 class="form__title">약관동의</h2>
+            <div class="agree">
+                <div class="span">
+                    <input type="checkbox" class="border" name="selectall" value="selectall" onclick="selectAll(this)">
+                    <span>전체 동의</span><br/>
+                </div>
+                <div class="span">
+                    <input type="checkbox" name="check" id="check_1" onclick="checkSelectAll()">
+                    <span onclick="openPopup('check_1')">이용약관(필수)</span><br/>
+                </div>
+                <div class="span">
+                    <input type="checkbox" name="check" id="check_2" onclick="checkSelectAll()">
+                    <span onclick="openPopup('check_2')">개인정보 필수항목에 대한 처리 및 이용(필수)</span><br/>
+                </div>
+                <div class="span">
+                    <input type="checkbox" name="check" id="check_3" onclick="checkSelectAll()">
+                    <span onclick="openPopup('check_3')" class="span"> 개인정보 선택항목에 대한 처리 및 이용(선택)</span><br/>
+                </div>
+                <div class="span">
+                    <input type="checkbox" name="check" id="check_4" onclick="checkSelectAll()">
+                    <span onclick="openPopup('check_4')" class="span">개인정보 마케팅 및 광고 활용(선택)</span><br/>
+                </div>
+                <div class="span">
+                    <input type="checkbox" name="check" id="check_5" onclick="checkSelectAll()">
+                    <span onclick="openPopup('check_5')" class="span">개인정보의 위탁(선택)</span>
+                </div>
+            </div>
+
+            <h2 class="form__title">본인 인증</h2>
+            <div class="info">
+                <input type="text" class="input" name="name" id="name" th:field="*{member_name}" placeholder="이름을 입력해주세요.">
+                <div class="radiodiv">
+                    <label for="phone" class="radio">
+                        <input type="radio" id="phone" name="contact" value="phone" checked>
+                        <span>Phone</span>
+                    </label>
+                    <label for="email" class="radio">
+                        <input type="radio" id="email" name="contact" value="email">
+                        <span>Email</span>
+                    </label><br/>
+                </div>
+                <input type="text" class="input" id="selectphone" placeholder="핸드폰 번호를 입력해주세요." onclick="agreeCheck()" th:field="*{member_phone}">
+                <span class="phoneCheck">이미 가입 되어 있는 번호입니다.</span>
+                <input type="text" class="input" id="mail" placeholder="이메일을 입력해주세요." onclick="agreeCheck()" th:field="*{member_email}">
+                <span class="emailCheck">이미 가입 되어 있는 이메일입니다.</span>
+
+                <div>
+                    <a>
+                        <button type="button" class="btn" id="sendEmailButton" onclick="sendNumber()">인증요청하기</button>
+                    </a>
+                </div>
+                <div id="mail_number" name="mail_number" style="display: none">
+                    <input type="text" class="input" name="number" id="number" placeholder="발송된 인증번호를 입력해주세요."><br/>
+                    <div class="btnCheck">
+                        <button class="btn" type="button" name="confirmBtn" id="confirmBtn"
+                                onclick="confirmNumber()">인증번호 확인
+                        </button>
+                    </div>
+                    <input type="hidden" name="next" value="1">
+                </div>
+                <input type="hidden" id="confirm" name="confirm">
+            </div>
+        </form>
+    </div>
+
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>
+
+<script>
+
+    //약관 전체 선택 및 전체 해제 (하나 풀리면 전체선택도 풀림)
+    function checkSelectAll(checkId) {
+        const checkboxes = document.getElementsByName('check');
+        const selectAll = document.getElementsByName('selectall')[0];
+
+        let allChecked = true;
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (!checkboxes[i].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+
+        if (allChecked) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+
+
+        // 선택한 약관 체크 여부를 hidden field에 반영
+        $("#check_3_hidden").val($("#check_3").prop("checked") ? "3" : "null");
+        $("#check_4_hidden").val($("#check_4").prop("checked") ? "4" : "null");
+        $("#check_5_hidden").val($("#check_5").prop("checked") ? "5" : "null");
+
+    }
+
+    function selectAll(selectAll) {
+        const checkboxes = document.getElementsByName('check');
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = selectAll.checked;
+        }
+        checkSelectAll(); // 전체 동의 체크 상태가 변경되면 다시 동의 여부 확인
+    }
+
+
+    //약관동의 팝업
+    function openPopup(checkId) {
+        window.open("/member/check/" + checkId, '약관 팝업', 'width=800,height=800');
+    }
+
+    //필수 동의 안 했을 시
+    function agreeCheck() {
+        const check1 = document.getElementById('check_1');
+        const check2 = document.getElementById('check_2');
+        const sendEmailButton = document.getElementById("sendEmailButton");
+
+        if (!check1.checked || !check2.checked) {
+            sendEmailButton.disabled = true;
+            alert("(필수)약관을 체크해주세요.");
+        } else {
+            sendEmailButton.disabled = false;
+        }
+    }
+
+    //인증 수단 변경
+    $(document).ready(function () {
+        $('#mail').hide();
+
+        $("input[name='contact']").change(function () {
+            // 폰번호 선택시
+            if ($("input[name='contact']:checked").val() == 'phone') {
+                $('#mail').hide();
+                $('#selectphone').show();
+                $('.emailCheck').hide();
+            }
+            // 이메일 선택시
+            else if ($("input[name='contact']:checked").val() == 'email') {
+                $('#selectphone').hide();
+                $('#mail').show();
+                $('.phoneCheck').hide();
+            }
+        });
+    });
+    $("#sendEmailButton").click(function () {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'center-center',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        // 약관 동의 체크
+        const check1 = document.getElementById('check_1');
+        const check2 = document.getElementById('check_2');
+
+        if (!check1.checked || !check2.checked) {
+            alert("(필수)약관을 체크해주세요.");
+            return; // 인증 요청 중단
+        }
+
+        //이름 입력 여부
+        const name = document.getElementById('name').value;
+        if(!name){
+            alert("이름을 입력하세요.");
+            return;
+        }
+
+        // 선택한 인증 수단 확인
+        let selectedContact = $("input[name='contact']:checked").val();
+        //핸드폰 선택시
+        if (selectedContact === 'phone') {
+            let phone = $("#selectphone").val();
+            if (!phone) {
+                alert("폰번호를 입력하세요.");
+                $("#mail_number").css("display", "none");
+                return; // 인증 요청 중단
+            }
+            $.ajax({
+                url: "/sms",
+                type: "post",
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify({"phone": phone}),
+                success: function (data) {
+                    $("#confirm").val(data.number);
+                    $("#mail_number").css("display", "block");
+                    document.getElementById("sendEmailButton").style.display = "none";
+                    Toast.fire({
+                        icon: 'success',
+                        title: '인증번호를 전송중입니다.'
+                    });
+                }
+            });
+        }
+        if (selectedContact === 'email') {
+            let mail = $("#mail").val();
+            if (!mail) {
+                alert("이메일 주소를 입력하세요.");
+                $("#mail_number").css("display", "none");
+                return; // 인증 요청 중단
+            }
+
+            $.ajax({
+                url: "/mail",
+                type: "post",
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify({"mail": mail}),
+                success: function (data) {
+                    $("#confirm").val(data);
+                    $("#mail_number").css("display", "block");
+                    document.getElementById("sendEmailButton").style.display = "none";
+                    Toast.fire({
+                        icon: 'success',
+                        title: '인증번호를 전송중입니다.'
+                    });
+                }
+            });
+        }
+    });
+
+
+    //인증번호 확인하기
+    function confirmNumber() {
+        let number1 = parseInt($("#number").val()); // 문자열을 정수로 변환
+        console.log("number1:", number1); // 값 확인용 로그
+        let number2 = parseInt($("#confirm").val()); // 문자열을 정수로 변환
+        console.log("number2:", number2); // 값 확인용 로그
+
+
+        if (number1 === number2) {
+            alert("인증되었습니다.");
+            // $('#joinForm').append('<input type="hidden" name="next" value="1">');
+            $('#joinForm').submit();
+        } else {
+            alert("인증번호가 다릅니다.");
+        }
+    }
+
+    //이메일 중복검사
+    let emailTimeoutId;
+    const emailInput = document.getElementById("mail");
+    emailInput.addEventListener("input", function () {
+        const email = emailInput.value;
+        // 입력이 멈추면 0.5초 후 이벤트 발생
+        clearTimeout(emailTimeoutId);
+        emailTimeoutId = setTimeout(function () {
+
+            $.ajax({
+                url: 'emailCheck',
+                type: 'post',
+                data: {email: email},
+                success: function (cnt) {
+                    if (cnt == 1) {
+                        $('.emailCheck').css("display", "inline-block");
+                        disableSendButton();
+                    }else{
+                        enableSendButton();
+                    }
+                },
+                error: function () {
+                    alert("error")
+                }
+            });
+        }, 500); // 0.5초 동안 아무 입력이 없으면 이벤트 발생
+    });
+
+    //핸드폰 중복검사
+    let phoneTimeoutId;
+    const phoneInput = document.getElementById("selectphone");
+    phoneInput.addEventListener("input", function () {
+        const phone = phoneInput.value;
+        // 입력이 멈추면 0.5초 후 이벤트 발생
+        clearTimeout(phoneTimeoutId);
+        phoneTimeoutId = setTimeout(function () {
+            $.ajax({
+                url: 'phoneCheck',
+                type: 'post',
+                data: {phone: phone},
+                success: function (cnt) {
+                    if (cnt == 1) {
+                        $('.phoneCheck').css("display", "inline-block");
+                        disableSendButton();
+                    }else{
+                        enableSendButton();
+                    }
+                },
+                error: function () {
+                    alert("error")
+                }
+            });
+        }, 500); // 0.5초 동안 아무 입력이 없으면 이벤트 발생
+    });
+
+    // "인증요청하기" 버튼 비활성화
+    function disableSendButton() {
+        $("#sendEmailButton").prop("disabled", true);
+    }
+
+    // "인증요청하기" 버튼 활성화
+    function enableSendButton() {
+        $("#sendEmailButton").prop("disabled", false);
+    }
+
+
+
+
+</script>

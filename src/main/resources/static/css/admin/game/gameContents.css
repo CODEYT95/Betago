@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+ body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        max-width: 940px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group select,
+    .form-group textarea {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form-group select {
+        height: 30px;
+        width: 150px;
+    }
+
+    .form-group input[type="file"] {
+        padding: 5px;
+    }
+
+    .form-group input[type="submit"] {
+        background-color: #c5ebc6;
+        color: #000000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 300px;
+        margin-left: 333px;
+    }
+
+    .form-group input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    .filebox .upload-name {
+   display: inline-block;
+   height: 40px;
+   padding: 0 10px;
+   vertical-align: middle;
+   border: 1px solid #dddddd;
+   width: 78%;
+   color: #999999;
+   }
+
+   .filebox label {
+display: inline-block;
+padding: 10px 20px;
+color: #000000;
+vertical-align: middle;
+cursor: pointer;
+height: 15px;
+margin-left: 189px;
+margin-top: -43px;
+border: 2px solid #18801b;
+border-radius: 20px 20px 20px 20px;
+padding: 19px;
+}
+   .filebox input[type="file"] {
+position: absolute;
+width: 0;
+height: 0;
+padding: 0;
+overflow: hidden;
+border: 0;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>학습조회리스트</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div id="bbsList">
+
+            <div id="bbsList_title">
+                교육자료 등록 리스트
+            </div>
+            <div id="bbsList_header">
+                <!--        <div id="leftHeader">
+                            <form action="/edupost/list" method="post" name="searchForm">
+                                <select name="searchKey" class="selectField">
+                                    <option value="subject">제목</option>
+                                    <option value="name">작성자</option>
+                                    <option value="content">내용</option>
+                                </select>
+                                <input type="text" name="searchValue" class="textField"/>
+                                <input type="button" value=" 검 색 " class="btn2" onclick="sendIt();"/>
+                            </form>
+                        </div>-->
+                <!--        <div id="rightHeader">
+                            <input type="button" value=" 글올리기 " class="btn2" onclick="javascript:location.href='/created.action';"/>
+                        </div>-->
+            </div>
+
+            <div id="bbsList_list">
+                <table>
+                    <thead id="title">
+                    <tr>
+                        <th class="num">번호</th>
+                        <th class="subject">자료구분</th>
+                        <th class="name">자료유형</th>
+                        <th class="created">학습자료명</th>
+                        <th class="hitCount">작성자</th>
+                        <th class="hitCount">등록일시</th>
+                    </tr>
+                    </thead>
+                    <tbody id="lists">
+                    <!--            <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">-->
+                    <tr th:if="${not #lists.isEmpty(postList)}" th:each="dto:${postList}">
+                        <!--                <td class="num" th:text="${dto.num}"></td>-->
+                        <!--       <td class="subject">
+                                   <a th:href="@{${articleUrl}} + '&num=' +
+                               @{${dto.num}}" th:text="${EdupostDTO.edupost_no}">번호</a>
+                               </td>-->
+                        <td class="no" th:text="${dto.edupost_no}"> 번호</td>
+
+                        <!--                       th:text="${dto.edupost_title}">-->
+
+                        <td class="category" th:text="${dto.edupost_category}">자료구분</td>
+                        <td class="type" th:text="${dto.edupost_type}">자료유형</td>
+                        <td>
+                            <a th:href="@{|/edupost/detail/${dto.edupost_no}|}">
+                                <span class="" th:text="${dto.edupost_title}"></span>
+                            </a>
+                        </td>
+                        <td class="writer" th:text="${dto.member_id}">작성자</td>
+                        <td class="writer" th:text="${dto.edupost_date}">등록일시</td>
+                    </tr>
+
+                    <!-- <tr th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
+
+                         <td colspan="5" id="footer">
+                             <a th:utext="${pageIndexList}"></a>
+                         </td>
+                     </tr>
+
+                     <tr th:if="${#lists.size(dataCount)}<0" th:each="dataCount:${dataCount}">
+                         <td colspan="5">등록된 게시물이 없습니다.</td>
+                     </tr>-->
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <script src="/js.common/header.js"></script>
+    <script src="/js.common/sidebar.js"></script>
+    <script src="/js.operate/game/gameContents.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/common/footer.css">
+    <link rel="stylesheet" type="text/css" href="../css/common/header.css">
+    <link rel="stylesheet" type="text/css" href="../css/common/edu_sidebar.css">
+    <link rel="stylesheet" type="text/css" href="../css/operate/game/gameContents.css">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<style>
+
+</style>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="container">
+            <form name="gameContent" th:action="@{/game/gameInsert}" method="post">
+                <div class="form-group">
+                    <label for="game_title">게임콘텐츠명</label>
+                    <input type="text" name="game_title" id="game_title" size="50" style="width: 750px;">
+                </div>
+                <div class="form-group">
+                    <label for="game_level">학습난이도</label>
+                    <select name="game_level" id="game_level">
+                        <option value="초급">초급</option>
+                        <option value="중급">중급</option>
+                        <option value="고급">고급</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="game_startdate">구독기간</label>
+                    <input type="date" name="game_startdate" id="game_startdate">
+                    <label for="game_enddate"></label>
+                    <input type="date" name="game_enddate" id="game_enddate">
+                </div>
+                <div class="form-group">
+                    <label for="game_total">구독 가능인원</label>
+                    <input type="number" name="game_total" id="game_total" min="1" max="100" style="width: 150px;">
+                </div>
+                <div class="form-group">
+                    <label for="game_price">정가</label>
+                    <input type="text" name="game_price" id="game_price" style="width: 150px;">
+                </div>
+                <div class="form-group">
+                    <label for="game_discount">할인율</label>
+                    <div class="input-group">
+                        <input type="number" name="game_discount" id="game_discount" min="0" max="100" step="1" value="0"
+                               style="width: 150px;">%
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="game_sell">판매가</label>
+                    <input type="text" name="game_sell" id="game_sell" style="width: 150px;">
+                </div>
+                <div class="form-group">
+                    <label for="game_content">패키지 내용</label>
+                    <textarea name="game_content" id="game_content" placeholder="내용을 입력해주세요"
+                              style="width: 800px; height: 199px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="thumbnail">
+                        <label for="thumbnail">썸네일</label>
+                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="thumbnail" style="padding: 5px;
+             border: 1px solid #ccc; border-radius: 5px;">
+                    </div>
+                    <div class="filebox">
+                        <label for="file">이미지업로드</label>
+                        <input type="file" id="file">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="등록하기">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

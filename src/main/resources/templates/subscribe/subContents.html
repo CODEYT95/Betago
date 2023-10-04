@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/pay_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/subContents.css}">
+    <script type="text/javascript" th:src="@{/js/subscribe/subContents.js}"></script>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+
+
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+
+<div class="content">
+    <div th:replace="~{common/fragments/pay_sidebar :: pay_sidebarFragment}"></div>
+    <div class="content-wrap" style="height: auto;">
+        <div class="main-content">
+            <form action="/list" method="get" class="form-container">
+                <div class="mycontents-date">
+                    구매기간 :
+                    <input type="date" id="startDate" name="startDate" th:value="${startDate}" /> ~
+                    <input type="date" id="endDate" name="endDate" th:value="${endDate}" />
+                    <input type="submit" value="조회하기" class="submit-button" onclick="fetchData(events)" />
+                    <input type="button" value="구독취소" id="paymentButton" disabled class="submit-button" />
+                </div>
+            </form>
+            <div class="mycontents-list">
+                <div class="contents-container">
+                    <form id="deleteForm" action="/deleteContents" method="post">
+                        <div class="checkbox" th:each="content : ${contentsList}" th:attr="data-game-no=${content.pay_no}">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.pay_no}" name="selectedGameNos" th:value="${content.pay_no}" />
+                                <span class="checkbox-title">
+                                        <div class="card">
+                                            <div class="poster"><img th:src="@{/image/testBADUK2.png}">
+                                                <div class="card-details">
+                                                    <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
+                                                    <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
+                                                    <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
+                                                    <h4>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h4>
+                                                </div>
+                                                <div class="details">
+                                                    <h5>학습그룹 등록내역 : <span th:text="${content.group_name}"></span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-bg"></div>
+<div id="cancelSubscriptionModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <div class="close">&times;</div>
+        <div class="modal-title">구독 취소 안내</div>
+        <div class="modal-guidtitle">정말로 구독을 취소하시겠습니까?</div>
+        <div class="modal-guid">
+            <div class="modal-guid1">- 무통장 입금 :
+                현금으로 환불받기를 원하시는 경우엔
+                [환불받으실 은행, 계좌번호, 예금주명]을 알려주셔야 하며,
+                무통장입금 환불신청일로부터 평일 기준 약 1~2일 이내에 환불됩니다.</div>
+
+            <div class="modal-guid2">- 계좌이체: 계좌이체 결제 취소 및 예치금 환불이 가능합니다.
+                부분/결제 취소 시, 고객님 이체 계좌로 다시 입금됩니다,
+                입금까지는 영업기준 2~3일 정도 소요될 수 있습니다</div>
+
+            <div class="modal-guid3">- 카카오페이: 카카오페이 결제는 결제사의 취소, 환불 관련 정책으로 인해 결제일 포함 7일 이전까지만 취소가 가능합니다.</div>
+
+            <div class="modal-guid4">※ 무통장입금 환불 신청 시 주의사항
+                무통장 입금 환불 신청 시 아이디 명의자 분의 본인계좌로만 환불이 가능하며
+                제 3자의 통장계좌로는 환불 받으실 수 없으니 이점 참고해주시기 바랍니다.
+            </div>
+            <div class="modal-buttons">
+                <button id="confirmCancel", class="yes">예</button>
+                <button id="declineCancel", class="no">아니오</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+
+</html>

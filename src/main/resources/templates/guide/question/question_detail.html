@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Question Detail</title>
+</head>
+<body>
+
+<h2>Question Detail</h2>
+
+<table border="1">
+    <tr>
+        <td>QNA No</td>
+        <td th:text="${question.qna_no}"></td>
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td th:text="${question.qna_title}"></td>
+    </tr>
+    <tr>
+        <td>Content</td>
+        <td th:text="${question.qna_content}"></td>
+    </tr>
+    <tr>
+        <td>Is Shown</td>
+        <td th:text="${question.qna_isshow}"></td>
+    </tr>
+    <tr>
+        <td>Registration Date</td>
+        <td th:text="${question.qna_regdate}"></td>
+    </tr>
+    <tr>
+        <td>Member ID</td>
+        <td th:text="${question.member_id}"></td>
+    </tr>
+</table>
+
+<a href="/question/list">Back to List</a>
+
+</body>
+</html>

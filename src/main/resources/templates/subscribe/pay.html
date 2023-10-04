@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/pay_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/pay.css}">
+    <script type="text/javascript" th:src="@{/js/subscribe/pay.js}"></script>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+
+<div class="content">
+    <div th:replace="~{common/fragments/pay_sidebar :: pay_sidebarFragment}"></div>
+
+    <div class="content-wrap" style="height: auto;">
+        <div class="main-content">
+            <form th:action="@{/submit-payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
+                <div class="pay-box">
+                    <div class="pay-titlebox">
+                        <div class="pay-title">결제방법 선택 안내</div>
+                        <div class="pay-titlecontent">모바일에서도 신용카드, 무통장 입금 등 결제가 가능합니다.</div>
+                    </div>
+                    <div class="pay-orderbox">
+                        <div class="pay-ordertitle">주문할 상품</div>
+                        <div class="pay-ordercontent">
+                            구매상품명 :
+                                <option th:each="game : ${mypaylist}" th:text="${game.game_title}" th:value="${game.game_no}" th:data-price="${game.game_price}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pay-infobox">
+                        <div class="pay-infotitle">구매자 정보</div>
+                        <div class="pay-name">
+                            구매자명 : <input type="text" class="buyer-name" name="buy_name" id="buyer-name">
+                                      <div class="error-message" id="buyer-name-error"></div>
+                        </div>
+                        <div class="pay-phone">
+                            연락처 : <input type="tel" class="buyer-phone" name="pay_phone" id="buyer-phone">
+                        <div class="error-message" id="buyer-phone-error"></div>
+                        </div>
+                    </div>
+                    <div class="pay-choicebox">
+                        <div class="pay-choietitle">결제</div>
+                        <input type="checkbox" name="pay_type" class="checkbox" value="무통장 입금" onchange="handleCheckboxChange(this)"> 무통장 입금
+                        <input type="checkbox" name="pay_type" class="checkbox" value="계좌이체" onchange="handleCheckboxChange(this)"> 계좌이체
+                        <input type="checkbox" name="pay_type" class="checkbox" value="카카오페이" onchange="handleCheckboxChange(this)"> 카카오페이
+                    </div>
+                    <div class="pay-depotiorbox">
+                        <div class="depotiortitle">
+                            입금자명 : <input type="text" class="pay-depositor" name="pay_name" id="payname">
+                            <div class="error-message2" id="pay-name-error"></div>
+                        </div>
+                    </div>
+                    <div class="pay-pricebox">
+                    <div class="pricetitle">
+                        결제금액 : <input type="number" class="order-total" readonly/></div>
+                    </div>
+                    <div class="buttonbox">
+                        <div class="pay-submit">
+                            <button type="submit" id="submitbutton" class="submit-button">결제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

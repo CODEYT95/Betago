@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bnw.beta.domain.subscribe.dao.payDAO">
+<!--게임컨텐츠결제-->
+
+<select id="selectContentsPay" parameterType="Integer" resultType="com.bnw.beta.domain.subscribe.dto.payDTO">
+    <![CDATA[
+    SELECT game_no, game_title, game_price
+    FROM game;
+    ]]>
+</select>
+
+<insert id="insertIntoPay" parameterType="com.bnw.beta.domain.subscribe.dto.payDTO">
+    <![CDATA[
+     INSERT INTO pay (game_no, pay_name, pay_phone, pay_type, buy_name, pay_date)
+    SELECT #{game_no}, member_name AS pay_name, member_phone AS pay_phone, #{pay_type}, #{buy_name}, NOW()
+    FROM member
+    WHERE member_id = #{member_id};
+    ]]>
+</insert>
+
+</mapper>

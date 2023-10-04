@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지게시판작성</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/noticeWrite.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<form id="notice" th:action="@{/notice/write}" enctype="multipart/form-data" method="post">
+    <div th:replace="~{common/fragments/header :: headerFragment}"></div>
+    <div class="content">
+        <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
+        <div class="content-wrap">
+            <input type="hidden" name="member_id" th:text="${member_id}">
+            <label> 공지구분
+                <select name="notice_category">
+                    <option value="공지">공지</option>
+                    <option value="FAQ">FAQ</option>
+                </select>
+            </label><br/>
+
+            <label for="upView">상단노출<input type="checkbox" id="upView" value="upView"></label>
+            <label for="allView">전체공개<input type="checkbox" id="allView" value="allView"></label><br/>
+
+            <span>제목 <input type="text" name="notice_title"></span><br/>
+
+            <label for="upLoadNow">즉시등록<input type="radio" id="upLoadNow" value="upView"></label>
+            <label for="upDateChoice">게시일자등록<input type="radio" id="upDateChoice" value="allView"></label><br/>
+
+            <textarea rows="10" cols="50" name="notice_content"></textarea><br/>
+
+            <input type="file" multiple ="multiple" name="file" ><br/>
+
+            <input type="submit" value="등록">
+            <a th:href="@{'/notice/list'}">
+                <button type="button">취소</button>
+            </a>
+        </div>
+    </div>
+</form>
+</body>
+</html>

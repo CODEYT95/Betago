@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bnw.beta.domain.operate.edupost.dao.EdupostDAO">
+    <insert id="eduinsert" useGeneratedKeys="true" keyProperty="edupost_no" parameterType="com.bnw.beta.domain.operate.edupost.dto.EdupostDTO">
+        <![CDATA[
+            insert into edupost(edupost_title, edupost_category, edupost_type, edupost_date, edupost_fileadd, edupost_service, member_id, edupost_content)
+            values (#{edupost_title},#{edupost_category},#{edupost_type}, NOW(), #{edupost_fileadd}, #{edupost_service}, #{member_id},#{edupost_content})
+        ]]>
+    </insert>
+
+    <select id="edulist" parameterType="map" resultType="com.bnw.beta.domain.operate.edupost.dto.EdupostDTO">
+        <![CDATA[
+            select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id
+            from edupost
+        ]]>
+    </select>
+
+    <select id="findById" parameterType="long" resultType="com.bnw.beta.domain.operate.edupost.dto.EdupostDTO">
+         <![CDATA[
+        select edupost_no, edupost_title, edupost_category, edupost_type, edupost_fileadd, edupost_content, edupost_service, member_id
+        from edupost
+        where edupost_no = #{value}
+        ]]>
+    </select>
+
+    <update id="update" parameterType="com.bnw.beta.domain.operate.edupost.dto.EdupostDTO">
+        <![CDATA[
+        update edupost
+        set edupost_date = NOW(), edupost_title = #{edupost_title}, edupost_category = #{edupost_category}, edupost_type = #{edupost_type}, edupost_fileadd = #{edupost_fileadd},
+            edupost_content = #{edupost_content}, edupost_service = #{edupost_service}
+        where
+            edupost_no = #{edupost_no}
+        ]]>
+    </update>
+</mapper>

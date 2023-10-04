@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bnw.beta.domain.guide.dao.QuestionDAO">
+
+    <!-- selectAllQuestions 매핑 -->
+    <select id="selectAllQuestions" resultType="com.bnw.beta.domain.guide.dto.QuestionDTO" parameterType="int">
+        SELECT * FROM question
+        ORDER BY qna_regdate DESC
+        LIMIT #{offset}, 10
+    </select>
+
+    <select id="selectQuestionById" resultType="com.bnw.beta.domain.guide.dto.QuestionDTO" parameterType="int">
+        SELECT * FROM question WHERE qna_no = #{id}
+    </select>
+
+</mapper>

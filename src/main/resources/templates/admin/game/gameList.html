@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/operate/game/gameList.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+
+<div class="content">
+    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div class="content-wrap" style="height: auto;">
+        <div class="main-content">
+            <form action="operate/game/gameList" method="get" class="form-container">
+                <div class="gameContent-search">
+                    <div class="searchReq">
+                    <label for="searchReq">검색조건</label>
+                    <select name="searchReq" id="searchReq">
+                        <option value="title">콘텐츠명</option>
+                        <option value="price">구매가격</option>
+                        <option value="period">구독기간</option>
+                        <option value="pay_date">구매일자</option>
+                    </select>
+                    </div>
+                    <div class="subscribe">
+                        <input type="submit" value="구독하기" class="submit-button"/>
+                    </div>
+                </div>
+            </form>
+            <div class = "gameContents-list">
+                <div class="contents-container">
+                    <div class="checkbox" th:each="content : ${contentsList}" th:attr="data-game-no=${content.game_no}">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="selectedGameNos" th:value="${content.game_no}" />
+                            <span class="checkbox-title">
+                                        <div class="card">
+                                            <div class="poster"><img th:src="@{/image/testBADUK2.png}">
+                                                <div class="card-details">
+                                                    <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
+                                                    <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
+                                                    <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
+                                                </div>
+                                                <div class="details">
+                                                    <h5>상품상세설명 : <span th:text="${content.game_content}"></span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>
