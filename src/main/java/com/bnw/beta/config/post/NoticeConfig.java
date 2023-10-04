@@ -1,4 +1,4 @@
-package com.bnw.beta.config.guide.notice;
+package com.bnw.beta.config.post;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
