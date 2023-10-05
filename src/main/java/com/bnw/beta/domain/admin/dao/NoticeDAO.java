@@ -14,6 +14,9 @@ public interface NoticeDAO {
     //게시글 저장
     Long insert(NoticeDTO noticeDTO);
 
+    //2
+    List<NoticeDTO> detail2(Long notice_no);
+
     //게시글 상세정보 조회
     NoticeDTO detail(Long notice_no);
 
