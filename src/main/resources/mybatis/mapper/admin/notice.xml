@@ -13,10 +13,8 @@
         <select id="detail" parameterType="long" resultType="NoticeDTO">
         <![CDATA[
             SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
-                   n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,
-                   fn.file_no, fn.file_name, fn.file_rename, fn.file_path, fn.file_date
+                   n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt
             FROM notice n
-                     LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no
             WHERE n.notice_no = #{notice_no}
             ]]>
         </select>
@@ -60,5 +58,12 @@
         ]]>
     </insert>
 
+    <!--파일 상세조회-->
+    <select id="getNoticeFiles" parameterType="Long" resultType="NoticeFileDTO">
+        <![CDATA[
+        SELECT * FROM filenotice
+        WHERE notice_no = #{notice_no}
+        ]]>
+    </select>
 
 </mapper>

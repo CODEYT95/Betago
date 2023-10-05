@@ -16,10 +16,10 @@ public interface NoticeDAO {
     Long insert(NoticeDTO noticeDTO);
 
     //게시글 상세정보 조회
-    List<NoticeDTO> detail(Long notice_no);
+    NoticeDTO detail(Long notice_no);
 
     //파일 상세정보
-    List<NoticeFileDTO> fileDetail(Long notice_no);
+    List<NoticeFileDTO> getNoticeFiles(Long notice_no);
 
     //게시글 수정
     List<NoticeDTO> update(NoticeDTO noticeDTO);
