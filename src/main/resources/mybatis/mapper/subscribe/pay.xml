@@ -3,14 +3,14 @@
 <mapper namespace="com.bnw.beta.domain.subscribe.dao.payDAO">
 <!--게임컨텐츠결제-->
 
-<select id="selectContentsPay" parameterType="Integer" resultType="com.bnw.beta.domain.subscribe.dto.payDTO">
+<select id="selectContentsPay" parameterType="Integer" resultType="payDTO">
     <![CDATA[
     SELECT game_no, game_title, game_price
     FROM game;
     ]]>
 </select>
 
-<insert id="insertIntoPay" parameterType="com.bnw.beta.domain.subscribe.dto.payDTO">
+<insert id="insertIntoPay" parameterType="payDTO">
     <![CDATA[
      INSERT INTO pay (game_no, pay_name, pay_phone, pay_type, buy_name, pay_date)
     SELECT #{game_no}, member_name AS pay_name, member_phone AS pay_phone, #{pay_type}, #{buy_name}, NOW()

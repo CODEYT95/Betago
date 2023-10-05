@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="edu_sidebarFragment">
+    <div class="side-bar active">
+        <div class="menu">
+            <div class="item">
+                <a href="/educator/group/addList">학습그룹 등록</a>
+            </div>
+            <div class="item">
+                <a href="/educator/group/list">학습그룹 조회</a>
+            </div>
+            <div class="item">
+                <a href="#">학습그룹 가입 승인</a>
+            </div>
+            <div class="item">
+                <a href="/educator/saveTaskForm" class="sub-btn-active" style="color: #FFFFFF;">숙제 생성</a>
+            </div>
+            <div class="item">
+                <a href="#">숙제 배포</a>
+            </div>
+            <div class="item">
+                <a href="#">숙제 진도 조회</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

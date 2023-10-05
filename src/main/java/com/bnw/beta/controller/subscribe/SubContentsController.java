@@ -38,7 +38,7 @@ public class SubContentsController {
 
         System.out.println(contentsList);
         model.addAttribute("contentsList", contentsList);
-        return "/subscribe/subcontents";
+        return "subscribe/subcontents";
     }
 
     @PostMapping("/deleteContents")

@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>사이트 제목</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/pay_sidebar.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/subContents.css}">
     <script type="text/javascript" th:src="@{/js/subscribe/subContents.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
@@ -15,7 +14,7 @@
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 
 <div class="content">
-    <div th:replace="~{common/fragments/pay_sidebar :: pay_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/pay_sidebar :: pay_sidebarFragment}"></div>
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
             <form action="/list" method="get" class="form-container">

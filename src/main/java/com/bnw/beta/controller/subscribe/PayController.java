@@ -22,10 +22,10 @@ public class PayController {
         System.out.println("리스트 컨트롤러");
 
         model.addAttribute("mypaylist", mypaylist);
-        return "/subscribe/pay";
+        return "subscribe/pay";
     }
 
-    @PostMapping("/submit-payment")
+    @PostMapping("/payment")
     public String submitPay(payDTO payDTO, String member_id) {
         System.out.println("결제컨트롤러");
         int result = payService.insertIntoPay(payDTO);

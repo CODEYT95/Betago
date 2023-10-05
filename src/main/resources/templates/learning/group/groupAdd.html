@@ -170,7 +170,7 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content" th:each="groupInfo : ${gameGroupInfo}">
-    <div th:replace="~{common/sidebar/educator_sidebar :: educator_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
         <div class="content-wrap">
             <form th:action="@{/educator/group/addInsert}" method="post">
             <input type="hidden" name="game_no" th:value="${groupInfo.game_no}">

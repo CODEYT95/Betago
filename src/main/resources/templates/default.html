@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <title>사이트 제목</title>
     <!--공통으로 쓰이는 CSS 및  -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
     <div th:replace="~{common/fragments/header :: headerFragment}"></div>
     <div class="content">
-        <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+        <div th:replace="~{common/fragments/sidebar :: default_sidebarFragment}"></div>
         <div class="content-wrap">
 
             <!--내용들어가는곳.-->

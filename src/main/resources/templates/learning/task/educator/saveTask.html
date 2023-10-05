@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>둑며들다|숙제 생성</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/educator/task/saveTask.css}">
-  <script type="text/javascript" th:src="@{/js/educator/task/saveTask.js}"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/educator/saveTask.css}">
+  <script type="text/javascript" th:src="@{/js/learning/task/educator/saveTask.js}"></script>
   <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-  <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+  <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
   <div class="content-wrap">
     <form th:action="@{/educator/saveTask}" method="post" class="task-form">
       <div class="saveTask-wrap">

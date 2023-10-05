@@ -2,27 +2,27 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.admin.dao.NoticeDAO">
     <!--게시글 저장-->
-    <insert id="save" parameterType="com.bnw.beta.domain.admin.dto.NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
+    <insert id="save" parameterType="NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
         <![CDATA[
             INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt)
             VALUES (#{notice_title}, #{notice_content}, #{notice_category}, now(), "Y", #{member_id}, 0);
         ]]>
     </insert>
 
-    <!--게시글 상세조회-->
-    <select id="findById" parameterType="long" resultType="noticeResultMap">
-        <![CDATA[
-        SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
-               n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,
-               fn.file_no, fn.file_name, fn.file_rename, fn.file_path, fn.file_date
-        FROM notice n
-                 LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no
-        WHERE n.notice_no = #{noticeNo}
-        ]]>
-    </select>
+<!--    &lt;!&ndash;게시글 상세조회&ndash;&gt;-->
+<!--    <select id="findById" parameterType="long" resultType="noticeResultMap">-->
+<!--        <![CDATA[-->
+<!--        SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,-->
+<!--               n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,-->
+<!--               fn.file_no, fn.file_name, fn.file_rename, fn.file_path, fn.file_date-->
+<!--        FROM notice n-->
+<!--                 LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no-->
+<!--        WHERE n.notice_no = #{noticeNo}-->
+<!--        ]]>-->
+<!--    </select>-->
 
     <!--게시글 수정-->
-    <update id="update" parameterType="com.bnw.beta.domain.admin.dto.NoticeDTO">
+    <update id="update" parameterType="NoticeDTO">
         <![CDATA[
             UPDATE notice
             SET
@@ -47,7 +47,7 @@
     </delete>
 
     <!--공지게시판 리스트조회-->
-    <select id="findAll" resultType="com.bnw.beta.domain.admin.dto.NoticeDTO">
+    <select id="findAll" resultType="NoticeDTO">
         <![CDATA[
             SELECT notice_no, notice_title, notice_category, notice_regdate, member_id, view_cnt,notice_isshow
             FROM
@@ -60,7 +60,7 @@
     </select>
 
     <!-- 공지글 파일 등록 -->
-    <insert id="fileUpload" parameterType="com.bnw.beta.domain.admin.dto.NoticeFileDTO">
+    <insert id="fileUpload" parameterType="NoticeFileDTO">
         <![CDATA[
         INSERT INTO filenotice (notice_no, file_name, file_rename, file_path, file_date)
         VALUES (#{notice_no}, #{file_name}, #{file_rename}, #{file_path}, #{file_date})
@@ -68,7 +68,7 @@
     </insert>
 
     <!-- member&File join..? -->
-    <resultMap id="noticeResultMap" type="com.bnw.beta.domain.admin.dto.NoticeDTO">
+    <resultMap id="noticeResultMap" type="NoticeDTO">
         <id property="noticeNo" column="notice_no"/>
         <result property="noticeTitle" column="notice_title"/>
         <result property="noticeContent" column="notice_content"/>
@@ -78,7 +78,7 @@
         <result property="memberId" column="member_id"/>
         <result property="viewCnt" column="view_cnt"/>
 
-        <collection property="noticeFiles" ofType="com.bnw.beta.domain.admin.dto.NoticeFileDTO">
+        <collection property="noticeFiles" ofType="NoticeFileDTO">
             <id property="fileNo" column="file_no"/>
             <result property="fileName" column="file_name"/>
             <result property="fileReName" column="file_rename"/>

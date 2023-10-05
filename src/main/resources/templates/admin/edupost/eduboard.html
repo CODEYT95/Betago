@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>학습자료등록</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/edupost/eduboard.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/edupost/eduboard.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
     <div class="content-wrap">
         <h2>학습자료 등록창</h2>
         <form id="saveForm" th:action="@{/edupost/insert}" method="post" autocomplete="off" enctype="multipart/form-data">

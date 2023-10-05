@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.subscribe.dao.subContentsDAO">
     <!--나의 구독상품 조회-->
-    <select id="selectContents" parameterType="com.bnw.beta.domain.subscribe.dto.subContentsDTO" resultType="com.bnw.beta.domain.subscribe.dto.subContentsDTO">
+    <select id="selectContents" parameterType="subContentsDTO" resultType="subContentsDTO">
         <![CDATA[
         SELECT
         g.game_no, p.pay_no, g.game_title, p.pay_date, g.game_price, g.game_startdate AS game_startdate, g.game_enddate AS game_enddate, s.group_name, p.member_id

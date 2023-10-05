@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>사이트 제목</title>
     <!--공통으로 쓰이는 CSS 및  -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/operate/game/gameList.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameList.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 
@@ -13,7 +12,7 @@
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 
 <div class="content">
-    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
             <form action="operate/game/gameList" method="get" class="form-container">

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>사이트 제목</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/pay_sidebar.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/pay.css}">
     <script type="text/javascript" th:src="@{/js/subscribe/pay.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
@@ -12,11 +11,11 @@
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 
 <div class="content">
-    <div th:replace="~{common/fragments/pay_sidebar :: pay_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/pay_sidebar :: pay_sidebarFragment}"></div>
 
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
-            <form th:action="@{/submit-payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
+            <form th:action="@{/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
                 <div class="pay-box">
                     <div class="pay-titlebox">
                         <div class="pay-title">결제방법 선택 안내</div>

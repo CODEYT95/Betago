@@ -4,18 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- 공통으로 쓰이는 CSS 및 JS 파일 -->
-    <script src="/js.common/header.js"></script>
-    <script src="/js.common/sidebar.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/common/footer.css">
-    <link rel="stylesheet" type="text/css" href="../css/common/header.css">
-    <link rel="stylesheet" type="text/css" href="../css/common/edu_sidebar.css">
-    <link rel="stylesheet" type="text/css" href="../css/operate/game/gameSales.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameSales.css}">
     <link th:replace="~{common/fragments/config :: configFragment}"/>
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="sales">
             <div class="salesContent" style="margin-top: 88px; padding-bottom: 55px">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bnw.beta.domain.educator.group.dao.GroupDAO">
+<mapper namespace="com.bnw.beta.domain.learning.dao.GroupDAO">
 
     <!-- 그룹등록 가능한 게임콘텐츠 Cnt -->
     <select id="groupAddListCnt" parameterType="String" resultType="Integer">

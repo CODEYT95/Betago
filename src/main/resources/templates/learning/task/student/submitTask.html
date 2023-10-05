@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>둑며들다|진도 등록</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/student/task/submitTask.css}">
-    <script type="text/javascript" th:src="@{/js/student/task/submitTask.js}"></script>
+    <script type="text/javascript" th:src="@{/js/learning/task/submitTask.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="main-content">
             <div class="mycontents-list">

@@ -22,8 +22,9 @@ public class GameController {
 
     @GetMapping("/insert")
     public String insertGame(){
-        return "operate/game/gameInsert";
+        return "admin/game/gameInsert";
     }
+
     @PostMapping("/gameInsert")
     public String insertGame(@ModelAttribute GameDTO dto, HttpServletRequest request) {
         String member_id = "dumy";

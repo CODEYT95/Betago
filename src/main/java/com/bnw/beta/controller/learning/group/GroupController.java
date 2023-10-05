@@ -54,7 +54,7 @@ public class  GroupController{
     public String addGroup(@RequestParam("game_no") int game_no, Model model){
 
         model.addAttribute("gameGroupInfo", groupService.gameGroupInfo(game_no));
-        return "/educator/group/groupAdd";
+        return "/learning/group/groupAdd";
     }
 
     @PostMapping("/addInsert")
@@ -68,7 +68,7 @@ public class  GroupController{
 
         System.out.println(sdate);
         int result = groupService.insertGroup(game_no,id, groupName, count, sdate, edate);
-        return "/educator/group/groupAddList";
+        return "/learning/group/groupAddList";
     }
 
     @GetMapping("/list")
@@ -80,7 +80,7 @@ public class  GroupController{
 
         model.addAttribute("groupName", groupService.selectGroupName(member_id));
         model.addAttribute("groupList", groupService.groupListSelect(member_id, group_name));
-        return "/educator/group/groupList";
+        return "/learning/group/groupList";
     }
 }
 

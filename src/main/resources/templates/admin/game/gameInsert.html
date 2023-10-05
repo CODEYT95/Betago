@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <title>사이트 제목</title>
     <!--공통으로 쓰이는 CSS 및  -->
-    <script src="/js.common/header.js"></script>
-    <script src="/js.common/sidebar.js"></script>
-    <script src="/js.operate/game/gameContents.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/common/footer.css">
-    <link rel="stylesheet" type="text/css" href="../css/common/header.css">
-    <link rel="stylesheet" type="text/css" href="../css/common/edu_sidebar.css">
-    <link rel="stylesheet" type="text/css" href="../css/operate/game/gameContents.css">
+    <script type="text/javascript" th:src="@{/js/admin/game/gameContents.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameContents.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <style>
@@ -19,10 +14,10 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/sidebar :: sidebarFragment}"></div>
+    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="container">
-            <form name="gameContent" th:action="@{/game/gameInsert}" method="post">
+            <form name="gameContent" th:action="@{operate/game/gameInsert}" method="post">
                 <div class="form-group">
                     <label for="game_title">게임콘텐츠명</label>
                     <input type="text" name="game_title" id="game_title" size="50" style="width: 750px;">

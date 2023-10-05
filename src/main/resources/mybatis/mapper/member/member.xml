@@ -3,7 +3,7 @@
 <mapper namespace="com.bnw.beta.domain.member.dao.MemberDAO">
 
     <!--약관동의-->
-    <insert id="memberAgree" parameterType="com.bnw.beta.domain.member.dto.MemberDTO">
+    <insert id="memberAgree" parameterType="MemberDTO">
         <![CDATA[
         INSERT INTO termsrecord(terms_record, member_id)
         VALUES (#{terms_record}, #{member_id})
@@ -11,7 +11,7 @@
     </insert>
 
     <!--회원가입-->
-    <insert id="memberJoin" parameterType="com.bnw.beta.domain.member.dto.MemberDTO">
+    <insert id="memberJoin" parameterType="MemberDTO">
         <![CDATA[
         INSERT INTO member (member_id, member_pw, member_name, member_birth, member_email, member_gender, member_phone, member_tell, member_agree_m, member_agree_p, member_isshow, role)
         VALUES (#{member_id}, #{member_pw}, #{member_name}, #{member_birth}, #{member_email}, #{member_gender}, #{member_phone}, #{member_tell}, #{member_agreeM}, #{member_agreeP}, 'Y',#{role})
