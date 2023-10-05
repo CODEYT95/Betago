@@ -27,5 +27,23 @@ function isAnyCheckboxChecked() {
     });
     // 초기 로드 시 한 번 확인
     updateSubscribeButtonState();
+    document.addEventListener('DOMContentLoaded', function() {
+        // 선택한 체크박스의 값을 저장할 배열
+        const selectedGameNos = [];
 
-
+        // 체크박스 변경 시 배열에 추가 또는 제거
+        const checkboxes = document.querySelectorAll('.checkbox-input');
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                const gameNo = checkbox.getAttribute('data-game-no');
+                if (checkbox.checked) {
+                    selectedGameNos.push(Number(gameNo));
+                } else {
+                    const index = selectedGameNos.indexOf(Number(gameNo));
+                    if (index !== -1) {
+                        selectedGameNos.splice(index, 1);
+                    }
+                }
+            });
+        });
+    });

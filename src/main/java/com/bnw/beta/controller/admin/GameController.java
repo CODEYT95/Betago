@@ -42,7 +42,7 @@ public class GameController {
         return "admin/game/gameList";
     }
     //게임콘텐츠 제목 검색
-    @GetMapping("admin/game/searchByTitle")
+    @GetMapping("game/searchByTitle")
     @ResponseBody
     public List<GameDTO> searchByTitle(@RequestParam("game_title") String game_title) {
         List<GameDTO> gameList = gameService.searchByTitle(game_title);
