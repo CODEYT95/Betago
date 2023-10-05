@@ -10,7 +10,7 @@
     </insert>
 
     <!--게시글 상세조회 -->
-        <select id="detail" parameterType="long" resultType="NoticeDTO">
+        <select id="detail" parameterType="Long" resultType="NoticeDTO">
         <![CDATA[
             SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
                    n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,

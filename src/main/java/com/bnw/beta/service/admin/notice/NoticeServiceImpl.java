@@ -59,15 +59,13 @@ public class NoticeServiceImpl implements NoticeService {
 
     //공지게시판 상세조회
     @Override
-    public NoticeDTO detail(Long notice_no) {
-        List<NoticeDTO> noticeDTO =  noticeDAO.detail(notice_no);
-        List<NoticeFileDTO> fileList = new ArrayList<>(); // NoticeFile을 담을 리스트 선언
-        for (NoticeFileDTO noticeFile : noticeDTO.get {
-            fileList.add(noticeFile); // NoticeFile을 리스트에 추가
+    public void detail(Long notice_no, NoticeDTO noticeDTO) {
+        noticeDAO.detail(notice_no, noticeDTO);
+        List<NoticeFileDTO> fileList = new ArrayList<>();
+        for (NoticeFileDTO noticeFile : noticeDTO.getNoticeFiles()) {
+            fileList.add(noticeFile);
         }
-
-
-        return noticeDTO;
+        noticeDTO.setNoticeFiles(fileList);
     }
 //
 //    //공지게시판 수정
