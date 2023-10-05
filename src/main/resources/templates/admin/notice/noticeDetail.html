@@ -20,8 +20,9 @@
 
             <textarea rows="10" cols="50" name="notice_content" th:value="${noticeDTO.getNotice_content()}"></textarea><br/>
             <input th:value="${noticeDTO.getNotice_regdate()}">
-            <div th:each="noticefile, loop : ${noticeDTO.getNoticeFiles()}" >
-                <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300">
+            <div class="here"></div>
+            <div th:each="noticeDTO : ${noticeDTO}" >
+                <img th:src="@{|/image/notice/${noticeDTO.getFile_rename()}|}" width="300" height="300">
             </div><br/>
 
             <a th:href="@{'/notice/update/' + ${noticeDTO.getNotice_no}}">

@@ -60,6 +60,15 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public NoticeDTO detail(Long notice_no){
         NoticeDTO noticeDTO = noticeDAO.detail(notice_no);
+        System.out.println("여기");
+        System.out.println("서비스DTO="+noticeDTO);
+        return noticeDTO;
+    }
+
+    @Override
+    public List<NoticeDTO> detail2(Long notice_no){
+        List<NoticeDTO> noticeDTO = noticeDAO.detail2(notice_no);
+        System.out.println("여기");
         System.out.println("서비스DTO="+noticeDTO);
         return noticeDTO;
     }
