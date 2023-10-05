@@ -18,9 +18,6 @@ public interface NoticeService {
     //공지게시판 상세조회
     NoticeDTO detail(Long notice_no);
 
-    //공지게시판 상세조회
-    List<NoticeDTO> detail2(Long notice_no);
-
-    //공지게시판 수정
-    void update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] newFile);
+//    //공지게시판 수정
+//    NoticeDTO update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] newFile);
 }

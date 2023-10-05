@@ -56,30 +56,26 @@ public class NoticeServiceImpl implements NoticeService {
             }
         }
     }
+
     //공지게시판 상세조회
     @Override
-    public NoticeDTO detail(Long notice_no){
-        NoticeDTO noticeDTO = noticeDAO.detail(notice_no);
-        System.out.println("여기");
-        System.out.println("서비스DTO="+noticeDTO);
+    public NoticeDTO detail(Long notice_no) {
+        List<NoticeDTO> noticeDTO =  noticeDAO.detail(notice_no);
+        List<NoticeFileDTO> fileList = new ArrayList<>(); // NoticeFile을 담을 리스트 선언
+        for (NoticeFileDTO noticeFile : noticeDTO.get {
+            fileList.add(noticeFile); // NoticeFile을 리스트에 추가
+        }
+
+
         return noticeDTO;
     }
-
-    @Override
-    public List<NoticeDTO> detail2(Long notice_no){
-        List<NoticeDTO> noticeDTO = noticeDAO.detail2(notice_no);
-        System.out.println("여기");
-        System.out.println("서비스DTO="+noticeDTO);
-        return noticeDTO;
-    }
-
-    //공지게시판 수정
-    @Override
-    public void update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] newFile){
-        noticeDTO = noticeDAO.detail(notice_no);
-        noticeDAO.update(noticeDTO);
-
-
-    }
+//
+//    //공지게시판 수정
+//    @Override
+//    public NoticeDTO update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] newFile) {
+//        noticeDTO = noticeDAO.detail(notice_no);
+//        noticeDAO.update((NoticeDTO) noticeDTO);
+//        return noticeDTO;
+//    }
 }
 

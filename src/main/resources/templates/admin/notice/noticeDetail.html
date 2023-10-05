@@ -9,20 +9,19 @@
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
     <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
-    <div class="content-wrap">
-        <form enctype="multipart/form-data">
-            <input type="hidden" name="member_id" th:value="${member_id}">
+    <div class="content-wrap" >
+        <form enctype="multipart/form-data" method="post">
             <label> 공지구분
-                <input th:value="${noticeDTO.getNotice_category()}">
+                <input th:value="${noticeDTO.notice_category}">
             </label><br/>
+            <input type="text" name="member_id" th:value="${noticeDTO.member_id}">
+            <span>제목 <input type="text" name="notice_title" th:value="${noticeDTO.notice_title}"></span><br/>
 
-            <span>제목 <input type="text" name="notice_title" th:value="${noticeDTO.getNotice_title()}"></span><br/>
-
-            <textarea rows="10" cols="50" name="notice_content" th:value="${noticeDTO.getNotice_content()}"></textarea><br/>
-            <input th:value="${noticeDTO.getNotice_regdate()}">
+            <textarea rows="10" cols="50" name="notice_content" th:value="${noticeDTO.notice_content}"></textarea><br/>
+            <input th:value="${noticeDTO.notice_regdate}">
             <div class="here"></div>
-            <div th:each="noticeDTO : ${noticeDTO}" >
-                <img th:src="@{|/image/notice/${noticeDTO.getFile_rename()}|}" width="300" height="300">
+            <div th:each="noticefile, loop : ${noticeDTO.getNoticeFiles()}">
+                <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300">
             </div><br/>
 
             <a th:href="@{'/notice/update/' + ${noticeDTO.getNotice_no}}">

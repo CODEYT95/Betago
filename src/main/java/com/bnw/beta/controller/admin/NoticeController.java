@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -52,15 +53,13 @@ public class NoticeController {
     //공지게시판 상세내용
     @GetMapping("/detail/{notice_no}")
     public String noticeDetail(@PathVariable("notice_no") Long notice_no, Model model){
-        System.out.println("컨트롤러");
-        List<NoticeDTO> noticeDTO = noticeService.detail2(notice_no);
-
+        NoticeDTO noticeDTO = noticeService.detail(notice_no);
         model.addAttribute("noticeDTO",noticeDTO);
         System.out.println("컨트롤DTO="+noticeDTO);
         return "admin/notice/noticeDetail";
     }
 
-    //공지게시판 수정폼
+/*    //공지게시판 수정폼
     @GetMapping("/edit/{notice_no}")
     public String edit(@PathVariable("notice_no") Long notice_no, Model model){
         NoticeDTO noticeDTO = noticeService.detail(notice_no);
@@ -71,8 +70,8 @@ public class NoticeController {
     //공지게시판 수정처리
     @PostMapping("/update")
     public String update(Long notice_no,@ModelAttribute NoticeDTO noticeDTO, @RequestParam("file") MultipartFile[] newFile){
-        noticeService.update(notice_no,noticeDTO,newFile);
+        noticeService.update(notice_no, noticeDTO,newFile);
         return "redirect:/list";
     }
-
+*/
 }
