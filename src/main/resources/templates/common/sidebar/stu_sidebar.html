@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="stu_sidebarFragment">
+    <div class="side-bar active">
+        <div class="menu">
+            <div class="item">
+                <a href="#">학습그룹 가입 신청</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/student/taskList/{member_no}(member_no=${member_no})}">숙제 제출</a>
+            </div>
+            <div class="item">
+                <a href="#">숙제 제출 목록</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

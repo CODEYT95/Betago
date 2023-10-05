@@ -1,15 +1,20 @@
 @charset "UTF-8";
 
 #footer {
-  position: relative;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid #e5e5e5;
-  background: #fff;
-  font-family: NanumSquareWebFont-R, "NanumSquareWebFont", "나눔고딕", NanumGothic, "맑은 고딕", Malgun Gothic, "Apple SD Gothic Neo", "돋움", dotum, Helvetica, arial, sans-serif;
-  z-index: 10;
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 1150px;
+    width: 100%;
+    border-top: 1px solid #e5e5e5;
+    background: #fff;
+    font-family: NanumSquareWebFont-R, "NanumSquareWebFont", "나눔고딕", NanumGothic, "맑은 고딕", Malgun Gothic, "Apple SD Gothic Neo", "돋움", dotum, Helvetica, arial, sans-serif;
+    z-index: 10;
+}
+
+.foot {
+    width: 100%
 }
 
 .f_layout {
@@ -103,4 +108,10 @@
   font-family: Helvetica, arial, "Apple SD Gothic Neo", sans-serif;
   color: #666;
   line-height: 14px;
+}
+
+@media (max-width: 800px) {
+  #footer {
+       width: 100%;
+  }
 }
