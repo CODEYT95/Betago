@@ -5,8 +5,6 @@
     <title>학습 그룹 조회</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
-    <script type="text/javascript" th:src="@{/js/common/educator_sidebar.js}"></script>
 </head>
 <style>
     .content_header{
@@ -117,7 +115,7 @@
     }
 }
 
-.search-btn,.join-btn{
+.search-btn,.modify-btn,.delete-btn{
     height: 40px;
     background: #fff;
     padding: 20px;
@@ -221,11 +219,11 @@ background: none;
   font-family: "FontAwesome";
   color: rgba(0, 0, 0, 0.2); }
 
-.checkbox-primary {
+.checkbox-wrap {
   color: #40bfc1; }
-  .checkbox-primary input:checked ~ .checkmark:after {
+  .checkbox-wrap input:checked ~ .checkmark:after {
     color: #40bfc1; }
-.alert:hover {
+.tbody-tr:hover {
 background: #339fff;
 }
     .detail-search{
@@ -237,6 +235,57 @@ background: #339fff;
      font-size: 27px;
     }
 </style>
+<script>
+    //게임 콘텐츠 목록 리스트
+    $(document).ready(function() {
+        const groupMenu = document.querySelector(".select-menu-group");
+        const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
+        const groupOptions = groupMenu.querySelectorAll(".option");
+        const groupSBtnText = groupMenu.querySelector(".sBtn-text");
+
+        selectGroupBtn.addEventListener("click", () => groupMenu.classList.toggle("active"));
+        groupOptions.forEach(option => {
+            option.addEventListener("click", () => {
+                let selectedOption = option.querySelector(".option-text").innerText;
+                groupSBtnText.innerText = selectedOption;
+                groupMenu.classList.remove("active");
+            });
+        });
+    });
+    $(document).ready(function() {
+    $(".delete-btn").click(function() {
+        var selectCheck = []; // 선택된 체크박스의 data-check-no 값들을 저장할 배열
+        console.log("클릭됨");
+        // 선택된 체크박스를 찾아서 data-check-no 값을 배열에 추가
+        $(".checkbox:checked").each(function() {
+            var checkNo = $(this).attr("data-check-no");
+            selectCheck.push(checkNo);
+        });
+            console.log(selectCheck);
+        // AJAX 요청 보내기
+        $.ajax({
+            url: "/educator/group/delete",
+            type: "POST",
+            data: { group_no: selectCheck },
+            dataType: "text",
+            traditional: true,
+            success: function(response) {
+                if(response==="success"){
+                console.log("삭제 요청이 성공적으로 처리되었습니다.");
+                }else{
+                console.log("삭제 실패");
+                }
+
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error("삭제 요청 중 오류가 발생했습니다.");
+                console.error(error);
+            }
+        });
+    });
+});
+</script>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
@@ -259,14 +308,14 @@ background: #339fff;
                 <button class="search-btn">조회</button>
             </div>
             <div class="edit-delete">
-                <button type="button" class="join-btn" value="학습 그룹 상세 입력">수정</button>
-                <button type="button" class="join-btn" value="학습 그룹 상세 입력">삭제</button>
+                <button type="button" class="modify-btn" value="학습 그룹 상세 입력">수정</button>
+                <button type="button" class="delete-btn" value="학습 그룹 상세 입력">삭제</button>
             </div>
         </div>
         <section class="main-content">
             <div class="container" >
                 <div class="table-wrap">
-                    <table class="table table-responsive-xl">
+                    <table class="table">
                         <thead>
                         <tr>
                             <th>&nbsp;</th>
@@ -279,15 +328,15 @@ background: #339fff;
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="alert" role="alert" th:each="groupList : ${groupList}">
+                        <tr class="tbody-tr" th:each="groupList : ${groupList}">
                             <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox" th:attr="data-check-no=${groupList.group_no}">
+                                <label class="checkbox-wrap">
+                                    <input class="checkbox" type="checkbox" th:attr="data-check-no=${groupList.group_no}">
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td class="d-flex align-items-center">
-                                <div class="pl-3 email">
+                            <td class="">
+                                <div class="">
                                     <span th:text="${groupList.group_name}"></span>
                                 </div>
                             </td>
@@ -298,7 +347,7 @@ background: #339fff;
                                 <span class="active" th:text="${groupList.group_cnt}-${groupList.group_nowcnt}"></span>
                             </td>
                             <td>
-                                <span th:text="${groupList.group_startdate}"></span>
+                                <span th:text="${groupList.group_enddate}"></span>
                             </td>
                             <td>
                                 <span class="active" th:text="${groupList.group_nowcnt}"></span>

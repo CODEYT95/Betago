@@ -71,8 +71,9 @@ public class GroupServiceImpl implements GroupService {
         return groupDAO.insertGroup(groupDTO);
     }
 
-    @Override
+
     //학습 그룹 조회 목록 불러오기
+    @Override
     public List<GroupDTO> groupListSelect(String member_id, String group_name){
 
         GroupDTO groupDTO = new GroupDTO();
@@ -82,7 +83,25 @@ public class GroupServiceImpl implements GroupService {
         return groupDAO.groupListSelect(groupDTO);
     }
 
-    @Override
+
     //학습 그룹 name 조회
+    @Override
     public List<GroupDTO> selectGroupName(String member_id){return groupDAO.selectGroupName(member_id);}
+
+    //학습 그룹 삭제
+    @Override
+    public String deleteGroup(List<Integer> group_no){
+        System.out.println("서비스 진입 성공");
+        int result = groupDAO.deleteGroup(group_no);
+        System.out.println("result값"+result);
+        if(result == 0){
+
+            return "fail";
+
+        }else{
+
+            return "success";
+
+        }
+    }
 }
