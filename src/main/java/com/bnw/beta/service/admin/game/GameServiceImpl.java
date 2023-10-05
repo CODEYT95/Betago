@@ -3,6 +3,7 @@ package com.bnw.beta.service.admin.game;
 import com.bnw.beta.domain.admin.dao.GameDAO;
 import com.bnw.beta.domain.admin.dto.GameDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -36,5 +37,9 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<GameDTO> selectMonthlySales(Date startsearch, Date endsearch)
     { return gameDAO.selectMonthlySales(startsearch, endsearch);}
+
+    //게임콘텐츠 제목검색
+    public List<GameDTO> searchByTitle(@Param("game_title") String game_title)
+    {return gameDAO.searchByTitle(game_title);}
 
 }
