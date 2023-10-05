@@ -40,18 +40,18 @@ public class QuestionController {
         return "guide/question/question_detail"; //templates폴더하위.html
     }
 
-  /*  //질문글 등록폼
+    //질문글 등록폼
      @PreAuthorize("isAuthenticated()")
      @GetMapping("/add")
      public String add(QuestionForm questionForm){
-        return "question_form";
+        return "guide/question/question_form";
      }
 
-*/
+
 
 
 //질문글작성
- /*
+
 @PreAuthorize("isAuthenticated()") //로그인인증->로그인이 필요한 기능
 @PostMapping("/add")
 public String questionAdd(@Valid QuestionForm questionForm, BindingResult bindingResult,
@@ -69,7 +69,7 @@ public String questionAdd(@Valid QuestionForm questionForm, BindingResult bindin
     //4.View
     return "redirect:/question/list";//질문목록조회요청을 통한_ 질문목록페이지로 이동
 }
-*/
+
 
 
 
