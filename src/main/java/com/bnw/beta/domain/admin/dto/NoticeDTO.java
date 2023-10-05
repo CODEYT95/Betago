@@ -16,4 +16,11 @@ public class NoticeDTO {
     private String member_id;
     private Long view_cnt;
     private List<NoticeFileDTO> noticeFiles;
+
+    //파일 컬럼 변수
+    private int file_no;
+    private String file_name;
+    private String file_rename;
+    private String file_path;
+    private Date file_date;
 }

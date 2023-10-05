@@ -8,12 +8,12 @@ flex-direction: column;
 }
 
 .form-container{
-display: flex;
-justify-content: center;
-align-items: center;
-height: 40px;
-width: 100%;
-margin-top:10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    margin-top:10px;
 }
 
 .mycontents-date{

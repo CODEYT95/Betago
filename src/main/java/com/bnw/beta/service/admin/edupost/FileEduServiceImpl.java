@@ -30,6 +30,7 @@ public class FileEduServiceImpl implements FileEduService {
     public List<FilepostDTO> findByNo(final Long edupost_no) {
         return filepostDao.findByNo(edupost_no);
     }
+    //파일 리스트 조회
     @Override
     public List<FilepostDTO> findById(final List<Long> ids) {
         if (CollectionUtils.isEmpty(ids)) {
@@ -37,14 +38,19 @@ public class FileEduServiceImpl implements FileEduService {
         }
         return filepostDao.findById(ids);
     }
+
     @Override
-    @Transactional
-    public void deleteFileByNos(final List<Long> nos) {
-        if(CollectionUtils.isEmpty(nos)) {
-            return;
+    public String deleteFileByNos(int file_no) {
+
+        int result = filepostDao.deleteByNo(file_no);
+
+        if(result == 1){
+            return "success";
+        }else{
+            return "fail";
         }
-        filepostDao.deleteByNo(nos);
     }
+
 
 
 }

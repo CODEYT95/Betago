@@ -2,24 +2,36 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.admin.dao.NoticeDAO">
     <!--게시글 저장-->
-    <insert id="save" parameterType="NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
+    <insert id="insert" parameterType="NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
         <![CDATA[
             INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt)
             VALUES (#{notice_title}, #{notice_content}, #{notice_category}, now(), "Y", #{member_id}, 0);
         ]]>
     </insert>
 
-<!--    &lt;!&ndash;게시글 상세조회&ndash;&gt;-->
-<!--    <select id="findById" parameterType="long" resultType="noticeResultMap">-->
-<!--        <![CDATA[-->
-<!--        SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,-->
-<!--               n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,-->
-<!--               fn.file_no, fn.file_name, fn.file_rename, fn.file_path, fn.file_date-->
-<!--        FROM notice n-->
-<!--                 LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no-->
-<!--        WHERE n.notice_no = #{noticeNo}-->
-<!--        ]]>-->
-<!--    </select>-->
+    <!--게시글 상세조회-->
+    <select id="detail2" parameterType="long" resultType="NoticeDTO">
+        <![CDATA[
+        SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
+               n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,
+               fn.file_no as file_no, fn.file_name as file_name, fn.file_rename as file_rename, fn.file_path as file_path, fn.file_date as file_date
+        FROM notice n
+                 LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no
+        WHERE n.notice_no = #{notice_No};
+        ]]>
+    </select>
+
+    <!--게시글 상세조회-->
+    <select id="detail" parameterType="long" resultType="NoticeDTO">
+        <![CDATA[
+        SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
+               n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,
+               fn.file_no as file_no, fn.file_name as file_name, fn.file_rename as file_rename, fn.file_path as file_path, fn.file_date as file_date
+        FROM notice n
+                 LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no
+        WHERE n.notice_no = #{notice_No};
+        ]]>
+    </select>
 
     <!--게시글 수정-->
     <update id="update" parameterType="NoticeDTO">
@@ -47,7 +59,7 @@
     </delete>
 
     <!--공지게시판 리스트조회-->
-    <select id="findAll" resultType="NoticeDTO">
+    <select id="noticeList" resultType="NoticeDTO">
         <![CDATA[
             SELECT notice_no, notice_title, notice_category, notice_regdate, member_id, view_cnt,notice_isshow
             FROM
@@ -67,7 +79,7 @@
         ]]>
     </insert>
 
-    <!-- member&File join..? -->
+    <!-- member&File join..?
     <resultMap id="noticeResultMap" type="NoticeDTO">
         <id property="noticeNo" column="notice_no"/>
         <result property="noticeTitle" column="notice_title"/>
@@ -86,5 +98,5 @@
             <result property="fileDate" column="file_date"/>
         </collection>
     </resultMap>
-
+-->
 </mapper>
