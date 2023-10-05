@@ -1,6 +1,7 @@
 package com.bnw.beta.service.admin.notice;
 
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
+import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

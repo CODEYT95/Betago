@@ -53,8 +53,7 @@ public class NoticeController {
     //공지게시판 상세내용
     @GetMapping("/detail/{notice_no}")
     public String noticeDetail(@PathVariable("notice_no") Long notice_no, Model model){
-        NoticeDTO noticeDTO = new NoticeDTO();
-        noticeService.detail(notice_no, noticeDTO);
+        NoticeDTO noticeDTO = (NoticeDTO) noticeService.detail(notice_no);
         model.addAttribute("noticeDTO",noticeDTO);
         System.out.println("컨트롤DTO="+noticeDTO);
         return "admin/notice/noticeDetail";

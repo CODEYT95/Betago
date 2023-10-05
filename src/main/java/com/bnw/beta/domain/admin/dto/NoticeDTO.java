@@ -19,10 +19,4 @@ public class NoticeDTO {
 
     private List<NoticeFileDTO> noticeFiles;
 
-  //파일 컬럼 변수
-    private Long file_no;
-    private String file_name;
-    private String file_rename;
-    private String file_path;
-    private Date file_date;
 }
