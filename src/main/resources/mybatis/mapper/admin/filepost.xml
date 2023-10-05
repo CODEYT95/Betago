@@ -36,13 +36,12 @@
             filepost_no
     </select>
 
-    <delete id="deleteByNo" parameterType="list">
+    <delete id="deleteByNo" parameterType="Integer">
         DELETE
         FROM filepost
         where
-            filepost_no IN
-        <foreach item="filepost_no" collection="list" open="(" separator="," close=")">
-            #{filepost_no}
-        </foreach>
+            filepost_no =
+            #{filepost_no};
+
     </delete>
 </mapper>
