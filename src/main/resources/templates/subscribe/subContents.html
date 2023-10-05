@@ -9,6 +9,26 @@
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 
+<script>
+    window.onload = function() {
+        var dateDiffs = document.querySelectorAll('.dateDiff');
+
+        dateDiffs.forEach(function(element) {
+            var date1 = new Date(element.getAttribute('data-enddate'));
+            var date2 = new Date(element.getAttribute('data-startdate'));
+
+            var diff = Math.abs(date1.getTime() - date2.getTime());
+            var diffMonths = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+            var diffDays = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30.44;
+
+            if (diffMonths === 0) {
+                element.innerText = diffDays + "일";
+            } else {
+                element.innerText = diffMonths + "개월 " + diffDays + "일";
+            }
+        });
+    }
+</script>
 
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
@@ -20,8 +40,10 @@
             <form action="/list" method="get" class="form-container">
                 <div class="mycontents-date">
                     구매기간 :
-                    <input type="date" id="startDate" name="startDate" th:value="${startDate}" /> ~
-                    <input type="date" id="endDate" name="endDate" th:value="${endDate}" />
+                    <input type="date" id="startDate" data-placeholder="날짜 선택"
+                           required name="startDate" th:value="${startDate}" /> ~
+                    <input type="date" data-placeholder="날짜 선택"
+                           required id="endDate" name="endDate" th:value="${endDate}" />
                     <input type="submit" value="조회하기" class="submit-button" onclick="fetchData(events)" />
                     <input type="button" value="구독취소" id="paymentButton" disabled class="submit-button" />
                 </div>
@@ -38,7 +60,7 @@
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
                                                     <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
-                                                    <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
+                                                    <h3>구독기간 : <span class="status dateDiff" th:attr="data-startdate=${#dates.format(content.game_startdate, 'yyyy-MM-dd')}, data-enddate=${#dates.format(content.game_enddate, 'yyyy-MM-dd')}"></span></h3>
                                                     <h4>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h4>
                                                 </div>
                                                 <div class="details">

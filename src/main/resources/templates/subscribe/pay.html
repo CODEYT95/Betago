@@ -25,6 +25,7 @@
                         <div class="pay-ordertitle">주문할 상품</div>
                         <div class="pay-ordercontent">
                             구매상품명 :
+                            <select name="productName" class="mypaylist"  onchange="updateTotalPrice()">
                                 <option th:each="game : ${mypaylist}" th:text="${game.game_title}" th:value="${game.game_no}" th:data-price="${game.game_price}"></option>
                             </select>
                         </div>
