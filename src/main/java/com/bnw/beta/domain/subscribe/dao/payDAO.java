@@ -1,5 +1,6 @@
 package com.bnw.beta.domain.subscribe.dao;
 
+import com.bnw.beta.domain.subscribe.dto.CartDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -11,5 +12,6 @@ import java.util.List;
 public interface payDAO {
     List<payDTO>selectContentsPay(Integer game_no);
 
+    List<CartDTO>selectCart(Integer game_no);
     int insertIntoPay(payDTO payDTO);
 }
