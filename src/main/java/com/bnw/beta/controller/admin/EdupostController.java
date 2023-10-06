@@ -51,7 +51,7 @@ public class EdupostController {
     public String postList(Model model) throws Exception {
             List<EdupostDTO> list = edupostService.edulist();
             model.addAttribute("postList",list);
-            return "/admin/edupost/eduboardlist";
+            return "admin/edupost/eduboardlist";
     }
     //학습자료 세부내용
     @GetMapping("/detail/{edupost_no}")
@@ -59,7 +59,7 @@ public class EdupostController {
         EdupostDTO post = edupostService.findPostId(edupost_no);
         model.addAttribute("post", post);
         System.out.println("조회 값 : "+post);
-        return "/admin/edupost/eduboarddetail";
+        return "admin/edupost/eduboarddetail";
     }
     @GetMapping("/update/{edupost_no}")
     public String updateForm(@PathVariable("edupost_no") final Long edupost_no, Model model) {
@@ -81,6 +81,12 @@ public class EdupostController {
         // 파일 정보 저장
         fileEduService.saveFiles(dto.getEdupost_no(), uploadFiles);
 
+        return "redirect:/edupost/list";
+    }
+    // 게시글 삭제
+    @PostMapping("/delete/{edupost_no}")
+    public String deletePost(@PathVariable("edupost_no") final Long edupost_no) {
+        edupostService.deletePost(edupost_no);
         return "redirect:/edupost/list";
     }
     //파일 삭제

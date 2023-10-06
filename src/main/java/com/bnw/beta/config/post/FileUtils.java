@@ -1,6 +1,8 @@
 package com.bnw.beta.config.post;
 
 import com.bnw.beta.domain.admin.dto.FilepostDTO;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -8,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -122,7 +126,7 @@ public class FileUtils  {
             return;
         }
         for (FilepostDTO file : files) {
-            String uploadedDate = file.getEdupost_datetime().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
+            String uploadedDate = file.getEdupost_date().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
             deleteFile(uploadedDate, file.getEdupost_rename());
         }
     }
@@ -146,9 +150,14 @@ public class FileUtils  {
             file.delete();
         }
     }
-/*    public Resource readFileAsResource(final FilepostDTO file) {
-        String uploadedDate = file.getEdupost_datetime().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
-        String filename = file.getSaveName();
+    /**
+     * 다운로드할 첨부파일(리소스) 조회 (as Resource)
+     * @param file - 첨부파일 상세정보
+     * @return 첨부파일(리소스)
+     */
+    public Resource readFileAsResource(final FilepostDTO file) {
+        String uploadedDate = file.getEdupost_date().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
+        String filename = file.getEdupost_rename();
         Path filePath = Paths.get(uploadPath, uploadedDate, filename);
         try {
             Resource resource = new UrlResource(filePath.toUri());
@@ -159,6 +168,6 @@ public class FileUtils  {
         } catch (MalformedURLException e) {
             throw new RuntimeException("file not found : " + filePath.toString());
         }
-    }*/
+    }
 
 }

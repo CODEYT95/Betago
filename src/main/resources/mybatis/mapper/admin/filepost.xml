@@ -44,4 +44,11 @@
             #{filepost_no};
 
     </delete>
+
+    <select id="findByfileNo" parameterType="long" resultType="FilepostDTO">
+        select edupost_no, edupost_name, filepost_no, edupost_rename, edupost_date, edupost_size
+        from filepost
+        where filepost_no = #{value}
+    </select>
+
 </mapper>

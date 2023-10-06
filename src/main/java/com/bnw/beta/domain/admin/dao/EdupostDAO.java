@@ -17,4 +17,7 @@ public interface EdupostDAO {
     EdupostDTO findById(Long edupost_no);
     //게시글 수정
     void update(EdupostDTO dto);
+
+    //게시글 삭제
+    void deleteById(Long edupost_no);
 }
