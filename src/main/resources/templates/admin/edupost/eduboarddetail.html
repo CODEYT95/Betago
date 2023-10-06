@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>학습등록 상세페이지</title>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
 </head>
 <body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
+    <div class="content-wrap">
 <h2 class="border-bottom py-2" th:text="${post.edupost_title}"></h2>
     <div>
         <label for="edupost_title" class="">학습자료명</label>
-        <input type="text" th:value="${post.edupost_title}"  id="edupost_title" name="edupost_title" readonly/>
+        <input type="text" th:value="${post.edupost_title}" id="edupost_title" name="edupost_title" readonly/>
     </div>
     <div>
         <label for="edupost_category" >자료구분</label>
@@ -52,11 +58,11 @@
         </table>
     </div>
         <a th:href="@{|/edupost/update/${edupost_no}|}" class="btns del_btn">수정하기</a>
-<!--        <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>삭제</span></button>-->
-<!--        <input type="submit" onclick="">-->
-<script th:src="@{/js/edupost/function.js}"></script>
-<script th:src="@{/js/edupost/jquery-3.6.0.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/edupost/common.js}"></script>
+        <button type="button" onclick="deleteFile();" class="btns fn_add_btn"><span>삭제하기</span></button>
+<script th:src="@{/js/admin/edupost/function.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
+    </div>
+    <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 <script>
     window.onload = () => {
@@ -78,13 +84,33 @@
         // 3. 파일 영역 추가
         let fileHtml = '<div class="file_down"><div class="cont">';
         response.forEach(row => {
-            fileHtml += `<a href="javascript:alert('준비 중입니다.');"><span class="icons"><i class="fas fa-folder-open"></i></span>${row.edupost_name}</a>`;
+            fileHtml += '<a href="/eduposts/' + edupost_no + '/files/' + row.filepost_no + '/download" download="' + row.edupost_name + '"><span class="icons"><i class="fas fa-folder-open"></i></span>' + row.edupost_name + '</a>';
+
+
         })
         fileHtml += '</div></div>';
 
         // 4. 파일 HTML 렌더링
         document.getElementById('files').innerHTML = fileHtml;
     }
+    function deleteFile() {
+        const id = [[${edupost_no}]];
+
+        if (!confirm(id + '번 게시글을 삭제할까요?')) {
+            return false;
+        }
+            // AJAX를 사용하여 서버로 게시물 삭제 요청을 보냅니다.
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/edupost/delete/' + id, true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // 게시물 삭제에 성공한 경우에 대한 처리를 추가하세요.
+                    window.location.href = '/edupost/list';
+                }
+            };
+            xhr.send();
+        }
 
 </script>
 </html>

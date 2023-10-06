@@ -3,33 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>둑며들다|진도 등록</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/student/task/submitTask.css}">
-    <script type="text/javascript" th:src="@{/js/learning/task/submitTask.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/submitTask.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/student/submitTask.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/stu_sidebar :: stu_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="main-content">
             <div class="mycontents-list">
                 <div class="contents-container">
-                    <form id="submitTask" action="student/submit" method="post">
-                        <div class="checkbox" th:each="content : ${contentsList}">
+                    <form id="submitTask" th:action="@{/student/submit}" method="post">
+                        <div class="checkbox" th:each="task : ${taskList}">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.pay_no}" name="selectedGameNos" th:value="${content.pay_no}" />
+                                <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${task.tasksend_no}" name="tasksend_no" th:value="${task.tasksend_no}" />
                                 <span class="checkbox-title">
                                         <div class="card">
-                                            <div class="poster"><img th:src="@{/image/testBADUK2.png}">
-                                                <div class="card-details">
-                                                    <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
-                                                    <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
-                                                    <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
-                                                    <h4>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h4>
+                                            <div class="card-details">
+                                                <div class="card-title">
+                                                    <div class="game-title"><span th:text="${task.game_title}"></span></div>
+                                                    <div class="member-name"><span th:text="${task.member_name}"></span></div>
                                                 </div>
-                                                <div class="details">
-                                                    <h5>학습그룹 등록내역 : <span th:text="${content.group_name}"></span></h5>
+                                                <hr>
+                                                <div class="card-content-wrap">
+                                                    <div class="card-content">
+                                                        <span>숙제 내용</span>
+                                                        <div class="task-content"><span class="data" th:text="${task.task_content}"></span></div>
+                                                        <div class="task-chapter">진도 : <span class="data" th:text="${task.task_chapter}"></span></div>
+                                                        <div class="task-deadline">제출 기한 : <span class="data" th:text="${#dates.format(task.task_deadline, 'yyyy-MM-dd')}"></span></div>
+                                                        <div class="task-state"> 상태 :
+                                                            <span class="data" th:text="${task.task_state}" th:style="${task.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-button">
+                                                        <div class="button-wrap">
+                                                            <input type="button" id="selectBtn${task.tasksend_no}" class="selectBtn" data-tasksend-no="${task.tasksend_no}" value="숙제하기">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

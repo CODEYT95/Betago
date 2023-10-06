@@ -28,6 +28,13 @@
     width: 150px;
     height: 32px;
     }
+
+    .searchReq{
+    display: flex;
+
+    }
+
+
     .checkbox{
     margin: 0;
     margin-bottom: 25px;

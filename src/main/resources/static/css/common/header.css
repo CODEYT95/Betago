@@ -251,7 +251,7 @@ nav .header-navi .links li:hover .admin-sub-menu {
   border: 1px solid;
   height: auto;
   min-height: 66vh;
-  width: 1080px;
+  width: 66%;
   margin-left: 253px;
   padding: 20px 30px 20px 30px;
 }
@@ -341,14 +341,17 @@ nav .header-navi .links li:hover .admin-sub-menu {
   .sidebar-logo .logo-name {
     font-size: 25px;
     color: #333;
+    margin: 0px;
   }
 
-  .sidebar-logo i,
   #main_sideBtn {
     font-size: 25px;
     color: #333;
+    margin: 0;
   }
-
+  .sub-logo{
+    display: none;
+  }
   nav .header-navi .links {
     display: block;
     margin-top: 40px;
@@ -368,8 +371,8 @@ nav .header-navi .links li:hover .admin-sub-menu {
     top: 0;
     box-shadow: none;
     display: none;
+    padding-top: 0;
   }
-
   nav .header-navi .links li .sub-menu li {
     border-bottom: none;
   }
@@ -381,9 +384,8 @@ nav .header-navi .links li:hover .admin-sub-menu {
   }
 
   .header-navi .links li .sub-menu .more-sub-menu li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    left: 15px;
+    margin-bottom: 0px;
   }
 
   .links li:hover .useInfo-arrow,
@@ -441,4 +443,16 @@ nav .header-navi .links li:hover .admin-sub-menu {
   .navi_links {
     max-width: 100%;
   }
+}
+.bxs-chevron-down:before {
+    content: "\ed35";
+    font-size: 20px;
+}
+.bx-x:before {
+    content: "\ec8d";
+    font-size: 25px;
+}
+
+.bx {
+    margin: 0px;
 }

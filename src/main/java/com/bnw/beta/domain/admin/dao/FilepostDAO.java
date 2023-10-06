@@ -15,6 +15,8 @@ public interface FilepostDAO {
 
     List<FilepostDTO> findById(List<Long> filepost_nos);
 
-    void deleteByNo(List<Long> filepost_nos);
+    int deleteByNo(int file_no);
+
+    FilepostDTO findByfileNo(Long filepost_no);
 
 }

@@ -43,7 +43,7 @@ public class EdupostController {
         }catch (Exception e) {
             logger.log(Level.SEVERE, "에러 메시지", e);
             System.out.println("db에 저장이 안되었습니다.");
-            return "operate/edupost/eduboard";
+            return "/admin/edupost/eduboard";
         }
     }
     //학습자료 목록
@@ -51,7 +51,7 @@ public class EdupostController {
     public String postList(Model model) throws Exception {
             List<EdupostDTO> list = edupostService.edulist();
             model.addAttribute("postList",list);
-            return "operate/edupost/eduboardlist";
+            return "admin/edupost/eduboardlist";
     }
     //학습자료 세부내용
     @GetMapping("/detail/{edupost_no}")
@@ -64,40 +64,37 @@ public class EdupostController {
     @GetMapping("/update/{edupost_no}")
     public String updateForm(@PathVariable("edupost_no") final Long edupost_no, Model model) {
         EdupostDTO post = edupostService.findPostId(edupost_no);
+        model.addAttribute("fileList",fileEduService.findByNo(edupost_no));
+        System.out.println("파일번호리스트 : "+fileEduService.findByNo(edupost_no));
         model.addAttribute("post", post);
         System.out.println("조회 값 : "+post);
         return "admin/edupost/eduboardupdate";
     }
     //학습자료 게시판 수정
     @PostMapping("/update/{edupost_no}")
-    public String update(@PathVariable("edupost_no") Long edupost_no, @ModelAttribute EdupostDTO dto) {
+    public String update(@PathVariable("edupost_no") Long edupost_no, @ModelAttribute EdupostDTO dto, Model model) {
         //게시글 수정
-        try {
-            // 1. 해당 게시물 조회
-            EdupostDTO edupostDTO = edupostService.findPostId(edupost_no);
 
-            edupostDTO.setEdupost_category(dto.getEdupost_category());
-            edupostDTO.setEdupost_date(dto.getEdupost_date());
-            edupostDTO.setEdupost_content(dto.getEdupost_content());
-            edupostDTO.setEdupost_fileadd(dto.getEdupost_fileadd());
-            edupostDTO.setEdupost_service(dto.getEdupost_service());
-            edupostDTO.setEdupost_title(dto.getEdupost_title());
-            edupostDTO.setEdupost_type(dto.getEdupost_type());
         edupostService.update(dto);
+        // 파일 업로드
         List<FilepostDTO> uploadFiles = fileUtils.uploadFiles(dto.getFiles());
         // 파일 정보 저장
         fileEduService.saveFiles(dto.getEdupost_no(), uploadFiles);
-        // 삭제할 파일 정보 조회
-        List<FilepostDTO> deleteFiles = fileEduService.findById(dto.getRemoveFileIds());
-        fileUtils.deleteFiles(deleteFiles);
 
-        fileEduService.deleteFileByNos(dto.getRemoveFileIds());
         return "redirect:/edupost/list";
+    }
+    // 게시글 삭제
+    @PostMapping("/delete/{edupost_no}")
+    public String deletePost(@PathVariable("edupost_no") final Long edupost_no) {
+        edupostService.deletePost(edupost_no);
+        return "redirect:/edupost/list";
+    }
+    //파일 삭제
+    @PostMapping("filedelete")
+    @ResponseBody
+    public String fileDelete(@RequestParam(name = "file_no") int file_no){
 
-        }catch (Exception e) {
-            logger.log(Level.SEVERE, "에러 메시지", e);
-            return "admin/edupost/eduboardupdate";
-        }
+        return fileEduService.deleteFileByNos(file_no);
     }
         //파일 업로드
  /*   @GetMapping("/download/{filepost_no}")

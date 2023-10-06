@@ -5,6 +5,7 @@
     <title>Title</title>
     <!-- 공통으로 쓰이는 CSS 및 JS 파일 -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameSales.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
     <link th:replace="~{common/fragments/config :: configFragment}"/>
 </head>
 <body>
@@ -71,10 +72,15 @@
                     </ul>
                     <!-- 나머지 li 태그들 추가 -->
                 </div>
+                <div>
+                <!--차트를 그릴 <canvas> 요소 추가-->
+                <canvas id="salesChart" width="400" height="400"></canvas>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+<script type="text/javascript" th:src="@{/js/admin/game/salesChart.js}"></script>
 </body>
 </html>

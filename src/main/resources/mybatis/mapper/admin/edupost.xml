@@ -33,4 +33,11 @@
             edupost_no = #{edupost_no}
         ]]>
     </update>
+<!-- 게시글 삭제 -->
+    <delete id="deleteById" parameterType="long">
+        delete
+        from edupost
+        where
+            edupost_no = #{edupost_no}
+    </delete>
 </mapper>

@@ -5,16 +5,18 @@
     <title>학습자료등록</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/edupost/eduboard.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
     <div class="content-wrap">
         <h2>학습자료 등록창</h2>
         <form id="saveForm" th:action="@{/edupost/insert}" method="post" autocomplete="off" enctype="multipart/form-data">
             <input type="hidden" id="edupost_no" name="edupost_no" th:value="${edupost_no}"/>
             <input type="hidden" id="edupost_date" name="edupost_date" th:value="${edupost_date}"/>
+            <div class="content_in">
             <div>
                 <label for="edupost_title" class="">학습자료명</label>
                 <input type="text" id="edupost_title" name="edupost_title"/>
@@ -63,6 +65,7 @@
                 <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
             </div>
             <input type="submit">
+            </div>
         </form>
 </body>
 <script>

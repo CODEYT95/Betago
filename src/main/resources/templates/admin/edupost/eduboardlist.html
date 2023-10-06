@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>학습조회리스트</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
     <div class="content-wrap">
         <div id="bbsList">
 

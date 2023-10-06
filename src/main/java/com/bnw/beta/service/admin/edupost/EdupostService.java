@@ -14,5 +14,6 @@ public interface EdupostService {
 
     Long update(final EdupostDTO dto);
 
-//    void update(Long edupostNo, MultipartFile edupostFile) throws DataFormatException;
+    public Long deletePost(final Long edupost_no);
+
 }

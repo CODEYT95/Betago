@@ -15,25 +15,23 @@
     <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
-            <form action="operate/game/gameList" method="get" class="form-container">
+            <form action="game/searchByTitle" method="get" class="form-container" id="searchForm">
                 <div class="gameContent-search">
                     <div class="searchReq">
-                    <label for="searchReq">검색조건</label>
-                    <select name="searchReq" id="searchReq">
-                        <option value="title">콘텐츠명</option>
-                        <option value="price">구매가격</option>
-                        <option value="period">구독기간</option>
-                        <option value="pay_date">구매일자</option>
-                    </select>
+                        <select name="game_title">
+                            <option value="">게임 선택</option> <!-- 기본 선택 항목 -->
+                            <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
+                        </select>
+                        <input type="button" value="검색" id="searchButton" onclick="submitForm()" />
                     </div>
                     <div class="subscribe">
-                        <input type="submit" value="구독하기" class="submit-button"/>
+                        <input type="button" value="구독하기" id="subscribeButton" onclick="goToPayList()" disabled class="submit-button" />
                     </div>
                 </div>
             </form>
             <div class = "gameContents-list">
                 <div class="contents-container">
-                    <div class="checkbox" th:each="content : ${contentsList}" th:attr="data-game-no=${content.game_no}">
+                    <div class="checkbox" th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
                         <label class="checkbox-wrapper">
                             <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="selectedGameNos" th:value="${content.game_no}" />
                             <span class="checkbox-title">
@@ -45,7 +43,12 @@
                                                     <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
                                                 </div>
                                                 <div class="details">
-                                                    <h5>상품상세설명 : <span th:text="${content.game_content}"></span></h5>
+                                                    <h4>난이도 : <span th:text="${content.game_level}"></span></h4>
+                                                    <h5>총인원 : <span th:text="${content.game_total}"></span></h5>
+                                                    <h6>가격 : <span th:text="${content.game_price}"></span></h6>
+                                                    <h7>할인 : <span th:text="${content.game_discount}"></span></h7>
+                                                    <h8>판매가 : <span th:text="${content.game_sell}"></span></h8>
+                                                    <h9>상품상세설명 : <span th:text="${content.game_content}"></span></h9>
                                                 </div>
                                             </div>
                                         </div>
@@ -58,5 +61,6 @@
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+<script type="text/javascript" th:src="@{/js/admin/game/gameList.js}"></script>
 </body>
 </html>
