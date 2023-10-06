@@ -4,16 +4,20 @@
 <mapper namespace="com.bnw.beta.domain.learning.dao.GroupDAO">
 
     <!-- 그룹등록 가능한 게임콘텐츠 Cnt -->
-    <select id="groupAddListCnt" parameterType="String" resultType="Integer">
+    <select id="groupAddListCnt" resultType="int">
         <![CDATA[
-        SELECT COUNT(*)
-        FROM game
+        SELECT COUNT(*) FROM (
+            SELECT g.*, SUM(s.group_nowcnt) AS group_nowcnt
+            FROM game g
+            LEFT JOIN studygroup s ON g.game_no = s.game_no
         ]]>
         <if test="game_title != null and game_title != ''">
-            WHERE game_title = #{game_title}
+            WHERE g.game_title = #{game_title}
         </if>
         <![CDATA[
-        ORDER BY game_no DESC
+        GROUP BY g.game_no
+        HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
+        ) AS subquery;
         ]]>
     </select>
 
@@ -28,14 +32,17 @@
     <!-- 그룹등록 가능한 게임콘텐츠 조회(무한 스크롤) -->
     <select id="groupAddList" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT *
-        FROM game
+        SELECT g.*, SUM(s.group_nowcnt) AS group_nowcnt
+        FROM game g
+        LEFT JOIN studygroup s ON g.game_no = s.game_no
         ]]>
-            <if test="game_title != null and game_title != ''">
-                WHERE game_title = #{game_title}
-            </if>
+        <if test="game_title != null and game_title != ''">
+            WHERE g.game_title = #{game_title}
+        </if>
         <![CDATA[
-        ORDER BY game_no DESC
+        GROUP BY g.game_no
+        HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
+        ORDER BY g.game_no DESC
         LIMIT #{LIMIT} OFFSET #{OFFSET};
         ]]>
     </select>
@@ -69,17 +76,14 @@
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
         </if>
-        <![CDATA[
-            AND sg.group_enddate >= CURDATE()
-        ]]>
     </select>
 
     <!-- 학습 그룹 name 조회 -->
-    <select id="selectGroupName" parameterType="String" resultType="GroupDTO">
+    <select id="selectGroupName" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
         SELECT DISTINCT group_name
         FROM studygroup
-        WHERE member_id = #{member_id};
+        WHERE member_id = #{member_id}
         ]]>
     </select>
 
@@ -87,7 +91,10 @@
     <delete id="deleteGroup" parameterType="java.util.List">
         <![CDATA[
         DELETE FROM studygroup
-        WHERE group_no = #{group_no};
+        WHERE group_no IN
         ]]>
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+        </foreach>
     </delete>
 </mapper>

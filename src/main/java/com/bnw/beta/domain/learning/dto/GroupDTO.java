@@ -6,9 +6,14 @@ import java.sql.Date;
 @Data
 public class GroupDTO {
 
+    //게임
     private int game_no;
     private String game_title;
     private int game_total;
+    private Date game_startdate;
+    private Date game_enddate;
+
+    //그룹
     private int group_no;
     private String group_name;
     private Date group_startdate;
@@ -16,6 +21,8 @@ public class GroupDTO {
     private int group_cnt;
     private int group_nowcnt;
     private String member_id;
+
+    //
     private int LIMIT;
     private int OFFSET;
 
