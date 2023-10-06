@@ -62,11 +62,16 @@
         SELECT sg.group_no, sg.group_name, sg.group_startdate, sg.group_enddate, sg.group_cnt, sg.group_nowcnt, g.game_title
         FROM studygroup AS sg
         JOIN game AS g ON sg.game_no = g.game_no
-        WHERE sg.member_id = #{member_id};
+        WHERE
+            sg.member_id = #{member_id}
         ]]>
+
         <if test="group_name != null and group_name != ''">
-            WHERE sg.group_name = #{group_name}
+            AND sg.group_name = #{group_name}
         </if>
+        <![CDATA[
+            AND sg.group_enddate >= CURDATE()
+        ]]>
     </select>
 
     <!-- 학습 그룹 name 조회 -->
@@ -77,4 +82,12 @@
         WHERE member_id = #{member_id};
         ]]>
     </select>
+
+    <!-- 학습 그룹 삭제 -->
+    <delete id="deleteGroup" parameterType="java.util.List">
+        <![CDATA[
+        DELETE FROM studygroup
+        WHERE group_no = #{group_no};
+        ]]>
+    </delete>
 </mapper>
