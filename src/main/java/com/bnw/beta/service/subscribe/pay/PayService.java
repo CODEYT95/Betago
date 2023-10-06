@@ -1,5 +1,6 @@
 package com.bnw.beta.service.subscribe.pay;
 
+import com.bnw.beta.domain.subscribe.dto.CartDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 public interface PayService {
     List<payDTO>selectContentsPay(Integer game_no);
 
+    List<CartDTO>selectCart(Integer game_no);
     int insertIntoPay(payDTO payDTO);
 
 }

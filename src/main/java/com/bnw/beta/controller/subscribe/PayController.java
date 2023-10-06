@@ -18,10 +18,10 @@ public class PayController {
     @GetMapping("/paylist")
     public String payList(Model model, Integer game_no){
 
-        List<payDTO> mypaylist = payService.selectContentsPay(game_no);
+        List<payDTO> selectpaylist = payService.selectContentsPay(game_no);
         System.out.println("리스트 컨트롤러");
 
-        model.addAttribute("mypaylist", mypaylist);
+        model.addAttribute("selectpaylist", selectpaylist);
         return "subscribe/pay";
     }
 

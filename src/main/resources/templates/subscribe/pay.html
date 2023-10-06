@@ -24,10 +24,14 @@
                     <div class="pay-orderbox">
                         <div class="pay-ordertitle">주문할 상품</div>
                         <div class="pay-ordercontent">
-                            구매상품명 :
-                            <select name="productName" class="mypaylist"  onchange="updateTotalPrice()">
-                                <option th:each="game : ${mypaylist}" th:text="${game.game_title}" th:value="${game.game_no}" th:data-price="${game.game_price}"></option>
-                            </select>
+                            <div class="tag-container">
+                                <div class="tag-container">
+                                    <div th:each="game : ${selectpaylist}" class="tag">
+                                        <div th:text="${game.game_title}"></div>
+                                        <a href="#" class="delete-btn" th:data-game-no="${game.game_no}" onclick="removeGame(this)">x</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="pay-infobox">
@@ -55,13 +59,17 @@
                     </div>
                     <div class="pay-pricebox">
                     <div class="pricetitle">
-                        결제금액 : <input type="number" class="order-total" readonly/></div>
+                        결제금액 :
+                        <select name="productName" class="mypaylist"  onchange="updateTotalPrice()">
+                        <option th:each="game : ${selectpaylist}" th:text="${game.game_price}" th:data-price="${game.game_price}"></option>
+                    </select>
                     </div>
                     <div class="buttonbox">
                         <div class="pay-submit">
                             <button type="submit" id="submitbutton" class="submit-button">결제하기</button>
                         </div>
                     </div>
+                </div>
                 </div>
             </form>
         </div>
