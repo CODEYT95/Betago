@@ -35,8 +35,8 @@ text-align: center;
 }
 
 .submit-button{
-width: 150px;
-height: 32px;
+    width: 150px;
+    height: 32px;
 }
 
     .checkbox{
@@ -79,7 +79,7 @@ height: 32px;
 }
 
 .checkbox-title {
-      display: flex;
+    display: flex;
     flex-direction: row;
     width: auto;
     border-radius: 11px;
