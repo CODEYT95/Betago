@@ -18,4 +18,6 @@ public interface QuestionDAO {
     void insertQuestion(QuestionDTO questionDTO);
 
     MemberDTO findUserByUsername(String username);
+
+    String getPwByQnaNo(Integer id);
 }

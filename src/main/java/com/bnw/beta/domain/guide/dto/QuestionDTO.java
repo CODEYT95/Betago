@@ -15,4 +15,5 @@ public class QuestionDTO {
     private String member_id;
     private LocalDateTime qna_regdate;
 
+
 }

@@ -7,17 +7,18 @@
 
 <h2>Question Detail</h2>
 
-<div id="passwordFormDiv">
-    <form action="/question/verifyPassword" method="post">
-        <input type="hidden" name="qna_no" th:value="${question.qna_no}" />
+<div id="passwordFormDiv" th:if="${not isPasswordCorrect}">
+    <form action="/question/question/verifyPassword" method="post">
+        <input type="hidden" name="id" th:value="${question.qna_no}" />
         <label for="pw">비밀번호 입력:</label>
-        <input type="pw" name="pw" required />
+        <input type="password" id="pw" name="pw" required />
         <input type="submit" value="확인" />
+        <span style="color:red;" th:text="${errormessage}"></span>
     </form>
 </div>
 
 <!-- 게시글의 상세 내용 (초기에는 숨겨져 있음) -->
-<div id="questionDetailDiv" style="display: none;">
+<div id="questionDetailDiv" th:if="${isPasswordCorrect}">
 
 <table border="1">
     <tr>
