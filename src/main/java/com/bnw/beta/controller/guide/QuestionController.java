@@ -57,14 +57,13 @@ public class QuestionController {
 public String questionAdd(@Valid QuestionForm questionForm, BindingResult bindingResult,
                           Principal principal){
     if(bindingResult.hasErrors()) {
-        return "question_form";  //valid QuestionForm 유효성검사후 BindingResult에 저장 그리고 그 값이 오류가 있다면
+        return "guide/question/question_form";  //valid QuestionForm 유효성검사후 BindingResult에 저장 그리고 그 값이 오류가 있다면
     }
     MemberDTO memberDTO = memberService.getUser(principal.getName())
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));//user정보를 가져오기
 
     //questionForm.getSubject():유효성 검사를 통과한 테이터 폼에서 subject필드값 가져오기
-    //questionForm.getContent():유효성 검사를 통과한 테이터 폼에서 subject필드값 가져오기
-    questionService.add(questionForm.getSubject(), questionForm.getContent(), memberDTO);
+    questionService.add(questionForm.getSubject(), questionForm.getContent(), questionForm.getPw(), memberDTO);
     //3.Model
     //4.View
     return "redirect:/question/list";//질문목록조회요청을 통한_ 질문목록페이지로 이동
