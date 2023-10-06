@@ -29,14 +29,14 @@ public class GameServiceImpl implements GameService {
 
     //월간 (일일 단위 매출조회)
     @Override
-    public List<GameDTO> selectDailySales(Date startsearch, Date endsearch)
-    { return gameDAO.selectDailySales(startsearch, endsearch);}
+    public List<GameDTO> selectDailySales(Date game_startsearch, Date game_endsearch)
+    { return gameDAO.selectDailySales(game_startsearch, game_endsearch);}
 
 
     //년간 (월 단위 매출조회)
     @Override
-    public List<GameDTO> selectMonthlySales(Date startsearch, Date endsearch)
-    { return gameDAO.selectMonthlySales(startsearch, endsearch);}
+    public List<GameDTO> selectMonthlySales(Date game_startsearch, Date game_endsearch)
+    { return gameDAO.selectMonthlySales(game_startsearch, game_endsearch);}
 
     //게임콘텐츠 제목검색
     public List<GameDTO> searchByTitle(@Param("game_title") String game_title)

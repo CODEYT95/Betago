@@ -62,4 +62,17 @@ public class GameController {
         return "admin/game/gameSales";
     }
 
+    //월별/일별 판매 건수, 판매금액 ajax로 가져오기
+    @ResponseBody
+    @PostMapping("/getChartDataAjax")
+    public void getChartDataAjax() {
+
+
+
+
+
+
+
+    }
+
 }
