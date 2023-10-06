@@ -18,17 +18,23 @@ public class QuestionServiceImpl {
             return questionDAO.selectAllQuestions(offset);
         }
 
-    public void add(String subject, String content, MemberDTO memberDTO){
+    public void add(String subject, String content, String pw, MemberDTO memberDTO){
         QuestionDTO question = new QuestionDTO();
         question.setQna_title(subject);
         question.setQna_content(content);
+        question.setQna_pw(pw);
         question.setQna_regdate(LocalDateTime.now());
         question.setMember_id(memberDTO.getMember_id());
         questionDAO.insertQuestion(question);
     }
 
-    public QuestionDTO getQuestion(Integer id) {
-        return questionDAO.selectQuestionById(id);
+    public QuestionDTO selectQuestion(Integer qna_no) {
+        return questionDAO.selectQuestionById(qna_no);
     }
+
+   /* public QuestionDTO getQuestion(Integer id) {
+        return questionDAO.getQuestionById(id);
+    }
+*/
 
 }

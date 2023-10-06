@@ -9,7 +9,7 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/sidebar :: default_sidebarFragment}"></div>
+    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
     <div class="content-wrap">
         <table class="table">
             <thead class="table-dark">
@@ -34,10 +34,11 @@
                 <td th:text="${question.qna_no}"></td>
                 <td><a th:href="@{/question/detail/{id}(id=${question.qna_no})}"
                        th:text="${question.qna_title}"></a></td>
-                <td th:text="${question.qna_content}"></td>
-                <td th:text="${question.qna_isshow}"></td>
-                <td th:text="${question.qna_regdate}"></td>
+                <!--<td th:text="${question.qna_content}"></td>-->
+                <!--<td th:text="${question.qna_isshow}"></td>-->
                 <td th:text="${question.member_id}"></td>
+                <td th:text="${question.qna_regdate}"></td>
+
 
             </tr><!--1페이지당 출력할 게시물수만큼 반복끝-->
             </tbody>

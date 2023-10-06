@@ -15,4 +15,8 @@ public class QuestionForm {
     //내용
     @NotEmpty(message = "내용은 필수 입력사항입니다.")
     private String content;//내용
+
+    @NotEmpty(message = "비밀번호는 필수로 10자 이하로 입력해주세요.")
+    @Size(max=10)
+    private String pw;//내용
 }
