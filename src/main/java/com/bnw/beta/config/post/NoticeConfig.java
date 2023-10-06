@@ -9,6 +9,6 @@ public class NoticeConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/image/notice/**")
-                .addResourceLocations("file:///c:/uploadfile/notice_img");
+                .addResourceLocations("file:///c:/uploadfile/notice_img/");
     }
 }

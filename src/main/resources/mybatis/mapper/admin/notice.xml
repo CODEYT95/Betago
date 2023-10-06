@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.admin.dao.NoticeDAO">
-    <!--게시글 저장-->
+    <!--게시글 등록-->
     <insert id="insert" parameterType="NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
         <![CDATA[
         INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt)
         VALUES (#{notice_title}, #{notice_content}, #{notice_category}, now(), "Y", #{member_id}, 0);
+        ]]>
+    </insert>
+
+    <!-- 공지글 파일 등록 & 수정 -->
+    <insert id="fileUpload" parameterType="NoticeFileDTO">
+        <![CDATA[
+        INSERT INTO filenotice (notice_no, file_name, file_rename, file_path, file_date)
+        VALUES (#{notice_no}, #{file_name}, #{file_rename}, #{file_path}, now())
         ]]>
     </insert>
 
@@ -18,18 +26,29 @@
             WHERE n.notice_no = #{notice_no}
             ]]>
         </select>
+    <!--파일 상세조회-->
+    <select id="getNoticeFiles" parameterType="Long" resultType="NoticeFileDTO">
+        <![CDATA[
+        SELECT * FROM filenotice
+        WHERE notice_no = #{notice_no}
+        ]]>
+    </select>
 
     <!--게시글 수정-->
     <update id="update" parameterType="NoticeDTO">
-        <![CDATA[
+       <![CDATA[
         UPDATE notice
-        SET notice_regdate  = NOW()
-          , notice_title    = #{notice_title}
-          , notice_content  = #{notice_content}
-          , notice_category = #{notice_category}
+        SET notice_title = #{notice_title}, notice_content = #{notice_content}, notice_category = #{notice_category}
         WHERE notice_no = #{notice_no}
         ]]>
     </update>
+    <!--사진 삭제-->
+    <delete id="deleteFile" parameterType="long">
+        <![CDATA[
+        DELETE FROM notice_file
+        WHERE notice_no = #{notice_no}
+        ]]>
+    </delete>
 
     <!--게시글 삭제-->
     <delete id="deleteById" parameterType="long">
@@ -50,20 +69,8 @@
         ]]>
     </select>
 
-    <!-- 공지글 파일 등록 -->
-    <insert id="fileUpload" parameterType="NoticeFileDTO">
-        <![CDATA[
-        INSERT INTO filenotice (notice_no, file_name, file_rename, file_path, file_date)
-        VALUES (#{notice_no}, #{file_name}, #{file_rename}, #{file_path}, #{file_date})
-        ]]>
-    </insert>
 
-    <!--파일 상세조회-->
-    <select id="getNoticeFiles" parameterType="Long" resultType="NoticeFileDTO">
-        <![CDATA[
-        SELECT * FROM filenotice
-        WHERE notice_no = #{notice_no}
-        ]]>
-    </select>
+
+
 
 </mapper>

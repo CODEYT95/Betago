@@ -17,14 +17,16 @@
             <input type="text" name="member_id" th:value="${noticeDTO.member_id}">
             <span>제목 <input type="text" name="notice_title" th:value="${noticeDTO.notice_title}"></span><br/>
 
-            <textarea rows="10" cols="50" name="notice_content" th:value="${noticeDTO.notice_content}"></textarea><br/>
+            <textarea rows="10" cols="50" name="notice_content" th:text="${noticeDTO.notice_content}"></textarea><br/>
             <input th:value="${noticeDTO.notice_regdate}">
-            <div class="here"></div>
-            <div th:each="noticefile, loop : ${noticeDTO.getNoticeFiles()}">
-                <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300">
+
+            <input th:value="${noticeDTO.member_id}">
+
+            <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}">
+               <img th:src="@{|/image/notice/${noticefile.file_rename}|}" width="300" height="300" alt="image">
             </div><br/>
 
-            <a th:href="@{'/notice/update/' + ${noticeDTO.getNotice_no}}">
+            <a th:href="@{'/notice/edit/' + ${noticeDTO.getNotice_no}}">
                 <button type="button">수정</button>
             </a>
 

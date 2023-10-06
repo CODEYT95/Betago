@@ -17,8 +17,8 @@ public interface NoticeService {
     void insert(NoticeDTO noticeDTO, MultipartFile[] file, String member_id) throws IOException;
 
     //공지게시판 상세조회
-    void detail(Long notice_no, NoticeDTO noticeDTO);
+    NoticeDTO detail(Long notice_no) ;
 
-//    //공지게시판 수정
-//    NoticeDTO update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] newFile);
+    //공지게시판 수정
+    NoticeDTO update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] file) throws IOException;
 }
