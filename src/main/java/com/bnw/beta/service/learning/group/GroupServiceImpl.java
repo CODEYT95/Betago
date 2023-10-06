@@ -76,7 +76,12 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDTO> groupListSelect(String member_id, String group_name){
 
+
+
         GroupDTO groupDTO = new GroupDTO();
+        if (group_name.equals("전체")){
+            group_name="";
+        }
         groupDTO.setGroup_name(group_name);
         groupDTO.setMember_id(member_id);
 
@@ -91,9 +96,7 @@ public class GroupServiceImpl implements GroupService {
     //학습 그룹 삭제
     @Override
     public String deleteGroup(List<Integer> group_no){
-        System.out.println("서비스 진입 성공");
         int result = groupDAO.deleteGroup(group_no);
-        System.out.println("result값"+result);
         if(result == 0){
 
             return "fail";

@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <div class="card-details"></div>
                                                 <div class="details">
                                                     <h5>게임 콘텐츠 : <span>${item.game_title}</span></h5>
-                                                    <h5>학습 구독 기간 : <span>${item.group_startdate}</span> ~ <span>${item.group_enddate}</span></h5>
-                                                    <h5>학습 가능 인원 : 100명</h5>
-                                                    <h5>그룹 지정된 인원 : 50명</h5>
+                                                    <h5>학습 구독 기간 : <span>${item.game_startdate}</span> ~ <span>${item.game_enddate}</span></h5>
+                                                    <h5>학습 가능 인원 : <span data-game-total=${item.game_total}>${item.game_total}명</span></h5>
+                                                    <h5>그룹 지정된 인원 : <span data-group-cnt=${item.group_nowcnt}>${item.group_nowcnt}명</span></h5>
                                                 </div>
                                             </div>
                                         </span>
@@ -71,6 +71,21 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateLiCount() {
         var liCount = $(".list-box li").length;
         $(".currentCnt").text(liCount);
+
+        // .currentCnt와 .totalCnt 요소를 가져옵니다.
+        var currentCountElement = document.querySelector('.currentCnt');
+        var totalCountElement = document.querySelector('.totalCnt');
+
+        // #moreBtn 요소를 가져옵니다.
+        var moreButton = document.getElementById('moreBtn');
+
+        // .currentCnt와 .totalCnt의 값을 비교합니다.
+        if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
+            // 값이 동일하거나 .currentCnt가 더 크다면, #moreBtn을 숨깁니다.
+            moreButton.style.display = 'none';
+        } else {
+            moreButton.style.display = 'block';  // Optional: 만약 total count가 더 크다면 버튼을 다시 보여줍니다.
+        }
     }
 
     //게임 콘텐츠 선택 후 조회
@@ -114,4 +129,18 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     });
+    window.onload = function() {
+            // .currentCnt와 .totalCnt 요소를 가져옵니다.
+            var currentCountElement = document.querySelector('.currentCnt');
+            var totalCountElement = document.querySelector('.totalCnt');
+
+            // #moreBtn 요소를 가져옵니다.
+            var moreButton = document.getElementById('moreBtn');
+
+            // .currentCnt와 .totalCnt의 값을 비교합니다.
+            if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
+                // 값이 동일하거나 .currentCnt가 더 크다면, #moreBtn을 숨깁니다.
+                moreButton.style.display = 'none';
+            }
+        }
  });
