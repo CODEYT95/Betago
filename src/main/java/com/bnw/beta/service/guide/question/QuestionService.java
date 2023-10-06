@@ -9,8 +9,13 @@ public interface QuestionService {
 
     List<QuestionDTO> getQuestions(int page);
 
-    QuestionDTO getQuestion(Integer id);
+    QuestionDTO selectQuestion(Integer qna_no);
 
     void add(String subject, String content, MemberDTO memberDTO);
+
+    void modify(QuestionDTO question, String subject, String content,String pw);
+
+    boolean isPasswordCorrect(Integer id, String inputPw);
+
 
 }

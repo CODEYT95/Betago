@@ -10,13 +10,28 @@
     </select>
 
     <select id="selectQuestionById" resultType="QuestionDTO" parameterType="int">
-        SELECT * FROM question WHERE qna_no = #{id}
+        SELECT * FROM question WHERE qna_no = #{qna_no}
     </select>
 
     <insert id="insertQuestion"  parameterType="com.bnw.beta.domain.guide.dto.QuestionDTO">
         INSERT INTO question(qna_title,qna_content,member_id,qna_pw,qna_regdate)
         VALUES (#{qna_title}, #{qna_content}, #{member_id}, #{qna_pw},#{qna_regdate})
     </insert>
+
+    <update id="updateQuestion" parameterType="com.bnw.beta.domain.guide.dto.QuestionDTO">
+        UPDATE question
+        SET
+        qna_title = #{qna_title},
+        qna_content = #{qna_content},
+        qna_pw = #{qna_pw},
+        qna_regdate = #{qna_regdate}
+        WHERE
+        qna_no = #{qna_no}
+    </update>
+
+    <select id="getPwByQnaNo" resultType="string">
+        SELECT qna_pw FROM question WHERE qna_no = #{pw}
+    </select>
 
 
 
