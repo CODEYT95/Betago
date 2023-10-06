@@ -5,6 +5,7 @@ import com.bnw.beta.service.learning.group.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class  GroupController{
     @Autowired
     private GroupService groupService;
 
-    //그룹 등록 가능한 게임 콘텐츠 목록
+    //그룹 등록 가능한 게임 콘텐츠 목록 GET
     @GetMapping("/addList")
     public String groupAddList(@RequestParam(name = "offset", defaultValue = "0") int offset,
                                @RequestParam(name = "title", defaultValue = "")String game_title, Model model){
@@ -38,7 +39,7 @@ public class  GroupController{
         return "/learning/group/groupAddList";
     }
 
-    //그룹 등록 가능한 게임 콘텐츠 목록(추가 데이터 불러오기)
+    //그룹 등록 가능한 게임 콘텐츠 목록 POST (추가 데이터 불러오기)
     @PostMapping("/addList")
     @ResponseBody
     public List<GroupDTO> groupAddList(@RequestParam(name = "offset", defaultValue = "0") int offset,
@@ -50,6 +51,7 @@ public class  GroupController{
         return groupService.groupAddList(game_title, limit, offset);
     }
 
+    //그룹 등록
     @GetMapping("/add")
     public String addGroup(@RequestParam("game_no") int game_no, Model model){
 
@@ -57,6 +59,7 @@ public class  GroupController{
         return "/learning/group/groupAdd";
     }
 
+    //그룹 등록 내용 Insert
     @PostMapping("/addInsert")
     public String addGroupInsert(
             @RequestParam("game_no") int game_no,
@@ -71,8 +74,9 @@ public class  GroupController{
         return "/learning/group/groupAddList";
     }
 
+    //학습 그룹 조회
     @GetMapping("/list")
-    public String grouplist(@RequestParam(name = "groupName", defaultValue = "") String group_name, Model model){
+    public String groupList(@RequestParam(name = "groupName", defaultValue = "") String group_name, Model model){
 
         System.out.println("그룹네임 초기값 확인"+group_name);
 
@@ -81,6 +85,14 @@ public class  GroupController{
         model.addAttribute("groupName", groupService.selectGroupName(member_id));
         model.addAttribute("groupList", groupService.groupListSelect(member_id, group_name));
         return "/learning/group/groupList";
+    }
+
+    //학습 그룹 삭제
+    @PostMapping("delete")
+    @ResponseBody
+    public String groupDelete(@RequestParam(name = "group_no") List<Integer> group_no) {
+        System.out.println("컨트롤러 진입 성공");
+        return groupService.deleteGroup(group_no);
     }
 }
 

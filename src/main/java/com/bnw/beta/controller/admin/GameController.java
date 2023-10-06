@@ -5,10 +5,10 @@ import com.bnw.beta.service.admin.game.GameService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequestMapping("/game")
@@ -36,10 +36,19 @@ public class GameController {
 
     //게임콘텐츠 조회
     @GetMapping("/list")
-    public String selectAll() {
+    public String selectAll(Model model) {
+        List<GameDTO> gameList = gameService.selectAll();
+        model.addAttribute("gameList",gameList);
         return "admin/game/gameList";
-
     }
+    //게임콘텐츠 제목 검색
+    @GetMapping("game/searchByTitle")
+    @ResponseBody
+    public List<GameDTO> searchByTitle(@RequestParam("game_title") String game_title) {
+        List<GameDTO> gameList = gameService.searchByTitle(game_title);
+        return gameList;
+    }
+
 
     //월간 (일일 단위 매출조회)
     @GetMapping("/dailyList")

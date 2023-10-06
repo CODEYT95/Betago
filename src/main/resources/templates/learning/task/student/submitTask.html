@@ -27,15 +27,20 @@
                                                     <div class="member-name"><span th:text="${task.member_name}"></span></div>
                                                 </div>
                                                 <hr>
-                                                <div class="card-content">
-                                                    <div class="task-content">숙제 내용 : <span th:text="${task.task_content}"></span></div>
-                                                    <div class="task-chapter">진도 : <span th:text="${task.task_chapter}"></span></div>
-                                                    <div class="task-deadline">제출 기한 : <span th:text="${#dates.format(task.task_deadline, 'yyyy-MM-dd')}"></span></div>
-                                                    <div class="task-state">상태 : <span th:text="${task.task_state}"></span></div>
-                                                </div>
-                                                <div class="card-button">
-                                                    <div class="button-wrap">
-                                                        <input type="button" id="selectBtn${task.tasksend_no}" class="selectBtn" data-tasksend-no="${task.tasksend_no}" value="숙제하기">
+                                                <div class="card-content-wrap">
+                                                    <div class="card-content">
+                                                        <span>숙제 내용</span>
+                                                        <div class="task-content"><span class="data" th:text="${task.task_content}"></span></div>
+                                                        <div class="task-chapter">진도 : <span class="data" th:text="${task.task_chapter}"></span></div>
+                                                        <div class="task-deadline">제출 기한 : <span class="data" th:text="${#dates.format(task.task_deadline, 'yyyy-MM-dd')}"></span></div>
+                                                        <div class="task-state"> 상태 :
+                                                            <span class="data" th:text="${task.task_state}" th:style="${task.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-button">
+                                                        <div class="button-wrap">
+                                                            <input type="button" id="selectBtn${task.tasksend_no}" class="selectBtn" data-tasksend-no="${task.tasksend_no}" value="숙제하기">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
