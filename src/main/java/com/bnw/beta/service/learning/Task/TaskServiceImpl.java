@@ -2,6 +2,7 @@ package com.bnw.beta.service.learning.Task;
 
 import com.bnw.beta.domain.learning.dao.TaskDAO;
 import com.bnw.beta.domain.learning.dto.TaskDTO;
+import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,15 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public List<TaskDTO> selectTaskById(int member_no) {
         return taskDAO.selectTaskById(member_no);
+    }
+
+    //숙제 번호로 정보 조회
+    @Override
+    public List<TaskDTO> selectTaskByNo(int tasksend_no, int member_no) {
+        TaskSendDTO taskSendDTO = new TaskSendDTO();
+        taskSendDTO.setMember_no(member_no);
+        taskSendDTO.setTask_no(tasksend_no);
+
+        return taskDAO.selectTaskByNo(taskSendDTO);
     }
 }

@@ -13,8 +13,16 @@
     <div th:replace="~{common/sidebar/stu_sidebar :: stu_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="main-content">
+            <div class="main-title">
+                <div class="student-name">
+                    <h1>학습자 : 김바둑<span th:text></span></h1>
+                </div>
+                <div class="title-button-wrap">
+                    <button type="submit" id="submitButton" class="submitBtn" disabled>제출하기</button>
+                </div>
+            </div>
+            <div class="contents-container">
             <div class="mycontents-list">
-                <div class="contents-container">
                     <form id="submitTask" th:action="@{/student/submit}" method="post">
                         <div class="checkbox" th:each="task : ${taskList}">
                             <label class="checkbox-wrapper">
@@ -31,10 +39,12 @@
                                                     <div class="card-content">
                                                         <span>숙제 내용</span>
                                                         <div class="task-content"><span class="data" th:text="${task.task_content}"></span></div>
-                                                        <div class="task-chapter">진도 : <span class="data" th:text="${task.task_chapter}"></span></div>
-                                                        <div class="task-deadline">제출 기한 : <span class="data" th:text="${#dates.format(task.task_deadline, 'yyyy-MM-dd')}"></span></div>
-                                                        <div class="task-state"> 상태 :
-                                                            <span class="data" th:text="${task.task_state}" th:style="${task.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                                                            <div class="task-contentlist">
+                                                                <div class="task-chapter">진도 : <span class="data" th:text="${task.task_chapter}"></span></div>
+                                                                <div class="task-deadline">제출 기한 : <span class="data" th:text="${#dates.format(task.task_deadline, 'yyyy-MM-dd')}"></span></div>
+                                                                <div class="task-state"> 상태 :
+                                                                <span class="data" th:text="${task.task_state}" th:style="${task.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-button">
@@ -49,6 +59,25 @@
                             </label>
                         </div>
                     </form>
+                    <div class="modal-bg"></div>
+                    <div id="myModal" class="modal" style="display:none;">
+                        <input type="hidden" name="tasksend_no">
+                        <div class="modal-wrap">
+                            <div class="modal-content-title">
+                                <div class="modal-game-title">
+                                    <span class="modal-data" th:text="${tasksend.game_title}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="modal-divider">
+
+                            <div class="modalBtn">
+                                <button type="submit">저장</button>
+                                <button class="conceal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

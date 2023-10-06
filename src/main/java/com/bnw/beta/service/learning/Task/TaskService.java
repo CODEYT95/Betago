@@ -1,6 +1,7 @@
 package com.bnw.beta.service.learning.Task;
 
 import com.bnw.beta.domain.learning.dto.TaskDTO;
+import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface TaskService {
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
     List<TaskDTO> selectTaskById(int member_no);
+
+    //숙제 번호로 정보 조회
+    List<TaskDTO> selectTaskByNo(int tesksend_no, int member_no);
 }

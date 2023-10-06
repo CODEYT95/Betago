@@ -1,6 +1,7 @@
 package com.bnw.beta.domain.learning.dao;
 
 import com.bnw.beta.domain.learning.dto.TaskDTO;
+import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,7 @@ public interface TaskDAO {
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
     List<TaskDTO> selectTaskById(int member_no);
+
+    //숙제 번호로 정보 조회
+    List<TaskDTO> selectTaskByNo(TaskSendDTO taskSendDTO);
 }

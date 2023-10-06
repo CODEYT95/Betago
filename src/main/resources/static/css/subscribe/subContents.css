@@ -105,7 +105,7 @@ cursor: pointer;
 }
 
 .checkbox-title {
-      display: flex;
+    display: flex;
     flex-direction: row;
     width: auto;
     border-radius: 11px;
