@@ -49,7 +49,7 @@
                                                     </div>
                                                     <div class="card-button">
                                                         <div class="button-wrap">
-                                                            <input type="button" id="selectBtn${task.tasksend_no}" class="selectBtn" data-tasksend-no="${task.tasksend_no}" value="숙제하기">
+                                                            <input type="button" class="selectBtn" th:attr="data-tasksend-no=${task.tasksend_no}" value="숙제하기">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -60,23 +60,33 @@
                         </div>
                     </form>
                     <div class="modal-bg"></div>
-                    <div id="myModal" class="modal" style="display:none;">
-                        <input type="hidden" name="tasksend_no">
-                        <div class="modal-wrap">
-                            <div class="modal-content-title">
-                                <div class="modal-game-title">
-                                    <span class="modal-data" th:text="${tasksend.game_title}"></span>
-                                </div>
-                            </div>
+                <div id="myModal" class="modal" style="display: none;">
+                    <div class="modal-wrap">
+                        <div class="modal-task-title">
+                            <span class="m_title"></span>
                         </div>
-                        <hr class="modal-divider">
-
-                            <div class="modalBtn">
-                                <button type="submit">저장</button>
-                                <button class="conceal">닫기</button>
-                            </div>
+                        <div class="modal-task-educator">
+                            <span class="m_educator"></span>
+                        </div>
+                        <div class="modal-task-content">
+                            <span class="m_content"></span>
+                        </div>
+                        <div class="modal-task-chapter">
+                            <span class="m_chapter"></span>
+                        </div>
+                        <div class="modal-task-deadline">
+                            <span class="m_deadline"></span>
+                        </div>
+                        <div class="modal-task-state">
+                            <span class="m_state"></span>
                         </div>
                     </div>
+                    <hr class="modal-divider">
+                    <div class="modalBtn">
+                        <button type="submit">저장</button>
+                        <button class="conceal">닫기</button>
+                    </div>
+                </div>
                 </div>
                 </div>
             </div>

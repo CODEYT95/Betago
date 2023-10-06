@@ -25,5 +25,5 @@ public interface TaskDAO {
     List<TaskDTO> selectTaskById(int member_no);
 
     //숙제 번호로 정보 조회
-    List<TaskDTO> selectTaskByNo(TaskSendDTO taskSendDTO);
+    List<TaskDTO> selectTaskByNo(int tasksend_no);
 }

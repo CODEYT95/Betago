@@ -20,28 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-
-    // 숙제하기 버튼에 클릭 이벤트 핸들러 추가
-    var selectButtons = document.querySelectorAll(".selectBtn");
-
-    selectButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            // 숙제하기 버튼을 클릭한 경우
-            var modal = document.getElementById("myModal"); // 모달 요소 가져오기
-            var modalBg = document.querySelector(".modal-bg"); // 모달 배경 요소 가져오기
-            var tasksendNo = button.getAttribute("data-tasksend-no"); // 데이터 속성에서 숙제 번호 가져오기
-
-            console.log(tasksendNo);
-            // 모달 내부에 숙제 번호 표시
-            var modalTaskNo = document.querySelector("#myModal input[name='tasksend_no']");
-            modalTaskNo.value = tasksendNo;
-
-            // 모달과 모달 배경을 보이게 설정
-            modal.style.display = "block";
-            modalBg.style.display = "block";
-        });
-    });
-
     // 모달 닫기 버튼에 이벤트 리스너 추가
     var closeModalButtons = document.querySelectorAll(".conceal");
     closeModalButtons.forEach(function(button) {
@@ -54,5 +32,45 @@ document.addEventListener("DOMContentLoaded", function () {
             modalBg.style.display = "none";
         });
     });
+    //선택한 숙제 정보 모달창에 띄워주기
+    $(document).ready(function() {
+       $(document).ready(function() {
+           $('.selectBtn').click(function() {
+               var taskSendNo = $(this).data('tasksend-no');
+                console.log(taskSendNo);
+               $.ajax({
+                   type: 'POST',
+                   url: '/student/taskInfo',
+                   data: { taskSendNo: taskSendNo },
+                   dataType: 'json',
+                   success: function(data) {
+                       if (data.length > 0) {
 
+                           var task = data[0];
+                           var date = new Date(task.task_deadline);
+                           var formattedDate = date.getFullYear() + '-' +
+                                               ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
+                                               ('0' + date.getDate()).slice(-2);
+
+                           $('.m_title').text(task.game_title);
+                           $('.m_educator').text(task.member_name);
+                           $('.m_content').text(task.task_content);
+                           $('.m_chapter').text(task.task_chapter);
+                           $('.m_deadline').text(formattedDate);
+                           $('.m_state').text('상태 : ' + task.task_state).css('color', task.task_state === '미작성' ? 'red' : 'green');
+                       }
+
+                       var modal = document.getElementById("myModal");
+                       var modalBg = document.querySelector(".modal-bg");
+                       modal.style.display = "block";
+                       modalBg.style.display = "block";
+                   },
+                   error: function() {
+                       alert('서버 요청 중 오류가 발생했습니다.');
+                   }
+               });
+
+           });
+       });
+    });
 });
