@@ -53,10 +53,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                                ('0' + date.getDate()).slice(-2);
 
                            $('.m_title').text(task.game_title);
-                           $('.m_educator').text(task.member_name);
+                           $('.m_educator').text('교육자 : ' + task.member_name);
                            $('.m_content').text(task.task_content);
-                           $('.m_chapter').text(task.task_chapter);
-                           $('.m_deadline').text(formattedDate);
+                           $('.m_chapter').text('진도 : ' + task.task_chapter);
+                           $('.m_deadline').text('제출기한 : ' + formattedDate);
                            $('.m_state').text('상태 : ' + task.task_state).css('color', task.task_state === '미작성' ? 'red' : 'green');
                        }
 

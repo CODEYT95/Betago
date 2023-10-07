@@ -267,3 +267,30 @@
     background: #f9ecbe;
     cursor: pointer;
 }
+
+.modal-wrap > div{
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.modal-wrap2 {
+    margin: 10px 10px 0 10px;
+}
+
+.modal-wrap2 > div{
+    width: 60%;
+    margin: 0;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.modal-wrap2 > div > span{
+    margin: 0;
+}
+
+.m_title{
+    font-size: 18px;
+    font-weight: bold;
+}

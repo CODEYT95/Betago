@@ -69,7 +69,7 @@
                             <span class="m_educator"></span>
                         </div>
                         <div class="modal-task-content">
-                            <span class="m_content"></span>
+                            <span>숙제내용:</span><br><span class="m_content"></span>
                         </div>
                         <div class="modal-task-chapter">
                             <span class="m_chapter"></span>
@@ -79,6 +79,20 @@
                         </div>
                         <div class="modal-task-state">
                             <span class="m_state"></span>
+                        </div>
+                    </div>
+                    <div class="modal-wrap2">
+                        <div class="modal-chapter">
+                            <span>진도</span>
+                            <input class="submit_chapter" type="text">
+                        </div>
+                        <div class="modal-learning-content">
+                            <span>금번 학습 내용</span>
+                            <input class="submit_content" type="text">
+                        </div>
+                        <div class="modal-add-content">
+                            <span>추가 질의 내용</span>
+                            <input class="submit_add" type="text">
                         </div>
                     </div>
                     <hr class="modal-divider">
@@ -92,7 +106,6 @@
             </div>
         </div>
     </div>
-</div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>
