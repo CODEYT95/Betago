@@ -21,4 +21,7 @@ public interface NoticeService {
 
     //공지게시판 수정
     NoticeDTO update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] file) throws IOException;
+
+    //공지게시판 삭제
+    void delete(Long notice_no);
 }

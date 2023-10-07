@@ -41,7 +41,7 @@ public class NoticeController {
                               @RequestParam("file")MultipartFile[] file,
                               Authentication authentication, Model model) throws IOException{
        String member_id = authentication.getName();
-
+        model.addAttribute("member_id",member_id);
         try{
             noticeService.insert(noticeDTO, file,member_id);
             return "redirect:list";
@@ -79,6 +79,13 @@ public class NoticeController {
                          @RequestParam("file") MultipartFile[] file) throws IOException {
         System.out.println("컨트롤러 디티오"+ noticeDTO);
         noticeService.update(notice_no,noticeDTO,file);
+        return "redirect:/notice/list";
+    }
+
+    //공지게시판 삭제
+    @GetMapping("/delete/{notice_no}")
+    public String delete(@PathVariable("notice_no") Long notice_no){
+        noticeService.delete(notice_no);
         return "redirect:/notice/list";
     }
 }

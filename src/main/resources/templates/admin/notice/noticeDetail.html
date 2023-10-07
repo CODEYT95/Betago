@@ -20,8 +20,6 @@
             <textarea rows="10" cols="50" name="notice_content" th:text="${noticeDTO.notice_content}"></textarea><br/>
             <input th:value="${noticeDTO.notice_regdate}">
 
-            <input th:value="${noticeDTO.member_id}">
-
             <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}">
                <img th:src="@{|/image/notice/${noticefile.file_rename}|}" width="300" height="300" alt="image">
             </div><br/>

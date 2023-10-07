@@ -11,6 +11,9 @@ import java.util.Optional;
 @Mapper
 @Repository
 public interface NoticeDAO {
+
+    //게시글 목록 조회
+    List<NoticeDTO> noticeList(NoticeDTO noticeDTO);
     
     //게시글 등록
     Long insert(NoticeDTO noticeDTO);
@@ -28,10 +31,10 @@ public interface NoticeDAO {
     int update(NoticeDTO noticeDTO);
 
     //파일 삭제
-    List<NoticeFileDTO> deleteFile(Long notice_no);
+    void deleteFile(Long notice_no);
 
-    //게시글 목록 조회
-    List<NoticeDTO> noticeList(NoticeDTO noticeDTO);
+   //게시글 삭제
+    void delete(Long notice_no);
 
 
 

@@ -11,6 +11,7 @@
     <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
     <div class="content-wrap" >
         <form th:action="@{/notice/update}" enctype="multipart/form-data" method="post">
+
             <input type="hidden" name="notice_no" th:value="${notice_no}">
             <label> 공지구분
                 <select name="notice_category" th:value="${noticeDTO.notice_category}">

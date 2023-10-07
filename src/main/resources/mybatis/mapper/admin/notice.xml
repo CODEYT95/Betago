@@ -43,15 +43,15 @@
         ]]>
     </update>
     <!--사진 삭제-->
-    <delete id="deleteFile" parameterType="long">
+    <delete id="deleteFile" parameterType="NoticeFileDTO">
         <![CDATA[
-        DELETE FROM notice_file
+        DELETE FROM filenotice
         WHERE notice_no = #{notice_no}
         ]]>
     </delete>
 
     <!--게시글 삭제-->
-    <delete id="deleteById" parameterType="long">
+    <delete id="delete" parameterType="long">
         <![CDATA[
         UPDATE notice
         SET notice_isshow = 'N'

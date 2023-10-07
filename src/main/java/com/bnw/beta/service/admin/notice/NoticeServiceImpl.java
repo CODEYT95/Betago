@@ -109,8 +109,13 @@ public class NoticeServiceImpl implements NoticeService {
                 noticeDAO.fileUpload(noticeFileDTO);
                 }
             }
-        System.out.println("서비스디티오3"+noticeDTO);
         noticeDAO.update(noticeDTO);
         return noticeDTO;
+    }
+
+    //공지게시판 삭제
+    @Override
+    public void delete(Long notice_no){
+        noticeDAO.delete(notice_no);
     }
 }
