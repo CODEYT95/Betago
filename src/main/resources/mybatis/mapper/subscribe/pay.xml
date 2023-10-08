@@ -2,13 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.subscribe.dao.payDAO">
 <!--게임컨텐츠결제-->
-
 <select id="selectContentsPay" parameterType="Integer" resultType="payDTO">
     <![CDATA[
     SELECT * FROM game WHERE game_no = #{game_no};
     ]]>
 </select>
 
+<insert id="insertIntoPay" parameterType="payDTO">
+    <![CDATA[
+    INSERT INTO pay (game_no, pay_name, pay_phone, pay_type, buy_name, pay_date)
+    SELECT #{game_no}, member_name AS pay_name, member_phone AS pay_phone, #{pay_type}, #{buy_name}, NOW()
+    FROM member
+    WHERE member_id = #{member_id};
+    ]]>
+</insert>
+
+<!--장바구니 제목과 금액 조회-->
 <select id="selectCart" parameterType="Integer" resultType="CartDTO">
     <![CDATA[
     SELECT c.*, g.game_title, g.game_price
@@ -17,14 +26,11 @@
     WHERE c.member_id = #{member_id};
     ]]>
 </select>
-
-<insert id="insertIntoPay" parameterType="payDTO">
+<!--장바구니 제목과 금액 입력-->
+<insert id="'insertCart" parameterType="cartDTO">
     <![CDATA[
-     INSERT INTO pay (game_no, pay_name, pay_phone, pay_type, buy_name, pay_date)
-    SELECT #{game_no}, member_name AS pay_name, member_phone AS pay_phone, #{pay_type}, #{buy_name}, NOW()
-    FROM member
-    WHERE member_id = #{member_id};
+    INSERT INTO cart (game_no, game_title, game_price, member_id)
+    VALUES (#{game_no}, #{game_title}, #{game_price}, #{member_id});
     ]]>
 </insert>
-
 </mapper>

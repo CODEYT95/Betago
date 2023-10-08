@@ -26,7 +26,7 @@
                         <div class="pay-ordercontent">
                             <div class="tag-container">
                                 <div class="tag-container">
-                                    <div th:each="game : ${selectpaylist}" class="tag">
+                                    <div th:each="game : ${cartList}" class="tag">
                                         <div th:text="${game.game_title}"></div>
                                         <a href="#" class="delete-btn" th:data-game-no="${game.game_no}" onclick="removeGame(this)">x</a>
                                     </div>
@@ -61,8 +61,8 @@
                     <div class="pricetitle">
                         결제금액 :
                         <select name="productName" class="mypaylist"  onchange="updateTotalPrice()">
-                        <option th:each="game : ${selectpaylist}" th:text="${game.game_price}" th:data-price="${game.game_price}"></option>
-                    </select>
+                        <option th:each="game : ${cartList}" th:text="${game.game_price}" th:data-price="${game.game_price}"></option>
+                        </select>
                     </div>
                     <div class="buttonbox">
                         <div class="pay-submit">

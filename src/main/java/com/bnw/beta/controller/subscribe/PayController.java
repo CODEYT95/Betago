@@ -1,5 +1,6 @@
 package com.bnw.beta.controller.subscribe;
 
+import com.bnw.beta.domain.subscribe.dto.CartDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
 import com.bnw.beta.service.subscribe.pay.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,17 @@ public class PayController {
     @Autowired
     private PayService payService;
 
-    @GetMapping("/paylist")
-    public String payList(Model model, Integer game_no){
-
-        List<payDTO> selectpaylist = payService.selectContentsPay(game_no);
+    @GetMapping("/cartList")
+    public String cartList(Model model, Integer game_no) {
+        // 수정: selectCart 메서드를 호출해야 합니다.
+        List<CartDTO> selectCartList = payService.selectCart(game_no);
         System.out.println("리스트 컨트롤러");
 
-        model.addAttribute("selectpaylist", selectpaylist);
+        // 수정: 모델에 새로운 변수명으로 저장합니다.
+        model.addAttribute("selectCartList", selectCartList);
         return "subscribe/pay";
     }
+
 
     @PostMapping("/payment")
     public String submitPay(payDTO payDTO, String member_id) {

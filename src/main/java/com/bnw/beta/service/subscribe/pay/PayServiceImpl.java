@@ -14,6 +14,7 @@ import java.util.List;
 public class PayServiceImpl implements PayService {
     @Autowired
     private payDAO payDAO;
+
     @Override
     public List<payDTO> selectContentsPay(Integer game_no) {
         return payDAO.selectContentsPay(game_no);
@@ -28,4 +29,8 @@ public class PayServiceImpl implements PayService {
         public int insertIntoPay(payDTO payDTO) {
             return payDAO.insertIntoPay(payDTO);
         }
+    @Override
+    public int insertIntoCart(CartDTO cartDTO) {
+        return payDAO.insertIntoCart(cartDTO);
+    }
 }

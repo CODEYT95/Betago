@@ -10,5 +10,6 @@ public interface PayService {
 
     List<CartDTO>selectCart(Integer game_no);
     int insertIntoPay(payDTO payDTO);
+    int insertIntoCart(CartDTO cartDTO);
 
 }

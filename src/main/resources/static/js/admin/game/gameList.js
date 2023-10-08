@@ -47,6 +47,7 @@ function isAnyCheckboxChecked() {
             });
         });
     });
+
 function goToPayList() {
     const selectedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
 
@@ -57,7 +58,7 @@ function goToPayList() {
         // 배열을 콤마로 연결한 문자열로 변환합니다.
         const gameNosParam = selectedGameNos.join(",");
 
-        window.location.href = `/paylist?game_nos=${gameNosParam}`;
+        window.location.href = `/cartList?game_nos=${gameNosParam}`;
     } else {
         alert("게임을 선택하세요!");
     }
