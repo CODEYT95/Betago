@@ -22,6 +22,12 @@ public class GroupDTO {
     private int group_nowcnt;
     private String member_id;
 
+    //회원
+    private String member_name;
+    private String member_phone;
+    private String member_email;
+    private Date join_date;
+
     //
     private int LIMIT;
     private int OFFSET;

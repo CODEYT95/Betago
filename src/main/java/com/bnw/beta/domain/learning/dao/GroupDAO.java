@@ -31,6 +31,9 @@ public interface GroupDAO {
     //학습 그룹 name 조회
     List<GroupDTO> selectGroupName(String member_id);
 
+    //학습 그룹 상세 조회
+    List<GroupDTO> selectGroupDetail(GroupDTO groupDTO);
+
     //학습 그룹 삭제
     int deleteGroup(List<Integer> group_no);
 }

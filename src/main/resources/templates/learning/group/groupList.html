@@ -66,6 +66,66 @@
             window.location.href = "/educator/group/list?groupName=" + encodeURIComponent(groupName);
         });
     });
+
+    $(document).ready(function() {
+    $(".detail-search").click(function() {
+        var groupName = $(this).attr("data-group-name");
+        console.log(groupName);
+        $(".sBtn-text1").text(groupName);
+    });
+
+    $(document).ready(function() {
+        const modalGroupMenu = document.querySelector(".modal .select-menu-group");
+        const modalSelectGroupBtn = modalGroupMenu.querySelector(".select-btn-group");
+        const modalGroupOptions = modalGroupMenu.querySelectorAll(".option");
+        const modalGroupSBtnText = modalGroupMenu.querySelector(".sBtn-text1");
+
+        modalSelectGroupBtn.addEventListener("click", () => modalGroupMenu.classList.toggle("active"));
+        modalGroupOptions.forEach(option => {
+        option.addEventListener("click", () => {
+        let selectedOption = option.querySelector(".option-text").innerText;
+        modalGroupSBtnText.innerText = selectedOption;
+        modalGroupMenu.classList.remove("active");
+            });
+        });
+    });
+    $(".detail-search").click(function() {
+        var group_no = $(this).data("detail-no");
+        var group_name = $(this).data("group-name");
+
+        $.ajax({
+            type: "GET",
+            url: "/educator/group/listDetail",
+            data: {
+                group_no: group_no,
+                group_name: group_name
+            },
+            dataType: "json", // 이 부분을 JSON으로 설정
+            success: function(response) {
+                console.log("AJAX 요청 성공:", response);
+
+                // 데이터를 사용하여 HTML을 업데이트
+                var memberList = $(".member-list");
+
+                $.each(response, function(index, groupItem) {
+                    var li = $("<li>");
+                    li.append("<span style='width: 10%;'>" + (index + 1) + "</span>");
+                    li.append("<span style='width: 15%;'>" + groupItem.member_name + "</span>");
+                    li.append("<span style='width: 20%;'>" + groupItem.member_phone + "</span>");
+                    li.append("<span style='width: 40%;'>" + groupItem.member_email + "</span>");
+                    li.append("<span style='width: 15%;'>" + groupItem.join_date + "</span>");
+
+                    memberList.append(li);
+                });
+            },
+            error: function(error) {
+                // AJAX 요청이 실패할 때 처리할 코드
+                console.error("AJAX 요청 실패:", error);
+            }
+        });
+    });
+});
+
 </script>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
@@ -116,25 +176,23 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td class="">
-                                <div class="">
-                                    <span th:text="${groupList.group_name}"></span>
-                                </div>
+                            <td>
+                                <span class="group_name" th:attr="data-group-name=${groupList.group_name}" th:text="${groupList.group_name}"></span>
                             </td>
                             <td>
                                 <span th:text="${groupList.game_title}"></span>
                             </td>
-                            <td class="status">
-                                <span class="active" th:text="${groupList.group_cnt}-${groupList.group_nowcnt}"></span>
+                            <td>
+                                <span th:text="${groupList.group_cnt}-${groupList.group_nowcnt}"></span>
                             </td>
                             <td>
                                 <span th:text="${groupList.group_enddate}"></span>
                             </td>
                             <td>
-                                <span class="active" th:text="${groupList.group_nowcnt}"></span>
+                                <span th:text="${groupList.group_nowcnt}"></span>
                             </td>
                             <td>
-                                <button class="detail-search" th:attr="data-detail-no=${groupList.group_no}"><i class="ri-search-eye-line" data-tasksend_no=""></i></button>
+                                <button class="detail-search" th:attr="data-detail-no=${groupList.group_no}, data-group-name=${groupList.group_name}"><i class="ri-search-eye-line" data-tasksend_no=""></i></button>
                             </td>
                         </tr>
                         </tbody>
@@ -142,6 +200,43 @@
                 </div>
             </div>
         </section>
+        <div id="modal" class="modal">
+            <div class="modal-wrap">
+                <div class="modal-header">
+                    <h2>학습 그룹</h2>
+                <div class="select-menu-group">
+                    <div class="select-btn-group">
+                        <span class="sBtn-text1">전체</span>
+                        <i class="bx bx-chevron-down"></i>
+                    </div>
+                    <ul class="options">
+                        <li class="option" th:each="groupName : ${groupName}">
+                            <span class="option-text" th:text="${groupName.group_name}"></span>
+                        </li>
+                    </ul>
+                </div>
+                    <button class="search-btn">조회</button>
+                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="groupinfo">
+                    <span>게임 콘텐츠 : 바둑 온라인 교육</span>
+                    <span>그룹 제한 인원 : 50명</span>
+                    <span>그룹 가능 인원 : 30명</span>
+                </div>
+                <hr>
+                <div class="modal-content">
+                    <div class="memberinfo-header">
+                        <span style="width: 10%;">No</span>
+                        <span style="width: 15%;">학생 이름</span>
+                        <span style="width: 20%;">연락처</span>
+                        <span style="width: 40%;">이메일</span>
+                        <span style="width: 15%;">가입일자</span>
+                    </div>
+                    <ul class="member-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

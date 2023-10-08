@@ -87,6 +87,29 @@
         ]]>
     </select>
 
+    <!-- 학습 그룹 상세 조회 -->
+    <select id="selectGroupDetail" parameterType="GroupDTO" resultType="GroupDTO">
+        <![CDATA[
+        SELECT
+        m.member_name, m.member_phone, m.member_email, m.join_date,
+        g.group_name, g.group_cnt, g.group_nowcnt,
+        ga.game_title
+        FROM
+        groupmember AS gm
+        JOIN
+        member AS m ON gm.member_no = m.member_no
+        JOIN
+        studygroup AS g ON gm.group_no = g.group_no
+        JOIN
+        game AS ga ON gm.game_no = ga.game_no
+        WHERE
+        gm.group_no = #{group_no}
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND g.group_name = #{group_name}
+        </if>
+    </select>
+
     <!-- 학습 그룹 삭제 -->
     <delete id="deleteGroup" parameterType="java.util.List">
         <![CDATA[

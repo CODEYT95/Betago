@@ -81,6 +81,18 @@ public class  GroupController{
         return "/learning/group/groupList";
     }
 
+    //학습 그룹 상세 조회
+    @GetMapping("/listDetail")
+    @ResponseBody
+    public List<GroupDTO> selectGroupDetail(@RequestParam(name = "group_no") int group_no,
+                                            @RequestParam(name = "group_name",defaultValue = "") String group_name){
+
+        System.out.println(group_name+group_no);
+
+        return groupService.selectGroupDetail(group_no,group_name);
+    }
+
+
     //학습 그룹 삭제
     @PostMapping("delete")
     @ResponseBody

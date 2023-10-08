@@ -123,6 +123,10 @@ nav .header-navi .links li a {
   line-height: 18px;
 }
 
+nav .header-navi .links li a:hover {
+    color: #00c73c;
+}
+
 .links li:hover .useInfo-arrow,
 .links li:hover .subscribe-arrow,
 .links li:hover .learning-arrow,
@@ -445,9 +449,9 @@ nav .header-navi .links li:hover .admin-sub-menu {
     max-width: 100%;
   }
 }
-.bxs-chevron-down:before {
+.bxs-chevron-up:before {
     content: "\ed35";
-    font-size: 20px;
+    font-size: 19px;
 }
 .bx-x:before {
     content: "\ec8d";
@@ -457,3 +461,4 @@ nav .header-navi .links li:hover .admin-sub-menu {
 .bx {
     margin: 0px;
 }
+

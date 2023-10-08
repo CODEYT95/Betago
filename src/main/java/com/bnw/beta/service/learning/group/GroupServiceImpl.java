@@ -76,8 +76,6 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDTO> groupListSelect(String member_id, String group_name){
 
-
-
         GroupDTO groupDTO = new GroupDTO();
         if (group_name.equals("전체")){
             group_name="";
@@ -92,6 +90,18 @@ public class GroupServiceImpl implements GroupService {
     //학습 그룹 name 조회
     @Override
     public List<GroupDTO> selectGroupName(String member_id){return groupDAO.selectGroupName(member_id);}
+
+    //학습 그룹 상세 조회
+    @Override
+    public List<GroupDTO> selectGroupDetail(int group_no, String group_name) {
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroup_no(group_no);
+        groupDTO.setGroup_name("");
+        System.out.println(groupDTO);
+        System.out.println("값확인"+groupDAO.selectGroupDetail(groupDTO));
+        return groupDAO.selectGroupDetail(groupDTO);
+    }
 
     //학습 그룹 삭제
     @Override
