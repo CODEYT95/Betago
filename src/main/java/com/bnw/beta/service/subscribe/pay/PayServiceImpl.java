@@ -3,6 +3,7 @@ package com.bnw.beta.service.subscribe.pay;
 import com.bnw.beta.domain.subscribe.dao.payDAO;
 import com.bnw.beta.domain.subscribe.dto.CartDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,11 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
+    public List<payDTO> selectBuylist(List<Integer> game_no) {
+        return payDAO.selectBuylist(game_no);
+    }
+
+    @Override
         public int insertIntoPay(payDTO payDTO) {
             return payDAO.insertIntoPay(payDTO);
         }
@@ -33,4 +39,6 @@ public class PayServiceImpl implements PayService {
     public int insertIntoCart(CartDTO cartDTO) {
         return payDAO.insertIntoCart(cartDTO);
     }
+
+
 }

@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     return true;
 });
+});
 
 function validateForm() {
     var buyerName = document.getElementById("buyer-name").value;
@@ -118,6 +119,10 @@ function validateName(name) {
     return /^[가-힣a-zA-Z]+$/.test(name) && name.length >= 2;
 }
 
+function validatePayDepositor(depositor) {
+    return /^[가-힣a-zA-Z]{2,}$/.test(depositor);
+}
+
 function validatePhone(phone) {
     if (!/^(010)\d{8}$/.test(phone)) {
         return false;
@@ -155,4 +160,58 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.removeItem('selectedGameTitle');
         sessionStorage.removeItem('selectedGamePrice');
     }
+});
+
+
+////////////////////////////////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+    var totalPrice = 0;
+    var gameNos = [];
+
+    //delete-btn 클릭 시 가격 업데이트 및 태그 삭제
+    document.querySelectorAll('.delete-btn').forEach(function(button) {
+        gameNos.push(button.getAttribute('data-game-no'));
+        button.addEventListener('click', deleteTag);
+    });
+
+    document.querySelectorAll('.price').forEach(function(input) {
+        totalPrice += parseFloat(input.value);
+    });
+
+    updateTotalPrice();
+
+    //태그 삭제 하고 url에 넣을 game_no배열 업데이트하는 함수
+    function deleteTag(event) {
+        event.preventDefault();
+
+        const tag = event.target.closest('.tag');
+        if (tag) {
+            var deletedGamePriceInput = tag.querySelector('input[hidden]');
+            var deletedGamePrice = parseFloat(deletedGamePriceInput.value);
+
+            const gameNo = tag.querySelector('.delete-btn').getAttribute('data-game-no');
+
+            const index = gameNos.indexOf(gameNo);
+            if (index > -1) {
+                gameNos.splice(index, 1);
+            }
+
+            tag.remove();
+
+            totalPrice -= deletedGamePrice;
+
+           updateTotalPrice();
+           updateUrl();
+        }
+    }
+     //태그 삭제시 url 업데이트 해주는 함수
+     function updateUrl() {
+         let newUrl = 'http://localhost:8800/cartList?game_nos=' + gameNos.join(',');
+         window.history.pushState({}, null, newUrl);
+     }
+     //가격 업데이트 해주는 함수
+     function updateTotalPrice() {
+         var productListSpan = document.querySelector('span[name=productName].mypaylist');
+         productListSpan.textContent = Math.round(totalPrice) + "원";
+     }
 });

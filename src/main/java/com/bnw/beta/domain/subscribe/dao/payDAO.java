@@ -13,6 +13,9 @@ public interface payDAO {
     List<payDTO>selectContentsPay(Integer game_no);
 
     List<CartDTO>selectCart(Integer game_no);
+
+    List<payDTO>selectBuylist(List<Integer> game_no);
+
     int insertIntoPay(payDTO payDTO);
     int insertIntoCart(CartDTO cartDTO);
 }

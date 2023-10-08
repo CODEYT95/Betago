@@ -10,14 +10,21 @@
 
 <insert id="insertIntoPay" parameterType="payDTO">
     <![CDATA[
-    INSERT INTO pay (game_no, pay_name, pay_phone, pay_type, buy_name, pay_date)
-    SELECT #{game_no}, member_name AS pay_name, member_phone AS pay_phone, #{pay_type}, #{buy_name}, NOW()
-    FROM member
-    WHERE member_id = #{member_id};
+    INSERT INTO pay (member_id, game_no, pay_name, pay_phone, pay_type, buy_name)
+    VALUES (#{member_id}, #{game_no}, #{pay_name}, #{pay_phone}, #{pay_type}, #{buy_name});
     ]]>
 </insert>
+<select id="selectBuylist" parameterType="java.util.List" resultType="payDTO">
+    <![CDATA[
+    SELECT * FROM game
+    WHERE game_no IN
+    ]]>
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+</select>
 
-<!--장바구니 제목과 금액 조회-->
+<!--장바구니 제목과 금액 조회
 <select id="selectCart" parameterType="Integer" resultType="CartDTO">
     <![CDATA[
     SELECT c.*, g.game_title, g.game_price
@@ -26,11 +33,13 @@
     WHERE c.member_id = #{member_id};
     ]]>
 </select>
-<!--장바구니 제목과 금액 입력-->
+-->
+<!--장바구니 제목과 금액 입력
 <insert id="'insertCart" parameterType="cartDTO">
     <![CDATA[
     INSERT INTO cart (game_no, game_title, game_price, member_id)
     VALUES (#{game_no}, #{game_title}, #{game_price}, #{member_id});
     ]]>
 </insert>
+    -->
 </mapper>

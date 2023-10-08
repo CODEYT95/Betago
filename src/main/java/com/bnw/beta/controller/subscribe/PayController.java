@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -17,22 +18,27 @@ public class PayController {
     private PayService payService;
 
     @GetMapping("/cartList")
-    public String cartList(Model model, Integer game_no) {
-        // 수정: selectCart 메서드를 호출해야 합니다.
-        List<CartDTO> selectCartList = payService.selectCart(game_no);
-        System.out.println("리스트 컨트롤러");
-
-        // 수정: 모델에 새로운 변수명으로 저장합니다.
-        model.addAttribute("selectCartList", selectCartList);
+    public String cartList(Model model, @RequestParam("game_nos") List<Integer> gameNos) {
+        List<payDTO> cartlist = payService.selectBuylist(gameNos);
+        model.addAttribute("cartlist", cartlist);
         return "subscribe/pay";
     }
 
-
     @PostMapping("/payment")
-    public String submitPay(payDTO payDTO, String member_id) {
-        System.out.println("결제컨트롤러");
-        int result = payService.insertIntoPay(payDTO);
-        System.out.println(result);
+    public String submitPay(@RequestParam("game_no[]") List<Integer> game_no,
+                            payDTO payDTO, String member_id) {
+
+        member_id="baduk";
+
+        for (int i = 0; i < game_no.size(); i++) {
+            Integer gameNo = game_no.get(i);
+
+            payDTO.setMember_id(member_id);
+            payDTO.setGame_no(gameNo);
+
+            System.out.println(payDTO);
+            payService.insertIntoPay(payDTO);
+        }
         return "redirect:/subscribe/paylist";
     }
 }
