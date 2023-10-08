@@ -6,8 +6,7 @@ import com.bnw.beta.service.subscribe.pay.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,14 +15,33 @@ public class PayController {
     @Autowired
     private PayService payService;
 
-    @GetMapping("/cartList")
-    public String cartList(Model model, Integer game_no) {
-        // 수정: selectCart 메서드를 호출해야 합니다.
-        List<CartDTO> selectCartList = payService.selectCart(game_no);
-        System.out.println("리스트 컨트롤러");
+    @PostMapping(value = "/addCart")
+    public String addToCart(@RequestParam("selectedGameNos") int[] selectedGameNos, String member_id) {
+        member_id="dumy";
+        StringBuilder redirectUrl = new StringBuilder("redirect:/cartList?");
+        for (int gameNo : selectedGameNos) {
+            redirectUrl.append("selectedGameNos=").append(gameNo).append("&");
 
-        // 수정: 모델에 새로운 변수명으로 저장합니다.
-        model.addAttribute("selectCartList", selectCartList);
+            payService.insertIntoCart(gameNo, member_id);
+        }
+
+        // "/cartList"로 바로 리다이렉트
+        return "redirect:/cartList";
+    }
+
+    @GetMapping("/cartList")
+    public String cartList(Model model, String member_id, @RequestParam(value = "selectedGameNos", required = false) int[] selectedGameNos) {
+        // 장바구니 목록을 조회합니다.
+        member_id="dumy";
+        CartDTO cartList = payService.selectCart(member_id);
+
+        // 조회한 장바구니 목록을 Model에 추가
+        model.addAttribute("cartList", cartList);
+
+        // 선택한 게임 번호를 Model에 추가
+        model.addAttribute("selectedGameNos", selectedGameNos);
+
+        // pay 페이지로 이동
         return "subscribe/pay";
     }
 

@@ -7,4 +7,5 @@ import lombok.Data;
         private int game_no;
         private int game_price;
         private String game_title;
+        private String member_id;
 }

@@ -15,8 +15,9 @@
     <div th:replace="~{common/sidebar/pay_sidebar :: pay_sidebarFragment}"></div>
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
-            <form action="game/searchByTitle" method="get" class="form-container" id="searchForm">
+
                 <div class="gameContent-search">
+                    <form action="game/searchByTitle" method="get" class="form-container" id="searchForm">
                     <div class="searchReq">
                         <select name="game_title">
                             <option value="">게임 선택</option> <!-- 기본 선택 항목 -->
@@ -24,39 +25,43 @@
                         </select>
                         <input type="button" value="검색" id="searchButton" onclick="submitForm()" />
                     </div>
+                    </form>
+                    <form th:action="@{/addCart}" method="Post">
                     <div class="subscribe">
-                        <input type="button" value="구독하기" id="subscribeButton" onclick="goToPayList()" disabled class="submit-button" />
+                        <button type="submit"  id="subscribeButton" disabled class="submit-button">구독하기</button>
+                    </div>
+                </div>
+
+
+                <div class = "gameContents-list">
+                    <div class="contents-container">
+                        <div class="checkbox" th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="selectedGameNos" th:value="${content.game_no}" />
+                                <span class="checkbox-title">
+                                    <div class="card">
+                                        <div class="poster"><img th:src="@{/image/testBADUK2.png}">
+                                            <div class="card-details">
+                                                <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
+                                                <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
+                                                <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
+                                            </div>
+                                            <div class="details">
+                                                <h4>난이도 : <span th:text="${content.game_level}"></span></h4>
+                                                <h5>총인원 : <span th:text="${content.game_total}"></span></h5>
+                                                <h6>가격 : <span th:text="${content.game_price}"></span></h6>
+                                                <h7>할인 : <span th:text="${content.game_discount}"></span></h7>
+                                                <h8>판매가 : <span th:text="${content.game_sell}"></span></h8>
+                                                <h9>상품상세설명 : <span th:text="${content.game_content}"></span></h9>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </form>
-            <div class = "gameContents-list">
-                <div class="contents-container">
-                    <div class="checkbox" th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
-                        <label class="checkbox-wrapper">
-                            <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="selectedGameNos" th:value="${content.game_no}" />
-                            <span class="checkbox-title">
-                                        <div class="card">
-                                            <div class="poster"><img th:src="@{/image/testBADUK2.png}">
-                                                <div class="card-details">
-                                                    <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
-                                                    <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
-                                                    <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
-                                                </div>
-                                                <div class="details">
-                                                    <h4>난이도 : <span th:text="${content.game_level}"></span></h4>
-                                                    <h5>총인원 : <span th:text="${content.game_total}"></span></h5>
-                                                    <h6>가격 : <span th:text="${content.game_price}"></span></h6>
-                                                    <h7>할인 : <span th:text="${content.game_discount}"></span></h7>
-                                                    <h8>판매가 : <span th:text="${content.game_sell}"></span></h8>
-                                                    <h9>상품상세설명 : <span th:text="${content.game_content}"></span></h9>
-                                                </div>
-                                            </div>
-                                        </div>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

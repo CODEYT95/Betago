@@ -125,7 +125,7 @@ function validatePhone(phone) {
 
     return /^\d+$/.test(phone);
 }
-
+}); // 이 부분에 주석을 닫아주어야 합니다.
 
 function handleCheckboxChange(checkbox) {
     if (checkbox.checked) {

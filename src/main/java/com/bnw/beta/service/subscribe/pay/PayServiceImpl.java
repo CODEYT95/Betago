@@ -21,16 +21,21 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    public List<CartDTO> selectCart(Integer game_no) {
-        return payDAO.selectCart(game_no);
+    public CartDTO selectCart(String member_id) {
+        return payDAO.selectCart(member_id);
     }
 
     @Override
         public int insertIntoPay(payDTO payDTO) {
             return payDAO.insertIntoPay(payDTO);
         }
+
     @Override
-    public int insertIntoCart(CartDTO cartDTO) {
+    public int insertIntoCart(int game_no, String member_id) {
+        CartDTO cartDTO = new CartDTO();
+        cartDTO.setCart_no(game_no);
+        cartDTO.setMember_id(member_id);
+
         return payDAO.insertIntoCart(cartDTO);
     }
 }

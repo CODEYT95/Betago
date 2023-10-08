@@ -8,8 +8,8 @@ import java.util.List;
 public interface PayService {
     List<payDTO>selectContentsPay(Integer game_no);
 
-    List<CartDTO>selectCart(Integer game_no);
+    CartDTO selectCart(String member_id);
     int insertIntoPay(payDTO payDTO);
-    int insertIntoCart(CartDTO cartDTO);
+    int insertIntoCart(int game_no, String member_id);
 
 }

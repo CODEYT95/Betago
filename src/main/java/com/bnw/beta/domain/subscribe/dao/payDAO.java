@@ -12,7 +12,7 @@ import java.util.List;
 public interface payDAO {
     List<payDTO>selectContentsPay(Integer game_no);
 
-    List<CartDTO>selectCart(Integer game_no);
+    CartDTO selectCart(String member_id);
     int insertIntoPay(payDTO payDTO);
     int insertIntoCart(CartDTO cartDTO);
 }
