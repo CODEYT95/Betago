@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>둑며들다|숙제 생성</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/educator/saveTask.css}">
-  <script type="text/javascript" th:src="@{/js/learning/task/educator/saveTask.js}"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/educator/createTask.css}">
+  <script type="text/javascript" th:src="@{/js/learning/task/educator/createTask.js}"></script>
   <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -12,7 +12,7 @@
 <div class="content">
   <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
   <div class="content-wrap">
-    <form th:action="@{/educator/saveTask}" method="post" class="task-form">
+    <form th:action="@{/educator/createTask}" method="post" class="task-form">
       <div class="saveTask-wrap">
         <div class="content-title">
           <h2>숙제 생성📝</h2>
@@ -110,13 +110,13 @@
               <div class="pagingNum">
                 <ul class="pagination-container" id="pagination">
                   <li th:if="${taskPageDTO.startPage > 5}" class="page-item">
-                    <a class="page-link" th:with="prevPage=${taskPageDTO.startPage - 1}" th:href="@{/educator/saveTaskForm(page=${prevPage})}">Prev</a>
+                    <a class="page-link" th:with="prevPage=${taskPageDTO.startPage - 1}" th:href="@{/educator/createTaskForm(page=${prevPage})}">Prev</a>
                   </li>
                   <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(taskPageDTO.startPage, taskPageDTO.endPage)}" class="page-item">
-                    <a th:href="@{/educator/saveTaskForm(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                    <a th:href="@{/educator/createTaskForm(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
                   </li>
                   <li th:if="${taskPageDTO.endPage < taskPageDTO.totalPages}" class="page-item">
-                    <a class="page-link" th:with="nextPage=${taskPageDTO.startPage + 5}" th:href="@{/educator/saveTaskForm(page=${nextPage})}">Next</a>
+                    <a class="page-link" th:with="nextPage=${taskPageDTO.startPage + 5}" th:href="@{/educator/createTaskForm(page=${nextPage})}">Next</a>
                   </li>
                 </ul>
               </div>

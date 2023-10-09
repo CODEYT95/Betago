@@ -1,12 +1,17 @@
 package com.bnw.beta.service.learning.Task;
 
+import com.bnw.beta.domain.common.paging.TaskPageDTO;
 import com.bnw.beta.domain.learning.dao.TaskDAO;
 import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
+import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,25 +23,42 @@ public class TaskServiceImpl implements TaskService{
     /*교육자 부분--------------------------------------------------------*/
     //숙제 생성
     @Override
-    public int createTask(TaskDTO taskDTO) {
+    public int createTask(String member_id, String task_title, String task_content, String task_chapter, String task_deadline) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date endDate;
+
+        try {
+            endDate = sdf.parse(task_deadline);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0; // 날짜 파싱 오류 시 0을 반환하거나 다른 오류 처리 방식을 선택할 수 있습니다.
+        }
+
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setMember_id(member_id);
+        taskDTO.setTask_title(task_title);
+        taskDTO.setTask_content(task_content);
+        taskDTO.setTask_chapter(task_chapter);
+        taskDTO.setTask_deadline(endDate);
+
         return taskDAO.createTask(taskDTO);
     }
 
-    //숙제 전송 목록
-    @Override
-    public List<TaskDTO> sendTaskList(String member_id, int pageNum, int size) {
+    //전송한 숙제 목록
+    public TaskPageDTO sendTaskList(String member_id, int pageNum, int size) {
         if (pageNum <= 0) {
             pageNum = 1;
         }
-        int offset = (pageNum-1) * size;
-        return taskDAO.sendTaskList(member_id, offset, size);
+        int offset = (pageNum - 1) * size;
+        List<TaskDTO> taskList = taskDAO.sendTaskList(member_id, offset, size);
+        int listCount = taskDAO.sendTaskListCount(member_id);
+
+        TaskPageDTO taskPageDTO = new TaskPageDTO(listCount, pageNum, size, taskList);
+        taskPageDTO.setListCount(listCount);
+
+        return taskPageDTO;
     }
 
-    //숙제 전송 갯수
-    @Override
-    public int sendTaskListCount(String member_id) {
-        return taskDAO.sendTaskListCount(member_id);
-    }
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
@@ -47,7 +69,25 @@ public class TaskServiceImpl implements TaskService{
 
     //숙제 번호로 정보 조회
     @Override
-    public List<TaskDTO> selectTaskByNo(int tasksend_no) {
+    public TaskSendDTO selectTaskByNo(int tasksend_no) {
         return taskDAO.selectTaskByNo(tasksend_no);
+    }
+
+    //숙제 작성하기
+    @Override
+    public int wirteTask(int tasksend_no, int task_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id) {
+
+        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
+        taskSubmitDTO.setTasksend_no(tasksend_no);
+        taskSubmitDTO.setTask_no(task_no);
+        taskSubmitDTO.setMember_id(member_id);
+        taskSubmitDTO.setTasksubmit_chapter(tasksubmit_chapter);
+        taskSubmitDTO.setTasksubmit_content(tasksubmit_content);
+        taskSubmitDTO.setTasksubmit_add(tasksubmit_add);
+
+        int savedTaskSubmit = taskDAO.wirteTask(taskSubmitDTO);
+        int result = taskDAO.saveTask(tasksend_no);
+
+        return (savedTaskSubmit == 1 && result == 1) ? 1 : 0;
     }
 }
