@@ -3,8 +3,6 @@ package com.bnw.beta.service.admin.notice;
 import com.bnw.beta.domain.admin.dao.NoticeDAO;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
-import com.bnw.beta.domain.member.dto.MemberDTO;
-import io.lettuce.core.ScriptOutputType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,11 +18,21 @@ public class NoticeServiceImpl implements NoticeService {
 
     //공지게시판 리스트 조회
     @Override
-    public List<NoticeDTO> noticeList(NoticeDTO noticeDTO) {
-        MemberDTO memberDTO = new MemberDTO();
-        noticeDTO.setMember_id(memberDTO.getMember_id());
-        return noticeDAO.noticeList(noticeDTO);
+    public List<NoticeDTO> noticeList(int pageNum, int size,String searchType, String keyword) {
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        int offset = (pageNum-1) * size;
+        return noticeDAO.noticeList(offset, size, searchType, keyword);
+        }
+
+    //총 게시글 개수 확인
+    @Override
+    public int listCnt(String searchType, String keyword){
+        return this.noticeDAO.listCnt(searchType,keyword);
     }
+
+
 
     //공지게시판 글 등록
     @Override
@@ -82,10 +90,10 @@ public class NoticeServiceImpl implements NoticeService {
             }
             //이전 파일 불러오기 & 삭제
             List<NoticeFileDTO> filed = noticeDAO.getNoticeFiles(notice_no);
-            for (NoticeFileDTO savedfile : filed){
+            for (NoticeFileDTO savedfile : filed) {
                 String filePath = savedfile.getFile_path();
                 File fileDelete = new File(filePath);
-                if(fileDelete.exists() && fileDelete.isFile()){
+                if (fileDelete.exists() && fileDelete.isFile()) {
                     fileDelete.delete();
                 }
             }
@@ -107,15 +115,18 @@ public class NoticeServiceImpl implements NoticeService {
                 noticeFileDTO.setFile_path(savedPath);
                 noticeFileDTO.setNotice_no(noticeDTO.getNotice_no());
                 noticeDAO.fileUpload(noticeFileDTO);
-                }
             }
+        }
         noticeDAO.update(noticeDTO);
         return noticeDTO;
     }
 
     //공지게시판 삭제
     @Override
-    public void delete(Long notice_no){
+    public void delete(Long notice_no) {
         noticeDAO.delete(notice_no);
     }
+
+
+
 }

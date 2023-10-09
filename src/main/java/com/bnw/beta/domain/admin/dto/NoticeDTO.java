@@ -18,6 +18,7 @@ public class NoticeDTO {
 
     private List<NoticeFileDTO> noticeFiles;
 
+
     // getter 및 setter 추가
     public List<NoticeFileDTO> getNoticeFiles() {
         return noticeFiles;

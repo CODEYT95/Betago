@@ -30,8 +30,11 @@
 
             <textarea rows="10" cols="50" name="notice_content"></textarea><br/>
 
-            <input type="file" multiple ="multiple" name="file" ><br/>
 
+            <div class="dropBox" multiple ="multiple">
+                파일을 이곳에 올려주세요.
+            </div>
+            <input type="file" class="btn-file" multiple ="multiple" name="file" ><br/>
             <input type="submit" value="등록">
             <a th:href="@{'/notice/list'}">
                 <button type="button">취소</button>
@@ -40,4 +43,43 @@
     </div>
 </form>
 </body>
+
+<script>
+    const $drop = document.querySelector(".dropBox");
+    const $title = document.querySelector(".dropBox");
+
+    // 파일 입력 필드
+    const $fileInput = document.querySelector('input[type="file"]');
+
+    // 드래그한 파일 객체가 해당 영역에 놓였을 때
+    $drop.ondrop = (e) => {
+        e.preventDefault();
+        $drop.className = "dropBox";
+
+        // 파일 리스트
+        const files = [...e.dataTransfer?.files, ...$fileInput.files];
+
+
+        $title.innerHTML = files.map(v => v.name).join("<br>");
+    }
+
+    // ondragover 이벤트가 없으면 ondrop 이벤트가 실행되지 않음
+    $drop.ondragover = (e) => {
+        e.preventDefault();
+    }
+
+    // 드래그한 파일이 최초로 진입했을 때
+    $drop.ondragenter = (e) => {
+        e.preventDefault();
+
+        $drop.classList.add("active");
+    }
+
+    // 드래그한 파일이 영역을 벗어났을 때
+    $drop.ondragleave = (e) => {
+        e.preventDefault();
+
+        $drop.classList.remove("active");
+    }
+</script>
 </html>
