@@ -1,15 +1,84 @@
 @charset "UTF-8";
-.content_in {
-    margin : auto;
+.head {
+    font-size: 18px;
+    font-weight: bold;
+    color: #454545;
+    margin-bottom: 30px;
+    line-height: 35px;
+}
+.edupost_category {
+    height: 29px;
+    border: 1px solid #d1d1d1;
+    text-align: center;
+    width: 20%;
+    margin-left: 31px;
+    font-size: 16px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+}
+.edupost_type {
+    height: 29px;
+    border: 1px solid #d1d1d1;
+    text-align: center;
+    width: 20%;
+    margin-left: 31px;
+    font-size: 16px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+}
+.edupost_service {
+    height: 29px;
+    border: 1px solid #d1d1d1;
+    text-align: center;
+    width: 20%;
+    margin-left: 16px;
+    font-size: 16px;
+}
+.texarea1 {
+    border: 1px solid #d1d1d1;
+    width: 80%;
+    margin-left: 10px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+
+}
+.texarea2 {
+    border: 1px solid #d1d1d1;
+    height: 300px;
+    width: 80%;
+    margin-left: 31px;
+    margin-bottom: 20px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+}
+.opt {
+    margin-top: 15px;
 }
 
-.main-content{
-    width: 100%;
-    height: 780px;
-    display: flex;
-    flex-direction: column;
+.fileselect {
+    position: relative;
+    right: -4px;
 }
-
+.fileup {
+    position: relative;
+    right: -35px;
+    width: 234px;
+    font-size: 12px;
+}
+.bt_1 {
+    position: relative;
+    right: -342px;
+    bottom: 29px;
+}
+.btn_sub {
+    position: relative;
+    left: 45rem;
+    width: 100px;
+    height: 36px;
+    color: white;
+    background: black;
+    cursor: pointer;
+}
 .pay-datelist{
     width: 100%;
     display: flex;
@@ -125,10 +194,4 @@ img{
 
 .card:hover .details {
     bottom: 0;
-}
-
-h1, h2, h3, h4{
-    font-size: 17px;
-    display: flex;
-    justify-content: center;
 }
