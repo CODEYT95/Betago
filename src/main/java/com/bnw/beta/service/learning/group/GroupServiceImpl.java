@@ -98,8 +98,6 @@ public class GroupServiceImpl implements GroupService {
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setGroup_no(group_no);
         groupDTO.setGroup_name("");
-        System.out.println(groupDTO);
-        System.out.println("값확인"+groupDAO.selectGroupDetail(groupDTO));
         return groupDAO.selectGroupDetail(groupDTO);
     }
 
@@ -117,4 +115,23 @@ public class GroupServiceImpl implements GroupService {
 
         }
     }
+
+    //////////////////학습자////////////////////
+
+    //학습 그룹 가입 신청 목록
+    @Override
+    public List<GroupDTO> selectJoinGroup(String group_name,int limit, int offset){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroup_name(group_name);
+        groupDTO.setLIMIT(limit);
+        groupDTO.setOFFSET(offset);
+
+        return groupDAO.selectJoinGroup(groupDTO);}
+
+    //그룹 가입신청 가능한 목록 갯수
+    @Override
+    public int joinGroupCount(){return groupDAO.joinGroupCount();}
+
+
 }

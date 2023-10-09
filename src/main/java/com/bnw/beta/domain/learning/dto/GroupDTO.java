@@ -24,6 +24,7 @@ public class GroupDTO {
 
     //회원
     private String member_name;
+    private int member_no;
     private String member_phone;
     private String member_email;
     private Date join_date;

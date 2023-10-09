@@ -5,8 +5,8 @@
     <title>학습 그룹 등록</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/groupAddList.css}">
-    <script type="text/javascript" th:src="@{/js/learning/group/groupAddList.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/educator/groupAddList.css}">
+    <script type="text/javascript" th:src="@{/js/learning/group/educator/groupAddList.js}"></script>
 </head>
 <body>
     <div th:replace="~{common/fragments/header :: headerFragment}"></div>
@@ -18,7 +18,8 @@
                     <h2>게임 콘텐츠</h2>
                     <div class="select-menu-group">
                         <div class="select-btn-group">
-                            <span class="sBtn-text" th:text="${title}"></span>
+                            <span class="sBtn-text">전체</span>
+                            <input class="title" hidden="hidden" th:value="${title}">
                             <i class="bx bx-chevron-down"></i>
                         </div>
                         <ul class="options">

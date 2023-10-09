@@ -36,4 +36,12 @@ public interface GroupDAO {
 
     //학습 그룹 삭제
     int deleteGroup(List<Integer> group_no);
+
+    //////////////////학습자////////////////////
+
+    //학습 그룹 가입 신청 목록
+    List<GroupDTO> selectJoinGroup(GroupDTO groupDTO);
+
+    //그룹 가입신청 가능한 목록 갯수
+    int joinGroupCount();
 }

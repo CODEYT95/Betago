@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         $("#moreBtn").click(function() {
             offset += 1;
-            var title = $(".sBtn-text").text();
+            var title = $(".title").value;
 
             $.ajax({
                 url: "/educator/group/addList",

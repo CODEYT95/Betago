@@ -5,7 +5,7 @@
     <title>학습 그룹 조회</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/groupList.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/educator/groupList.css}">
 </head>
 
 <script>
@@ -89,6 +89,12 @@
             });
         });
     });
+
+    $(".close-modal").click(function() {
+        // 모달 엘리먼트를 숨기는 처리
+        $(".member-list").empty();
+        $("#modal").css("display", "none");
+    });
     $(".detail-search").click(function() {
         var group_no = $(this).data("detail-no");
         var group_name = $(this).data("group-name");
@@ -117,6 +123,7 @@
 
                     memberList.append(li);
                 });
+                $("#modal").css("display", "block");
             },
             error: function(error) {
                 // AJAX 요청이 실패할 때 처리할 코드
@@ -169,6 +176,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <div>
                         <tr class="tbody-tr" th:each="groupList : ${groupList}">
                             <td>
                                 <label class="checkbox-wrap">
@@ -195,6 +203,7 @@
                                 <button class="detail-search" th:attr="data-detail-no=${groupList.group_no}, data-group-name=${groupList.group_name}"><i class="ri-search-eye-line" data-tasksend_no=""></i></button>
                             </td>
                         </tr>
+                        </div>
                         </tbody>
                     </table>
                 </div>
@@ -211,11 +220,11 @@
                     </div>
                     <ul class="options">
                         <li class="option" th:each="groupName : ${groupName}">
-                            <span class="option-text" th:text="${groupName.group_name}"></span>
+                            <span class="option-text" th:text="${groupName.group_name}" th:attr="data-no=${groupName.group_no}"></span>
                         </li>
                     </ul>
                 </div>
-                    <button class="search-btn">조회</button>
+                    <button class="search-btn1">조회</button>
                     <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="groupinfo">

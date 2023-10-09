@@ -21,7 +21,7 @@
         ]]>
     </select>
 
-    <!-- 게임 콘텐츠 title 조회 -->
+    <!-- 게임 콘텐츠 title 조회 그룹인원 초과된건 조회안되게 학원가서 수정 -->
     <select id="selectGameTitle" resultType="GroupDTO">
         <![CDATA[
         SELECT DISTINCT game_title
@@ -120,4 +120,35 @@
         #{item}
         </foreach>
     </delete>
+
+    <!--/////////////////학습자/////////////////// -->
+
+    <!-- 학습 그룹 가입 신청 목록 -->
+    <select id="selectJoinGroup" resultType="GroupDTO">
+        <![CDATA[
+        SELECT sg.*, m.member_no, m.member_name
+        FROM studygroup sg
+        JOIN member m ON sg.member_id = m.member_id
+        WHERE sg.group_nowcnt < sg.group_cnt
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND sg.group_name = #{group_name}
+        </if>
+        <if test="member_name != null and member_name != ''">
+            AND m.member_name = #{member_name}
+        </if>
+        <![CDATA[
+        ORDER BY sg.group_enddate
+        LIMIT #{LIMIT} OFFSET #{OFFSET};
+        ]]>
+    </select>
+
+    <!-- 그룹 가입신청 가능한 목록 갯수 -->
+    <select id="joinGroupCount" resultType="Integer">
+        <![CDATA[
+        SELECT count(*)
+        FROM studygroup
+        WHERE group_nowcnt < group_cnt;
+        ]]>
+    </select>
 </mapper>
