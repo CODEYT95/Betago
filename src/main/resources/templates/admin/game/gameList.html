@@ -16,8 +16,8 @@
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
 
-                <div class="gameContent-search">
-                    <form action="game/searchByTitle" method="get" class="form-container" id="searchForm">
+            <div class="gameContent-search">
+                <form action="game/searchByTitle" method="get" class="form-container" id="searchForm">
                     <div class="searchReq">
                         <select name="game_title">
                             <option value="">게임 선택</option> <!-- 기본 선택 항목 -->
@@ -25,20 +25,21 @@
                         </select>
                         <input type="button" value="검색" id="searchButton" onclick="submitForm()" />
                     </div>
-                    </form>
-                    <form th:action="@{/addCart}" method="Post">
+                </form>
+
+                <form th:action="@{/cartList}" method="GET">
                     <div class="subscribe">
-                        <button type="submit"  id="subscribeButton" disabled class="submit-button">구독하기</button>
+                        <button onclick="goToPayList()" id="subscribeButton" disabled class="submit-button">구독하기</button>
                     </div>
-                </div>
 
+            </div>
 
-                <div class = "gameContents-list">
-                    <div class="contents-container">
-                        <div class="checkbox" th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
-                            <label class="checkbox-wrapper">
-                                <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="selectedGameNos" th:value="${content.game_no}" />
-                                <span class="checkbox-title">
+            <div class = "gameContents-list">
+                <div class="contents-container">
+                    <div class="checkbox" th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
+                            <span class="checkbox-title">
                                     <div class="card">
                                         <div class="poster"><img th:src="@{/image/testBADUK2.png}">
                                             <div class="card-details">
@@ -57,11 +58,10 @@
                                         </div>
                                     </div>
                                 </span>
-                            </label>
-                        </div>
+                        </label>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

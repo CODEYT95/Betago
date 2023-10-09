@@ -327,6 +327,10 @@ width: 110px;
 
 #deleteForm{
 column-count:3;
+display: flex;
+justify-content: flex-start;
+flex-wrap: wrap;
+gap: 35px;
 }
 
 .scroll-to-top {
@@ -351,6 +355,7 @@ background-color: #395cdd;
 }
 
 #deleteForm{
+column-count:3;
 display: flex;
 justify-content: flex-start;
 flex-wrap: wrap;

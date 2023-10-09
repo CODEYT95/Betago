@@ -17,12 +17,13 @@ public class PayController {
     @Autowired
     private PayService payService;
 
+    /*
     @PostMapping(value = "/addCart")
     public String addToCart(@RequestParam("selectedGameNos") int[] selectedGameNos, String member_id) {
         member_id="dumy";
         StringBuilder redirectUrl = new StringBuilder("redirect:/cartList?");
         for (int gameNo : selectedGameNos) {
-            redirectUrl.append("selectedGameNos=").append(gameNo).append("&");
+            redirectUrl.append("GameNos=").append(gameNo);
 
             payService.insertIntoCart(gameNo, member_id);
         }
@@ -30,7 +31,7 @@ public class PayController {
         // "/cartList"로 바로 리다이렉트
         return "redirect:/cartList";
     }
-
+*/
     //제가 한 컨트롤러
     @GetMapping("/cartList")
     public String cartList(Model model, @RequestParam("game_nos") List<Integer> gameNos) {
