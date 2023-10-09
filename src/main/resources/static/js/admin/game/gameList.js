@@ -46,5 +46,22 @@ function isAnyCheckboxChecked() {
                 }
             });
         });
+
+        //구독하기 -도훈-
+         function goToPayList() {
+             const selectedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
+
+             // 선택한 체크박스의 game_no 값을 배열로 가져옵니다.
+             const selectedGameNos = Array.from(selectedCheckboxes).map(cb => cb.getAttribute('data-game-no'));
+
+             if (selectedGameNos.length > 0) {
+                 // 배열을 콤마로 연결한 문자열로 변환합니다.
+                 const gameNosParam = selectedGameNos.join(",");
+                console.log(gameNosParam);
+                 window.location.href = `/cartList?game_nos=${gameNosParam}`;
+             } else {
+                 alert("게임을 선택하세요!");
+             }
+         }
     });
 
