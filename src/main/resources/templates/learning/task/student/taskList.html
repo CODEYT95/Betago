@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>둑며들다|진도 등록</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/submitTask.css}">
-    <script type="text/javascript" th:src="@{/js/learning/task/student/submitTask.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/taskList.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/student/taskList.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="contents-container">
-            <div class="mycontents-list">
+                <div class="mycontents-list">
                     <form id="submitTask" th:action="@{/student/submit}" method="post">
                         <div class="checkbox" th:each="task : ${taskList}">
                             <label class="checkbox-wrapper">
@@ -49,7 +49,9 @@
                                                     </div>
                                                     <div class="card-button">
                                                         <div class="button-wrap">
-                                                            <input type="button" id="selectBtn${task.tasksend_no}" class="selectBtn" data-tasksend-no="${task.tasksend_no}" value="숙제하기">
+                                                             <a th:href="@{/student/taskDetail/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
+                                                                <input type="button" class="selectBtn" value="숙제하기">
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -59,25 +61,6 @@
                             </label>
                         </div>
                     </form>
-                    <div class="modal-bg"></div>
-                    <div id="myModal" class="modal" style="display:none;">
-                        <input type="hidden" name="tasksend_no">
-                        <div class="modal-wrap">
-                            <div class="modal-content-title">
-                                <div class="modal-game-title">
-                                    <span class="modal-data" th:text="${tasksend.game_title}"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="modal-divider">
-
-                            <div class="modalBtn">
-                                <button type="submit">저장</button>
-                                <button class="conceal">닫기</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 </div>
             </div>
         </div>
