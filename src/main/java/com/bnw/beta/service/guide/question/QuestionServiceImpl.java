@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 @Service
 public class QuestionServiceImpl {
-        @Autowired
-        private QuestionDAO questionDAO;
+    @Autowired
+    private QuestionDAO questionDAO;
 
-        public List<QuestionDTO> getQuestions(int page) {
-            int offset = page * 10;
-            return questionDAO.selectAllQuestions(offset);
-        }
+    public List<QuestionDTO> getQuestions(int page) {
+        int offset = page * 10;
+        return questionDAO.selectAllQuestions(offset);
+    }
 
     public void add(String subject, String content, String pw, MemberDTO memberDTO){
         QuestionDTO question = new QuestionDTO();
@@ -31,6 +31,15 @@ public class QuestionServiceImpl {
     public QuestionDTO selectQuestion(Integer qna_no) {
         return questionDAO.selectQuestionById(qna_no);
     }
+
+    public void modify(QuestionDTO question, String subject, String content,String pw) {
+        question.setQna_title(subject);
+        question.setQna_content(content);
+        question.setQna_pw(pw);
+        question.setQna_regdate(LocalDateTime.now());
+        questionDAO.updateQuestion(question);
+    }
+
 
    /* public QuestionDTO getQuestion(Integer id) {
         return questionDAO.getQuestionById(id);

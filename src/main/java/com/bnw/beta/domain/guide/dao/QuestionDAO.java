@@ -20,4 +20,6 @@ public interface QuestionDAO {
     MemberDTO findUserByUsername(String username);
 
     String getPwByQnaNo(Integer id);
+
+    void updateQuestion(QuestionDTO question);
 }
