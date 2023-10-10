@@ -271,4 +271,29 @@ font-size:16px;
 margin-right: 336px;
 }
 
+.tag-container {
+    display: flex;
+    gap: 5px;
+    margin:0px;
+}
+
+.tag {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.delete-btn {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
+}
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>공지게시판리스트</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticelist.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
@@ -18,6 +19,7 @@
             <th>NO</th>
             <th>분류</th>
             <th>제목</th>
+            <th>내용</th>
             <th>작성자</th>
             <th>등록일시</th>
             <th>조회수</th>
@@ -25,7 +27,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="notice, loop: ${noticeList}">
+        <tr th:each="notice:${noticeList}">
             <td>
                 <span th:text="${notice.notice_no}"></span>
             </td>
@@ -39,6 +41,9 @@
             </td>
             <td>
                 <span th:text="${notice.member_id}"></span>
+            </td>
+            <td>
+                <span th:text="${notice.notice_content}"></span>
             </td>
             <td>
                 <span th:text="${notice.notice_regdate}"></span>

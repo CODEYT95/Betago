@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|진도 등록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/taskList.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/student/taskList.js}"></script>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/stu_sidebar :: stu_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="main-content">
+            <form id="submitTask" th:action="@{/student/submitTask}" method="post">
+                <div class="main-title">
+                    <div class="student-name">
+                        <h1>학습자 : 김바둑<span th:text></span></h1>
+                    </div>
+                    <div class="title-button-wrap">
+                        <button type="submit" id="submitButton" class="submitBtn" disabled>제출하기</button>
+                    </div>
+                </div>
+                <div class="contents-container">
+                    <div class="mycontents-list">
+                            <div class="checkbox" th:each="task : ${taskList}">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${task.tasksend_no}" name="tasksend_no[]" th:value="${task.tasksend_no}" th:disabled="${task.task_state == '미작성'}"/>
+                                    <span class="checkbox-title">
+                                        <div class="card">
+                                            <div class="card-details">
+                                                <div class="card-title">
+                                                    <div class="game-title"><span th:text="${task.game_title}"></span></div>
+                                                    <div class="member-name"><span th:text="${task.member_name}"></span></div>
+                                                </div>
+                                                <hr>
+                                                <div class="card-content-wrap">
+                                                    <div class="card-content">
+                                                        <span>숙제 내용</span>
+                                                        <div class="task-content"><span class="data" th:text="${task.task_content}"></span></div>
+                                                            <div class="task-contentlist">
+                                                                <div class="task-chapter">진도 : <span class="data" th:text="${task.task_chapter}"></span></div>
+                                                                <div class="task-deadline">제출 기한 : <span class="data" th:text="${#dates.format(task.task_deadline, 'yyyy-MM-dd')}"></span></div>
+                                                                <div class="task-state"> 상태 :
+                                                                <span class="data" th:text="${task.task_state}" th:style="${task.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-button">
+                                                        <div class="button-wrap">
+                                                             <a th:href="@{/student/taskDetail/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
+                                                                <input type="button" class="writeBtn" value="숙제하기">
+                                                            </a>
+                                                            <a th:href="@{/student/taskModify/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
+                                                                <input type="button" class="modifyBtn" id="modifyButton_${task.tasksend_no}" value="수정하기" style="display: none;">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </span>
+                                </label>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

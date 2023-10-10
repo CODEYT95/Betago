@@ -21,10 +21,10 @@
     <!--월간 (일일 단위 매출조회)-->
    <select id="selectDailySales" resultType="GameDTO">
         <![CDATA[
-            select game_startsearch, game_sales, SUM(game_sales * game_sell) AS game_dailyamount
+            select DATE_FORMAT(game_startsearch, '%m-%d') AS game_startsearch, game_sales, SUM(game_sales * game_sell) AS game_dailyamount
             from game
-            where game_startsearch between #{startsearch} and #{endsearch}
-            group by game_startsearch
+            where game_startsearch between #{game_startsearch} and #{game_endsearch}
+            group by DATE_FORMAT(game_startsearch, '%m-%d')
             order by game_startsearch desc;
         ]]>
    </select>
@@ -47,6 +47,8 @@
             where game_title = #{game_title}
         ]]>
     </select>
+
+
 </mapper>
 
 

@@ -1,6 +1,7 @@
 package com.bnw.beta.service.admin.notice;
 
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
+import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,11 +17,8 @@ public interface NoticeService {
     void insert(NoticeDTO noticeDTO, MultipartFile[] file, String member_id) throws IOException;
 
     //공지게시판 상세조회
-    NoticeDTO detail(Long notice_no);
-
-    //공지게시판 상세조회
-    List<NoticeDTO> detail2(Long notice_no);
+    NoticeDTO detail(Long notice_no) ;
 
     //공지게시판 수정
-    void update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] newFile);
+    NoticeDTO update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] file) throws IOException;
 }

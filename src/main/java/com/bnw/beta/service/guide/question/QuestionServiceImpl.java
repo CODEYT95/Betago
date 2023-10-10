@@ -32,15 +32,6 @@ public class QuestionServiceImpl {
         return questionDAO.selectQuestionById(qna_no);
     }
 
-    public void modify(QuestionDTO question, String subject, String content,String pw) {
-    question.setQna_title(subject);
-    question.setQna_content(content);
-    question.setQna_pw(pw);
-    question.setQna_regdate(LocalDateTime.now());
-    questionDAO.updateQuestion(question);
-    }
-
-
    /* public QuestionDTO getQuestion(Integer id) {
         return questionDAO.getQuestionById(id);
     }

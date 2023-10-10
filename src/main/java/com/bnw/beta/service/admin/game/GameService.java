@@ -16,10 +16,10 @@ public interface GameService {
    public List<GameDTO> selectAll();
 
     //월간 (일일 단위 매출조회)
-    public List<GameDTO> selectDailySales(Date startsearch, Date endsearch);
+    public List<GameDTO> selectDailySales(Date game_startsearch, Date game_endsearch);
 
     //년간 (월 단위 매출조회)
-    public List<GameDTO> selectMonthlySales(Date startsearch, Date endsearch);
+    public List<GameDTO> selectMonthlySales(Date game_startsearch, Date game_endsearch);
 
     //게임콘텐츠 제목검색
     public List<GameDTO> searchByTitle(@Param("game_title") String game_title);

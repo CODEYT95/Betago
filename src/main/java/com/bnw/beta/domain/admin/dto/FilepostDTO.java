@@ -12,7 +12,7 @@ public class FilepostDTO {
     private String edupost_name; // 원본 파일명
     private String edupost_rename; // 저장 파일명
     private String edupost_path;
-    private LocalDateTime edupost_datetime;
+    private LocalDateTime edupost_date;
     private long edupost_size; //파일 크기
 
 

@@ -19,6 +19,7 @@ public class TaskPageDTO {
     private int startPage;
     private int endPage;
     private int startIndex;
+    private int listCount;
 
 
     public TaskPageDTO(int total, int currentPage, int size, List<TaskDTO> taskList){

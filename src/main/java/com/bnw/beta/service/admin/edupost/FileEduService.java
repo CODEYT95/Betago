@@ -12,4 +12,6 @@ public interface FileEduService {
     public List<FilepostDTO> findById(final List<Long> ids);
 
     String deleteFileByNos(int file_no);
+
+    public FilepostDTO findByfileNo(final Long filepost_no);
 }
