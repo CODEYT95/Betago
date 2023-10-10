@@ -13,70 +13,70 @@
     <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
     <div class="content-wrap">
 
-<div id="passwordFormDiv" th:if="${not isPasswordCorrect}">
-    <form action="/question/question/verifyPassword" method="post">
-        <input type="hidden" name="id" th:value="${question.qna_no}" />
-        <label for="pw">비밀번호 입력:</label>
-        <input type="password" id="pw" name="pw" required />
-        <input type="submit" value="확인" />
-        <span style="color:red;" th:text="${errormessage}"></span>
-    </form>
-</div>
+        <div id="passwordFormDiv" th:if="${not isPasswordCorrect}">
+            <form action="/question/question/verifyPassword" method="post">
+                <input type="hidden" name="id" th:value="${question.qna_no}" />
+                <label for="pw">비밀번호 입력:</label>
+                <input type="password" id="pw" name="pw" required />
+                <input type="submit" value="확인" />
+                <span style="color:red;" th:text="${errormessage}"></span>
+            </form>
+        </div>
 
-<!-- 게시글의 상세 내용 (초기에는 숨겨져 있음) -->
-<div id="questionDetailDiv" th:if="${isPasswordCorrect}">
-
-
-
-        <table border="1">
-            <tr>
-                <td>QNA No</td>
-                <td th:text="${question.qna_no}"></td>
-            </tr>
-            <tr>
-                <td>Title</td>
-                <td th:text="${question.qna_title}"></td>
-            </tr>
-            <tr>
-                <td>Content</td>
-                <td th:text="${question.qna_content}"></td>
-            </tr>
-            <tr>
-                <td>Is Shown</td>
-                <td th:text="${question.qna_isshow}"></td>
-            </tr>
-            <tr>
-                <td>Registration Date</td>
-                <td th:text="${question.qna_regdate}"></td>
-            </tr>
-            <tr>
-                <td>Member ID</td>
-                <td th:text="${question.member_id}"></td>
-            </tr>
-        </table>
-
-    <!--수정-->
-    <div class="my-3">
-        <!-- 질문수정버튼 - 로그인해야지만 수정가능, 로그인한유저가 글쓴이와 동일해야만 한다 -->
-        <a class="btn btn-sm btn-outline-secondary"
-           sec:authorize="isAuthenticated()"
-           th:href="@{|/question/modify/${question.qna_no}|}"
-           th:if="${ question.member_id!=null and #authentication.getPrincipal().getUsername()==question.member_id}"
-           th:text="수정"></a>
-        <!-- 질문삭제버튼 - 로그인해야지만 삭제가능, 로그인한유저가 글쓴이와 동일해야만 한다-->
-        <a href="javascript:void(0);" class="delete btn btn-sm btn-outline-secondary"
-           sec:authorize="isAuthenticated()"
-           th:data-uri="@{|/question/delete/${question.qna_no}|}"
-           th:if="${ question.member_id!=null and #authentication.getPrincipal().getUsername()==question.member_id}"
-           th:text="삭제"></a>
-
-    </div>
-
-<a href="/question/list">Back to List</a>
+        <!-- 게시글의 상세 내용 (초기에는 숨겨져 있음) -->
+        <div id="questionDetailDiv" th:if="${isPasswordCorrect}">
 
 
 
-</div>
+            <table border="1">
+                <tr>
+                    <td>QNA No</td>
+                    <td th:text="${question.qna_no}"></td>
+                </tr>
+                <tr>
+                    <td>Title</td>
+                    <td th:text="${question.qna_title}"></td>
+                </tr>
+                <tr>
+                    <td>Content</td>
+                    <td th:text="${question.qna_content}"></td>
+                </tr>
+                <tr>
+                    <td>Is Shown</td>
+                    <td th:text="${question.qna_isshow}"></td>
+                </tr>
+                <tr>
+                    <td>Registration Date</td>
+                    <td th:text="${question.qna_regdate}"></td>
+                </tr>
+                <tr>
+                    <td>Member ID</td>
+                    <td th:text="${question.member_id}"></td>
+                </tr>
+            </table>
+
+            <!--수정-->
+            <div class="my-3">
+                <!-- 질문수정버튼 - 로그인해야지만 수정가능, 로그인한유저가 글쓴이와 동일해야만 한다 -->
+                <a class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:href="@{|/question/modify/${question.qna_no}|}"
+                   th:if="${ question.member_id!=null and #authentication.getPrincipal().getUsername()==question.member_id}"
+                   th:text="수정"></a>
+                <!-- 질문삭제버튼 - 로그인해야지만 삭제가능, 로그인한유저가 글쓴이와 동일해야만 한다-->
+                <a href="javascript:void(0);" class="delete btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:data-uri="@{|/question/delete/${question.qna_no}|}"
+                   th:if="${ question.member_id!=null and #authentication.getPrincipal().getUsername()==question.member_id}"
+                   th:text="삭제"></a>
+
+            </div>
+
+            <a href="/question/list">Back to List</a>
+
+
+
+        </div>
 
 
 

@@ -13,6 +13,7 @@ public interface QuestionService {
 
     void add(String subject, String content, MemberDTO memberDTO);
 
+    void modify(QuestionDTO question, String subject, String content,String pw);
 
     boolean isPasswordCorrect(Integer id, String inputPw);
 
