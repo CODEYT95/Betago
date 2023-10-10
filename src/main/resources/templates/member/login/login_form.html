@@ -2,19 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
     <meta charset="UTF-8">
-    <title>사이트 제목</title>
+    <title>로그인 페이지</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
+
+    <style>
+        h1 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 16px;
+        }
+        p, body {
+            font-size: 14px;
+        }
+        .content {
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<div class="content">
+<div class="content shadow-box">
     <div class="content-wrap">
-    <h4>로그인</h4>
-    </div>
-        </div>
-            <form  th:action="@{/login}" method="post">
+        <h4 class="title">로그인</h4>
+        <h5 class="subtitle">이곳은 소제목입니다.</h5>
+        <p class="content-text">이곳은 내용입니다.</p>
+
+        <form  th:action="@{/login}" method="post">
 
             <div class="mb-3">
                 <label for="username" class="form-label">ID</label>
@@ -47,6 +66,10 @@
                 <input type="submit" value="비밀번호찾기" class="btn btn-primary my-2">
             </form>
         </div>
+
+
+    </div>
+</div>
 
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
