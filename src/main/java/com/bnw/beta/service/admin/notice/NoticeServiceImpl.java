@@ -5,6 +5,7 @@ import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -36,34 +37,41 @@ public class NoticeServiceImpl implements NoticeService {
 
     //공지게시판 글 등록
     @Override
-    public void insert(NoticeDTO noticeDTO, MultipartFile[] file, String member_id) throws IOException {
+    public void insert(NoticeDTO noticeDTO, MultipartFile[][] file, String member_id, @RequestParam(name = "type")String type) throws IOException {
         System.out.println("글정보?" + noticeDTO);
         noticeDTO.setMember_id(member_id);
+        noticeDTO.setType(type);
+        boolean file1Empty = file[0][0] == null || file[0][0].isEmpty();
+        boolean file2Empty = file[1][0] == null || file[1][0].isEmpty();
 
-        if (file[0].isEmpty()) {
+        if (file1Empty && file2Empty) {
             noticeDAO.insert(noticeDTO);
-        } else {
+        }else {
             noticeDAO.insert(noticeDTO);
             String path = "C:/uploadfile/notice_img/";
             File directory = new File(path);
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-
             NoticeFileDTO noticeFileDTO = new NoticeFileDTO();
-            for (MultipartFile nofile : file) {
-                String originName = nofile.getOriginalFilename();
-                String extension = originName.substring(originName.lastIndexOf("."));
-                String reName = UUID.randomUUID().toString() + extension;
-                String savedPath = path + reName;
-                File savedFile = new File(path, reName);
-                nofile.transferTo(savedFile);
+            for (MultipartFile[] fileList  : file) {
+                for (MultipartFile nofile : fileList) {
+                    if (nofile != null && !nofile.isEmpty()) {
+                        String originName = nofile.getOriginalFilename();
+                        System.out.println("서비스파일" + originName);
+                        String extension = originName.substring(originName.lastIndexOf("."));
+                        String reName = UUID.randomUUID().toString() + extension;
+                        String savedPath = path + reName;
+                        File savedFile = new File(path, reName);
+                        nofile.transferTo(savedFile);
 
-                noticeFileDTO.setFile_name(originName);
-                noticeFileDTO.setFile_rename(reName);
-                noticeFileDTO.setFile_path(savedPath);
-                noticeFileDTO.setNotice_no(noticeDTO.getNotice_no());
-                noticeDAO.fileUpload(noticeFileDTO);
+                        noticeFileDTO.setFile_name(originName);
+                        noticeFileDTO.setFile_rename(reName);
+                        noticeFileDTO.setFile_path(savedPath);
+                        noticeFileDTO.setNotice_no(noticeDTO.getNotice_no());
+                        noticeDAO.fileUpload(noticeFileDTO);
+                    }
+                }
             }
         }
     }

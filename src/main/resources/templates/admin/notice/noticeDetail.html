@@ -12,8 +12,9 @@
     <div class="content-wrap" >
         <form enctype="multipart/form-data" method="post">
             <label> 공지구분
-                <input th:value="${noticeDTO.notice_category}">
+                <input  th:value="${noticeDTO.notice_category}">
             </label><br/>
+
             <input type="text" name="member_id" th:value="${noticeDTO.member_id}">
             <span>제목 <input type="text" name="notice_title" th:value="${noticeDTO.notice_title}"></span><br/>
 

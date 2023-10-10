@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>공지게시판작성</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
@@ -20,8 +21,8 @@
                 </select>
             </label><br/>
 
-            <label for="upView">상단노출<input type="checkbox" id="upView" value="upView"></label>
-            <label for="allView">전체공개<input type="checkbox" id="allView" value="allView"></label><br/>
+            <label for="upView">상단노출<input type="checkbox" name="type" id="upView" value="upView"></label>
+            <label for="allView">전체공개<input type="checkbox" name="type" id="allView" value="allView"></label><br/>
 
             <span>제목 <input type="text" name="notice_title"></span><br/>
 
@@ -29,13 +30,25 @@
             <label for="upDateChoice">게시일자등록<input type="radio" id="upDateChoice" value="allView"></label><br/>
 
             <textarea rows="10" cols="50" name="notice_content"></textarea><br/>
+    <section id="ex9">
+        <style>
+            #ex9 .drop-area {
+                width: 500px;
+                height: 300px;
+                border: 1px solid rgb(128, 128, 128);
+                box-shadow: 2px 3px 9px hsl(0, 0%, 47%);
+                padding: 10px;
+            }
+        </style>
+            <div class="drop-area" id="dropArea">
+            <p id ="here">여기에 파일을 드래그 앤 드롭하세요.</p>
+            <input class="btn_file" multiple ="multiple" type="file" name="file" id="fileInput">
+        </div>
+    </section>
 
 
-            <div class="dropBox" multiple ="multiple">
-                파일을 이곳에 올려주세요.
-            </div>
             <input type="file" class="btn-file" multiple ="multiple" name="file" ><br/>
-            <input type="submit" value="등록">
+            <input type="submit" id="btn" value="등록">
             <a th:href="@{'/notice/list'}">
                 <button type="button">취소</button>
             </a>
@@ -45,41 +58,45 @@
 </body>
 
 <script>
-    const $drop = document.querySelector(".dropBox");
-    const $title = document.querySelector(".dropBox");
+    var dropArea = document.getElementById('dropArea');
+    var fileInput = document.getElementById('fileInput');
 
-    // 파일 입력 필드
-    const $fileInput = document.querySelector('input[type="file"]');
-
-    // 드래그한 파일 객체가 해당 영역에 놓였을 때
-    $drop.ondrop = (e) => {
+    dropArea.addEventListener('dragenter', function (e) {
         e.preventDefault();
-        $drop.className = "dropBox";
+        dropArea.classList.add('active');
+    });
 
-        // 파일 리스트
-        const files = [...e.dataTransfer?.files, ...$fileInput.files];
-
-
-        $title.innerHTML = files.map(v => v.name).join("<br>");
-    }
-
-    // ondragover 이벤트가 없으면 ondrop 이벤트가 실행되지 않음
-    $drop.ondragover = (e) => {
+    dropArea.addEventListener('dragover', function (e) {
         e.preventDefault();
-    }
+    });
 
-    // 드래그한 파일이 최초로 진입했을 때
-    $drop.ondragenter = (e) => {
+    dropArea.addEventListener('dragleave', function () {
+        dropArea.classList.remove('active');
+    });
+
+    dropArea.addEventListener('drop', function (e) {
         e.preventDefault();
+        dropArea.classList.remove('active');
 
-        $drop.classList.add("active");
-    }
+        var files = e.dataTransfer.files;
+        fileInput.files = files;
 
-    // 드래그한 파일이 영역을 벗어났을 때
-    $drop.ondragleave = (e) => {
-        e.preventDefault();
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+        }
 
-        $drop.classList.remove("active");
+        fileName(files);
+
+    });
+
+    //업로드된 파일 이름을 출력
+    function fileName(files){
+        var fileName = [];
+        for(var i = 0; i <files.length; i++){
+            fileName.push(files[i].name);
+        }
+        document.getElementById('here').textContent = fileName.join(',');
     }
 </script>
 </html>

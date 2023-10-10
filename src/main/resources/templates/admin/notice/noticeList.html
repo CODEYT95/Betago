@@ -61,12 +61,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="notice:${noticePage.noticeList}">
+            <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice:${noticePage.noticeList}">
                 <td>
                     <span th:text="${notice.notice_no}"></span>
                 </td>
                 <td>
-                    <span th:text="${notice.notice_category}"></span>
+                    <span  name="type" th:text="${notice.notice_category}"></span>
                 </td>
                 <td>
                     <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">

@@ -53,12 +53,13 @@ public class NoticeController {
     //공지게시판 글작성 처리
     @PostMapping("/write")
     public String noticeWrite(@ModelAttribute NoticeDTO noticeDTO,
-                              @RequestParam("file") MultipartFile[] file,
+                              @RequestParam("file") MultipartFile[][] file,
+                              @RequestParam(name = "type", defaultValue = "일반") String type,
                               Authentication authentication, Model model) throws IOException {
         String member_id = authentication.getName();
         model.addAttribute("member_id", member_id);
         try {
-            noticeService.insert(noticeDTO, file, member_id);
+            noticeService.insert(noticeDTO, file, member_id, type);
             return "redirect:list";
         } catch (Exception e) {
             e.printStackTrace();
