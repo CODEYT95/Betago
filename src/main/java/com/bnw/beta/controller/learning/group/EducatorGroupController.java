@@ -5,7 +5,6 @@ import com.bnw.beta.service.learning.group.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/educator/group")
 @RequiredArgsConstructor
-public class  GroupController{
+public class EducatorGroupController {
 
     @Autowired
     private GroupService groupService;
@@ -24,19 +23,15 @@ public class  GroupController{
     //그룹 등록 가능한 게임 콘텐츠 목록 GET
     @GetMapping("/addList")
     public String groupAddList(@RequestParam(name = "offset", defaultValue = "0") int offset,
-                               @RequestParam(name = "title", defaultValue = "")String game_title, Model model){
+                               @RequestParam(name = "title", defaultValue = "전체")String game_title, Model model){
 
         int limit = 6;
 
-
-        if(game_title.equals("null") || game_title.equals("")){
-            game_title="전체";
-        }
         model.addAttribute("title", game_title);
         model.addAttribute("groupAddList", groupService.groupAddList(game_title, limit, offset));
         model.addAttribute("gameTitle", groupService.selectGameTitle());
         model.addAttribute("totalCnt" , groupService.groupAddListCnt(game_title));
-        return "/learning/group/groupAddList";
+        return "/learning/group/educator/groupAddList";
     }
 
     //그룹 등록 가능한 게임 콘텐츠 목록 POST (추가 데이터 불러오기)
@@ -44,7 +39,6 @@ public class  GroupController{
     @ResponseBody
     public List<GroupDTO> groupAddList(@RequestParam(name = "offset", defaultValue = "0") int offset,
                                        @RequestParam(name = "title", defaultValue = "") String game_title) {
-
 
         int limit = 6;
 
@@ -55,8 +49,9 @@ public class  GroupController{
     @GetMapping("/add")
     public String addGroup(@RequestParam("game_no") int game_no, Model model){
 
+        System.out.println(groupService.gameGroupInfo(game_no));
         model.addAttribute("gameGroupInfo", groupService.gameGroupInfo(game_no));
-        return "/learning/group/groupAdd";
+        return "/learning/group/educator/groupAdd";
     }
 
     //그룹 등록 내용 Insert
@@ -69,29 +64,37 @@ public class  GroupController{
             @RequestParam("edate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate){
         String id = "baduk";
 
-        System.out.println(sdate);
         int result = groupService.insertGroup(game_no,id, groupName, count, sdate, edate);
-        return "/learning/group/groupAddList";
+        return "/learning/group/educator/groupAddList";
     }
 
     //학습 그룹 조회
     @GetMapping("/list")
-    public String groupList(@RequestParam(name = "groupName", defaultValue = "") String group_name, Model model){
-
-        System.out.println("그룹네임 초기값 확인"+group_name);
+    public String groupList(@RequestParam(name = "groupName", defaultValue = "전체") String group_name, Model model){
 
         String member_id = "baduk";
 
+        model.addAttribute("group_name", group_name);
         model.addAttribute("groupName", groupService.selectGroupName(member_id));
         model.addAttribute("groupList", groupService.groupListSelect(member_id, group_name));
-        return "/learning/group/groupList";
+        return "/learning/group/educator/groupList";
     }
+
+    //학습 그룹 상세 조회
+    @GetMapping("/listDetail")
+    @ResponseBody
+    public List<GroupDTO> selectGroupDetail(@RequestParam(name = "group_no") int group_no,
+                                            @RequestParam(name = "group_name",defaultValue = "") String group_name){
+
+
+        return groupService.selectGroupDetail(group_no,group_name);
+    }
+
 
     //학습 그룹 삭제
     @PostMapping("delete")
     @ResponseBody
     public String groupDelete(@RequestParam(name = "group_no") List<Integer> group_no) {
-        System.out.println("컨트롤러 진입 성공");
         return groupService.deleteGroup(group_no);
     }
 }

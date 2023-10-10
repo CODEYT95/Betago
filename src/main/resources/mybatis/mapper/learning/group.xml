@@ -4,20 +4,24 @@
 <mapper namespace="com.bnw.beta.domain.learning.dao.GroupDAO">
 
     <!-- 그룹등록 가능한 게임콘텐츠 Cnt -->
-    <select id="groupAddListCnt" parameterType="String" resultType="Integer">
+    <select id="groupAddListCnt" parameterType="String" resultType="int">
         <![CDATA[
-        SELECT COUNT(*)
-        FROM game
+        SELECT COUNT(*) FROM (
+            SELECT g.*, SUM(s.group_nowcnt) AS group_nowcnt
+            FROM game g
+            LEFT JOIN studygroup s ON g.game_no = s.game_no
         ]]>
         <if test="game_title != null and game_title != ''">
-            WHERE game_title = #{game_title}
+            WHERE g.game_title = #{game_title}
         </if>
         <![CDATA[
-        ORDER BY game_no DESC
+        GROUP BY g.game_no
+        HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
+        ) AS subquery;
         ]]>
     </select>
 
-    <!-- 게임 콘텐츠 title 조회 -->
+    <!-- 게임 콘텐츠 title 조회 그룹인원 초과된건 조회안되게 학원가서 수정 -->
     <select id="selectGameTitle" resultType="GroupDTO">
         <![CDATA[
         SELECT DISTINCT game_title
@@ -28,14 +32,17 @@
     <!-- 그룹등록 가능한 게임콘텐츠 조회(무한 스크롤) -->
     <select id="groupAddList" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT *
-        FROM game
+        SELECT g.*, SUM(s.group_nowcnt) AS group_nowcnt
+        FROM game g
+        LEFT JOIN studygroup s ON g.game_no = s.game_no
         ]]>
-            <if test="game_title != null and game_title != ''">
-                WHERE game_title = #{game_title}
-            </if>
+        <if test="game_title != null and game_title != ''">
+            WHERE g.game_title = #{game_title}
+        </if>
         <![CDATA[
-        ORDER BY game_no DESC
+        GROUP BY g.game_no
+        HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
+        ORDER BY g.game_no DESC
         LIMIT #{LIMIT} OFFSET #{OFFSET};
         ]]>
     </select>
@@ -69,25 +76,131 @@
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
         </if>
-        <![CDATA[
-            AND sg.group_enddate >= CURDATE()
-        ]]>
     </select>
 
     <!-- 학습 그룹 name 조회 -->
-    <select id="selectGroupName" parameterType="String" resultType="GroupDTO">
+    <select id="selectGroupName" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
         SELECT DISTINCT group_name
         FROM studygroup
-        WHERE member_id = #{member_id};
+        WHERE member_id = #{member_id}
         ]]>
+    </select>
+
+    <!-- 학습 그룹 상세 조회 -->
+    <select id="selectGroupDetail" parameterType="GroupDTO" resultType="GroupDTO">
+        <![CDATA[
+        SELECT
+        m.member_name, m.member_phone, m.member_email, m.join_date,
+        g.group_name, g.group_cnt, g.group_nowcnt,
+        ga.game_title
+        FROM
+        groupmember AS gm
+        JOIN
+        member AS m ON gm.member_no = m.member_no
+        JOIN
+        studygroup AS g ON gm.group_no = g.group_no
+        JOIN
+        game AS ga ON gm.game_no = ga.game_no
+        WHERE
+        gm.group_no = #{group_no}
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND g.group_name = #{group_name}
+        </if>
     </select>
 
     <!-- 학습 그룹 삭제 -->
     <delete id="deleteGroup" parameterType="java.util.List">
         <![CDATA[
         DELETE FROM studygroup
+        WHERE group_no IN
+        ]]>
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+        </foreach>
+    </delete>
+
+    <!--/////////////////학습자/////////////////// -->
+
+    <!-- 학습 그룹 가입 신청 목록 -->
+    <select id="selectJoinGroup" resultType="GroupDTO">
+        <![CDATA[
+        SELECT sg.*, m.member_no, m.member_name
+        FROM studygroup sg
+        JOIN member m ON sg.member_id = m.member_id
+        WHERE sg.group_nowcnt < sg.group_cnt
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND sg.group_name = #{group_name}
+        </if>
+        <if test="member_name != null and member_name != ''">
+            AND m.member_name = #{member_name}
+        </if>
+        <![CDATA[
+        ORDER BY sg.group_enddate
+        LIMIT #{LIMIT} OFFSET #{OFFSET};
+        ]]>
+    </select>
+
+    <!-- 그룹 가입신청 가능한 목록 갯수 -->
+    <select id="joinGroupCount" parameterType="String" resultType="Integer">
+        <![CDATA[
+        SELECT count(*)
+        FROM studygroup
+        WHERE group_nowcnt < group_cnt;
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND group_name = #{group_name}
+        </if>
+    </select>
+
+    <!-- 그룹명 목록 불러오기 -->
+    <select id="selectGroupTitle" resultType="GroupDTO">
+        <![CDATA[
+        SELECT DISTINCT group_name
+        FROM studygroup
+        WHERE group_nowcnt < group_cnt;
+        ]]>
+    </select>
+
+    <!-- 교육자명 불러오기 -->
+    <select id="selectEducatorName" resultType="GroupDTO">
+        <![CDATA[
+        SELECT DISTINCT m.member_name
+        FROM studygroup AS sg
+        JOIN member AS m ON m.member_id = sg.member_id
+        WHERE sg.group_nowcnt < sg.group_cnt;
+        ]]>
+    </select>
+
+    <!-- 그룹 신청 가능 실시간 체크 -->
+    <select id="checkJoin" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+        SELECT group_no
+        FROM studygroup
+        WHERE (group_cnt - group_nowcnt) <> 0
+        ]]>
+        <if test="group_no != null and group_no != ''">
+            AND group_no = #{group_no}
+        </if>
+    </select>
+
+    <!-- 학생 그룹 가입신청 Insert -->
+    <insert id="insertGroupJoin" parameterType="GroupDTO">
+        <![CDATA[
+        INSERT INTO groupmember (member_no, group_no, game_no)
+        VALUES (#{member_no}, #{group_no}, #{game_no});
+        ]]>
+    </insert>
+
+    <!-- 학생 그룹 현재인원 Update -->
+    <update id="updateGroupJoin" parameterType="Integer">
+        <![CDATA[
+        UPDATE studygroup
+        SET group_nowcnt = group_nowcnt + 1
         WHERE group_no = #{group_no};
         ]]>
-    </delete>
+    </update>
+
 </mapper>

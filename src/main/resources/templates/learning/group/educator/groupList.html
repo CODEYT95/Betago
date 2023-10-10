@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>학습 그룹 조회</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/educator/groupList.css}">
+</head>
+
+<script>
+    //게임 콘텐츠 목록 리스트
+    $(document).ready(function() {
+        const groupMenu = document.querySelector(".select-menu-group");
+        const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
+        const groupOptions = groupMenu.querySelectorAll(".option");
+        const groupSBtnText = groupMenu.querySelector(".sBtn-text");
+
+        selectGroupBtn.addEventListener("click", () => groupMenu.classList.toggle("active"));
+        groupOptions.forEach(option => {
+            option.addEventListener("click", () => {
+                let selectedOption = option.querySelector(".option-text").innerText;
+                groupSBtnText.innerText = selectedOption;
+                groupMenu.classList.remove("active");
+            });
+        });
+    });
+    $(document).ready(function() {
+    $(".delete-btn").click(function() {
+        var selectCheck = []; // 선택된 체크박스의 data-check-no 값들을 저장할 배열
+        console.log("클릭됨");
+        // 선택된 체크박스를 찾아서 data-check-no 값을 배열에 추가
+        $(".checkbox:checked").each(function() {
+            var checkNo = $(this).attr("data-check-no");
+            selectCheck.push(checkNo);
+        });
+            console.log(selectCheck);
+        // AJAX 요청 보내기
+        $.ajax({
+            url: "/educator/group/delete",
+            type: "POST",
+            data: { group_no: selectCheck },
+            dataType: "text",
+            traditional: true,
+            success: function(response) {
+                if(response==="success"){
+                console.log("삭제 요청이 성공적으로 처리되었습니다.");
+                }else{
+                console.log("삭제 실패");
+                }
+
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error("삭제 요청 중 오류가 발생했습니다.");
+                console.error(error);
+            }
+        });
+    });
+});
+    //학습 그룹 선택 후 조회
+    $(document).ready(function() {
+        $(".search-btn").click(function() {
+            var groupName = $(".sBtn-text").text();
+
+            window.location.href = "/educator/group/list?groupName=" + encodeURIComponent(groupName);
+        });
+    });
+
+    $(document).ready(function() {
+    $(".detail-search").click(function() {
+        var groupName = $(this).attr("data-group-name");
+        console.log(groupName);
+        $(".sBtn-text1").text(groupName);
+    });
+
+    $(document).ready(function() {
+        const modalGroupMenu = document.querySelector(".modal .select-menu-group");
+        const modalSelectGroupBtn = modalGroupMenu.querySelector(".select-btn-group");
+        const modalGroupOptions = modalGroupMenu.querySelectorAll(".option");
+        const modalGroupSBtnText = modalGroupMenu.querySelector(".sBtn-text1");
+
+        modalSelectGroupBtn.addEventListener("click", () => modalGroupMenu.classList.toggle("active"));
+        modalGroupOptions.forEach(option => {
+        option.addEventListener("click", () => {
+        let selectedOption = option.querySelector(".option-text").innerText;
+        modalGroupSBtnText.innerText = selectedOption;
+        modalGroupMenu.classList.remove("active");
+            });
+        });
+    });
+
+    $(".close-modal").click(function() {
+        // 모달 엘리먼트를 숨기는 처리
+        $(".member-list").empty();
+        $("#modal").css("display", "none");
+    });
+    $(".detail-search").click(function() {
+        var group_no = $(this).data("detail-no");
+        var group_name = $(this).data("group-name");
+
+        $.ajax({
+            type: "GET",
+            url: "/educator/group/listDetail",
+            data: {
+                group_no: group_no,
+                group_name: group_name
+            },
+            dataType: "json", // 이 부분을 JSON으로 설정
+            success: function(response) {
+                console.log("AJAX 요청 성공:", response);
+
+                // 데이터를 사용하여 HTML을 업데이트
+                var memberList = $(".member-list");
+
+                $.each(response, function(index, groupItem) {
+                    var li = $("<li>");
+                    li.append("<span style='width: 10%;'>" + (index + 1) + "</span>");
+                    li.append("<span style='width: 15%;'>" + groupItem.member_name + "</span>");
+                    li.append("<span style='width: 20%;'>" + groupItem.member_phone + "</span>");
+                    li.append("<span style='width: 40%;'>" + groupItem.member_email + "</span>");
+                    li.append("<span style='width: 15%;'>" + groupItem.join_date + "</span>");
+
+                    memberList.append(li);
+                });
+                $("#modal").css("display", "block");
+            },
+            error: function(error) {
+                // AJAX 요청이 실패할 때 처리할 코드
+                console.error("AJAX 요청 실패:", error);
+            }
+        });
+    });
+});
+
+</script>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="content_header">
+            <div class="keyword-container">
+                <h2>학습 그룹</h2>
+                <div class="select-menu-group">
+                    <div class="select-btn-group">
+                        <span class="sBtn-text" th:text="${group_name}"></span>
+                        <i class="bx bx-chevron-down"></i>
+                    </div>
+                    <ul class="options">
+                        <li class="option" th:each="groupName : ${groupName}">
+                            <span class="option-text" th:text="${groupName.group_name}"></span>
+                        </li>
+                    </ul>
+                </div>
+                <button class="search-btn">조회</button>
+            </div>
+            <div class="edit-delete">
+                <button type="button" class="modify-btn" value="학습 그룹 상세 입력">수정</button>
+                <button type="button" class="delete-btn" value="학습 그룹 상세 입력">삭제</button>
+            </div>
+        </div>
+        <section class="main-content">
+            <div class="container" >
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>학습 그룹명</th>
+                            <th>게임 콘텐츠명</th>
+                            <th>그룹T/O</th>
+                            <th>구독기간</th>
+                            <th>등록 학생수</th>
+                            <th>상세 조회</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div>
+                        <tr class="tbody-tr" th:each="groupList : ${groupList}">
+                            <td>
+                                <label class="checkbox-wrap">
+                                    <input class="checkbox" type="checkbox" th:attr="data-check-no=${groupList.group_no}">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            <td>
+                                <span class="group_name" th:attr="data-group-name=${groupList.group_name}" th:text="${groupList.group_name}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${groupList.game_title}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${groupList.group_cnt}-${groupList.group_nowcnt}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${groupList.group_enddate}"></span>
+                            </td>
+                            <td>
+                                <span th:text="${groupList.group_nowcnt}"></span>
+                            </td>
+                            <td>
+                                <button class="detail-search" th:attr="data-detail-no=${groupList.group_no}, data-group-name=${groupList.group_name}"><i class="ri-search-eye-line" data-tasksend_no=""></i></button>
+                            </td>
+                        </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <div id="modal" class="modal">
+            <div class="modal-wrap">
+                <div class="modal-header">
+                    <h2>학습 그룹</h2>
+                <div class="select-menu-group">
+                    <div class="select-btn-group">
+                        <span class="sBtn-text1">전체</span>
+                        <i class="bx bx-chevron-down"></i>
+                    </div>
+                    <ul class="options">
+                        <li class="option" th:each="groupName : ${groupName}">
+                            <span class="option-text" th:text="${groupName.group_name}" th:attr="data-no=${groupName.group_no}"></span>
+                        </li>
+                    </ul>
+                </div>
+                    <button class="search-btn1">조회</button>
+                    <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="groupinfo">
+                    <span>게임 콘텐츠 : 바둑 온라인 교육</span>
+                    <span>그룹 제한 인원 : 50명</span>
+                    <span>그룹 가능 인원 : 30명</span>
+                </div>
+                <hr>
+                <div class="modal-content">
+                    <div class="memberinfo-header">
+                        <span style="width: 10%;">No</span>
+                        <span style="width: 15%;">학생 이름</span>
+                        <span style="width: 20%;">연락처</span>
+                        <span style="width: 40%;">이메일</span>
+                        <span style="width: 15%;">가입일자</span>
+                    </div>
+                    <ul class="member-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>
