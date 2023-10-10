@@ -22,10 +22,7 @@ public class StudentTaskController {
     @GetMapping("/taskList/{member_no}")
     public String selectTaskById(@PathVariable int member_no, Model model){
         member_no = 99;
-        System.out.println("들어옴");
         List<TaskDTO> taskList = taskService.selectTaskById(member_no);
-
-        System.out.println(taskList);
         model.addAttribute("taskList", taskList);
         return "learning/task/student/taskList";
     }
@@ -66,13 +63,16 @@ public class StudentTaskController {
     //숙제 수정하기
     @PostMapping("/taskModify")
     public String taskModify(@RequestParam int tasksend_no, @RequestParam String tasksubmit_chapter,
-                                                @RequestParam String tasksubmit_content, @RequestParam String tasksubmit_add){
+                                                @RequestParam String tasksubmit_content, @RequestParam String tasksubmit_add,
+                                                @RequestParam String task_state){
         int member_no = 99;
 
         int result = taskService.ModifySubmitTask(tasksend_no,tasksubmit_chapter,tasksubmit_content,tasksubmit_add);
-        System.out.println(result);
-        if(result>0){
+        if(task_state.equals("작성중") && result > 0) {
             return "redirect:/student/taskList/" + member_no;
+
+        } else if(task_state.equals("제출완료") && result > 0) {
+            return "redirect:/student/submitTaskList/" + member_no;
         }
         return "redirect:/student/taskModify/" + tasksend_no;
     }
@@ -83,8 +83,16 @@ public class StudentTaskController {
         int member_no = 99;
         int result = taskService.submitTask(tasksend_no);
         if(result > 0){
-            return "/student/submitTaskList/" + member_no;
+            return "redirect:/student/submitTaskList/" + member_no;
         }
         return "redirect:/student/taskList/" + member_no;
+    }
+
+    //제출 숙제 조회
+    @GetMapping("/submitTaskList/{member_no}")
+    public String selectSubmitTask(@PathVariable int member_no, Model model){
+        List<TaskSubmitDTO> submitList =  taskService.selectSubmitTask(member_no);
+        model.addAttribute("submitList", submitList);
+        return "learning/task/student/submitTaskList";
     }
 }

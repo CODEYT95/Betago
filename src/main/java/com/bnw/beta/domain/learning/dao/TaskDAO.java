@@ -38,4 +38,7 @@ public interface TaskDAO {
 
     //숙제 전송
     int submitTask(List<Integer> tasksend_no);
+
+    //제출 숙제 조회
+    List<TaskSubmitDTO> selectSubmitTask(int member_no);
 }

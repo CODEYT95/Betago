@@ -33,6 +33,7 @@
                     </div>
                     <div class="modal-task-state">
                         <span class="m_state" th:text="${taskSubmit.task_state}" th:style="${taskSubmit.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                        <input type="hidden" name="task_state" th:value="${taskSubmit.task_state}" />
                     </div>
                 </div>
                 <hr class="modal-divider">
