@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class TaskServiceImpl implements TaskService{
             endDate = sdf.parse(task_deadline);
         } catch (ParseException e) {
             e.printStackTrace();
-            return 0; // 날짜 파싱 오류 시 0을 반환하거나 다른 오류 처리 방식을 선택할 수 있습니다.
+            return 0;
         }
 
         TaskDTO taskDTO = new TaskDTO();
@@ -89,5 +90,37 @@ public class TaskServiceImpl implements TaskService{
         int result = taskDAO.saveTask(tasksend_no);
 
         return (savedTaskSubmit == 1 && result == 1) ? 1 : 0;
+    }
+
+    //작성한 숙제 조회
+    @Override
+    public TaskSubmitDTO modifyTask(int tasksend_no) {
+        return taskDAO.modifyTask(tasksend_no);
+    }
+
+    //숙제 수정
+    @Override
+    public int ModifySubmitTask(int tasksend_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add) {
+
+        System.out.println("qqqqqq"+tasksend_no+tasksubmit_chapter+tasksubmit_add+tasksubmit_content);
+
+        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
+
+        System.out.println("aaaa"+taskSubmitDTO);
+
+        taskSubmitDTO.setTasksend_no(tasksend_no);
+        taskSubmitDTO.setTasksubmit_chapter(tasksubmit_chapter);
+        taskSubmitDTO.setTasksubmit_content(tasksubmit_content);
+        taskSubmitDTO.setTasksubmit_add(tasksubmit_add);
+
+        System.out.println("dddd"+taskSubmitDTO);
+
+        return taskDAO.ModifySubmitTask(taskSubmitDTO);
+    }
+
+    //숙제 전송
+    public int submitTask(List<Integer> tasksend_no){
+        System.out.println(tasksend_no);
+        return taskDAO.submitTask(tasksend_no);
     }
 }

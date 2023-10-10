@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     chapterInput.addEventListener('input', toggleSaveBtn);
     contentTextarea.addEventListener('input', toggleSaveBtn);
 
-    //버튼 활성화
     function toggleSaveBtn() {
         if (chapterInput.value.trim() !== '' && contentTextarea.value.trim() !== '') {
             saveBtn.removeAttribute('disabled');

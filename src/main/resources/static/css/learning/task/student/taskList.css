@@ -8,25 +8,18 @@
 }
 
 .mycontents-list {
-    height:auto;
-    display:flex;
-    flex-direction:row;
-    flex-wrap:wrap;
-    padding:0 30px 0 30px;
-    width:100%;
-}
-.contents-container {
+    height: auto;
     display: flex;
-    margin: 10px;
-}
-
-#submitTask {
-    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    padding: 0 30px 0 30px;
     gap: 30px;
     width: 100%;
-    justify-content: flex-start;
-    column-count: 3;
+}
+
+.contents-container {
+    margin: 10px;
+    display: flex;
 }
 
 .card-content {
@@ -50,7 +43,6 @@
 &:checked + .checkbox-title {
     border-color: #2260ff;
     box-shadow: 0 5px 10px rgba(#000, 0.1);
-    color: #2260ff;
     &:before {
         transform: scale(1);
         opacity: 1;
@@ -172,7 +164,7 @@
     right: 2px;
 }
 
-.selectBtn {
+.writeBtn, .modifyBtn {
     border: none;
     width: 70px;
     height: 30px;
@@ -196,7 +188,7 @@
     cursor: pointer;
 }
 
-.selectBtn:hover {
+.writeBtn:hover, .modifyBtn:hover {
     background-color: #2260ff;
     color: #fff;
 }
@@ -218,4 +210,8 @@
 
 .student-name, .title-button-wrap{
   margin: 0;
+}
+
+#submitTask {
+    margin: 0;
 }

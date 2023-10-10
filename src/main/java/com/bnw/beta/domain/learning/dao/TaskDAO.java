@@ -31,4 +31,11 @@ public interface TaskDAO {
     //숙제 작성
     int wirteTask(TaskSubmitDTO taskSubmitDTO);
     int saveTask(int tasksend_no);
+
+    //숙제 수정
+    TaskSubmitDTO modifyTask(int tasksend_no);
+    int ModifySubmitTask(TaskSubmitDTO taskSubmitDTO);
+
+    //숙제 전송
+    int submitTask(List<Integer> tasksend_no);
 }

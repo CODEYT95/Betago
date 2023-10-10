@@ -63,6 +63,7 @@ textarea {
     width: 370px;
     height: 80px;
     resize: none;
+    cursor: auto;
 }
 
 textarea::-webkit-scrollbar {

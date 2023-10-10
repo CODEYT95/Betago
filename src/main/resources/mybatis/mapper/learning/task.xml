@@ -101,6 +101,33 @@
         ]]>
     </insert>
 
+    <!--숙제 수정페이지-->
+    <select id="modifyTask" parameterType="Integer" resultType="TaskSubmitDTO">
+        <![CDATA[
+        SELECT t.task_title, t.task_content, t.task_deadline, ts.task_state, m.member_name, ts.member_no, g.game_title, sub.*
+        FROM tasksend AS ts
+        JOIN task AS t
+        ON ts.task_no = t.task_no
+        JOIN tasksubmit AS sub
+        ON ts.tasksend_no = sub.tasksend_no
+        JOIN  member AS m
+        ON ts.member_id = m.member_id
+        JOIN studygroup AS sg
+        ON ts.group_no = sg.group_no
+        JOIN game AS g ON sg.game_no = g.game_no
+        WHERE ts.tasksend_no = #{tasksend_no};
+        ]]>
+    </select>
+
+    <!--작성 숙제 수정하기-->
+    <update id="ModifySubmitTask" parameterType="TaskSubmitDTO">
+        <![CDATA[
+        UPDATE tasksubmit
+        SET tasksubmit_chapter = #{tasksubmit_chapter}, tasksubmit_content = #{tasksubmit_content}, tasksubmit_add = #{tasksubmit_add}
+        WHERE tasksend_no = #{tasksend_no};
+        ]]>
+    </update>
+
     <!--제출 숙제 조회하기-->
     <select id="selectSaveTask" parameterType="Integer" resultType="TaskSubmitDTO">
         <![CDATA[
@@ -115,7 +142,7 @@
         JOIN studygroup AS sg
         ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
-        WHERE ts.tasksend_no = #{tasksend_no}
+        WHERE ts.member_no = #{member_no}
         AND (ts.task_state = '제출완료' OR ts.task_state = '평가완료');
         ]]>
     </select>
@@ -129,13 +156,17 @@
     </update>
 
     <!--숙제 제출-->
-    <update id="submitTask" parameterType="Integer">
+    <update id="submitTask" parameterType="java.util.List">
         <![CDATA[
-        UPDATE tasksend SET task_state = '제출완료'
-        WHERE tasksend_no = #{tasksend_no};
+        UPDATE tasksend AS ts
+        JOIN tasksubmit sub ON ts.tasksend_no = sub.tasksend_no
+        SET ts.task_state = '제출완료', sub.tasksubmit_regdate = now()
+        WHERE ts.tasksend_no IN
         ]]>
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
-
 
     <!--제출 숙제 조회하기-->
     <select id="selectsubmitTask" parameterType="Integer" resultType="TaskSubmitDTO">
@@ -157,12 +188,4 @@
         ]]>
     </select>
 
-    <!--작성 숙제 수정하기-->
-    <update id="updateSubmitTask" parameterType="TaskSubmitDTO">
-        <![CDATA[
-        UPDATE tasksubmit
-        SET tasksubmit_chapter = #{tasksubmit_chapter}, tasksubmit_content = #{tasksubmit_content}, tasksubmit_add = #{tasksubmit_add}, tasksend_regdate = now()
-        WHERE tasksubmit_no = #{tasksubmit_no};
-        ]]>
-    </update>
 </mapper>
