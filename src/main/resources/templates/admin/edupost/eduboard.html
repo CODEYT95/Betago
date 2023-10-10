@@ -10,7 +10,7 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
         <h2>학습자료 등록창</h2>
         <form id="saveForm" th:action="@{/edupost/insert}" method="post" autocomplete="off" enctype="multipart/form-data">
