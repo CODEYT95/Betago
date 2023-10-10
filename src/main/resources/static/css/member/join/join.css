@@ -138,9 +138,6 @@ radiodiv{
     font-size: 15px;
 }
 
-select option:hover {
-    background-color: var(--gray); /* 원하는 색상으로 변경 */
-}
 
 select {
     padding: 14px 27.2px;
