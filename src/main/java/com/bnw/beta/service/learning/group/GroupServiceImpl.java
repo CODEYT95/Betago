@@ -131,7 +131,45 @@ public class GroupServiceImpl implements GroupService {
 
     //그룹 가입신청 가능한 목록 갯수
     @Override
-    public int joinGroupCount(){return groupDAO.joinGroupCount();}
+    public int joinGroupCount(String group_name){return groupDAO.joinGroupCount(group_name);}
 
+    //그룹명 목록 불러오기
+    @Override
+    public List<GroupDTO> selectGroupTitle(){return groupDAO.selectGroupTitle();}
 
+    //교육자명 불러오기
+    @Override
+    public List<GroupDTO> selectEducatorName(){return groupDAO.selectEducatorName();}
+
+    //그룹 신청 가능 실시간 체크
+    @Override
+    public String checkJoin(int group_no) {
+
+        int result = groupDAO.checkJoin(group_no);
+
+        if (result > 0) {
+
+            return "applyable";
+
+        } else {
+
+            return "unapplyable";
+        }
+    }
+
+    //학생 그룹 가입신청 Insert
+    @Override
+    public int insertGroupJoin(int member_no, int group_no, int game_no){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
+        groupDTO.setGroup_no(group_no);
+        groupDTO.setGame_no(game_no);
+        System.out.println("임플확인"+groupDTO);
+        return groupDAO.insertGroupJoin(groupDTO);
+    }
+
+    //학생 그룹 현재인원 Update
+    @Override
+    public int updateGroupJoin(int group_no){return groupDAO.updateGroupJoin(group_no);}
 }

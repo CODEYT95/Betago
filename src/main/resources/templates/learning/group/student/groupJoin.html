@@ -26,15 +26,30 @@
                             <li class="option">
                                 <span class="option-text">전체</span>
                             </li>
-                            <li class="option" th:each="joinList : ${groupJoinList}">
-                                <span class="option-text" th:text="${joinList.group_name}"></span>
+                            <li class="option" th:each="title : ${title}">
+                                <span class="option-text" th:text="${title.group_name}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="select-menu-educator">
+                        <div class="select-btn-educator">
+                            <span class="sBtn-text-educator">전체</span>
+                            <input class="title-educator" hidden="hidden" th:value="${educator}">
+                            <i class="bx bx-chevron-down"></i>
+                        </div>
+                        <ul class="options">
+                            <li class="option">
+                                <span class="option-text-educator">전체</span>
+                            </li>
+                            <li class="option" th:each="educator : ${educator}">
+                                <span class="option-text" th:text="${educator.member_name}"></span>
                             </li>
                         </ul>
                     </div>
                     <button class="search-btn">조회</button>
                 </div>
                 <div class="detailBtn-container">
-                    <input type="button" class="detail-btn" value="가입신청">
+                    <input type="button" class="join-btn" value="가입신청">
                 </div>
             </div>
             <div class="content-container">
@@ -43,7 +58,7 @@
                         <input hidden="hidden" class="attr" th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no}"/>
+                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no}"/>
                                 <span class="checkbox-tile">
                                 <div class="card">
                                     <div class="poster"><img th:src="@{/image/testBADUK2.png}"></div>
@@ -64,6 +79,12 @@
             <div class="content_footer">
                 <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCnt}"></span>)<i class="ri-arrow-down-s-line"></i></button>
             </div>
+        </div>
+    </div>
+    <div class="modal-checkerror" id="checkErrorModal">
+        <div class="modal-content">
+            <h3>그룹은 한 개만 선택해주세요.</h3>
+            <button class="modal-btn" onclick="closeModal()">확인</button>
         </div>
     </div>
     <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

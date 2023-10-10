@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let checkedCount = $(".checkbox-input:checked").length;
 
             if (checkedCount > 1) {
-                alert("하나의 게임 콘텐츠만 선택이 가능합니다");
+                alert("하나의 그룹만 선택이 가능합니다");
                 $(this).prop("checked", false);
             }
         });
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var title = $(".title").value;
 
             $.ajax({
-                url: "/student/group/join",
+                url: "/student/group/joinList",
                 type: "POST",
                 data: {
                     offset: offset,
@@ -33,11 +33,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     var remainingTo = item.group_cnt - item.group_nowcnt;
                     console.log(remainingTo);
                         $(".content-container ul").append(`
-                            <li>
+                            <li data-game-no=${item.game_no}>
                                 <input hidden="hidden" class="attr" data-game-no=${item.game_no} data-group-no=${item.group_no} data-member-no=${item.member_no}>
                                     <div class="checkbox">
                                         <label class="checkbox-wrapper">
-                                            <input type="checkbox" class="checkbox-input"  data-game-no=${item.game_no} />
+                                            <input type="checkbox" class="checkbox-input"  data-game-no=${item.game_no} data-group-no=${item.group_no} />
                                             <span class="checkbox-tile">
                                                 <div class="card">
                                                     <div class="poster"><img src="/image/testBADUK2.png"></div>
@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     //학습 그룹 상세 페이지로 이동
+    /*
     var detailBtn = document.querySelector(".detail-btn");
 
     detailBtn.addEventListener("click", function() {
@@ -116,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("게임을 선택해주세요.");
         }
     });
+    */
     //게임 콘텐츠 목록 리스트
     $(document).ready(function() {
         const groupMenu = document.querySelector(".select-menu-group");
@@ -124,14 +126,54 @@ document.addEventListener("DOMContentLoaded", function() {
         const groupSBtnText = groupMenu.querySelector(".sBtn-text");
 
         selectGroupBtn.addEventListener("click", () => groupMenu.classList.toggle("active"));
-        groupOptions.forEach(option => {
-            option.addEventListener("click", () => {
-                let selectedOption = option.querySelector(".option-text").innerText;
-                groupSBtnText.innerText = selectedOption;
-                groupMenu.classList.remove("active");
-            });
-        });
+
+       const educatorMenu = document.querySelector(".select-menu-educator");
+       const selectEducatorBtn = educatorMenu.querySelector(".select-btn-educator");
+       const educatorOptions = educatorMenu.querySelectorAll(".options");
+       const educatorSBtnText = educatorMenu.querySelector(".sBtn-text-educator");
+
+       selectEducatorBtn.addEventListener("click", () => educatorMenu.classList.toggle("active"));
+
+       educatorOptions.forEach(option => {
+           option.addEventListener("click", () => {
+               let selectedOption = option.querySelector(".option-text").innerText;
+               educatorSBtnText.innerText = selectedOption;
+               educatorMenu.classList.remove("active");
+           });
+       });
     });
+   $(document).ready(function() {
+     $('.join-btn').click(function() {
+       var group_no = $('.checkbox-input:checked').data('group-no');
+       var game_no = $('.checkbox-input:checked').data('game-no');
+       var member_no = 999;
+       if (group_no && game_no) { // 그룹을 선택한 경우
+         $.ajax({
+           type: 'POST',
+           url: '/student/group/join',
+           data: {
+             group_no: group_no,
+             game_no: game_no,
+             member_no: member_no
+           },
+           dataType: 'text',
+           success: function(response) {
+             if (response === "applyable") {
+               alert('Success');
+             } else {
+               alert('Error');
+             }
+           },
+           error: function(xhr, status, error) {
+             console.error('오류 발생:', error);
+           }
+         });
+       } else {
+         alert('그룹을 선택해주세요.');
+       }
+     });
+   });
+
     window.onload = function() {
             // .currentCnt와 .totalCnt 요소를 가져옵니다.
             var currentCountElement = document.querySelector('.currentCnt');

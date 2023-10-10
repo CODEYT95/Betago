@@ -43,5 +43,20 @@ public interface GroupDAO {
     List<GroupDTO> selectJoinGroup(GroupDTO groupDTO);
 
     //그룹 가입신청 가능한 목록 갯수
-    int joinGroupCount();
+    int joinGroupCount(String group_name);
+
+    //그룹명 목록 불러오기
+    List<GroupDTO> selectGroupTitle();
+
+    //교육자명 불러오기
+    List<GroupDTO> selectEducatorName();
+
+    //그룹 신청 가능 실시간 체크
+    int checkJoin(int group_no);
+
+    //학생 그룹 가입신청 Insert
+    int insertGroupJoin(GroupDTO groupDTO);
+
+    //학생 그룹 현재인원 Update
+    int updateGroupJoin(int group_no);
 }
