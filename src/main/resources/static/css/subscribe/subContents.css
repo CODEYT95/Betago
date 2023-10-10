@@ -49,20 +49,26 @@ input#startDate, input#endDate{
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     font-weight: bold;
+    height:40px;
 }
 
 .submit-button{
-    width: 150px;
-    height: 32px;
-    background-color: RGB(249, 236, 190);
+    height: 40px;
+    background: #fff;
+    padding: 20px;
+    font-size: 18px;
     border: none;
-    border-radius: 8px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
+    font-weight: 400;
+    border-radius: 5px;
+    line-height: 0;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    color: black;
 }
 .submit-button:hover {
-background-color: #f9da8d;
-cursor: pointer;
+    background-color: #205AEF;
+    cursor: pointer;
+    color:white;
 }
 
     .checkbox{

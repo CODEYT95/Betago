@@ -47,6 +47,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+ // <select> 요소를 가져옵니다.
+    var gameTitleSelect = document.getElementById("gameTitleSelect");
+
+    // <select> 요소의 변경 이벤트를 감지하고 선택한 값을 <option> 요소에 추가합니다.
+    gameTitleSelect.addEventListener("change", function() {
+        var selectedGameTitle = gameTitleSelect.options[gameTitleSelect.selectedIndex].text;
+
+        // 선택한 게임 제목을 "게임 선택" 옵션 아래에 표시합니다.
+        var defaultOption = gameTitleSelect.querySelector("option[value='game_title']");
+        defaultOption.textContent = selectedGameTitle;
+    });
     function submitForm() {
             document.getElementById("searchForm").submit();
         }
