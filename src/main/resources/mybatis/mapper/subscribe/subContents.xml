@@ -6,7 +6,7 @@
     <select id="selectContents" parameterType="subContentsDTO" resultType="subContentsDTO">
         <![CDATA[
         SELECT
-        g.game_no, p.pay_no, g.game_title, p.pay_date, g.game_price, g.game_startdate AS game_startdate, g.game_enddate AS game_enddate, s.group_name, p.member_id
+        g.game_no, p.pay_no, g.game_title, p.pay_date, g.game_startdate AS game_startdate, g.game_enddate AS game_enddate, s.group_name, p.member_id
         FROM
         game g
         JOIN

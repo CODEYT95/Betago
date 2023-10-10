@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // 폼 제출 함수
-    function submitForm() {
-        document.getElementById("searchForm").submit();
-    }
 
     // 클래스가 "checkbox-input"인 모든 체크박스 가져오기
     const checkboxes = document.querySelectorAll('.checkbox-input');
@@ -50,6 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+});
+    function submitForm() {
+            document.getElementById("searchForm").submit();
+        }
 
     //구독하기 - 도훈
     // 구독 버튼 클릭 시 처리
@@ -64,4 +64,3 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("게임을 선택하세요!");
         }
     });
-});

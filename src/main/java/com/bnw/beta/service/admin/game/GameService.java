@@ -23,5 +23,4 @@ public interface GameService {
 
     //게임콘텐츠 제목검색
     public List<GameDTO> searchByTitle(@Param("game_title") String game_title);
-
 }

@@ -43,7 +43,7 @@ public class GameController {
     }
 
     // 게임콘텐츠 제목 검색
-    @GetMapping("/game/searchByTitle")
+    @GetMapping("/searchByTitle")
     public String searchByTitle(@RequestParam("game_title") String game_title, Model model) {
         if (game_title != null && !game_title.trim().isEmpty()) {
             // 사용자가 게임 제목을 선택한 경우에만 필터링
