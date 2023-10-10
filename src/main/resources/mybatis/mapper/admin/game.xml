@@ -13,10 +13,27 @@
     <!--게임콘텐츠 등록-->
     <insert  id="insertGame" parameterType="GameDTO">
             <![CDATA[
-                insert into game (game_title, game_level, game_startdate, game_enddate, game_total, game_price, game_discount,
-                game_sell, game_content, member_id) values (#{game_title}, #{game_level}, #{game_startdate}, #{game_enddate}, #{game_total}
-                , #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id});
-                ]]>
+                   <insert id="insertGame" parameterType="com.example.model.Game">
+        INSERT INTO game (
+            game_title,
+            game_level,
+            game_duration,
+            game_total,
+            game_price,
+            game_discount,
+            game_sell,
+            game_content,
+            member_id
+        ) VALUES (
+            #{game_title},
+            #{game_level},
+            #{game_duration},
+            #{game_total},
+            #{game_price},
+            #{game_content},
+            #{member_id}
+        )
+        ]]>
     </insert>
     <!--월간 (일일 단위 매출조회)-->
    <select id="selectDailySales" resultType="GameDTO">
