@@ -5,8 +5,16 @@
 
 <select id="selectContentsPay" parameterType="Integer" resultType="payDTO">
     <![CDATA[
-    SELECT game_no, game_title, game_price
-    FROM game;
+    SELECT * FROM game WHERE game_no = #{game_no};
+    ]]>
+</select>
+
+<select id="selectCart" parameterType="Integer" resultType="CartDTO">
+    <![CDATA[
+    SELECT c.*, g.game_title, g.game_price
+    FROM cart AS c
+    JOIN game AS g ON c.game_no = #{g.game_no}
+    WHERE c.member_id = #{member_id};
     ]]>
 </select>
 

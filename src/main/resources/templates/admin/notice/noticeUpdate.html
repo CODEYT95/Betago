@@ -9,12 +9,41 @@
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
     <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
-    <div class="content-wrap">
-        <form enctype="multipart/form-data">
+    <div class="content-wrap" >
+        <form th:action="@{/notice/update}" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="notice_no" th:value="${notice_no}">
+            <label> 공지구분
+                <select name="notice_category" th:value="${noticeDTO.notice_category}">
+                    <option value="공지">공지</option>
+                    <option value="FAQ">FAQ</option>
+                </select>
+
+            </label><br/>
+            <input type="text" name="member_id" th:value="${noticeDTO.member_id}">
+            <span>제목 <input type="text" name="notice_title" th:value="${noticeDTO.notice_title}"></span><br/>
+
+            <textarea rows="10" cols="50" name="notice_content" th:text="${noticeDTO.notice_content}"></textarea><br/>
+            <input th:value="${noticeDTO.notice_regdate}">
+            <input type="file" multiple ="multiple" name="file" ><br/>
+            <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}">
+                <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300" alt="image">
+            </div><br/>
 
 
+            <button type="submit">완료</button>
+
+
+            <a th:href="@{'/notice/delete/' + ${noticeDTO.getNotice_no}}">
+                <button type="button">삭제</button>
+            </a>
+
+            <a th:href="@{'/notice/list'}">
+                <button type="button">취소</button>
+            </a>
         </form>
     </div>
 </div>
+
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

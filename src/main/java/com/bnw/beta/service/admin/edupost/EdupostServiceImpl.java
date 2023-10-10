@@ -35,5 +35,10 @@ public class EdupostServiceImpl implements EdupostService {
         edupostDao.update(dto);
         return dto.getEdupost_no();
     }
+    @Override
+    public Long deletePost(final Long edupost_no) {
+        edupostDao.deleteById(edupost_no);
+        return edupost_no;
+    }
 
 }

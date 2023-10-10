@@ -1,6 +1,7 @@
 package com.bnw.beta.domain.guide.dao;
 
 import com.bnw.beta.domain.guide.dto.QuestionDTO;
+import com.bnw.beta.domain.member.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +16,8 @@ public interface QuestionDAO {
     QuestionDTO selectQuestionById(Integer id);
 
     void insertQuestion(QuestionDTO questionDTO);
+
+    MemberDTO findUserByUsername(String username);
+
+    String getPwByQnaNo(Integer id);
 }

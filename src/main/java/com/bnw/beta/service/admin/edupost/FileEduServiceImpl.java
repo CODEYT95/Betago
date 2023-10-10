@@ -41,14 +41,17 @@ public class FileEduServiceImpl implements FileEduService {
 
     @Override
     public String deleteFileByNos(int file_no) {
-
         int result = filepostDao.deleteByNo(file_no);
-
         if(result == 1){
             return "success";
         }else{
             return "fail";
         }
+    }
+
+    @Override
+    public FilepostDTO findByfileNo(final Long filepost_no) {
+        return filepostDao.findByfileNo(filepost_no);
     }
 
 

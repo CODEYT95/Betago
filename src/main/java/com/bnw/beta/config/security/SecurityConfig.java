@@ -32,7 +32,8 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
                 .and()
                 .logout()
-                .logoutUrl("/user/logout")
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .deleteCookies();
         return http.build();
     }

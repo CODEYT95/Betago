@@ -98,4 +98,20 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("게임을 선택해주세요.");
         }
     });
+    //게임 콘텐츠 목록 리스트
+    $(document).ready(function() {
+        const groupMenu = document.querySelector(".select-menu-group");
+        const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
+        const groupOptions = groupMenu.querySelectorAll(".option");
+        const groupSBtnText = groupMenu.querySelector(".sBtn-text");
+
+        selectGroupBtn.addEventListener("click", () => groupMenu.classList.toggle("active"));
+        groupOptions.forEach(option => {
+            option.addEventListener("click", () => {
+                let selectedOption = option.querySelector(".option-text").innerText;
+                groupSBtnText.innerText = selectedOption;
+                groupMenu.classList.remove("active");
+            });
+        });
+    });
  });

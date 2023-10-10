@@ -17,4 +17,6 @@ public interface FilepostDAO {
 
     int deleteByNo(int file_no);
 
+    FilepostDTO findByfileNo(Long filepost_no);
+
 }

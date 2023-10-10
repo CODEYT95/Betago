@@ -27,4 +27,7 @@ public interface GroupService {
 
     //학습 그룹 name 조회
     List<GroupDTO> selectGroupName(String member_id);
+
+    //학습 그룹 삭제
+    String deleteGroup(List<Integer> group_no);
 }
