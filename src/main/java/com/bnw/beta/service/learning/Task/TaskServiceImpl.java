@@ -102,18 +102,11 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public int ModifySubmitTask(int tasksend_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add) {
 
-        System.out.println("qqqqqq"+tasksend_no+tasksubmit_chapter+tasksubmit_add+tasksubmit_content);
-
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
-
-        System.out.println("aaaa"+taskSubmitDTO);
-
         taskSubmitDTO.setTasksend_no(tasksend_no);
         taskSubmitDTO.setTasksubmit_chapter(tasksubmit_chapter);
         taskSubmitDTO.setTasksubmit_content(tasksubmit_content);
         taskSubmitDTO.setTasksubmit_add(tasksubmit_add);
-
-        System.out.println("dddd"+taskSubmitDTO);
 
         return taskDAO.ModifySubmitTask(taskSubmitDTO);
     }
@@ -122,5 +115,12 @@ public class TaskServiceImpl implements TaskService{
     public int submitTask(List<Integer> tasksend_no){
         System.out.println(tasksend_no);
         return taskDAO.submitTask(tasksend_no);
+    }
+
+    //제출 숙제 조회
+
+    @Override
+    public List<TaskSubmitDTO> selectSubmitTask(int member_no) {
+        return taskDAO.selectSubmitTask(member_no);
     }
 }
