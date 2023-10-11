@@ -4,6 +4,7 @@ import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
 import com.bnw.beta.service.learning.Task.TaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,17 +20,16 @@ public class StudentTaskController {
     private TaskService taskService;
 
     //전송된 숙제 조회하기
-    @GetMapping("/taskList/{member_no}")
-    public String selectTaskById(@PathVariable int member_no, Model model){
-        member_no = 99;
+    @GetMapping("/taskList")
+    public String selectTaskById( int member_no, Model model){
         List<TaskDTO> taskList = taskService.selectTaskById(member_no);
         model.addAttribute("taskList", taskList);
         return "learning/task/student/taskList";
     }
 
     //모달창 숙제 정보 불러오기
-    @GetMapping("/taskDetail/{tasksend_no}")
-    public String taskDetail(@PathVariable int tasksend_no, Model model){
+    @GetMapping("/taskDetail")
+    public String taskDetail(@RequestParam int tasksend_no, Model model){
         TaskSendDTO taskDetail = taskService.selectTaskByNo(tasksend_no);
         model.addAttribute("taskDetail", taskDetail);
         return "learning/task/student/taskDetail";
