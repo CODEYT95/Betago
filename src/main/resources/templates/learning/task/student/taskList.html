@@ -16,7 +16,7 @@
             <form id="submitTask" th:action="@{/student/submitTask}" method="post">
                 <div class="main-title">
                     <div class="student-name">
-                        <h1>학습자 : 김바둑<span th:text></span></h1>
+                        <h1>학습자 : <span th:text="${member_name}"></span></h1>
                     </div>
                     <div class="title-button-wrap">
                         <button type="submit" id="submitButton" class="submitBtn" disabled>제출하기</button>
@@ -49,7 +49,7 @@
                                                     </div>
                                                     <div class="card-button">
                                                         <div class="button-wrap">
-                                                             <a th:href="@{/student/taskDetail}" th:data-tasksend-no="${task.tasksend_no}">
+                                                             <a th:href="@{/student/taskDetail/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
                                                                 <input type="button" class="writeBtn" value="숙제하기">
                                                             </a>
                                                             <a th:href="@{/student/taskModify/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">

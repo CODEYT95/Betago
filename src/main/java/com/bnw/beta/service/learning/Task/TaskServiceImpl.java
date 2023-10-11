@@ -69,8 +69,12 @@ public class TaskServiceImpl implements TaskService{
 
     //숙제 번호로 정보 조회
     @Override
-    public TaskSendDTO selectTaskByNo(Integer tasksend_no) {
-        return taskDAO.selectTaskByNo(tasksend_no);
+    public TaskSendDTO selectTaskByNo(Integer tasksend_no, Integer member_no) {
+        TaskSendDTO taskSendDTO = new TaskSendDTO();
+        taskSendDTO.setMember_no(member_no);
+        taskSendDTO.setTasksend_no(tasksend_no);
+
+        return taskDAO.selectTaskByNo(taskSendDTO);
     }
 
     //숙제 작성하기
