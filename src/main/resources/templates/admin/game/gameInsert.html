@@ -14,7 +14,7 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/admin_sidebar :: admin_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="container">
             <form name="gameContent" th:action="@{/game/gameInsert}" method="post">

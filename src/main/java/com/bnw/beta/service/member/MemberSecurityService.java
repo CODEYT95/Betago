@@ -59,6 +59,4 @@ public class MemberSecurityService implements UserDetailsService {
         select * from user where email=> ?
         jpa기능인데 마이바티스로 변경해야해
         */
-
-
 }
