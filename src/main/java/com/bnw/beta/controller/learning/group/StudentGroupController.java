@@ -2,6 +2,7 @@ package com.bnw.beta.controller.learning.group;
 
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ public class StudentGroupController {
     @GetMapping("joinList")
     public String groupJoin(@RequestParam(name = "offset", defaultValue = "0") int offset,
                             @RequestParam(name = "group_name", defaultValue = "") String group_name,
-                            Model model){
+                            Model model, HttpSession session){
 
         int limit = 1;
         model.addAttribute("title", groupService.selectGroupTitle());
@@ -46,9 +47,7 @@ public class StudentGroupController {
     @ResponseBody
     public String join(@RequestParam(name = "group_no") int group_no,
                        @RequestParam(name = "game_no") int game_no,
-                       @RequestParam(name = "member_no") int member_no){
-        System.out.println("컨트럴로 진입");
-        member_no = 1004;
+                       @RequestParam(name = "member_no") int member_no, HttpSession session){
 
         if(groupService.checkJoin(group_no).equals("applyable")){
             System.out.println("성공");
