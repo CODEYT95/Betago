@@ -43,7 +43,7 @@ public interface GroupDAO {
     List<GroupDTO> selectJoinGroup(GroupDTO groupDTO);
 
     //그룹 가입신청 가능한 목록 갯수
-    int joinGroupCount(String group_name);
+    int joinGroupCount(GroupDTO groupDTO);
 
     //그룹명 목록 불러오기
     List<GroupDTO> selectGroupTitle();

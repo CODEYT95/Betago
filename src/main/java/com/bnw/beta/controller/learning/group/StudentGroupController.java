@@ -2,6 +2,7 @@ package com.bnw.beta.controller.learning.group;
 
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,16 @@ public class StudentGroupController {
     @GetMapping("joinList")
     public String groupJoin(@RequestParam(name = "offset", defaultValue = "0") int offset,
                             @RequestParam(name = "group_name", defaultValue = "") String group_name,
-                            Model model){
+                            Model model, HttpSession session){
+
+        int member_no = (int) session.getAttribute("member_no");
 
         int limit = 1;
+
         model.addAttribute("title", groupService.selectGroupTitle());
         model.addAttribute("educator", groupService.selectEducatorName());
-        model.addAttribute("totalCnt", groupService.joinGroupCount(group_name));
-        model.addAttribute("groupJoinList", groupService.selectJoinGroup(group_name,limit,offset));
+        model.addAttribute("totalCnt", groupService.joinGroupCount(member_no, group_name));
+        model.addAttribute("groupJoinList", groupService.selectJoinGroup(member_no,group_name,limit,offset));
         return "/learning/group/student/groupJoin";
     }
 
@@ -34,25 +38,24 @@ public class StudentGroupController {
     @ResponseBody
     public List<GroupDTO> groupJoinAdd(@RequestParam(name = "offset", defaultValue = "0") int offset,
                                        @RequestParam(name = "group_name", defaultValue = "") String group_name,
-                                       Model model){
+                                       Model model, HttpSession session){
+
+        int member_no = (int) session.getAttribute("member_no");
 
         int limit = 1;
 
-        return groupService.selectJoinGroup(group_name,limit,offset);
+        return groupService.selectJoinGroup(member_no, group_name,limit,offset);
     }
 
     //그룹 가능 실시간 체크
     @PostMapping("join")
     @ResponseBody
     public String join(@RequestParam(name = "group_no") int group_no,
-                       @RequestParam(name = "game_no") int game_no,
-                       @RequestParam(name = "member_no") int member_no){
-        System.out.println("컨트럴로 진입");
-        member_no = 1004;
+                       @RequestParam(name = "game_no") int game_no, HttpSession session){
+
+        int member_no = (int) session.getAttribute("member_no");
 
         if(groupService.checkJoin(group_no).equals("applyable")){
-            System.out.println("성공");
-            System.out.println("인서트성공"+groupService.insertGroupJoin(member_no, group_no, game_no));
             groupService.insertGroupJoin(member_no, group_no, game_no);
             groupService.updateGroupJoin(group_no);
             return "applyable";

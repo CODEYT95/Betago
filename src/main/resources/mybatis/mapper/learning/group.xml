@@ -129,7 +129,9 @@
         SELECT sg.*, m.member_no, m.member_name
         FROM studygroup sg
         JOIN member m ON sg.member_id = m.member_id
+        LEFT JOIN groupmember gm ON sg.group_no = gm.group_no AND gm.member_no = #{member_no}
         WHERE sg.group_nowcnt < sg.group_cnt
+        AND gm.member_no IS NULL
         ]]>
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
@@ -144,14 +146,16 @@
     </select>
 
     <!-- 그룹 가입신청 가능한 목록 갯수 -->
-    <select id="joinGroupCount" parameterType="String" resultType="Integer">
+    <select id="joinGroupCount" parameterType="GroupDTO" resultType="Integer">
         <![CDATA[
         SELECT count(*)
-        FROM studygroup
-        WHERE group_nowcnt < group_cnt;
+        FROM studygroup sg
+        LEFT JOIN groupmember gm ON sg.group_no = gm.group_no AND gm.member_no = #{member_no}
+        WHERE sg.group_nowcnt < sg.group_cnt
+        AND gm.member_no IS NULL
         ]]>
         <if test="group_name != null and group_name != ''">
-            AND group_name = #{group_name}
+            AND sg.group_name = #{group_name}
         </if>
     </select>
 

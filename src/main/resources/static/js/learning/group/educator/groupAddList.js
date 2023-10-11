@@ -72,19 +72,15 @@ document.addEventListener("DOMContentLoaded", function() {
         var liCount = $(".list-box li").length;
         $(".currentCnt").text(liCount);
 
-        // .currentCnt와 .totalCnt 요소를 가져옵니다.
         var currentCountElement = document.querySelector('.currentCnt');
         var totalCountElement = document.querySelector('.totalCnt');
 
-        // #moreBtn 요소를 가져옵니다.
         var moreButton = document.getElementById('moreBtn');
 
-        // .currentCnt와 .totalCnt의 값을 비교합니다.
         if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
-            // 값이 동일하거나 .currentCnt가 더 크다면, #moreBtn을 숨깁니다.
             moreButton.style.display = 'none';
         } else {
-            moreButton.style.display = 'block';  // Optional: 만약 total count가 더 크다면 버튼을 다시 보여줍니다.
+            moreButton.style.display = 'block';
         }
     }
 
@@ -129,16 +125,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     window.onload = function() {
-            // .currentCnt와 .totalCnt 요소를 가져옵니다.
             var currentCountElement = document.querySelector('.currentCnt');
             var totalCountElement = document.querySelector('.totalCnt');
 
-            // #moreBtn 요소를 가져옵니다.
             var moreButton = document.getElementById('moreBtn');
 
-            // .currentCnt와 .totalCnt의 값을 비교합니다.
             if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
-                // 값이 동일하거나 .currentCnt가 더 크다면, #moreBtn을 숨깁니다.
                 moreButton.style.display = 'none';
             }
         }
