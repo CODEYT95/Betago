@@ -1,0 +1,70 @@
+@charset "UTF-8";
+.main-content {
+display: inline-table;
+    border: 1px solid red;
+    width: 100%;
+    height: 100%;
+}
+
+.first-box {
+    border: 1px solid blue;
+    height: 190px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.imgbox{
+    border: 1px solid red;
+    height: 170px;
+    width: 790px;
+    margin: 10px;
+}
+
+.loginbox{
+        border: 1px solid red;
+        display: grid;
+        width: 190px;
+        height: 120px;
+}
+.loginbox button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.loginbox button:hover {
+    background-color: #0056b3;
+}
+
+.second-box {
+    border: 1px solid blue;
+    height: 190px;
+    width: 100%;
+    display: flex;
+}
+.third-box {
+    border: 1px solid blue;
+    height: 190px;
+    width: 100%;
+    display: flex;
+}
+
+.image-slider img {
+    width: 100%;
+    height: auto;
+    display: none; /* 초기에는 모든 이미지를 숨김 */
+}
+
+.image-slider img:first-child {
+    display: block; /* 첫 번째 이미지만 보여줌 */
+}
+
+.login-form {
+    margin-top: 20px;
+}

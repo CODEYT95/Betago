@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/main.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+<!--    <div th:replace="~{common/fragments/sidebar :: default_sidebarFragment}"></div>-->
+    <div class="content-wrap">
+        <div class="main-content">
+        <!-- 첫번째 칸: 이미지 슬라이더 및 로그인 폼 -->
+            <div class="first-box">
+                <div class="imgbox">
+                <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="path/to/your/image1.jpg" alt="Image 1">
+                        <img src="path/to/your/image2.jpg" alt="Image 2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                    <!-- 로그인 폼 -->
+                <div class="loginbox">
+                    <button type="button" onclick="location.href='/login'">로그인</button>
+                    <button type="button" onclick="location.href='/signup'">회원가입</button>
+                </div>
+            </div>
+
+        <!-- 두번째 칸: 게임 리스트 -->
+            <div class="second-box">
+                <ul class="game-list">
+                    <li>게임 1</li>
+                    <li>게임 2</li>
+                    <!-- 추가 게임을 리스트로 넣을 수 있습니다 -->
+                </ul>
+            </div>
+
+        <!-- 세번째 칸: 공지사항 -->
+            <div class="third-box">
+                <ul class="notice-list">
+                    <li>공지사항 1</li>
+                    <li>공지사항 2</li>
+                    <!-- 추가 공지사항을 리스트로 넣을 수 있습니다 -->
+                </ul>
+            </div>
+    </div>
+</div>
+</div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

@@ -10,6 +10,9 @@
 
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div th:if="${message}" class="alert alert-success" role="alert">
+    <p th:text="${message}"></p>
+</div>
 
 <div class="content">
     <div th:replace="~{common/sidebar/pay_sidebar :: pay_sidebarFragment}"></div>
@@ -43,7 +46,7 @@
                                     <div class="details">
                                         <h5>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h5>
                                         <h5>구매금액 : <span th:text="${content.game_sell}"></span>원</h5>
-                                        <h5>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h5>
+                                        <h5>구독기간</h5>
                                         <h5>그룹가능인원  : 50명</h5>
                                     </div>
                                     <div class="backDetails">

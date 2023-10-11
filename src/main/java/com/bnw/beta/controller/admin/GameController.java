@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -26,11 +27,13 @@ public class GameController {
     }
 
     @PostMapping("/gameInsert")
-    public String insertGame(@ModelAttribute GameDTO dto, HttpServletRequest request) {
-        String member_id = "dumy";
+    public String insertGame(@ModelAttribute GameDTO dto, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String member_id = "admin1";
         dto.setMember_id(member_id);
         int result = gameService.insertGame(dto);
         System.out.println(result);
+
+        redirectAttributes.addFlashAttribute("message", "등록이 완료되었습니다.");
         return "redirect:/game/list";
     }
 
