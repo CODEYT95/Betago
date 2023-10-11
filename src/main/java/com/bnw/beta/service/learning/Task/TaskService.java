@@ -18,10 +18,10 @@ public interface TaskService {
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
-    List<TaskDTO> selectTaskById(int member_no);
+    List<TaskDTO> selectTaskById(Integer member_no);
 
     //숙제 번호로 정보 조회
-    TaskSendDTO selectTaskByNo(int tasksend_no);
+    TaskSendDTO selectTaskByNo(Integer tasksend_no);
 
     //숙제 작성
     int wirteTask(int tasksend_no, int task_no,  String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id);
@@ -36,5 +36,5 @@ public interface TaskService {
     int submitTask(List<Integer> tasksend_no);
 
     //제출 숙제 조회
-    List<TaskSubmitDTO> selectSubmitTask(int member_no);
+    List<TaskSubmitDTO> selectSubmitTask(Integer member_no);
 }

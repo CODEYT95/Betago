@@ -46,7 +46,7 @@ public class MemberController {
         System.out.println("성공");
 
         System.out.println(session.getAttribute("member_no"));
-        return "main/maintest"; //메인페이지로 설정
+        return "main/main"; //메인페이지로 설정
     }
 
     @GetMapping("/loginForm") //기본주소로 설정시 시큐리티가 주소를 낚아채지만 SecurtiyConfig생성후 폼으로 정상 작동
