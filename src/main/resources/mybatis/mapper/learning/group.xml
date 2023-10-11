@@ -50,9 +50,9 @@
     <!-- 그룹 등록을 위한 게임 콘텐츠 정보 불러오기 -->
     <select id="gameGroupInfo" parameterType="Integer" resultType="GroupDTO">
         <![CDATA[
-        SELECT g.game_no, g.game_title, g.game_total, SUM(s.group_cnt) AS group_nowcnt
+        SELECT g.game_no, g.game_title, g.game_total, IFNULL(SUM(sg.group_cnt), 0) AS group_nowcnt
         FROM game g
-        JOIN studygroup s ON g.game_no = s.game_no
+        LEFT JOIN studygroup sg ON g.game_no = sg.game_no
         WHERE g.game_no = #{game_no};
         ]]>
     </select>

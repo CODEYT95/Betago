@@ -39,4 +39,12 @@
         ]]>
     </select>
 
+    <!--///////////member_no & member_name 불러오기 -->
+    <select id="getMemberInfo" parameterType="String">
+        <![CDATA[
+        SELECT *
+        FROM member
+        WHERE member_id = #{member_id};
+        ]]>
+    </select>
 </mapper>

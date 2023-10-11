@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (selectedCheckbox) {
 
             var selectedGameNo = selectedCheckbox.getAttribute("data-game-no");
-
             var url = "/educator/group/add?game_no=" + selectedGameNo;
             location.href = url;
         } else {

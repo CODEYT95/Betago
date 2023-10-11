@@ -104,6 +104,7 @@ public class GroupServiceImpl implements GroupService {
     //학습 그룹 삭제
     @Override
     public String deleteGroup(List<Integer> group_no){
+
         int result = groupDAO.deleteGroup(group_no);
         if(result == 0){
 

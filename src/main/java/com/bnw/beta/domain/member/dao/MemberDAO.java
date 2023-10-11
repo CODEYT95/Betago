@@ -27,4 +27,7 @@ public interface MemberDAO {
     //question 글등록 유저 아이디
     MemberDTO findUserByUsername(String username);
 
+    //////////멤버 정보 불러오기///////////
+    MemberDTO getMemberInfo(String member_id);
+
 }

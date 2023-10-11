@@ -26,6 +26,9 @@ public interface MemberService {
         //Question 글작성 회원 아이디 정보
         Optional<MemberDTO> getUser(String username);
 
+        //////////멤버 정보 불러오기///////////
+        MemberDTO getMemberInfo(String member_id);
+
 
 
 

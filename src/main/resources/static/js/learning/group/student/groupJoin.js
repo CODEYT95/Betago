@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
        var group_no = $('.checkbox-input:checked').data('group-no');
        var game_no = $('.checkbox-input:checked').data('game-no');
        var member_no = 999;
+
        if (group_no && game_no) { // 그룹을 선택한 경우
          $.ajax({
            type: 'POST',

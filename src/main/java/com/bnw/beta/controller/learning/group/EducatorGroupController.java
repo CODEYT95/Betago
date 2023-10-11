@@ -2,6 +2,8 @@ package com.bnw.beta.controller.learning.group;
 
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
+import com.bnw.beta.service.member.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class EducatorGroupController {
 
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private MemberService memberService;
 
     //그룹 등록 가능한 게임 콘텐츠 목록 GET
     @GetMapping("/addList")
@@ -47,24 +52,23 @@ public class EducatorGroupController {
 
     //그룹 등록
     @GetMapping("/add")
-    public String addGroup(@RequestParam("game_no") int game_no, Model model){
-
-        System.out.println(groupService.gameGroupInfo(game_no));
+    public String addGroup(@RequestParam("game_no") int game_no, Principal principal, Model model){
+        model.addAttribute("member_name",memberService.getMemberInfo(principal.getName()).getMember_name());
         model.addAttribute("gameGroupInfo", groupService.gameGroupInfo(game_no));
         return "/learning/group/educator/groupAdd";
     }
 
     //그룹 등록 내용 Insert
     @PostMapping("/addInsert")
-    public String addGroupInsert(
-            @RequestParam("game_no") int game_no,
-            @RequestParam("groupName") String groupName,
-            @RequestParam("count") int count,
-            @RequestParam("sdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date sdate,
-            @RequestParam("edate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate){
-        String id = "baduk";
+    public String addGroupInsert(Principal principal,
+                                 @RequestParam("game_no") int game_no,
+                                 @RequestParam("groupName") String groupName,
+                                 @RequestParam("count") int count,
+                                 @RequestParam("sdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date sdate,
+                                 @RequestParam("edate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate){
 
-        int result = groupService.insertGroup(game_no,id, groupName, count, sdate, edate);
+
+        int result = groupService.insertGroup(game_no, principal.getName(), groupName, count, sdate, edate);
         return "/learning/group/educator/groupAddList";
     }
 
@@ -97,5 +101,6 @@ public class EducatorGroupController {
     public String groupDelete(@RequestParam(name = "group_no") List<Integer> group_no) {
         return groupService.deleteGroup(group_no);
     }
+
 }
 
