@@ -8,7 +8,7 @@ import java.util.Collection;
 
 @Data
 public class MemberDTO implements UserDetails {
-    private Long member_no;
+    private Integer member_no;
     private String member_id;
     private String member_pw;
     private String member_name;

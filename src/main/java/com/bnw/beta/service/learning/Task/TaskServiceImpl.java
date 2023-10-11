@@ -63,13 +63,13 @@ public class TaskServiceImpl implements TaskService{
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
     @Override
-    public List<TaskDTO> selectTaskById(int member_no) {
+    public List<TaskDTO> selectTaskById(Integer member_no) {
         return taskDAO.selectTaskById(member_no);
     }
 
     //숙제 번호로 정보 조회
     @Override
-    public TaskSendDTO selectTaskByNo(int tasksend_no) {
+    public TaskSendDTO selectTaskByNo(Integer tasksend_no) {
         return taskDAO.selectTaskByNo(tasksend_no);
     }
 
@@ -119,7 +119,7 @@ public class TaskServiceImpl implements TaskService{
     //제출 숙제 조회
 
     @Override
-    public List<TaskSubmitDTO> selectSubmitTask(int member_no) {
+    public List<TaskSubmitDTO> selectSubmitTask(Integer member_no) {
         return taskDAO.selectSubmitTask(member_no);
     }
 }

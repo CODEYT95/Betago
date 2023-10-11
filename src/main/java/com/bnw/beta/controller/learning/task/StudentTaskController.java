@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,11 +22,16 @@ public class StudentTaskController {
 
     //전송된 숙제 조회하기
     @GetMapping("/taskList")
-    public String selectTaskById( int member_no, Model model){
-        List<TaskDTO> taskList = taskService.selectTaskById(member_no);
-        model.addAttribute("taskList", taskList);
+    public String selectTaskById(HttpSession session, Model model){
+        Integer member_no = (Integer) session.getAttribute("member_no");
+        System.out.println(member_no);
+            // member_no가 null이 아닌 경우에만 숙제 조회를 수행합니다.
+            if (member_no != null) {
+                List<TaskDTO> taskList = taskService.selectTaskById(member_no);
+                model.addAttribute("taskList", taskList);
+            }
         return "learning/task/student/taskList";
-    }
+        }
 
     //모달창 숙제 정보 불러오기
     @GetMapping("/taskDetail")
