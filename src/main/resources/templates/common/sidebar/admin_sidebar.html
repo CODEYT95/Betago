@@ -5,7 +5,7 @@
     <div class="side-bar active">
         <div class="menu">
             <div class="item">
-                <a href="#">게임콘텐츠 조회</a>
+                <a th:href="@{/game/list}">게임콘텐츠 조회</a>
             </div>
             <div class="item">
                 <a th:href="@{/edupost/insert}" class="sub-btn">학습자료 등록</a>
@@ -20,7 +20,10 @@
                 <a href="#">Q&A 올리기</a>
             </div>
             <div class="item">
-                <a href="#">매출 조회</a>
+                <a th:href="@{/game/dailyList}">일별 매출 조회</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/game/monthlyList}">월별 매출 조회</a>
             </div>
         </div>
     </div>

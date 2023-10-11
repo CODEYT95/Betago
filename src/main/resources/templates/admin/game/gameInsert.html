@@ -14,7 +14,7 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/admin_sidebar :: admin_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="container">
             <form name="gameContent" th:action="@{/game/gameInsert}" method="post">
@@ -32,9 +32,9 @@
                 </div>
                 <div class="form-group">
                     <label for="game_startdate">구독기간</label>
-                    <input type="date" name="game_startdate" id="game_startdate" th:value="${startDate}">
+                    <input type="date" name="game_startdate" id="game_startdate" th:value="${game_startDate}">
                     <label for="game_enddate"></label>
-                    <input type="date" name="game_enddate" id="game_enddate" th:value="${endDate}">
+                    <input type="date" name="game_enddate" id="game_enddate" th:value="${game_endDate}">
                 </div>
                 <div class="form-group">
                     <label for="game_total">구독 가능인원</label>

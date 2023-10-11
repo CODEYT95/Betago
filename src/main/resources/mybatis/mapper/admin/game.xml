@@ -5,9 +5,11 @@
 <!--게임콘텐츠 모든 목록 조회-->
     <select id="selectAll" resultType="GameDTO">
         <![CDATA[
-        SELECT game_no, game_title, game_level, game_startdate, game_enddate, game_total, game_price, game_discount,
-               game_sell, game_content, member_id
-        FROM game;
+        SELECT game.game_no, game.game_title, game.game_level, game.game_startdate, game.game_enddate, game.game_total,
+        game.game_price, discountgame.game_discount, game.game_sell, game.game_content, game.member_id
+        FROM game
+        LEFT JOIN discountgame ON game.game_no = discountgame.game_no
+        WHERE game.game_no = #{gameNo}
         ]]>
     </select>
     <!--게임콘텐츠 등록-->
