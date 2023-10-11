@@ -39,3 +39,39 @@ function fetchData() {
         // start date가 변경될 때 end date를 업데이트하는 추가적인 로직을 여기에 작성할 수 있어
         // 예를 들어, 특정 기간 이후의 날짜만 end date로 선택 가능하게 하는 등의 조건을 설정할 수 있어
     });
+
+// 기간 입력란의 keyup 이벤트 리스너 추가
+ document.getElementById("game_date").addEventListener("keyup", calculateDiscount);
+
+    //할인율 계산 함수
+    function calculateDiscount() {
+       const gameTotal = parseFloat(document.getElementById("game_total").value);
+       let discount = 0;
+
+       // 구독 기간에 따른 할인율 계산
+        if (game_date >=2) {
+            discount += (game_date -1) * 0.02; // 개월당 2% 할인
+        }
+        // 구독 인원수에 따른 할인율 계산
+        if (game_total >= 10) {
+            discount += Math.floor((game_total - 10)/10)*0.03; // 10명당 3% 할인
+        }
+        // 할인율 필드 업데이트
+        document.getElementById("game_discount").value = (discount * 100) + "%";
+    }
+    //페이지 로드시 할인율 초기 계산
+    calculateDiscount();
+
+
+
+
+
+
+
+
+
+
+
+
+
+

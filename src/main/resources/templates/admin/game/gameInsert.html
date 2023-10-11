@@ -31,10 +31,21 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="game_startdate">구독기간</label>
-                    <input type="date" name="game_startdate" id="game_startdate" th:value="${game_startDate}">
-                    <label for="game_enddate"></label>
-                    <input type="date" name="game_enddate" id="game_enddate" th:value="${game_endDate}">
+                    <label for="game_date">구독기간</label>
+                    <select name="game_date" id="game_date" th:value="${game_date}">
+                        <option value="1">1개월</option>
+                        <option value="2">2개월</option>
+                        <option value="3">3개월</option>
+                        <option value="4">4개월</option>
+                        <option value="5">5개월</option>
+                        <option value="6">6개월</option>
+                        <option value="7">7개월</option>
+                        <option value="8">8개월</option>
+                        <option value="9">9개월</option>
+                        <option value="10">10개월</option>
+                        <option value="11">11개월</option>
+                        <option value="12">12개월</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="game_total">구독 가능인원</label>
