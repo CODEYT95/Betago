@@ -18,8 +18,4 @@ public class GameDTO {
     private String game_sell;
     private String game_content;
     private String member_id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date game_startsearch;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date game_endsearch;
 }

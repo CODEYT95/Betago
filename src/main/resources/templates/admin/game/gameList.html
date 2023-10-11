@@ -40,7 +40,7 @@
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
                                                     <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
-                                                    <h3>구독기간 : <span th:text="${#dates.format(content.game_startdate, 'yyyy-MM-dd')}"></span>~</h3>
+                                                    <h3>구독기간 : <span th:text="${content.game_date}"></span></h3>
                                                 </div>
                                                 <div class="details">
                                                     <h4>난이도 : <span th:text="${content.game_level}"></span></h4>
