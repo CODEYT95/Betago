@@ -1,21 +1,30 @@
 package com.bnw.beta.controller.guide;
 
 import com.bnw.beta.config.vaildation.question.QuestionForm;
+import com.bnw.beta.domain.guide.dao.QuestionDAO;
+import com.bnw.beta.domain.guide.dto.FileQuestionDTO;
 import com.bnw.beta.domain.guide.dto.QuestionDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.guide.question.QuestionServiceImpl;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.List;
 
@@ -24,6 +33,9 @@ import java.util.List;
 @Controller
 public class QuestionController {
 
+
+    @Autowired
+    private QuestionDAO questionDAO;
 
     private final QuestionServiceImpl questionService;
 
@@ -36,6 +48,9 @@ public class QuestionController {
         System.out.println(question);
         model.addAttribute(question.getQna_pw());
         if (question != null && question.getQna_pw().equals(pw)) {
+            FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(id);
+            model.addAttribute("fileQuestion", fileQuestion);
+
             model.addAttribute("question", question);
             System.out.println(model.asMap());
             model.addAttribute("isPasswordCorrect", true);  // 비밀번호가 맞으면 true 값을 설정합니다.
@@ -48,22 +63,6 @@ public class QuestionController {
             return "/guide/question/question_detail";}
     }
 
-    /*질문글 상세조회*/
-    /*기본 상세조회문
-    @GetMapping("/detail/{qna_no}")
-    public  String detail(@PathVariable("qna_no") Integer qna_no, Model model
-    ){
-        //1 파라미터 받기
-        //2 비즈니스로직수행
-        QuestionDTO question = questionService.selectQuestion(qna_no);
-        model.addAttribute("qna_pw",question.getQna_pw());*//*생략가능한지 테스트*//*
-        //3 Model
-        model.addAttribute("question",question);
-        model.addAttribute("isPasswordCorrect", false); // 초기 상태는 비밀번호가 틀린 상태로 설정
-        //4 view
-        return "guide/question/question_detail"; //templates폴더하위.html
-    }
-*/
 
     /*리다이렉션 할때 비밀번호를 보지 않는 상세조회*/
     @GetMapping("/detail/{qna_no}")
@@ -71,10 +70,11 @@ public class QuestionController {
                          @RequestParam(value = "afterEdit", required = false, defaultValue = "false") boolean afterEdit,
                          Model model) {
 
-
         //1 파라미터 받기
         //2 비즈니스로직수행
         QuestionDTO question = questionService.selectQuestion(qna_no);
+        FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(qna_no);
+        model.addAttribute("fileQuestion", fileQuestion);
         model.addAttribute("qna_pw", question.getQna_pw());
         //3 Model
         model.addAttribute("question", question);
@@ -130,6 +130,18 @@ public class QuestionController {
     }
 
 
+    @GetMapping("/delete/{qna_no}")
+    public String questionDelete(@PathVariable("qna_no") Integer qna_no,
+                                 Principal principal){
+        //1 파라미터 받기
+        //2 비즈니스로직수행
+        QuestionDTO question = questionService.selectQuestion(qna_no);
+        if(!question.getMember_id().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        questionService.delete(question);
+        return "redirect:/question/list";
+    }
 
 
     //질문글 등록폼
@@ -147,6 +159,7 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()") //로그인인증->로그인이 필요한 기능
     @PostMapping("/add")
     public String questionAdd(@Valid QuestionForm questionForm, BindingResult bindingResult,
+                              @RequestParam(value="file", required=false) MultipartFile file,
                               Principal principal){
         if(bindingResult.hasErrors()) {
             return "guide/question/question_form";  //valid QuestionForm 유효성검사후 BindingResult에 저장 그리고 그 값이 오류가 있다면
@@ -154,22 +167,22 @@ public class QuestionController {
         MemberDTO memberDTO = memberService.getUser(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));//user정보를 가져오기
 
-        //questionForm.getSubject():유효성 검사를 통과한 테이터 폼에서 subject필드값 가져오기
-        questionService.add(questionForm.getSubject(), questionForm.getContent(), questionForm.getPw(), memberDTO);
-        //3.Model
-        //4.View
-        return "redirect:/question/list";//질문목록조회요청을 통한_ 질문목록페이지로 이동
+        questionService.add(questionForm.getSubject(), questionForm.getContent(), questionForm.getPw(), file, memberDTO);
+        return "redirect:/question/list";
     }
 
 
 
     /*질문글 리스트 조회*/
     @GetMapping("/list")
-    public String questionList(Model model,
-                               @RequestParam(value="page",defaultValue="1") int page){
+    public String questionList(Model model, @RequestParam(value="page",defaultValue="1") int page){
         List<QuestionDTO> questions= this.questionService.getQuestions(page-1);
         model.addAttribute("questions",questions);
         return "guide/question/question_list";//  templates폴더하위  question_list.html문서
     }
-
+    /*이미지 파일 보여주기*/
+/*    @GetMapping("/image/{filequ_name}")
+    public Resource showImage(@PathVariable String filequ_name) throws MalformedURLException {
+        return new UrlResource("file:" + file.getFullPath(filequ_name));
+    }*/
 }

@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title>질문등록</title>
     <!--공통으로 쓰이는 CSS 및  -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticelist.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
 
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/default_sidebar :: default_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/question_sidebar :: question_sidebarFragment}"></div>
     <div class="content-wrap">
 
         <div id="passwordFormDiv" th:if="${not isPasswordCorrect}">
@@ -45,6 +47,13 @@
                     <td>Is Shown</td>
                     <td th:text="${question.qna_isshow}"></td>
                 </tr>
+
+                <!-- 이미지 미리보기 -->
+                <img src="/image/qna/${fileQuestion.filequ_name}" alt="Uploaded image" width="300">
+
+                <!-- 첨부파일 다운로드 링크 -->
+                <a href="/uploadfile/question_img/${fileQuestion.filequ_rename}" download>Download attached image</a>
+
                 <tr>
                     <td>Registration Date</td>
                     <td th:text="${question.qna_regdate}"></td>
@@ -83,5 +92,26 @@
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+
+
+<script layout:fragment="script">
+    //삭제버튼 클릭시
+    const delElements = document.getElementsByClassName("delete");
+    Array.from(delElements).forEach(function(element){
+
+        //$(".delete").on("click",function(){ alert("정말삭제할거여?"); });
+        element.addEventListener("click",function(){
+            if(confirm("정말 삭제하시겠습니까?")){
+                //click이벤트가 발생한 a요소의  data-uri속성의 값을 가져와
+                //location객체의 href속성의 값으로 적용해라
+                //=>현재 browser의 URL주소를 변경해라
+                location.href=this.dataset.uri;
+                //location.href="/question/delete/${question.qna_no}";//삭제요청
+            };
+        });
+    });
+
+</script>
+
 </body>
 </html>

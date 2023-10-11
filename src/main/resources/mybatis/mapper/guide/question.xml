@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.guide.dao.QuestionDAO">
 
+    <!-- 파일 등록 -->
+    <insert id="insertFileQuestion" parameterType="FileQuestionDTO">
+        INSERT INTO filequestion (qna_no, filequ_name, filequ_rename, filequ_path, filequ_date)
+        VALUES (#{qna_no}, #{filequ_name}, #{filequ_rename}, #{filequ_path}, NOW())
+    </insert>
+
+    <!-- 파일 조회 (특정 qna_no에 해당하는 모든 파일 조회) -->
+    <select id="selectFilesByQnaNo" parameterType="int" resultType="FileQuestionDTO">
+        SELECT * FROM filequestion WHERE qna_no = #{qna_no} LIMIT 1
+    </select>
+
+    <!-- 파일 삭제 (filequ_no를 통한 파일 삭제) -->
+    <delete id="deleteFileQuestion" parameterType="int">
+        DELETE FROM filequestion WHERE filequ_no = #{filequ_no}
+    </delete>
+
+
     <!-- selectAllQuestions 매핑 -->
     <select id="selectAllQuestions" resultType="QuestionDTO" parameterType="int">
         SELECT * FROM question
@@ -13,7 +30,7 @@
         SELECT * FROM question WHERE qna_no = #{qna_no}
     </select>
 
-    <insert id="insertQuestion"  parameterType="com.bnw.beta.domain.guide.dto.QuestionDTO">
+    <insert id="insertQuestion"  parameterType="com.bnw.beta.domain.guide.dto.QuestionDTO" useGeneratedKeys="true" keyProperty="qna_no">
         INSERT INTO question(qna_title,qna_content,member_id,qna_pw,qna_regdate)
         VALUES (#{qna_title}, #{qna_content}, #{member_id}, #{qna_pw},#{qna_regdate})
     </insert>
@@ -32,6 +49,11 @@
     <select id="getPwByQnaNo" resultType="string">
         SELECT qna_pw FROM question WHERE qna_no = #{pw}
     </select>
+
+    <delete id="deleteQuestion"  parameterType="Long">
+        DELETE FROM question
+        WHERE qna_no = #{qna_no}
+    </delete>
 
 
 
