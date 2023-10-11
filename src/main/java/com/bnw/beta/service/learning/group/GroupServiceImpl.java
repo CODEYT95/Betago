@@ -121,9 +121,10 @@ public class GroupServiceImpl implements GroupService {
 
     //학습 그룹 가입 신청 목록
     @Override
-    public List<GroupDTO> selectJoinGroup(String group_name,int limit, int offset){
+    public List<GroupDTO> selectJoinGroup(int member_no, String group_name,int limit, int offset){
 
         GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
         groupDTO.setGroup_name(group_name);
         groupDTO.setLIMIT(limit);
         groupDTO.setOFFSET(offset);
@@ -132,7 +133,13 @@ public class GroupServiceImpl implements GroupService {
 
     //그룹 가입신청 가능한 목록 갯수
     @Override
-    public int joinGroupCount(String group_name){return groupDAO.joinGroupCount(group_name);}
+    public int joinGroupCount(int member_no, String group_name){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
+        groupDTO.setGroup_name(group_name);
+
+        return groupDAO.joinGroupCount(groupDTO);}
 
     //그룹명 목록 불러오기
     @Override

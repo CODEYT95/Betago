@@ -37,10 +37,10 @@ public interface GroupService {
     //////////////////학습자////////////////////
 
     //학습 그룹 가입 신청 목록
-    List<GroupDTO> selectJoinGroup(String group_name,int limit, int offset);
+    List<GroupDTO> selectJoinGroup(int member_no, String group_name,int limit, int offset);
 
     //그룹 가입신청 가능한 목록 갯수
-    int joinGroupCount(String group_name);
+    int joinGroupCount(int member_no, String group_name);
 
     //그룹명 목록 불러오기
     List<GroupDTO> selectGroupTitle();

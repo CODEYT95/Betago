@@ -69,7 +69,7 @@ public class EducatorGroupController {
 
 
         int result = groupService.insertGroup(game_no, principal.getName(), groupName, count, sdate, edate);
-        return "/learning/group/educator/groupAddList";
+        return "redirect:/educator/group/addList";
     }
 
     //학습 그룹 조회
