@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>둑며들다|숙제 배포</title>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
+    <div class="content-wrap">
 
+
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

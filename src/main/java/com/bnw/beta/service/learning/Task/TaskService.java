@@ -27,7 +27,7 @@ public interface TaskService {
     int wirteTask(int tasksend_no, int task_no,  String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id);
 
     //작성한 숙제 조회
-    TaskSubmitDTO modifyTask(int tasksend_no);
+    TaskSubmitDTO modifyTask(int tasksend_no, int member_no);
 
     //숙제 수정
     int ModifySubmitTask(int tasksubmit_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add);
