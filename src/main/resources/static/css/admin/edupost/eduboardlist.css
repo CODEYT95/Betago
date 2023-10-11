@@ -1,4 +1,36 @@
 @charset "UTF-8";
+.paging {
+    margin-top: 15px;
+    display: flex;
+}
+#pagination{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.pagination-container li{
+    display: flex;
+    float: left;
+    margin-right: 5px;
+    padding: 8px 13px;
+    text-decoration: none;
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius : 8px;
+    width: 36px;
+}
+.head {
+    font-size: 18px;
+    font-weight: bold;
+    color: #454545;
+    margin-bottom: 30px;
+    line-height: 35px;
+}
+
 table {
     border: 1px #a39485 solid;
     font-size: .9em;
@@ -74,4 +106,10 @@ a {
     td {
         border-bottom: 1px solid #e5e5e5;
     }
+
+    .active-page {
+        background: #f9ecbe;
+        border-radius: 8px;
+    }
+
 }

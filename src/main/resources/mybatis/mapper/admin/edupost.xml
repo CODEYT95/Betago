@@ -2,6 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bnw.beta.domain.admin.dao.EdupostDAO">
+    <!-- 게시글 검색 -->
+    <sql id="search">
+        <!-- 검색 키워드가 있을 때 -->
+        <if test="keyword != null and keyword != ''">
+            <choose>
+                <!-- 검색 유형이 있을 때 -->
+                <when test="searchType != null and searchType != ''">
+                    <choose>
+                        <when test="'title'.equals( searchType )">
+                            AND title LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'content'.equals( searchType )">
+                            AND content LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'writer'.equals( searchType )">
+                            AND writer LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </when>
+
+                <!-- 전체 검색일 때 -->
+                <otherwise>
+                    AND (
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    OR content LIKE CONCAT('%', #{keyword}, '%')
+                    OR writer LIKE CONCAT('%', #{keyword}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+
     <insert id="eduinsert" useGeneratedKeys="true" keyProperty="edupost_no" parameterType="EdupostDTO">
         <![CDATA[
             insert into edupost(edupost_title, edupost_category, edupost_type, edupost_date, edupost_fileadd, edupost_service, member_id, edupost_content)
@@ -10,10 +42,15 @@
     </insert>
 
     <select id="edulist" parameterType="map" resultType="EdupostDTO">
-        <![CDATA[
             select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id
             from edupost
-        ]]>
+            order by edupost_no
+                LIMIT #{page}, #{size};
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*)
+        from edupost
     </select>
 
     <select id="findById" parameterType="long" resultType="EdupostDTO">

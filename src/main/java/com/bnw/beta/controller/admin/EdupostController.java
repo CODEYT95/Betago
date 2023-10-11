@@ -3,6 +3,8 @@ package com.bnw.beta.controller.admin;
 import com.bnw.beta.config.post.FileUtils;
 import com.bnw.beta.domain.admin.dto.EdupostDTO;
 import com.bnw.beta.domain.admin.dto.FilepostDTO;
+import com.bnw.beta.domain.common.paging.EdupostPageDTO;
+import com.bnw.beta.domain.common.paging.TaskPageDTO;
 import com.bnw.beta.service.admin.edupost.EdupostService;
 import com.bnw.beta.service.admin.edupost.FileEduService;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +50,18 @@ public class EdupostController {
     }
     //학습자료 목록
     @GetMapping("/list")
-    public String postList(Model model) throws Exception {
-            List<EdupostDTO> list = edupostService.edulist();
-            model.addAttribute("postList",list);
+    public String postList(@RequestParam(value = "page", defaultValue = "1") int page,
+                           @RequestParam(value = "size", defaultValue = "5") int size,
+                           Model model) throws Exception {
+        int listCount = edupostService.count();
+        int totalPages = (int) Math.ceil((double) listCount / size);
+        page = Math.min(Math.max(1, page), totalPages);
+        List<EdupostDTO> edupostList = edupostService.edulist(page, size);
+        EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, page, size, edupostList);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("listCount", listCount);
+        model.addAttribute("edupostPageDTO", edupostPageDTO);
             return "admin/edupost/eduboardlist";
     }
     //학습자료 세부내용

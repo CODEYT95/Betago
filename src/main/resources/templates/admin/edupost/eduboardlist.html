@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>학습조회리스트</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/edupost/eduboardlist.css}">
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
@@ -14,7 +14,7 @@
         <div id="bbsList">
 
             <div id="bbsList_title">
-                교육자료 등록 리스트
+                <h2 class="head">교육자료 등록 리스트</h2>
             </div>
             <div id="bbsList_header">
                 <!--        <div id="leftHeader">
@@ -39,34 +39,32 @@
                     <tr>
                         <th class="num">번호</th>
                         <th class="subject">자료구분</th>
-                        <th class="name">자료유형</th>
-                        <th class="created">학습자료명</th>
-                        <th class="hitCount">작성자</th>
-                        <th class="hitCount">등록일시</th>
+                        <th class="type">자료유형</th>
+                        <th class="eduname">학습자료명</th>
+                        <th class="user">작성자</th>
+                        <th class="createdate">등록일시</th>
                     </tr>
                     </thead>
-                    <tbody id="lists">
-                    <!--            <tr th:if="${#lists.size(lists)}>0" th:each="dto:${lists}">-->
-                    <tr th:if="${not #lists.isEmpty(postList)}" th:each="dto:${postList}">
-                        <!--                <td class="num" th:text="${dto.num}"></td>-->
-                        <!--       <td class="subject">
-                                   <a th:href="@{${articleUrl}} + '&num=' +
-                               @{${dto.num}}" th:text="${EdupostDTO.edupost_no}">번호</a>
-                               </td>-->
-                        <td class="no" th:text="${dto.edupost_no}"> 번호</td>
-
-                        <!--                       th:text="${dto.edupost_title}">-->
-
-                        <td class="category" th:text="${dto.edupost_category}">자료구분</td>
-                        <td class="type" th:text="${dto.edupost_type}">자료유형</td>
-                        <td>
-                            <a th:href="@{|/edupost/detail/${dto.edupost_no}|}">
-                                <span class="" th:text="${dto.edupost_title}"></span>
-                            </a>
-                        </td>
-                        <td class="writer" th:text="${dto.member_id}">작성자</td>
-                        <td class="writer" th:text="${dto.edupost_date}">등록일시</td>
-                    </tr>
+                    <tbody id="list">
+                    <th:block th:if="${#lists.isEmpty(edupostPageDTO.edupostList)}">
+                        <tr>
+                            <td colspan="6">등록된 학습자료가 없습니다.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${not #lists.isEmpty(edupostPageDTO.edupostList)}">
+                        <tr class="tr-list"  th:each="list, index : ${edupostPageDTO.edupostList}">
+                            <td class="no" th:text="${index.index + edupostPageDTO.startIndex + 1}"></td>
+                            <td class="category" th:text="${list.edupost_category}">자료구분</td>
+                            <td class="type" th:text="${list.edupost_type}">자료유형</td>
+                            <td>
+                                <a th:href="@{|/edupost/detail/${list.edupost_no}|}">
+                                    <span class="" th:text="${list.edupost_title}"></span>
+                                </a>
+                            </td>
+                            <td class="writer" th:text="${list.member_id}">작성자</td>
+                            <td class="writer" th:text="${list.edupost_date}">등록일시</td>
+                        </tr>
+                    </th:block>
 
                     <!-- <tr th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
 
@@ -81,9 +79,32 @@
 
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <div class="paging">
+                        <div class="text-center clearfix">
+                            <div class="pagingNum">
+                                <ul class="pagination-container" id="pagination">
+                                    <li th:if="${edupostPageDTO.startPage > 5}" class="page-item">
+                                        <a class="page-link" th:with="prevPage=${edupostPageDTO.startPage - 1}" th:href="@{/edupost/list(page=${prevPage})}"><</a>
+                                    </li>
+                                    <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(edupostPageDTO.startPage, edupostPageDTO.endPage)}" class="page-item">
+                                        <a th:href="@{/edupost/list(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                    </li>
+                                    <li th:if="${edupostPageDTO.endPage < edupostPageDTO.totalPages}" class="page-item">
+                                        <a class="page-link" th:with="nextPage=${edupostPageDTO.startPage + 5}" th:href="@{/edupost/list(page=${nextPage})}">></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
+    <script th:src="@{/js/admin/edupost/function.js}"></script>
+    <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
+    </div>
+    <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</div>
 </body>
-
 </html>
