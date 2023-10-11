@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Data
@@ -19,4 +20,5 @@ public class QuestionForm {
     @NotEmpty(message = "비밀번호는 필수로 10자 이하로 입력해주세요.")
     @Size(max=10)
     private String pw;//내용
+
 }
