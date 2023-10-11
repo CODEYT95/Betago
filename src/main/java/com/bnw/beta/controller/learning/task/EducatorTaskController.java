@@ -1,7 +1,6 @@
 package com.bnw.beta.controller.learning.task;
 
 import com.bnw.beta.domain.common.paging.TaskPageDTO;
-import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.service.learning.Task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/educator")
@@ -23,8 +20,7 @@ public class EducatorTaskController {
     @GetMapping("/createTaskForm")
     public String saveTaskForm(@RequestParam(value = "page", defaultValue = "1") int page,
                                @RequestParam(value = "size", defaultValue = "10") int size,
-                               @RequestParam(value = "member_id", defaultValue = "dumy") String member_id,
-                               Model model) {
+                               String member_id, Model model) {
 
         TaskPageDTO taskPageDTO = taskService.sendTaskList(member_id, page, size);
 
