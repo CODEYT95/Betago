@@ -30,6 +30,7 @@ public class MemberSecurityService implements UserDetailsService {
 
 
     //수업내용 UserSecurityService와 동일파일
+
     @Override
     public UserDetails loadUserByUsername(String member_id) throws UsernameNotFoundException {
 

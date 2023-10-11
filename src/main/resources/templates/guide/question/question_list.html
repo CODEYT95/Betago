@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>사이트 제목</title>
     <!--공통으로 쓰이는 CSS 및  -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticelist.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/admin_sidebar :: admin_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/question_sidebar :: question_sidebarFragment}"></div>
     <div class="content-wrap">
         <table class="table">
             <thead class="table-dark">

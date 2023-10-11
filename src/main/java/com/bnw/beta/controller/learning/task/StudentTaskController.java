@@ -24,19 +24,22 @@ public class StudentTaskController {
     @GetMapping("/taskList")
     public String selectTaskById(HttpSession session, Model model){
         Integer member_no = (Integer) session.getAttribute("member_no");
+        System.out.println(session.getAttribute("member_name"));
         System.out.println(member_no);
             // member_no가 null이 아닌 경우에만 숙제 조회를 수행합니다.
             if (member_no != null) {
                 List<TaskDTO> taskList = taskService.selectTaskById(member_no);
+                model.addAttribute("member_name", session.getAttribute("member_name"));
                 model.addAttribute("taskList", taskList);
             }
         return "learning/task/student/taskList";
         }
 
     //모달창 숙제 정보 불러오기
-    @GetMapping("/taskDetail")
-    public String taskDetail(@RequestParam int tasksend_no, Model model){
-        TaskSendDTO taskDetail = taskService.selectTaskByNo(tasksend_no);
+    @GetMapping("/taskDetail/{tasksend_no}")
+    public String taskDetail(@PathVariable int tasksend_no, Model model, HttpSession session){
+
+        TaskSendDTO taskDetail = taskService.selectTaskByNo(tasksend_no, (Integer)session.getAttribute("member_no"));
         model.addAttribute("taskDetail", taskDetail);
         return "learning/task/student/taskDetail";
     }

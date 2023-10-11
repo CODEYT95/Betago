@@ -21,7 +21,7 @@ public interface TaskService {
     List<TaskDTO> selectTaskById(Integer member_no);
 
     //숙제 번호로 정보 조회
-    TaskSendDTO selectTaskByNo(Integer tasksend_no);
+    TaskSendDTO selectTaskByNo(Integer tasksend_no, Integer member_no);
 
     //숙제 작성
     int wirteTask(int tasksend_no, int task_no,  String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id);

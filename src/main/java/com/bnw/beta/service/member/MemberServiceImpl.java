@@ -92,6 +92,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     //////////멤버 정보 불러오기///////////
-    public MemberDTO getMemberInfo(String member_id){return memberDAO.getMemberInfo(member_id);}
+    public MemberDTO getMemberInfo(String member_id){
+
+        System.out.println(memberDAO.getMemberInfo(member_id).getMember_name());
+
+        return memberDAO.getMemberInfo(member_id);}
 
 }

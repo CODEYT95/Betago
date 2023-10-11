@@ -3,6 +3,7 @@ package com.bnw.beta.domain.guide.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class QuestionDTO {
@@ -14,6 +15,8 @@ public class QuestionDTO {
     private String qna_pw;
     private String member_id;
     private LocalDateTime qna_regdate;
+
+    private List<FileQuestionDTO> questionfiles;
 
 
 }

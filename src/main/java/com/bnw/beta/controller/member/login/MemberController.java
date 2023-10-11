@@ -42,8 +42,13 @@ public class MemberController {
 
     @GetMapping({"","/"})
     public String index(Principal principal, HttpSession session) {
-        session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
-        session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
+
+        if(principal != null){
+            session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
+            session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
+            session.setMaxInactiveInterval(1800);
+        }
+        System.out.println("성공");
 
         System.out.println(session.getAttribute("member_no"));
         return "main/main"; //메인페이지로 설정
