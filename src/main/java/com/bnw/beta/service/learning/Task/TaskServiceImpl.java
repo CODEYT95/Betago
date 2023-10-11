@@ -22,6 +22,21 @@ public class TaskServiceImpl implements TaskService{
     private TaskDAO taskDAO;
 
     /*교육자 부분--------------------------------------------------------*/
+    //전송한 숙제 목록
+    public TaskPageDTO sendTaskList(String member_id, int pageNum, int size) {
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        int offset = (pageNum - 1) * size;
+        List<TaskDTO> taskList = taskDAO.sendTaskList(member_id, offset, size);
+        int listCount = taskDAO.sendTaskListCount(member_id);
+
+        TaskPageDTO taskPageDTO = new TaskPageDTO(listCount, pageNum, size, taskList);
+        taskPageDTO.setListCount(listCount);
+
+        return taskPageDTO;
+    }
+
     //숙제 생성
     @Override
     public int createTask(String member_id, String task_title, String task_content, String task_chapter, String task_deadline) {
@@ -44,22 +59,6 @@ public class TaskServiceImpl implements TaskService{
 
         return taskDAO.createTask(taskDTO);
     }
-
-    //전송한 숙제 목록
-    public TaskPageDTO sendTaskList(String member_id, int pageNum, int size) {
-        if (pageNum <= 0) {
-            pageNum = 1;
-        }
-        int offset = (pageNum - 1) * size;
-        List<TaskDTO> taskList = taskDAO.sendTaskList(member_id, offset, size);
-        int listCount = taskDAO.sendTaskListCount(member_id);
-
-        TaskPageDTO taskPageDTO = new TaskPageDTO(listCount, pageNum, size, taskList);
-        taskPageDTO.setListCount(listCount);
-
-        return taskPageDTO;
-    }
-
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회

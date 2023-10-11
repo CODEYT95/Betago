@@ -4,49 +4,39 @@
     <meta charset="UTF-8">
     <title>학습등록 상세페이지</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/edupost/eduboard.css}">
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
     <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
-<h2 class="border-bottom py-2" th:text="${post.edupost_title}"></h2>
-    <div>
-        <label for="edupost_title" class="">학습자료명</label>
-        <input type="text" th:value="${post.edupost_title}" id="edupost_title" name="edupost_title" readonly/>
+<h2 class="head" th:text="${post.edupost_title}"></h2>
+    <div class="opt">
+        <label for="edupost_title" style="font-size: 16px; margin-right: 9px;">학습자료명</label>
+        <input type="text" class="texarea1" th:value="${post.edupost_title}" id="edupost_title" name="edupost_title" readonly/>
     </div>
-    <div>
-        <label for="edupost_category" >자료구분</label>
-        <select id="edupost_category" th:value="${post.edupost_category}" name="edupost_category" readonly class="">
-            <option value="튜토리얼">튜토리얼</option>
-            <option value="교육영상">교육영상</option>
-        </select>
+    <div class="opt">
+        <label for="edupost_category" style="font-size: 16px;">자료구분</label>
+        <input class="edupost_category" id="edupost_category" th:value="${post.edupost_category}" name="edupost_category" readonly/>
     </div>
-    <div>
-        <label for="edupost_type">자료유형</label>
-        <select id="edupost_type" name="edupost_type" th:value="${post.edupost_type}" readonly class="">
-            <option value="묘수풀이">묘수풀이</option>
-            <option value="사활">사활</option>
-            <option value="영토">영토</option>
-        </select>
+    <div class="opt">
+        <label for="edupost_type" style="font-size: 16px;">자료유형</label>
+        <input class="edupost_type" id="edupost_type" name="edupost_type" th:value="${post.edupost_type}" readonly/>
     </div>
-    <div>
-        <label for="edupost_fileadd">자료file주소</label>
-        <input type="text" th:value="${post.edupost_fileadd}" id="edupost_fileadd" name="edupost_fileadd" readonly/>
+    <div class="opt">
+        <label for="edupost_fileadd" style="font-size: 16px;">자료file주소</label>
+        <input class="texarea1" type="text" th:value="${post.edupost_fileadd}" id="edupost_fileadd" name="edupost_fileadd" readonly/>
     </div>
-    <div>
-        <label for="edupost_service">서비스구분</label>
-        <select id="edupost_service" th:value="${post.edupost_service}" name="edupost_service" readonly class="">
-            <option value="유료">유료</option>
-            <option value="무료">무료</option>
-        </select>
+    <div class="opt">
+        <label for="edupost_service" style="font-size: 16px;">서비스구분</label>
+        <input class="edupost_service" id="edupost_service" th:value="${post.edupost_service}" name="edupost_service" readonly />
     </div>
-    <div>
-        <label for="edupost_content">자료 내용</label>
-        <textarea id="edupost_content" th:text="${post.edupost_content}" name="edupost_content" readonly></textarea>
+    <div class="opt">
+        <label for="edupost_content" style="position: relative; font-size: 16px; bottom: 19rem">자료 내용</label>
+        <textarea class="texarea2" id="edupost_content" th:text="${post.edupost_content}" name="edupost_content" readonly></textarea>
     </div>
-    <div>
+    <div class="contain">
         <table class="tb tb_row">
             <tbody>
                 <tr>
@@ -57,14 +47,23 @@
             </tbody>
         </table>
     </div>
-        <a th:href="@{|/edupost/update/${edupost_no}|}" class="btns del_btn">수정하기</a>
-        <button type="button" onclick="deleteFile();" class="btns fn_add_btn"><span>삭제하기</span></button>
+        <div class="btn_box">
+<!--         <a th:href="@{|/edupost/update/${edupost_no}|}" class="btn_update">수정하기</a>-->
+         <button type="button" onclick="updatepage()" class="btn_update">수정하기</button>
+         <button type="button" onclick="deleteFile();" class="btn_del"><span>삭제하기</span></button>
+        </div>
 <script th:src="@{/js/admin/edupost/function.js}"></script>
 <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
     </div>
     <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 <script>
+    function updatepage() {
+        var edupost_no = [[${edupost_no}]];
+        var url = "/edupost/update/" + edupost_no;
+        window.location.href = url;
+    }
+
     window.onload = () => {
         findAllFile();
 
@@ -84,7 +83,7 @@
         // 3. 파일 영역 추가
         let fileHtml = '<div class="file_down"><div class="cont">';
         response.forEach(row => {
-            fileHtml += '<a href="/eduposts/' + edupost_no + '/files/' + row.filepost_no + '/download" download="' + row.edupost_name + '"><span class="icons"><i class="fas fa-folder-open"></i></span>' + row.edupost_name + '</a>';
+            fileHtml += '<a style="margin-bottom: 10px; margin-left: 15px;" href="/eduposts/' + edupost_no + '/files/' + row.filepost_no + '/download" download="' + row.edupost_name + '"><span class="icons"><i class="fas fa-folder-open"></i></span>' + row.edupost_name + '</a>';
 
 
         })

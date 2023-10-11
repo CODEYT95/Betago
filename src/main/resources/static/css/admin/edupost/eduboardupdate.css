@@ -85,6 +85,7 @@
     color: white;
     background: black;
     cursor: pointer;
+    border: none;
 }
 .btn_update {
     border: none;
