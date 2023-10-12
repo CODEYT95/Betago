@@ -10,16 +10,21 @@
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<div class="container right-panel-active">
+<div class="container">
     <div class="container__form container--signup">
         <form id="joinForm" class="form" th:action="@{/member/join}" th:object="${joinForm}" method="post">
             <input type="hidden" name="member_name" th:value="${name}">
             <input type="hidden" name="member_email" th:value="${email}">
             <input type="hidden" name="member_phone" th:value="${phone}">
 
+            <h1 class="h1">회원 가입</h1>
+            <h6 class="h6">나머지 개인정보를 입력해주세요.</h6>
+            <hr class="line1">
+
             <h2 class="form__title">인증 정보</h2>
+            <hr class="line">
             <div class="page1">
-                <div class="span">
+                <div class="info">
                     <label>이름: <span th:text="${name}"></span></label>
                     <div id="emailInfo">
                         <label>이메일: <span id="emailInfo2" th:text="${email}"></span></label>
@@ -29,33 +34,39 @@
                     </div>
                 </div>
             </div>
-            <h2 class="form__title">정보 입력</h2>
+            <h2 class="form__title">정보 입력</h2><hr class="line1">
             <div class="inputInfo">
-                <input type="text" class="input" id="id" th:field="*{member_id}" onchange = "checkId()" placeholder="아이디를 입력하세요.">
+                <span class="spanName">아이디</span> <input type="text" class="idInput" id="id" th:field="*{member_id}" onchange = "checkId()" placeholder="아이디를 입력하세요.">
                 <span class="id_ok">사용 가능한 아이디입니다.</span>
                 <span class="id_already">이미 사용중인 아이디입니다.</span>
                 <br/>
 
-                <input type="password" id="pw" class="input" th:field="*{member_pw}" placeholder="비밀번호를 입력하세요."><br/>
+                <span class="spanName">비밀번호</span><input type="password" id="pw" class="pwInput" th:field="*{member_pw}" placeholder="비밀번호를 입력하세요."><br/>
 
-                <input type="password" id="repw" class="input" th:field="*{member_repw}" onchange = "checkPwd()" placeholder="비밀번호를 확인해주세요."><br/>
+                <span class="spanName">비밀번호 확인</span><input type="password" id="repw" class="pwReInput" th:field="*{member_repw}" onchange = "checkPwd()" placeholder="비밀번호를 확인해주세요."><br/>
                 <span class="pwCheck">입력하신 비밀번호와 일치하지 않습니다.</span><br/>
 
+                <div class="birth">
                 <input type="hidden" name="member_birth" id="member_birth" th:field="*{member_birth}">
+                <span class="birthName">생년월일</span>
                 <select name="yy" id="year"><option disabled selected>출생 연도</option></select>
                 <select name="mm" id="month"><option disabled selected>월</option></select>
                 <select name="dd" id="day"><option disabled selected>일</option></select><br/>
+                </div>
 
                 <!--  인증 정보에 없는 값의 input이 보여져야함.  -->
                 <div id="phoneField">
-                    <input type="text" class="input" th:field="*{member_phone}" placeholder="휴대폰번호를 입력해주세요."><br/>
+                    <span class="spanName">휴대폰번호</span>
+                    <input type="text" class="phoneInput" th:field="*{member_phone}" placeholder="휴대폰번호를 입력해주세요."><br/>
                 </div>
 
                 <div id="emailField">
-                    <input type="text" class="input" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
+                    <span class="emailName">이메일</span>
+                    <input type="text" class="emainInput" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
                 </div>
 
                 <label>
+                    <span class="spanName">회원유형</span>
                     <select th:field="*{role}" class="role">
                         <option value="">회원 유형을 선택해주세요.</option>
                         <option value="ROLE_ADMIN">관리자</option>
@@ -63,7 +74,10 @@
                         <option value="ROLE_USER">학생</option>
                     </select>
                 </label><br/>
+
+
                 <div class="radiodiv">
+                    <span class="genderName">성별</span>
                     <label for="male" class="radio">
                         <input type="radio" id="male" th:field="*{member_gender}" value="male" checked>
                         <span>남자</span></label>
@@ -71,7 +85,10 @@
                         <input type="radio" id="female" th:field="*{member_gender}" value="female">
                         <span>여자</span></label><br/>
                 </div>
+
+
                 <div class="abver1">
+                    <span class="telName">집전화번호</span>
                     <select id="telNumberSelect" class="input">
                         <option value="">전화번호를 입력해주세요.</option>
                         <option value="none">없음</option>
@@ -80,13 +97,13 @@
                     <input type="text" class="input" id="customTelNumber" th:field="*{member_tell}" placeholder="전화번호를 입력해주세요." style="display: none;">
                 </div>
                 <label class="abver">
-                    <span >이벤트, 커리큘럼, 신규콘텐츠 등 광고 메세지 수신</span>
+                    <span class="agree">이벤트, 커리큘럼, 신규콘텐츠 등 광고 메세지 수신</span>
                     <input type="checkbox" th:field="*{member_agreeM}" value="동의">이메일
                     <input type="checkbox" th:field="*{member_agreeP}" value="동의">SMS
-                </label><br/>
+                </label><br/><hr class="line1">
             </div>
 
-            <div>
+            <div class="button">
                 <button type="submit" class="btn" onclick="birth()">회원가입</button>
                 <input type="hidden" name="next" value="2">
             </div>
