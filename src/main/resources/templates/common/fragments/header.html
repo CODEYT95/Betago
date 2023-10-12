@@ -31,7 +31,7 @@
                     <i class='bx bx-x'></i>
                 </div>
                 <ul class="links">
-                    <li class="first_li"><a th:href="@{/}>홈</a></li>
+                    <li class="first_li"><a th:href="@{/}">홈</a></li>
                     <li class="first_li">
                         <a href="#">이용안내</a>
                         <i class='bx bxs-chevron-up useInfo-arrow arrow'></i>
@@ -47,9 +47,9 @@
                                     <li><a href="#">바둑 영상</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/notice/list">공지사항</a></li>
-                            <li><a href="/FAQ/list">FAQ</a></li>
-                            <li><a href="#">Q&A</a></li>
+                            <li><a th:href="@{/notice/list}">공지사항</a></li>
+                            <li><a th:href="@{/FAQ/list}">FAQ</a></li>
+                            <li><a th:href="#">Q&A</a></li>
                         </ul>
                     </li>
                     <li class="first_li">
@@ -70,7 +70,7 @@
                     </li>
 
                     <li class="first_li">
-                        <a th:href="@{/educator/group/addList}"s>교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
+                        <a th:href="@{/educator/group/addList}">교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
                         <ul id="service" class="educator-sub-menu sub-menu">
                             <li><a th:href="@{/educator/group/addList}">학습그룹 등록</a></li>
                             <li><a th:href="@{/educator/group/list}">학습그룹 조회</a></li>
@@ -83,8 +83,8 @@
                     <li class="first_li">
                         <a href="#">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
-                            <li><a href="@{/game/insert}">게임컨텐츠 등록</a></li>
-                            <li><a href="@{/edupost/insert}">교육자료 등록</a></li>
+                            <li><a th:href="@{/game/insert}">게임컨텐츠 등록</a></li>
+                            <li><a th:href="@{/edupost/insert}">교육자료 등록</a></li>
                             <li><a href="#">게시물 등록</a></li>
                             <li><a href="#">매출조회</a></li>
                             <li><a href="#">회원조회</a></li>
