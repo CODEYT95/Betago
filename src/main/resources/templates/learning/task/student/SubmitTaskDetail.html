@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|진도 등록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/taskModal.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/student/submitDetail.js}"></script>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/stu_sidebar :: stu_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="modal-bg" onclick="goBack()"></div>
+            <div id="myModal" class="modal">
+                <div class="modal-wrap">
+                    <input type="hidden" name="tasksend_no" th:value="${taskEval.tasksend_no}">
+                    <div class="modal-task-title">
+                        <span class="m_title" th:text="${taskEval.game_title}"></span>
+                    </div>
+                    <div class="modal-task-educator">
+                        <span class="m_educator" th:text="${taskEval.member_name}"></span>
+                    </div>
+                    <div class="modal-task-content">
+                        <span>숙제내용:</span><br><span class="modal_content" th:text="${taskEval.task_content}"></span>
+                    </div>
+                    <div class="modal-task-chapter">
+                        진도 : <span class="m_chapter" th:text="${taskEval.task_chapter}"></span>
+                    </div>
+                    <div class="modal-task-deadline">
+                        제출 기한 : <span class="m_deadline" th:text="${#dates.format(taskEval.task_deadline, 'yyyy-MM-dd')}"></span>
+                    </div>
+                    <div class="modal-task-state">
+                        상태 : <span class="m_state" th:text="${taskEval.task_state}" th:style="${taskEval.task_state == '평가완료' ? 'color: #0025ff;' : 'color: green;'}"></span>
+                        <input type="hidden" name="task_state" th:value="${taskEval.task_state}" />
+                    </div>
+                </div>
+                <hr class="modal-divider">
+                <div class="eval-wrap">
+                    <div class="eval-chapter">
+                        진도 : <span class="taskeval_chapter" th:text="${taskEval.tasksubmit_chapter}"></span>
+                    </div>
+                    <div class="eval-content">
+                        <div class="sub-title">금번 학습 내용 :</div>
+                        <span class="taskseval_content" th:text="${taskEval.tasksubmit_content}"></span>
+                    </div>
+                    <div class="eval-content">
+                        <div class="sub-title">추가 질의 내용 :</div>
+                        <span class="taskeval_add"  th:text="${taskEval.tasksubmit_add}"></span>
+                    </div>
+                    <div class="eval">
+                        평가 : <span class="task_eval" th:text="${taskEval.tasksubmit_eval}" id="eval"></span>
+                    </div>
+                    <div class="eval-comment">
+                        질의 답변 : <span class="task_comment"  th:text="${taskEval.tasksubmit_comment}"></span>
+                    </div>
+                </div>
+                <div class="modalBtn">
+                    <input type="button" class="concealBtn" value="닫기" onclick="goBack()">
+                </div>
+            </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

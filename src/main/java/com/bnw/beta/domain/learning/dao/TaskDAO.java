@@ -41,4 +41,7 @@ public interface TaskDAO {
 
     //제출 숙제 조회
     List<TaskSubmitDTO> selectSubmitTask(int member_no);
+
+    //평가 완료된 숙제 조회
+    TaskSubmitDTO selectSubmitTaskByNo(TaskSubmitDTO taskSubmitDTO);
 }

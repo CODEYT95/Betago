@@ -129,4 +129,16 @@ public class TaskServiceImpl implements TaskService{
     public List<TaskSubmitDTO> selectSubmitTask(Integer member_no) {
         return taskDAO.selectSubmitTask(member_no);
     }
+
+    //평가 완료된 숙제 조회
+
+    @Override
+    public TaskSubmitDTO selectSubmitTaskByNo(int tasksend_no, int member_no) {
+
+        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
+        taskSubmitDTO.setTasksend_no(tasksend_no);
+        taskSubmitDTO.setMember_no(member_no);
+
+        return taskDAO.selectSubmitTaskByNo(taskSubmitDTO);
+    }
 }

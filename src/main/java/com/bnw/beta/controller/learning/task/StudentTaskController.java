@@ -37,7 +37,6 @@ public class StudentTaskController {
     //모달창 숙제 정보 불러오기
     @GetMapping("/taskDetail/{tasksend_no}")
     public String taskDetail(@PathVariable int tasksend_no, Model model, HttpSession session){
-
         TaskSendDTO taskDetail = taskService.selectTaskByNo(tasksend_no, (Integer) session.getAttribute("member_no"));
         model.addAttribute("taskDetail", taskDetail);
         return "learning/task/student/taskDetail";
@@ -102,5 +101,14 @@ public class StudentTaskController {
             model.addAttribute("submitList", submitList);
         }
         return "learning/task/student/submitTaskList";
+    }
+
+    //평가 완료된 숙제 조회
+    @GetMapping("/viewEval/{tasksend_no}")
+    public String selectSubmitTaskByNo(@PathVariable int tasksend_no, Model model, HttpSession session){
+        TaskSubmitDTO taskEval = taskService.selectSubmitTaskByNo(tasksend_no, (Integer) session.getAttribute("member_no"));
+        System.out.println(taskEval);
+        model.addAttribute("taskEval", taskEval);
+        return "learning/task/student/SubmitTaskDetail";
     }
 }
