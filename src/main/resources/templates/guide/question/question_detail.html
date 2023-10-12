@@ -2,10 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
     <meta charset="UTF-8">
-    <title>질문등록</title>
+    <title>질문상세보기</title>
     <!--공통으로 쓰이는 CSS 및  -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticelist.css}">
+
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -15,9 +14,10 @@
     <div th:replace="~{common/sidebar/question_sidebar :: question_sidebarFragment}"></div>
     <div class="content-wrap">
 
-        <div id="passwordFormDiv" th:if="${not isPasswordCorrect}">
-            <form action="/question/question/verifyPassword" method="post">
-                <input type="hidden" name="id" th:value="${question.qna_no}" />
+        <!--<div id="passwordFormDiv" th:if="${not isPasswordCorrect}">-->
+        <div id="passwordFormDiv" th:unless="${isAdmin or isPasswordCorrect}">
+            <form action="/question/verifyPassword" method="post">
+                <input type="hidden" name="id" th:value="${questionDTO.qna_no}" />
                 <label for="pw">비밀번호 입력:</label>
                 <input type="password" id="pw" name="pw" required />
                 <input type="submit" value="확인" />
@@ -26,26 +26,26 @@
         </div>
 
         <!-- 게시글의 상세 내용 (초기에는 숨겨져 있음) -->
-        <div id="questionDetailDiv" th:if="${isPasswordCorrect}">
-
+        <!--<div id="questionDetailDiv" th:if="${isPasswordCorrect}">-->
+        <div id="questionDetailDiv" th:if="${isAdmin or isPasswordCorrect}">
 
 
             <table border="1">
                 <tr>
                     <td>QNA No</td>
-                    <td th:text="${question.qna_no}"></td>
+                    <td th:text="${questionDTO.qna_no}"></td>
                 </tr>
                 <tr>
                     <td>Title</td>
-                    <td th:text="${question.qna_title}"></td>
+                    <td th:text="${questionDTO.qna_title}"></td>
                 </tr>
                 <tr>
                     <td>Content</td>
-                    <td th:text="${question.qna_content}"></td>
+                    <td th:text="${questionDTO.qna_content}"></td>
                 </tr>
                 <tr>
                     <td>Is Shown</td>
-                    <td th:text="${question.qna_isshow}"></td>
+                    <td th:text="${questionDTO.qna_isshow}"></td>
                 </tr>
 
 
@@ -61,41 +61,75 @@
 
                 <tr>
                     <td>Registration Date</td>
-                    <td th:text="${question.qna_regdate}"></td>
+                    <td th:text="${questionDTO.qna_regdate}"></td>
                 </tr>
                 <tr>
                     <td>Member ID</td>
-                    <td th:text="${question.member_id}"></td>
+                    <td th:text="${questionDTO.member_id}"></td>
                 </tr>
             </table>
+
 
             <!--수정-->
             <div class="my-3">
                 <!-- 질문수정버튼 - 로그인해야지만 수정가능, 로그인한유저가 글쓴이와 동일해야만 한다 -->
                 <a class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
-                   th:href="@{|/question/modify/${question.qna_no}|}"
-                   th:if="${ question.member_id!=null and #authentication.getPrincipal().getUsername()==question.member_id}"
-                   th:text="수정"></a>
+                   th:href="@{|/question/modify/${questionDTO.qna_no}|}"
+                   th:if="${ login_id!=null and login_id==qna_id}"
+                   th:text="질문수정"></a>
                 <!-- 질문삭제버튼 - 로그인해야지만 삭제가능, 로그인한유저가 글쓴이와 동일해야만 한다-->
                 <a href="javascript:void(0);" class="delete btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
-                   th:data-uri="@{|/question/delete/${question.qna_no}|}"
-                   th:if="${ question.member_id!=null and #authentication.getPrincipal().getUsername()==question.member_id}"
-                   th:text="삭제"></a>
+                   th:data-uri="@{|/question/delete/${questionDTO.qna_no}|}"
+                   th:if="${ login_id!=null and login_id==qna_id}"
+                   th:text="질문삭제"></a>
+
+            </div>
+
+
+            <!--댓글-->
+            <div id="comments-section">
+
+                <!--댓글목록-->
+                <div class="card my-3" th:each="question : ${question}">
+                    <!-- 예시: 각 댓글에 대한 반복문, th:each를 사용해서 서버로부터 받은 댓글 목록을 반복해서 표시 -->
+                    <div class="card-body" >
+                        <div class="card-text" style="white-space:pre-line;" th:text="${question.ans_content}">
+
+                        </div>
+                        <!-- <div class="badge bg-light text-dark p-2 text-start">
+                             <div class="my-2">
+                                 <span th:if="${answer.writer!=null}"  th:text="${answer.writer.username}"></span>
+                             </div>
+                           <div th:text="${#temporals.format(answer.createDate,'yyyy-MM-dd HH:mm')}"/>
+                         </div>-->
+                    </div>
+
+                            <!-- 관리자용 수정/삭제 버튼 -->
+                            <div class="admin-actions" sec:authorize="hasRole('ADMIN')">
+                                <button class="edit-button">수정</button>
+                                <button class="delete-button">삭제</button>
+                            </div>
+                </div>
+
+
+
+                <!--댓글작성-->
+                <form method="post" id="answerForm" th:action="@{|/answer/add/${questionDTO.qna_no}|}" th:object="${answerForm}">
+                    <textarea class="form-control" placeholder="댓글 내용을 입력해주세요." rows="8"  sec:authorize="hasRole('ADMIN')" th:field="*{answer}"></textarea>
+                    <p sec:authorize="!hasRole('ADMIN')">답글은 관리자만 작성할 수 있습니다</p>
+                    <input type="submit" value="Submit" class="comment-submit-button" sec:authorize="hasRole('ADMIN')">
+                </form>
 
             </div>
 
             <a href="/question/list">Back to List</a>
-
-
-
         </div>
-
-
-
     </div>
 </div>
+
+
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 
 
@@ -111,7 +145,7 @@
                 //location객체의 href속성의 값으로 적용해라
                 //=>현재 browser의 URL주소를 변경해라
                 location.href=this.dataset.uri;
-                //location.href="/question/delete/${question.qna_no}";//삭제요청
+                //location.href="/question/delete/${questionDTO.qna_no}";//삭제요청
             };
         });
     });

@@ -1,10 +1,13 @@
 package com.bnw.beta.controller.guide;
 
+import com.bnw.beta.config.vaildation.question.AnswerForm;
 import com.bnw.beta.config.vaildation.question.QuestionForm;
 import com.bnw.beta.domain.guide.dao.QuestionDAO;
+import com.bnw.beta.domain.guide.dto.AnswerDTO;
 import com.bnw.beta.domain.guide.dto.FileQuestionDTO;
 import com.bnw.beta.domain.guide.dto.QuestionDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.service.guide.question.QuestionService;
 import com.bnw.beta.service.guide.question.QuestionServiceImpl;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.validation.Valid;
@@ -17,6 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,26 +79,37 @@ public class QuestionController {
     @Autowired
     private QuestionDAO questionDAO;
 
-    private final QuestionServiceImpl questionService;
+    private final QuestionService questionService;
 
     private final MemberService memberService;
 
     /*이미지 파일*/
 
     //질문 게시글 조회전 비밀번호 확인
-    @PostMapping("/question/verifyPassword")
-    public String verifyPassword(@RequestParam String pw, @RequestParam(name="id") Integer id, Model model) {
-        QuestionDTO question = questionService.selectQuestion(id);
+    @PostMapping("/verifyPassword")
+    public String verifyPassword(@RequestParam String pw, @RequestParam(name="id") Integer qna_no, Model model, AnswerForm answerForm,Principal principal) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
+
+        QuestionDTO questionDTO = questionService.selectQuestion(qna_no);
+        List<QuestionDTO> question = questionService.getQuestionInfo(qna_no);
+        /*QuestionDTO question2 = questionService.getQuestion(id);*/
         System.out.println(question);
-        model.addAttribute(question.getQna_pw());
-        if (question != null && question.getQna_pw().equals(pw)) {
-            FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(id);
-            /*model.addAttribute("fileQuestion", fileQuestion);*/
+        model.addAttribute("qna_pw", questionDTO.getQna_pw());
+        /* model.addAttribute("qna_pw", question.getQna_pw());*/
+        if (question != null && questionDTO.getQna_pw().equals(pw)) {
+            FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(qna_no);
             if (fileQuestion != null) {
                 model.addAttribute("fileQuestion", fileQuestion);
             }
-
+            model.addAttribute("login_id", principal.getName());
+            model.addAttribute("qna_id", questionDTO.getMember_id());
             model.addAttribute("question", question);
+            model.addAttribute("questionDTO", questionDTO);
+            /*model.addAttribute("question2", question2);*/
+
             System.out.println(model.asMap());
             model.addAttribute("isPasswordCorrect", true);  // 비밀번호가 맞으면 true 값을 설정합니다.
             return "/guide/question/question_detail";
@@ -107,21 +124,25 @@ public class QuestionController {
 
     /*리다이렉션 할때 비밀번호를 보지 않는 상세조회*/
     @GetMapping("/detail/{qna_no}")
-    public String detail(@PathVariable("qna_no") Integer qna_no,
+    public String detail(@PathVariable("qna_no") Integer qna_no, AnswerForm answerForm,
                          @RequestParam(value = "afterEdit", required = false, defaultValue = "false") boolean afterEdit,
-                         Model model) {
-
-        //1 파라미터 받기
-        //2 비즈니스로직수행
-        QuestionDTO question = questionService.selectQuestion(qna_no);
+                         Model model, Principal principal) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
+        QuestionDTO questionDTO = questionService.selectQuestion(qna_no);
+        List<QuestionDTO> question = questionService.getQuestionInfo(qna_no);
+        /*QuestionDTO question2 = questionService.getQuestion(qna_no);*/
         FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(qna_no);
-
         if (fileQuestion != null) {
             model.addAttribute("fileQuestion", fileQuestion);
         }
-        model.addAttribute("qna_pw", question.getQna_pw());
-        //3 Model
+        model.addAttribute("login_id", principal.getName());
+        model.addAttribute("qna_id", questionDTO.getMember_id());
         model.addAttribute("question", question);
+        model.addAttribute("questionDTO", questionDTO);
+        //3 Model
+        /*model.addAttribute("question2", question2);*/
 
         // afterEdit 파라미터가 true면 비밀번호 확인을 생략
         if (Boolean.TRUE.equals(afterEdit)) {
@@ -154,8 +175,6 @@ public class QuestionController {
     }
 
 
-    /*질문수정처리*/
-    /*기존 게시글 수정
     @PostMapping("/modify/{qna_no}")
     public String modify(@Valid QuestionForm questionForm, BindingResult bindingResult,
                          @PathVariable("qna_no") Integer qna_no, Principal principal){
@@ -168,26 +187,7 @@ public class QuestionController {
         if( !question.getMember_id().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없다");
         }
-
-        questionService.modify(question, questionForm.getSubject(), questionForm.getContent(),question.getQna_pw());
-        *//*return String.format( "redirect:/question/detail",qna_no);*//*
-        return String.format("redirect:/question/detail/%d?afterEdit=true", qna_no);
-    }
-*/
-
-    @PostMapping("/modify/{qna_no}")
-    public String modify(@Valid QuestionForm questionForm, BindingResult bindingResult,
-                         @PathVariable("qna_no") Integer qna_no, Principal principal){
-        //1파라미터받기
-        if(bindingResult.hasErrors()){
-            return "guide/question/question_form";
-        }
-        //2비즈니스로직
-        QuestionDTO question = questionService.selectQuestion(qna_no);
-        if( !question.getMember_id().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없다");
-        }
-        questionService.modify(question, questionForm.getSubject(), questionForm.getContent(),question.getQna_pw(), questionForm.getFile());
+        questionService.modify(question, questionForm.getSubject(), questionForm.getContent(),questionForm.getPw(), questionForm.getFile());
 
         return String.format("redirect:/question/detail/%d?afterEdit=true", qna_no);
     }
@@ -201,7 +201,7 @@ public class QuestionController {
         if(!question.getMember_id().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
-        questionService.delete(question);
+        questionService.deleteY(question);
         return "redirect:/question/list";
     }
 

@@ -28,6 +28,8 @@ public interface QuestionDAO {
 
     QuestionDTO selectQuestionById(Integer id);
 
+    List<QuestionDTO> getQuestionInfo(Integer id);
+
 
     MemberDTO findUserByUsername(String username);
 
@@ -35,5 +37,7 @@ public interface QuestionDAO {
 
     void updateQuestion(QuestionDTO question);
 
-    void deleteQuestion(int qna_no);
+    void deleteQuestionY(int qna_no);
+
+
 }
