@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>공지게시판작성</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
@@ -20,8 +21,8 @@
                 </select>
             </label><br/>
 
-            <label for="upView">상단노출<input type="checkbox" id="upView" value="upView"></label>
-            <label for="allView">전체공개<input type="checkbox" id="allView" value="allView"></label><br/>
+            <label for="upView">상단노출<input type="checkbox" name="type" id="upView" value="upView"></label>
+            <label for="allView">전체공개<input type="checkbox" name="type" id="allView" value="allView"></label><br/>
 
             <span>제목 <input type="text" name="notice_title"></span><br/>
 
@@ -29,10 +30,25 @@
             <label for="upDateChoice">게시일자등록<input type="radio" id="upDateChoice" value="allView"></label><br/>
 
             <textarea rows="10" cols="50" name="notice_content"></textarea><br/>
+    <section id="ex9">
+        <style>
+            #ex9 .drop-area {
+                width: 500px;
+                height: 300px;
+                border: 1px solid rgb(128, 128, 128);
+                box-shadow: 2px 3px 9px hsl(0, 0%, 47%);
+                padding: 10px;
+            }
+        </style>
+            <div class="drop-area" id="dropArea">
+            <p id ="here">여기에 파일을 드래그 앤 드롭하세요.</p>
+            <input class="btn_file" multiple ="multiple" type="file" name="file" id="fileInput">
+        </div>
+    </section>
 
-            <input type="file" multiple ="multiple" name="file" ><br/>
 
-            <input type="submit" value="등록">
+            <input type="file" class="btn-file" multiple ="multiple" name="file" ><br/>
+            <input type="submit" id="btn" value="등록">
             <a th:href="@{'/notice/list'}">
                 <button type="button">취소</button>
             </a>
@@ -40,4 +56,47 @@
     </div>
 </form>
 </body>
+
+<script>
+    var dropArea = document.getElementById('dropArea');
+    var fileInput = document.getElementById('fileInput');
+
+    dropArea.addEventListener('dragenter', function (e) {
+        e.preventDefault();
+        dropArea.classList.add('active');
+    });
+
+    dropArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+    });
+
+    dropArea.addEventListener('dragleave', function () {
+        dropArea.classList.remove('active');
+    });
+
+    dropArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dropArea.classList.remove('active');
+
+        var files = e.dataTransfer.files;
+        fileInput.files = files;
+
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+        }
+
+        fileName(files);
+
+    });
+
+    //업로드된 파일 이름을 출력
+    function fileName(files){
+        var fileName = [];
+        for(var i = 0; i <files.length; i++){
+            fileName.push(files[i].name);
+        }
+        document.getElementById('here').textContent = fileName.join(',');
+    }
+</script>
 </html>

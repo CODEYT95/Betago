@@ -33,7 +33,7 @@ public interface TaskDAO {
     int saveTask(int tasksend_no);
 
     //숙제 수정
-    TaskSubmitDTO modifyTask(int tasksend_no);
+    TaskSubmitDTO modifyTask(TaskSubmitDTO taskSubmitDTO);
     int ModifySubmitTask(TaskSubmitDTO taskSubmitDTO);
 
     //숙제 전송

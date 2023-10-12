@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>둑며들다|진도 등록</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/taskList.css}">
-    <script type="text/javascript" th:src="@{/js/learning/task/student/taskList.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/submitTaskList.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/student/submitTaskList.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -16,14 +16,13 @@
             <form id="submitTask" th:action="@{/student/submitTask}" method="post">
                 <div class="main-title">
                     <div class="student-name">
-                        <h1>학습자 : 김바둑<span th:text></span></h1>
+                        <h1 class="h1">학습자 : <span th:text="${member_name}"></span></h1>
                     </div>
                 </div>
                 <div class="contents-container">
                     <div class="mycontents-list">
                         <div class="checkbox" th:each="task : ${submitList}">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${task.tasksend_no}" name="tasksend_no[]" th:value="${task.tasksend_no}" th:disabled="${task.task_state == '미작성'}"/>
                                 <span class="checkbox-title">
                                         <div class="card">
                                             <div class="card-details">
@@ -47,10 +46,10 @@
                                                     <div class="card-button">
                                                         <div class="button-wrap">
                                                              <a th:href="@{/student/taskModify/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
-                                                                <input type="button" class="writeBtn" value="수정하기">
+                                                                <input type="button" class="modifyBtn" id="modifyButton_${task.tasksend_no}" value="수정하기">
                                                             </a>
                                                             <a th:href="@{/student/taskModify/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
-                                                                <input type="button" class="modifyBtn" id="modifyButton_${task.tasksend_no}" value="조회하기" style="display: none;">
+                                                                <input type="button" class="modifyBtn" value="조회하기" style="display: none;">
                                                             </a>
                                                         </div>
                                                     </div>

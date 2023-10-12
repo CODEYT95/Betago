@@ -20,8 +20,9 @@
 
     .form-group label {
         display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
     }
 
     .form-group input[type="text"],
@@ -34,8 +35,34 @@
     }
 
     .form-group select {
-        height: 30px;
-        width: 150px;
+        height: 40px;
+        width: 166px;
+    }
+    #game_title{
+    height:40px;
+    width:340px;
+
+    }
+
+    #game_price{
+    height: 40px;
+    width:166px;
+    }
+
+    #game_discount{
+    height: 40px;
+    width:166px;
+    }
+
+    #game_sell{
+    height: 40px;
+    width:166px;
+    }
+
+   #game_content{
+        width: 560px;
+        height: 200px;
+        resize: none;
     }
 
     .form-group input[type="file"] {
@@ -56,6 +83,31 @@
     .form-group input[type="submit"]:hover {
         background-color: #0056b3;
     }
+
+    .uploadbox{
+    border:1px solid red;
+    }
+    .thumbnail{
+        width: 100%;
+            border: 1px solid red;
+            display: grid;
+            height: 70px;
+            justify-content: start;
+    }
+    #thumbnail{
+    border:1px solid blue;
+    }
+    .thumbnail-title{
+       border: 1px solid red;
+           width: 100%;
+           font-size: 14px;
+           font-weight: bold;
+    }
+
+    .filebox{
+        border:1px solid red;
+    }
+
     .filebox .upload-name {
    display: inline-block;
    height: 40px;
@@ -66,24 +118,7 @@
    color: #999999;
    }
 
-   .filebox label {
-display: inline-block;
-padding: 10px 20px;
-color: #000000;
-vertical-align: middle;
-cursor: pointer;
-height: 15px;
-margin-left: 189px;
-margin-top: -43px;
-border: 2px solid #18801b;
-border-radius: 20px 20px 20px 20px;
-padding: 19px;
-}
+//이미지파일첨부버튼
    .filebox input[type="file"] {
-position: absolute;
-width: 0;
-height: 0;
-padding: 0;
-overflow: hidden;
-border: 0;
+
 }

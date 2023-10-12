@@ -2,29 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.subscribe.dao.payDAO">
 <!--게임컨텐츠결제-->
-
 <select id="selectContentsPay" parameterType="Integer" resultType="payDTO">
     <![CDATA[
     SELECT * FROM game WHERE game_no = #{game_no};
     ]]>
 </select>
 
-<select id="selectCart" parameterType="Integer" resultType="CartDTO">
-    <![CDATA[
-    SELECT c.*, g.game_title, g.game_price
-    FROM cart AS c
-    JOIN game AS g ON c.game_no = #{g.game_no}
-    WHERE c.member_id = #{member_id};
-    ]]>
-</select>
-
 <insert id="insertIntoPay" parameterType="payDTO">
     <![CDATA[
-     INSERT INTO pay (game_no, pay_name, pay_phone, pay_type, buy_name, pay_date)
-    SELECT #{game_no}, member_name AS pay_name, member_phone AS pay_phone, #{pay_type}, #{buy_name}, NOW()
-    FROM member
-    WHERE member_id = #{member_id};
+    INSERT INTO pay (member_id, game_no, pay_name, pay_phone, pay_type, buy_name)
+    VALUES (#{member_id}, #{game_no}, #{pay_name}, #{pay_phone}, #{pay_type}, #{buy_name});
     ]]>
 </insert>
+<select id="selectBuylist" parameterType="java.util.List" resultType="payDTO">
+    <![CDATA[
+    SELECT * FROM game
+    WHERE game_no IN
+    ]]>
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+</select>
 
 </mapper>

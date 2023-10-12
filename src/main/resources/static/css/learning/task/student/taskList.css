@@ -138,6 +138,11 @@
     display: flow-root;
 }
 
+.h1 {
+    font-size: 20px;
+    margin: 0.67em 0;
+}
+
 .member-name span {
     float: right;
     font-size: 19px;

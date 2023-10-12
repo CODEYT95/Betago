@@ -3,15 +3,23 @@ package com.bnw.beta.domain.admin.dao;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Mapper
 @Repository
 public interface NoticeDAO {
-    
+
+    //게시글 목록 조회
+    List<NoticeDTO> noticeList(@Param("page") int page, @Param("size") int size,
+                               @Param("searchType") String searchType, @Param("keyword") String keyword);
+
+
+    //총 게시글 개수 확인
+    int listCnt(@Param("searchType") String searchType, @Param("keyword") String keyword);
+
     //게시글 등록
     Long insert(NoticeDTO noticeDTO);
 
@@ -28,10 +36,10 @@ public interface NoticeDAO {
     int update(NoticeDTO noticeDTO);
 
     //파일 삭제
-    List<NoticeFileDTO> deleteFile(Long notice_no);
+    void deleteFile(Long notice_no);
 
-    //게시글 목록 조회
-    List<NoticeDTO> noticeList(NoticeDTO noticeDTO);
+   //게시글 삭제
+    void delete(Long notice_no);
 
 
 

@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
         $(".search-btn").click(function() {
             var title = $(".sBtn-text").text();
 
-            //window.location.href = "/educator/group/addList?title=" + encodeURIComponent(title);
+            window.location.href = "/student/group/joinList?group_name=" + encodeURIComponent(title);
         });
     });
     //게임 콘텐츠 목록 리스트
@@ -137,6 +137,67 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     });
+    /*
+    $(document).ready(function() {
+            const groupMenu = document.querySelector(".select-menu-group");
+            const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
+            const groupOptions = groupMenu.querySelectorAll(".option");
+            const groupSBtnText = groupMenu.querySelector(".sBtn-text");
+
+            const educatorMenu = document.querySelector(".select-menu-educator");
+            const selectEducatorBtn = educatorMenu.querySelector(".select-btn-educator");
+            const educatorOptions = educatorMenu.querySelectorAll(".option");
+            const educatorSBtnText = educatorMenu.querySelector(".sBtn-text-educator");
+
+            selectGroupBtn.addEventListener("click", () => {
+                educatorMenu.classList.remove("active");
+                groupMenu.classList.toggle("active");
+            });
+
+            selectEducatorBtn.addEventListener("click", () => {
+                groupMenu.classList.remove("active");
+                educatorMenu.classList.toggle("active");
+            });
+
+            groupOptions.forEach(option => {
+                option.addEventListener("click", () => {
+                    let selectedOption = option.querySelector(".option-text").innerText;
+                    if (selectedOption === "전체") {
+                        groupOptions.forEach(opt => {
+                            opt.classList.remove("selected");
+                        });
+                        groupSBtnText.innerText = "전체";
+                    } else {
+                        groupOptions.forEach(opt => {
+                            opt.classList.remove("selected");
+                        });
+                        option.classList.add("selected");
+                        groupSBtnText.innerText = selectedOption;
+                    }
+                    groupMenu.classList.remove("active");
+                });
+            });
+
+            educatorOptions.forEach(option => {
+                option.addEventListener("click", () => {
+                    let selectedOption = option.querySelector(".option-text-educator").innerText;
+                    if (selectedOption === "전체") {
+                        educatorOptions.forEach(opt => {
+                            opt.classList.remove("selected");
+                        });
+                        educatorSBtnText.innerText = "전체";
+                    } else {
+                        educatorOptions.forEach(opt => {
+                            opt.classList.remove("selected");
+                        });
+                        option.classList.add("selected");
+                        educatorSBtnText.innerText = selectedOption;
+                    }
+                    educatorMenu.classList.remove("active");
+                });
+            });
+        });
+    */
    $(document).ready(function() {
      $('.join-btn').click(function() {
        var group_no = $('.checkbox-input:checked').data('group-no');
@@ -154,8 +215,10 @@ document.addEventListener("DOMContentLoaded", function() {
            success: function(response) {
              if (response === "applyable") {
                alert('가입이 완료 되었습니다.');
+               location.reload();
              } else {
                alert('잔여 T/O가 없어 가입이 불가능 합니다.');
+               location.reload();
              }
            },
            error: function(xhr, status, error) {

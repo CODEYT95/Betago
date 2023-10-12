@@ -15,8 +15,10 @@ public class NoticeDTO {
     private String notice_isshow;
     private String member_id;
     private Long view_cnt;
+    private String type = " ";
 
     private List<NoticeFileDTO> noticeFiles;
+
 
     // getter 및 setter 추가
     public List<NoticeFileDTO> getNoticeFiles() {

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>공지게시판리스트</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticelist.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/notice/noticelist.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -12,51 +12,104 @@
 <div class="content">
     <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
-    <div><a th:href="@{/notice/write}"><button>글쓰기</button></a></div>
-    <table>
-        <thead>
-        <tr>
-            <th>NO</th>
-            <th>분류</th>
-            <th>제목</th>
-            <th>내용</th>
-            <th>작성자</th>
-            <th>등록일시</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
+        <div><a th:href="@{/notice/write}">
+            <button>글쓰기</button>
+        </a></div>
 
-        <tbody>
-        <tr th:each="notice:${noticeList}">
-            <td>
-                <span th:text="${notice.notice_no}"></span>
-            </td>
-            <td>
-                <span th:text="${notice.notice_category}"></span>
-            </td>
-            <td>
-                <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
-                <span th:text="${notice.notice_title}"></span>
-                </a>
-            </td>
-            <td>
-                <span th:text="${notice.member_id}"></span>
-            </td>
-            <td>
-                <span th:text="${notice.notice_content}"></span>
-            </td>
-            <td>
-                <span th:text="${notice.notice_regdate}"></span>
-            </td>
-            <td>
-                <span th:text="${notice.view_cnt}"></span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <!--검색 -->
+        <div class="search_box">
+            <form id="searchForm" method="get" action="/notice/list" autocomplete="off">
+                <div class="sch_group fl">
+                    <select name="searchType">
+                        <option value="notice_title" th:classappend="${(searchType == 'notice_title') ? 'selected' : ''}">제목</option>
+                        <option value="notice_content" th:classappend="${(searchType == 'notice_content') ? 'selected' : ''}">내용</option>
+                        <option value="title_content" th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용</option>
+                    </select>
+                    <input type="text" placeholder="키워드를 입력해 주세요." name="keyword" />
+                    <button type="submit" class="bt_search"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+                </div>
+            </form>
+        </div>
 
+
+        <!--페이지 목록 갯수-->
+        <div class="form-group row justify-content-center">
+            <p>게시판 목록 갯수</p>
+            <form id="pageSizeForm" action="/notice/list" method="get">
+                <div class="w100" style="padding-right: 10px">
+                    <select class="form-control form-control-sm" name="size" id="listSize" onchange="changePageSize()">
+                        <option value="10" th:selected="${noticePage.noticeList.size() == 10}">10개</option>
+                        <option value="15" th:selected="${noticePage.noticeList.size() == 15}">15개</option>
+                        <option value="20" th:selected="${noticePage.noticeList.size() == 20}">20개</option>
+                    </select>
+
+                </div>
+            </form>
+
+
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>NO</th>
+                <th>분류</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일시</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice:${noticePage.noticeList}">
+                <td>
+                    <span th:text="${notice.notice_no}"></span>
+                </td>
+                <td>
+                    <span  name="type" th:text="${notice.notice_category}"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
+                        <span th:text="${notice.notice_title}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${notice.member_id}"></span>
+                </td>
+
+                <td>
+                    <span th:text="${notice.notice_regdate}"></span>
+                </td>
+                <td>
+                    <span th:text="${notice.view_cnt}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--페이징-->
+        <div>
+            <ul id="pagination" style="display: inline;">
+                <li th:if="${noticePage.startPage > 5}" style="display: inline;">
+                    <a th:with="prevPage=${noticePage.startPage - 1}" th:href="@{/notice/list(page=${prevPage}, size=${noticePage.noticeList.size}, searchType=${searchType}, keyword=${keyword})}">Prev</a>
+                </li>
+                <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(noticePage.startPage, noticePage.endPage)}"  style="display: inline;">
+                    <a th:href="@{/notice/list(page=${pageNum}, size=${noticePage.noticeList.size}, searchType=${searchType}, keyword=${keyword})}" th:classappend="${noticePage.currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                </li>
+                <li th:if="${noticePage.endPage < noticePage.totalPages}" style="display: inline;">
+                    <a th:with="nextPage=${noticePage.endPage + 1}" th:href="@{/notice/list(page=${nextPage}, size=${noticePage.noticeList.size}, searchType=${searchType}, keyword=${keyword})}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </div>
-</div>
-<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
+<script>
+    //페이지 표기 수 변경
+    function changePageSize() {
+        document.getElementById("pageSizeForm").submit();
+    }
+
+</script>
+
 </html>

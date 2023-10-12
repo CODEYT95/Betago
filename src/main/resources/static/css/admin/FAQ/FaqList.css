@@ -1,0 +1,25 @@
+.faq_block {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    transition: max-height 0.3s ease-out;
+    min-width: 480px;
+}
+
+.faq_block+.faq_block {
+    margin-top: 10px;
+}
+
+.faq_header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+}
+.faq_body {
+    max-height: 0;
+    overflow: hidden;
+    background-color: #eee;
+    transition: max-height 0.3s ease-in-out;
+    padding: 0 10px;
+}

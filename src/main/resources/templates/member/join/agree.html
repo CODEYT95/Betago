@@ -20,19 +20,22 @@
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<div class="container right-panel-active">
+<div class="container">
     <div class="container__form container--signup">
         <form id="joinForm" class="form" th:action="@{/member/agree}" th:object="${joinForm}" method="post">
             <input type="hidden" name="check_3" id="check_3_hidden">
             <input type="hidden" name="check_4" id="check_4_hidden">
             <input type="hidden" name="check_5" id="check_5_hidden">
 
-            <h2 class="form__title">약관동의</h2>
+            <h1 class="h1">회원 가입</h1>
+            <h6 class="h6">약관 동의 및 기본정보를 입력해주세요.</h6>
+            <hr class="line1">
+            <h2 class="form__title">약관동의</h2><hr class="line">
             <div class="agree">
                 <div class="span">
                     <input type="checkbox" class="border" name="selectall" value="selectall" onclick="selectAll(this)">
                     <span>전체 동의</span><br/>
-                </div>
+                </div><hr class="line1">
                 <div class="span">
                     <input type="checkbox" name="check" id="check_1" onclick="checkSelectAll()">
                     <span onclick="openPopup('check_1')">이용약관(필수)</span><br/>
@@ -53,12 +56,14 @@
                     <input type="checkbox" name="check" id="check_5" onclick="checkSelectAll()">
                     <span onclick="openPopup('check_5')" class="span">개인정보의 위탁(선택)</span>
                 </div>
+                <hr class="line">
             </div>
 
-            <h2 class="form__title">본인 인증</h2>
+            <h2 class="form__title">기본정보(필수)</h2>
+            <hr class="line">
             <div class="info">
-                <input type="text" class="input" name="name" id="name" th:field="*{member_name}" placeholder="이름을 입력해주세요.">
-                <div class="radiodiv">
+                <span class="spanName">이름</span><input type="text" class="input" name="name" id="name" th:field="*{member_name}" placeholder="이름을 입력해주세요.">
+                <div class="radiodiv"><span class="spanTitle">인증수단</span>
                     <label for="phone" class="radio">
                         <input type="radio" id="phone" name="contact" value="phone" checked>
                         <span>Phone</span>
@@ -68,19 +73,22 @@
                         <span>Email</span>
                     </label><br/>
                 </div>
+                <span class="spanNum"></span>
                 <input type="text" class="input" id="selectphone" placeholder="핸드폰 번호를 입력해주세요." onclick="agreeCheck()" th:field="*{member_phone}">
                 <span class="phoneCheck">이미 가입 되어 있는 번호입니다.</span>
                 <input type="text" class="input" id="mail" placeholder="이메일을 입력해주세요." onclick="agreeCheck()" th:field="*{member_email}">
                 <span class="emailCheck">이미 가입 되어 있는 이메일입니다.</span>
-
+                <hr class="line1">
                 <div>
-                    <a>
+                    <a class="button">
                         <button type="button" class="btn" id="sendEmailButton" onclick="sendNumber()">인증요청하기</button>
                     </a>
                 </div>
                 <div id="mail_number" name="mail_number" style="display: none">
+                    <span class="spanNum">인증번호</span>
                     <input type="text" class="input" name="number" id="number" placeholder="발송된 인증번호를 입력해주세요."><br/>
-                    <div class="btnCheck">
+                    <hr class="line">
+                    <div class="button">
                         <button class="btn" type="button" name="confirmBtn" id="confirmBtn"
                                 onclick="confirmNumber()">인증번호 확인
                         </button>

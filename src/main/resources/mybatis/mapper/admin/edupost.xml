@@ -11,13 +11,19 @@
                 <when test="searchType != null and searchType != ''">
                     <choose>
                         <when test="'title'.equals( searchType )">
-                            AND title LIKE CONCAT('%', #{keyword}, '%')
+                            AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
                         </when>
                         <when test="'content'.equals( searchType )">
-                            AND content LIKE CONCAT('%', #{keyword}, '%')
+                            AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
                         </when>
-                        <when test="'writer'.equals( searchType )">
-                            AND writer LIKE CONCAT('%', #{keyword}, '%')
+                        <when test="'member_id'.equals( searchType )">
+                            AND member_id LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'edupost_category'.equals(searchType)">
+                            AND edupost_category LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'edupost_type'.equals(searchType)">
+                            AND edupost_type LIKE CONCAT('%', #{keyword}, '%')
                         </when>
                     </choose>
                 </when>
@@ -25,14 +31,24 @@
                 <!-- 전체 검색일 때 -->
                 <otherwise>
                     AND (
-                    title LIKE CONCAT('%', #{keyword}, '%')
-                    OR content LIKE CONCAT('%', #{keyword}, '%')
-                    OR writer LIKE CONCAT('%', #{keyword}, '%')
+                    edupost_title LIKE CONCAT('%', #{keyword}, '%')
+                    OR edupost_content LIKE CONCAT('%', #{keyword}, '%')
+                    OR member_id LIKE CONCAT('%', #{keyword}, '%')
+                    OR edupost_category LIKE CONCAT('%', #{keyword}, '%')
+                    OR edupost_type LIKE CONCAT('%', #{keyword}, '%')
                     )
                 </otherwise>
             </choose>
         </if>
     </sql>
+
+    <select id="getListSearch" resultType="EdupostDTO">
+        <![CDATA[
+            select edupost_title, edupost_category, edupost_type, member_id, edupost_content
+            from edupost
+            <include refid="search"></include>
+        ]]>
+    </select>
 
     <insert id="eduinsert" useGeneratedKeys="true" keyProperty="edupost_no" parameterType="EdupostDTO">
         <![CDATA[
