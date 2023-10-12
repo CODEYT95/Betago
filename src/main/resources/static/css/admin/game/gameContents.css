@@ -131,9 +131,24 @@
    color: #999999;
    }
 
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
 
 
-
-//이미지파일첨부버튼
    .filebox input[type="file"] {
+       display: none;
+       position: absolute;
+       width: 0;
+       height: 0;
+       padding: 0;
+       overflow: hidden;
+       border: 0;
 }

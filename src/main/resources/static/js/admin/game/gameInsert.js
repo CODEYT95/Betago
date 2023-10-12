@@ -50,3 +50,11 @@
 
                return true;  // 폼 제출을 계속합니다.
            }
+
+    $("#file").on('change',function(){
+    var fileName = $("#file").val();
+    $(".upload-name").val(fileName);
+    });
+
+
+

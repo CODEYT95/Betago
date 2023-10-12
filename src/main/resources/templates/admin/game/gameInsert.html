@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>사이트 제목</title>
     <!--공통으로 쓰이는 CSS 및  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" th:src="@{/js/admin/game/gameInsert.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameContents.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
@@ -85,10 +86,11 @@
                     썸네일
                     </div>
                     <div class="filebox">
-                        <div class="fileupload"><input type="file" id="file"></div>
+                        <input class="upload-name" value="이미지업로드" placeholder="이미지업로드" readonly>
+                        <label for="file">파일찾기</label>
+                        <input type="file" id="file">
                     </div>
                 </div>
-
                 <div class="form-group1">
                     <input type="submit" value="등록하기">
                 </div>
