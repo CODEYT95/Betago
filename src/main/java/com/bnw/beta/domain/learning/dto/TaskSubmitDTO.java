@@ -16,11 +16,10 @@ public class TaskSubmitDTO {
     private String tasksubmit_chapter;
     private String tasksubmit_content;
     private String tasksubmit_add;
-    private Date tasksubmit_regdate;
     private Integer member_no;
     private String member_id;
     private String member_name;
-    private String tasksbumit_eval;
+    private String tasksubmit_eval;
     private String tasksubmit_comment;
     private String task_state;
     private String game_title;

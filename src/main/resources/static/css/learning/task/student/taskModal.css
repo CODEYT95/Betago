@@ -120,3 +120,20 @@
 input:focus, textarea:focus {
     outline: none;
 }
+
+.eval-wrap {
+    margin: 10px;
+    font-size: 17px;
+}
+
+.eval-wrap > div {
+    margin-bottom: 15px;
+}
+
+.sub-title {
+    margin-bottom : 2px;
+}
+
+.eval-wrap > div > span {
+    font-weight: bold;
+}

@@ -1,14 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>ERROR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B 로고</title>
 </head>
+<style>
+    body {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 98vh;
+        background-color: #f1f1f1;
+        padding-right: 50px;
+        overflow: hidden;
+    }
+
+    .circle-container {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: -135px;
+    }
+
+    .circle {
+        display: flex;
+        border-radius: 50%;
+        margin: 0 10px;
+        box-shadow: 20px 8px 13px 3px;
+        color: #ccc;
+    }
+
+    .circle.black {
+        position: relative;
+        right: -240px;
+        width: 40rem;
+        height: 40rem;
+        background-color: black;
+        color: #22222278;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 6px 3px 16px 4px;
+    }
+
+    .circle.white {
+        width: 40rem;
+        height: 40rem;
+        background-color: white;
+    }
+
+    .logo {
+        font-size: 15rem;
+        position: absolute;
+        right: 236px;
+        bottom: 186px;
+        color: white;
+    }
+
+</style>
 <body>
-<div class="content">
-    <div class="content-wrap">
-        <span>에러임</span>
+<div class="circle-container">
+    <div class="circle black">
+        <span class="logo">β</span>
     </div>
+    <div class="circle white"></div>
 </div>
 </body>
 </html>

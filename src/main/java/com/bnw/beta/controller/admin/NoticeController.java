@@ -2,8 +2,10 @@ package com.bnw.beta.controller.admin;
 
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
+import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.admin.notice.NoticeServiceImpl;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/notice")
 public class NoticeController {
     private final NoticeServiceImpl noticeService;
     //리스트 목록 + 페이징 + 검색
-    @GetMapping("/list")
+    @GetMapping("/notice/list")
     public String noticeList(@RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "size", defaultValue = "10") int size,
                              @RequestParam(value = "searchType", defaultValue = "all") String searchType,
@@ -45,22 +49,24 @@ public class NoticeController {
 
 
     //공지게시판 글작성 폼
-    @GetMapping("/write")
+    @GetMapping("/admin/notice/write")
     public String noticeWriteForm() {
+
         return "admin/notice/noticeWrite";
     }
 
     //공지게시판 글작성 처리
-    @PostMapping("/write")
+    @PostMapping("/admin/notice/write")
     public String noticeWrite(@ModelAttribute NoticeDTO noticeDTO,
                               @RequestParam("file") MultipartFile[][] file,
                               @RequestParam(name = "type", defaultValue = "일반") String type,
-                              Authentication authentication, Model model) throws IOException {
-        String member_id = authentication.getName();
-        model.addAttribute("member_id", member_id);
+                              Model model,Principal principal) throws IOException {
+        noticeDTO.setMember_id(principal.getName());
+        System.out.println(noticeDTO);
         try {
-            noticeService.insert(noticeDTO, file, member_id, type);
-            return "redirect:list";
+            System.out.println(noticeDTO);
+            noticeService.insert(noticeDTO, file, type);
+            return "redirect:/notice/list";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "글 작성 중 오류가 발생했습니다: " + e.getMessage());
@@ -70,7 +76,7 @@ public class NoticeController {
     }
 
     //공지게시판 상세내용
-    @GetMapping("/detail/{notice_no}")
+    @GetMapping("/notice/detail/{notice_no}")
     public String noticeDetail(@PathVariable("notice_no") Long notice_no, Model model) {
         NoticeDTO noticeDTO = (NoticeDTO) noticeService.detail(notice_no);
         model.addAttribute("noticeDTO", noticeDTO);
@@ -79,7 +85,7 @@ public class NoticeController {
     }
 
     //공지게시판 수정폼
-    @GetMapping("/edit/{notice_no}")
+    @GetMapping("/admin/edit/{notice_no}")
     public String edit(@PathVariable("notice_no") Long notice_no, Model model) {
         NoticeDTO noticeDTO = noticeService.detail(notice_no);
         model.addAttribute("notice_no", notice_no);
@@ -89,7 +95,7 @@ public class NoticeController {
     }
 
     //공지게시판 수정처리
-    @PostMapping("/update")
+    @PostMapping("/admin/notice/update")
     public String update(@RequestParam("notice_no") Long notice_no,
                          @ModelAttribute NoticeDTO noticeDTO,
                          @RequestParam("file") MultipartFile[] file) throws IOException {
@@ -99,7 +105,7 @@ public class NoticeController {
     }
 
     //공지게시판 삭제
-    @GetMapping("/delete/{notice_no}")
+    @GetMapping("/admin/notice/delete/{notice_no}")
     public String delete(@PathVariable("notice_no") Long notice_no) {
         noticeService.delete(notice_no);
         return "redirect:/notice/list";

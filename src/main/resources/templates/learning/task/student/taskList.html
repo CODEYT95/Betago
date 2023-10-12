@@ -18,12 +18,12 @@
                     <div class="student-name">
                         <h1 class="h1">학습자 : <span th:text="${member_name}"></span></h1>
                     </div>
-                    <div class="guide">
-                        <span>미작성 숙제는 제출하실 수 없습니다. 반드시 숙제를 작성 후 제출해주세요.</span>
-                    </div>
                     <div class="title-button-wrap">
                         <button type="submit" id="submitButton" class="submitBtn" disabled>제출하기</button>
                     </div>
+                </div>
+                <div class="guide">
+                    <span>미작성 숙제는 제출하실 수 없습니다. 반드시 숙제를 작성 후 제출해주세요.</span>
                 </div>
                 <div class="contents-container">
                     <div class="mycontents-list">
@@ -52,11 +52,11 @@
                                                     </div>
                                                     <div class="card-button">
                                                         <div class="button-wrap">
-                                                             <a th:href="@{/student/taskDetail/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
+                                                             <a th:if="${task.task_state == '미작성'}" th:href="@{/student/taskDetail/{tasksend_no}(tasksend_no=${task.tasksend_no})}">
                                                                 <input type="button" class="writeBtn" value="숙제하기">
                                                             </a>
-                                                            <a th:href="@{/student/taskModify/{tasksend_no}(tasksend_no=${task.tasksend_no})}" th:data-tasksend-no="${task.tasksend_no}">
-                                                                <input type="button" class="modifyBtn" id="modifyButton_${task.tasksend_no}" value="수정하기" style="display: none;">
+                                                            <a th:if="${task.task_state == '작성중'}" th:href="@{/student/taskModify/{tasksend_no}(tasksend_no=${task.tasksend_no})}">
+                                                                <input type="button" class="modifyBtn" id="modifyButton_${task.tasksend_no}" value="수정하기">
                                                             </a>
                                                         </div>
                                                     </div>
