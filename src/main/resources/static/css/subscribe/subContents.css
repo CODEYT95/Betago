@@ -43,7 +43,7 @@ input[type='date']:valid::before {
   display: none;
 }
 
-input#startDate, input#endDate{
+input#game_date{
     border: none;
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);

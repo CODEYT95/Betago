@@ -52,8 +52,8 @@
                         <a href="#">구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
-                            <li><a href="#">게임 컨텐츠 구매</a></li>
-                            <li><a href="#">내 게임 컨텐츠 조회</a></li>
+                            <li><a href="@{/game/list}">게임 컨텐츠 구매</a></li>
+                            <li><a th:href="@{/list}">내 게임 컨텐츠 조회</a></li>
                         </ul>
                     </li>
                     <li class="first_li">
@@ -77,7 +77,7 @@
                     <li class="first_li">
                         <a href="#">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
-                            <li><a href="#">게임컨텐츠 등록</a></li>
+                            <li><a href="@{/game/insert}">게임컨텐츠 등록</a></li>
                             <li><a href="#">교육자료 등록</a></li>
                             <li><a href="#">게시물 등록</a></li>
                             <li><a href="#">매출조회</a></li>
