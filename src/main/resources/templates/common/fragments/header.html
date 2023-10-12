@@ -19,7 +19,7 @@
                 <button onclick="document.getElementById('logoutForm').submit();" class="logoutBtn">로그아웃</button>
                 <!--임시로그아웃 김현민 끝-->
             </section>
-            <div class="logo"><a href="#">둑며들다</a></div>
+            <div class="logo"><a href="/">둑며들다</a></div>
             <span>바둑에 스며들다</span>
             <div class="navi_links">
                 <div class="sidebar-logo">
@@ -27,7 +27,7 @@
                     <i class='bx bx-x'></i>
                 </div>
                 <ul class="links">
-                    <li class="first_li"><a href="#">홈</a></li>
+                    <li class="first_li"><a href="/">홈</a></li>
                     <li class="first_li">
                         <a class="aa" href="#">이용안내</a>
                         <i class='bx bxs-chevron-up useInfo-arrow arrow'></i>
@@ -59,9 +59,12 @@
                     <li class="first_li">
                         <a th:href="@{/student/group/joinList}">학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
                         <ul class="learning-sub-menu sub-menu">
+                            <li><a href="#">학습그룹 가입신청</a></li>
+                            <li><a th:href="@{/student/taskList}">숙제 진도 등록</a></li>
+                            <li><a th:href="@{/student/submitTaskList}">제출 숙제 목록</a></li>
                             <li><a th:href="@{/student/group/joinList}">학습그룹 가입신청</a></li>
-                            <li><a th:href="@{'/student/taskList/' + ${member_no}}">숙제 진도 등록</a></li>
-                            <li><a th:href="@{'/student/submitTaskList/' + ${member_no}}">제출 숙제 목록</a></li>
+                            <li><a th:href="@{/student/taskList}">숙제 진도 등록</a></li>
+                            <li><a th:href="@{/student/submitTaskList}">제출 숙제 목록</a></li>
                         </ul>
                     </li>
                     <li class="first_li">

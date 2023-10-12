@@ -6,6 +6,7 @@ import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
 import lombok.RequiredArgsConstructor;
+import okhttp3.internal.concurrent.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,8 +98,12 @@ public class TaskServiceImpl implements TaskService{
 
     //작성한 숙제 조회
     @Override
-    public TaskSubmitDTO modifyTask(int tasksend_no) {
-        return taskDAO.modifyTask(tasksend_no);
+    public TaskSubmitDTO modifyTask(int tasksend_no, int member_no) {
+        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
+        taskSubmitDTO.setTasksend_no(tasksend_no);
+        taskSubmitDTO.setMember_no(member_no);
+
+        return taskDAO.modifyTask(taskSubmitDTO);
     }
 
     //숙제 수정
@@ -116,12 +121,10 @@ public class TaskServiceImpl implements TaskService{
 
     //숙제 전송
     public int submitTask(List<Integer> tasksend_no){
-        System.out.println(tasksend_no);
         return taskDAO.submitTask(tasksend_no);
     }
 
     //제출 숙제 조회
-
     @Override
     public List<TaskSubmitDTO> selectSubmitTask(Integer member_no) {
         return taskDAO.selectSubmitTask(member_no);
