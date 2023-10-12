@@ -16,7 +16,10 @@
             <form id="submitTask" th:action="@{/student/submitTask}" method="post">
                 <div class="main-title">
                     <div class="student-name">
-                        <h1>학습자 : <span th:text="${member_name}"></span></h1>
+                        <h1 class="h1">학습자 : <span th:text="${member_name}"></span></h1>
+                    </div>
+                    <div class="guide">
+                        <span>미작성 숙제는 제출하실 수 없습니다. 반드시 숙제를 작성 후 제출해주세요.</span>
                     </div>
                     <div class="title-button-wrap">
                         <button type="submit" id="submitButton" class="submitBtn" disabled>제출하기</button>
