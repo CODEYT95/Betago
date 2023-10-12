@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>학습 그룹 가입신청</title>
@@ -23,7 +23,7 @@
                         </div>
                         <ul class="options">
                             <li class="option">
-                                <span class="option-text">전체</span>
+                                <span class="option-text" th:value="${groupTitle}">전체</span>
                             </li>
                             <li class="option" th:each="title : ${title}">
                                 <span class="option-text" th:text="${title.group_name}"></span>
@@ -33,7 +33,7 @@
                     <h2>교육자명</h2>
                     <div class="select-menu-educator">
                         <div class="select-btn-educator">
-                            <span class="sBtn-text-educator">전체</span>
+                            <span class="sBtn-text-educator" th:value="${educatorTitle}">전체</span>
                             <i class="bx bx-chevron-down"></i>
                         </div>
                         <ul class="options">

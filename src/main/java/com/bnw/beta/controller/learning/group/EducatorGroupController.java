@@ -1,5 +1,6 @@
 package com.bnw.beta.controller.learning.group;
 
+import com.bnw.beta.domain.common.paging.GroupPageDTO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
 import com.bnw.beta.service.member.MemberService;
@@ -74,9 +75,9 @@ public class EducatorGroupController {
 
     //학습 그룹 조회
     @GetMapping("/list")
-    public String groupList(@RequestParam(name = "groupName", defaultValue = "전체") String group_name, Model model){
+    public String groupList(@RequestParam(name = "groupName", defaultValue = "전체") String group_name, Principal principal, Model model){
 
-        String member_id = "baduk";
+        String member_id = principal.getName();
 
         model.addAttribute("group_name", group_name);
         model.addAttribute("groupName", groupService.selectGroupName(member_id));
@@ -102,5 +103,21 @@ public class EducatorGroupController {
         return groupService.deleteGroup(group_no);
     }
 
+
+    //그룹 학습자 가입 승인
+    @GetMapping("approveList")
+    public String approveStudent(@RequestParam(value = "page", defaultValue = "1") int page,
+                                 @RequestParam(value = "size", defaultValue = "10") int size,
+                                 @RequestParam(value = "group_name", defaultValue = "바둑 기사 모여라3") String group_name,
+                                 Model model, HttpSession session){
+        int member_no = (int) session.getAttribute("member_no");
+
+        GroupPageDTO groupPageDTO = groupService.selectGroupApprove(member_no, group_name, page,size);
+        model.addAttribute("currentPage", groupPageDTO.getCurrentPage());
+        model.addAttribute("listCount", groupPageDTO.getListCount());
+        model.addAttribute("groupPageDTO", groupPageDTO);
+
+        return "/learning/group/educator/joinApprove/";
+    }
 }
 
