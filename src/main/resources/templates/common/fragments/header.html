@@ -10,6 +10,7 @@
 <th:block th:fragment="headerFragment">
     <nav>
         <section class="header-navi">
+            <img th:src="@{/image/baduk5.png}" alt="Betago Header Image" class="header-image">
             <i id="main_sideBtn" class='bx bx-menu'></i>
             <section class="header_top">
                 <span class="top_info">Betago를 보다 편리하고 안전하게 이용하세요.</span>
@@ -19,7 +20,7 @@
                 <button onclick="document.getElementById('logoutForm').submit();" class="logoutBtn">로그아웃</button>
                 <!--임시로그아웃 김현민 끝-->
             </section>
-            <div class="logo"><a href="/">둑며들다</a></div>
+            <div class="logo"><a th:href="@{/}">둑며들다</a></div>
             <span>바둑에 스며들다</span>
             <div class="navi_links">
                 <div class="sidebar-logo">
@@ -27,9 +28,9 @@
                     <i class='bx bx-x'></i>
                 </div>
                 <ul class="links">
-                    <li class="first_li"><a href="/">홈</a></li>
+                    <li class="first_li"><a th:href="@{/}">홈</a></li>
                     <li class="first_li">
-                        <a class="aa" href="#">이용안내</a>
+                        <a href="#">이용안내</a>
                         <i class='bx bxs-chevron-up useInfo-arrow arrow'></i>
                         <ul class="useInfo-sub-menu sub-menu">
                             <li><a href="#">사이트 소개</a></li>
@@ -52,21 +53,19 @@
                         <a href="#">구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
-                            <li><a href="#">게임 컨텐츠 구매</a></li>
-                            <li><a href="#">내 게임 컨텐츠 조회</a></li>
+                            <li><a th:href="@{/game/list}">게임 컨텐츠 구매</a></li>
+                            <li><a th:href="@{/list}">내 게임 컨텐츠 조회</a></li>
                         </ul>
                     </li>
                     <li class="first_li">
                         <a th:href="@{/student/group/joinList}">학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
                         <ul class="learning-sub-menu sub-menu">
-                            <li><a href="#">학습그룹 가입신청</a></li>
-                            <li><a th:href="@{/student/taskList}">숙제 진도 등록</a></li>
-                            <li><a th:href="@{/student/submitTaskList}">제출 숙제 목록</a></li>
                             <li><a th:href="@{/student/group/joinList}">학습그룹 가입신청</a></li>
                             <li><a th:href="@{/student/taskList}">숙제 진도 등록</a></li>
                             <li><a th:href="@{/student/submitTaskList}">제출 숙제 목록</a></li>
                         </ul>
                     </li>
+
                     <li class="first_li">
                         <a th:href="@{/educator/group/addList}"s>교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
                         <ul id="service" class="educator-sub-menu sub-menu">
@@ -81,8 +80,8 @@
                     <li class="first_li">
                         <a href="#">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
-                            <li><a href="#">게임컨텐츠 등록</a></li>
-                            <li><a href="@{/edupost/insert}">교육자료 등록</a></li>
+                            <li><a th:href="@{/game/insert}">게임컨텐츠 등록</a></li>
+                            <li><a th:href="@{/edupost/insert}">교육자료 등록</a></li>
                             <li><a href="#">게시물 등록</a></li>
                             <li><a href="#">매출조회</a></li>
                             <li><a href="#">회원조회</a></li>
