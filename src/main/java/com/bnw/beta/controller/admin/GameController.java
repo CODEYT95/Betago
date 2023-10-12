@@ -44,7 +44,6 @@ public class GameController {
     public String selectAll(Model model) {
         List<GameDTO> gameList = gameService.selectAll();
         model.addAttribute("gameList", gameList);
-        System.out.println("출력결과 :" + gameList);
         return "admin/game/gameList";
     }
 
