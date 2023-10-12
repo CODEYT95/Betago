@@ -1,41 +1,52 @@
-document.addEventListener('DOMContentLoaded', function (events) {
-function fetchData() {
-    var startDate = document.getElementById("startDate").value;
-    var endDate = document.getElementById("endDate").value;
+ document.addEventListener('DOMContentLoaded', function() {
+        let subscriptionDuration = document.getElementById('game_date');
+        let gameTotal = document.getElementById('game_total');
+        let gamePrice = document.getElementById('game_price');
+        let gameSell = document.getElementById('game_sell');
+        let gameDiscount = document.getElementById('game_discount');
 
-    // startDate, endDate 중 하나라도 비어있을 경우에 알림 메시지 표시 및 폼 제출 방지
-    if (!startDate || !endDate) {
-        alert("날짜를 선택해주세요.");
-        event.preventDefault(); // 폼의 기본 제출을 방지
-        return; // 이후 로직 실행을 중단
-    }
+        let durationDiscountRates = {
+                1: 0, 2: 2, 3: 4, 4: 6, 5: 8, 6: 10, 7: 12,
+                8: 14, 9: 16, 10: 18, 11: 20, 12: 22
+            };
+            let totalDiscountRates = {
+                        10: 3, 20: 6, 30: 9, 40: 12, 50: 15, 60: 18
+            };
+         function updateDiscount() {
+                   let durationDiscount = durationDiscountRates[subscriptionDuration.value] || 0;
+                   let totalDiscount = totalDiscountRates[gameTotal.value] || 0;
+                   gameDiscount.value = durationDiscount + totalDiscount;
+               }
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = JSON.parse(xhr.responseText);
+               function updateSellPrice() {
+                   updateDiscount();
+                   let discountRate = parseFloat(gameDiscount.value) / 100;
+                   let originalPrice = parseFloat(gamePrice.value) || 0;
+                   let discountedPrice = originalPrice * (1 - discountRate);
+                   gameSell.value = discountedPrice.toFixed();  // 소수점 둘째자리까지 표시
+               }
 
-            // 조회 결과를 동적으로 표시
-            updateGameList(response);
-        }
-    };
-   var url = "http://localhost:8800/list?startDate=" + encodeURIComponent(startDate) + "&endDate=" + encodeURIComponent(endDate);
-   xhr.open("GET", url, true);
-   xhr.send();
-}
-// start date input 요소 가져오기
-    const startDateInput = document.getElementById('startDate');
-    // end date input 요소 가져오기
-    const endDateInput = document.getElementById('endDate');
+               subscriptionDuration.addEventListener('change', updateSellPrice);
+               gameTotal.addEventListener('change', updateSellPrice);
+               gamePrice.addEventListener('input', updateSellPrice); // 이 부분이 정가 input box에서 값이 변경될 때마다 리스너를 추가하는 부분입니다.
+           });
+           // validateForm 함수를 이벤트 리스너 밖에 추가합니다.
+           function validateForm() {
+               // 각 필드의 값을 가져옵니다.
+               var game_title = document.getElementById("game_title").value;
+               var game_level = document.getElementById("game_level").value;
+               var game_date = document.getElementById("game_date").value;
+               var game_total = document.getElementById("game_total").value;
+               var game_price = document.getElementById("game_price").value;
+               var game_discount = document.getElementById("game_discount").value;
+               var game_sell = document.getElementById("game_sell").value;
+               var game_content = document.getElementById("game_content").value;
 
-    // start date input의 변경 이벤트에 대한 핸들러 등록
-    startDateInput.addEventListener('change', function() {
-        // start date input의 값을 가져오기
-        const startDateValue = startDateInput.value;
+               // 필요한 필드가 비어있는지 확인합니다.
+               if(!game_title || !game_level || !game_date || !game_total || !game_price || !game_discount || !game_sell || !game_content) {
+                   alert("모두 입력해주세요.");
+                   return false;  // 폼 제출을 중단합니다.
+               }
 
-        // end date input의 최솟값을 start date로 설정
-        endDateInput.setAttribute('min', startDateValue);
-
-        // start date가 변경될 때 end date를 업데이트하는 추가적인 로직을 여기에 작성할 수 있어
-        // 예를 들어, 특정 기간 이후의 날짜만 end date로 선택 가능하게 하는 등의 조건을 설정할 수 있어
-    });
+               return true;  // 폼 제출을 계속합니다.
+           }
