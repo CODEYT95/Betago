@@ -5,8 +5,7 @@
 <!--게임콘텐츠 모든 목록 조회-->
     <select id="selectAll" resultType="GameDTO">
         <![CDATA[
-        SELECT game_no, game_title, game_level, game_date, game_total,
-               game_sell, game_content, member_id
+        SELECT *
         FROM game;
         ]]>
     </select>
