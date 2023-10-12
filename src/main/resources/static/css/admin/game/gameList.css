@@ -24,9 +24,9 @@
 
 .titlelist{
     display: flex;
-    height: 40px;
+    height: auto;
     background: #fff;
-    padding: 20px;
+    padding: 8px;
     font-size: 18px;
     font-weight: 400;
     border-radius: 8px;
@@ -135,6 +135,11 @@
     color: #fff;
     z-index: 1;
     font-size: 20px;
+}
+.detaillist h6{
+
+        display: grid;
+        justify-content: space-between;
 }
 
 .details h5{
