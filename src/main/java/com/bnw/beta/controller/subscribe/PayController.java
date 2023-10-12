@@ -41,23 +41,6 @@ public class PayController {
         return "subscribe/pay";
     }
 
-    /* 형이 하신 cartList 컨트롤러
-    @GetMapping("/cartList")
-    public String cartList(Model model, String member_id, @RequestParam(value = "selectedGameNos", required = false) int[] selectedGameNos) {
-        // 장바구니 목록을 조회합니다.
-        member_id="dumy";
-        CartDTO cartList = payService.selectCart(member_id);
-
-        // 조회한 장바구니 목록을 Model에 추가
-        model.addAttribute("cartList", cartList);
-
-        // 선택한 게임 번호를 Model에 추가
-        model.addAttribute("selectedGameNos", selectedGameNos);
-
-        // pay 페이지로 이동
-        return "subscribe/pay";
-    }
-    */
     @PostMapping("/payment")
     public String submitPay(@RequestParam("game_no[]") List<Integer> game_no,
                             payDTO payDTO, String member_id) {

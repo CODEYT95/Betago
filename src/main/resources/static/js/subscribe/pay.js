@@ -1,3 +1,38 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Variables
+    var checkboxes = document.querySelectorAll('.checkbox');
+    var submitButton = document.getElementById("submitbutton");
+    var totalPrice = 0;
+    var gameNos = [];
+
+    // Functions
+    function handleCheckboxChange(checkbox) {
+        checkboxes.forEach(function(currentCheckbox) {
+            if (currentCheckbox !== checkbox) {
+                currentCheckbox.checked = false;
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function handleCheckboxChange(checkbox) {
     // 모든 체크박스 가져오기
     var checkboxes = document.querySelectorAll('.checkbox');
