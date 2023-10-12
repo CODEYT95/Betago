@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class QuestionDTO {
 
-    private Long qna_no;
+    private int qna_no;
     private String qna_title;
     private String qna_content;
     private String qna_isshow;
