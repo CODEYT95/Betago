@@ -8,28 +8,6 @@
     <script type="text/javascript" th:src="@{/js/subscribe/subContents.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
-
-<script>
-    window.onload = function() {
-        var dateDiffs = document.querySelectorAll('.dateDiff');
-
-        dateDiffs.forEach(function(element) {
-            var date1 = new Date(element.getAttribute('data-enddate'));
-            var date2 = new Date(element.getAttribute('data-startdate'));
-
-            var diff = Math.abs(date1.getTime() - date2.getTime());
-            var diffMonths = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
-            var diffDays = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30.44;
-
-            if (diffMonths === 0) {
-                element.innerText = diffDays + "일";
-            } else {
-                element.innerText = diffMonths + "개월 " + diffDays + "일";
-            }
-        });
-    }
-</script>
-
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 
