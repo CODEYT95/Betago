@@ -1,38 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Variables
-    var checkboxes = document.querySelectorAll('.checkbox');
-    var submitButton = document.getElementById("submitbutton");
-    var totalPrice = 0;
-    var gameNos = [];
-
-    // Functions
-    function handleCheckboxChange(checkbox) {
-        checkboxes.forEach(function(currentCheckbox) {
-            if (currentCheckbox !== checkbox) {
-                currentCheckbox.checked = false;
-            }
-        });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function handleCheckboxChange(checkbox) {
     // 모든 체크박스 가져오기
     var checkboxes = document.querySelectorAll('.checkbox');
@@ -93,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 여기에 추가로 실행할 로직을 추가할 수 있어
 
     return true;
+});
 });
 
 function validateForm() {
@@ -157,14 +123,14 @@ function validatePayDepositor(depositor) {
     return /^[가-힣a-zA-Z]{2,}$/.test(depositor);
 }
 
-function validatePhone(phone) {
-    if (!/^(010)\d{8}$/.test(phone)) {
+function validatePhone(콜) {
+    if (!/^(010)\d{8}$/.test(콜)) {
         return false;
     }
 
-    return /^\d+$/.test(phone);
+    return /^\d+$/.test(콜);
 }
-}); // 이 부분에 주석을 닫아주어야 합니다.
+
 
 function handleCheckboxChange(checkbox) {
     if (checkbox.checked) {
@@ -240,17 +206,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
      //태그 삭제시 url 업데이트 해주는 함수
      function updateUrl() {
-         let newUrl = 'http://localhost:8800/cartList?game_no=' + gameNos.join(',');
-         window.history.replaceState({}, null, newUrl);
+         let newUrl = 'http://localhost:8800/cartList?game_nos=' + gameNos.join(',');
+         window.history.pushState({}, null, newUrl);
      }
      //가격 업데이트 해주는 함수
      function updateTotalPrice() {
          var productListSpan = document.querySelector('span[name=productName].mypaylist');
          productListSpan.textContent = Math.round(totalPrice) + "원";
      }
-
-     backButton.addEventListener('click', function () {
-         // 이전 페이지로 돌아감
-         window.history.back();
-     });
 });
