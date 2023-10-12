@@ -85,7 +85,6 @@ public class MemberServiceImpl implements MemberService {
 
     //글등록 유저 아이디 가져오기
     public Optional<MemberDTO> getUser(String username){
-        //서비스계층에서는 저장소(데이터베이스)에서 실제로 데이터를 가져오는 작업을 한다
         MemberDTO member = memberDAO.findUserByUsername(username);  // 메서드 호출 변경
         return Optional.ofNullable(member);
 

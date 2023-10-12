@@ -18,7 +18,7 @@ public interface NoticeService {
     int listCnt(String searchType, String keyword);
 
     //공지게시판 글등록
-    void insert(NoticeDTO noticeDTO, MultipartFile[][] file, String member_id, String type) throws IOException;
+    void insert(NoticeDTO noticeDTO, MultipartFile[][] file, String type) throws IOException;
 
     //공지게시판 상세조회
     NoticeDTO detail(Long notice_no) ;

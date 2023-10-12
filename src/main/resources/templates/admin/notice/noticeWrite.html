@@ -8,56 +8,83 @@
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
-<form id="notice" th:action="@{/notice/write}" enctype="multipart/form-data" method="post">
-    <div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<form id="notice" th:action="@{/admin/notice/write}" enctype="multipart/form-data" method="post">
+
     <div class="content">
-        <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
+        <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+
         <div class="content-wrap">
-            <input type="hidden" name="member_id" th:text="${member_id}">
-            <label> 공지구분
-                <select name="notice_category">
-                    <option value="공지">공지</option>
-                    <option value="FAQ">FAQ</option>
-                </select>
-            </label><br/>
+            <div class="edupost_cont">
+                <div class="edupost_write_box">
+                    <h2 class="head">공지 등록창</h2>
 
-            <label for="upView">상단노출<input type="checkbox" name="type" id="upView" value="upView"></label>
-            <label for="allView">전체공개<input type="checkbox" name="type" id="allView" value="allView"></label><br/>
+                    <div class="opt">
+                        <laber for="notice_title" style="font-size: 16px; margin-right: 9px;">제목</laber>
+                        <input type="text" class="texarea1" id="notice_title" name="notice_title"/>
+                    </div>
 
-            <span>제목 <input type="text" name="notice_title"></span><br/>
+                    <div class="opt">
+                        <label for="notice_category" style="font-size: 16px;">공지 구분</label>
+                        <select id="notice_category" name="notice_category" class="notice_category">
+                            <option value="공지">공지</option>
+                            <option value="FAQ">FAQ</option>
+                        </select>
+                    </div>
 
-            <label for="upLoadNow">즉시등록<input type="radio" id="upLoadNow" value="upView"></label>
-            <label for="upDateChoice">게시일자등록<input type="radio" id="upDateChoice" value="allView"></label><br/>
+                    <div class="opt2">
+                        <label for="upView" class="view">상단노출</label>
+                        <input type="checkbox" name="type" id="upView" value="upView">
+                        <label for="allView" class="view">전체공개</label>
+                        <input type="checkbox" name="type" id="allView" value="allView">
+                    </div>
+                    <div class="opt2">
+                    <label for="upLoadNow" class="view">즉시등록
+                        <input type="checkbox" id="upLoadNow" value="upView"></label>
+                    <label for="upDateChoice" class="view">게시일자등록
+                        <input type="checkbox"  id="upDateChoice" value="allView"></label><br/>
+                    </div>
+                    <div class="opt">
+                        <label for="notice_content"
+                               style="position: relative; font-size: 16px; bottom: 19rem">내용</label>
+                        <textarea class="texarea2" id="notice_content" name="notice_content"></textarea>
+                    </div>
 
-            <textarea rows="10" cols="50" name="notice_content"></textarea><br/>
-    <section id="ex9">
-        <style>
-            #ex9 .drop-area {
-                width: 500px;
-                height: 300px;
-                border: 1px solid rgb(128, 128, 128);
-                box-shadow: 2px 3px 9px hsl(0, 0%, 47%);
-                padding: 10px;
-            }
-        </style>
-            <div class="drop-area" id="dropArea">
-            <p id ="here">여기에 파일을 드래그 앤 드롭하세요.</p>
-            <input class="btn_file" multiple ="multiple" type="file" name="file" id="fileInput">
+                    <div class="file_input">
+                        <label class="fileselect" style="font-size: 16px;"> 파일 등록
+                            <input type="file" class="fileup" multiple="multiple" name="file"><br/>
+                        </label>
+                    </div>
+
+                    <div id="ex9">
+                        <div class="drop-area" id="dropArea">
+                            <p id="here">여기에 파일을 드래그 앤 드롭하세요.</p>
+                            <input class="btn_file" multiple="multiple" type="file" name="file" id="fileInput">
+                        </div>
+                    </div>
+
+                    <div class="btn_submit">
+                    <button type="submit" id="btn" class="btn_sub" >등록</button>
+                    <a th:href="@{'/notice/list'}">
+                        <button type="button" class="btn_sub" >취소</button>
+                    </a>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-
-
-            <input type="file" class="btn-file" multiple ="multiple" name="file" ><br/>
-            <input type="submit" id="btn" value="등록">
-            <a th:href="@{'/notice/list'}">
-                <button type="button">취소</button>
-            </a>
-        </div>
-    </div>
 </form>
 </body>
 
 <script>
+
+    /* function logMessage() {
+         console.log("Button clicked!");
+         var form = document.getElementById('notice');
+         form.submit();
+     } */
+
+
     var dropArea = document.getElementById('dropArea');
     var fileInput = document.getElementById('fileInput');
 
@@ -91,9 +118,9 @@
     });
 
     //업로드된 파일 이름을 출력
-    function fileName(files){
+    function fileName(files) {
         var fileName = [];
-        for(var i = 0; i <files.length; i++){
+        for (var i = 0; i < files.length; i++) {
             fileName.push(files[i].name);
         }
         document.getElementById('here').textContent = fileName.join(',');

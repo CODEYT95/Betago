@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="guide_sidebarFragment">
+    <div class="side-bar active">
+        <div class="menu">
+            <div class="item">
+                <a href="#">사이트 소개</a>
+            </div>
+            <div class="item">
+                <a href="#">이용 가이드</a>
+            </div>
+            <div class="item">
+                <a href="#"> 컨텐츠 소개</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/notice/list}">공지 사항</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/FAQ/list}">FAQ</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/question/list}">Q&A</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
