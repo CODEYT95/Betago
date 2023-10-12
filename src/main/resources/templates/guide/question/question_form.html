@@ -33,7 +33,9 @@
                 <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error"></p>
             </div>
 
-            <input type="file" name="file" ><br/>
+
+            <input type="file" name="file" id="fileUpload"><br/>
+            <label for="fileUpload">1개의 JPG(JPEG)파일을 올려주세요:</label>
 
             <div class="mb-3" sec:authorize="isAuthenticated()">
                 <label for="pw" class="form-label">비밀번호</label>
