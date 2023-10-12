@@ -7,7 +7,8 @@
         <![CDATA[
         SELECT game_no, game_title, game_level, game_date, game_total,
                game_sell, game_content, member_id
-        FROM game;
+        FROM game
+        order by game_no desc;
         ]]>
     </select>
     <!--게임콘텐츠 등록-->

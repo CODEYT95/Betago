@@ -5,6 +5,7 @@
     <title>사이트 제목</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameList.css}">
+    <script type="text/javascript" th:src="@{/js/admin/game/gameList.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 
@@ -22,8 +23,8 @@
             <div class="gameContent-search">
                 <form action="/game/searchByTitle" method="get" class="form-container" id="searchForm">
                     <div class="searchReq">
-                            <select name="game_title" class="titlelist">
-                                <option value="">게임 선택</option> <!-- 기본 선택 항목 -->
+                            <select name="game_title" class="titlelist" id="gameTitleSelect">
+                                <option selected>게임 선택</option>
                                 <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
                             </select>
                         <input type="submit" value="조회하기" id="searchButton" />
@@ -35,7 +36,7 @@
             </div>
             <div class="content-container">
                 <ul class="list-box">
-                    <li th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
+                    <li th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no},data-game-title=${content.game_title}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
@@ -50,12 +51,14 @@
                                         <h5>그룹가능인원  : 50명</h5>
                                     </div>
                                     <div class="backDetails">
-                                        <h5>난이도 : <span th:text="${content.game_level}"></span></h5>
-                                        <h5>총인원 : <span th:text="${content.game_total}"></span></h5>
-                                        <h5>가격 : <span th:text="${content.game_price}"></span></h5>
-                                        <h5>할인 : <span th:text="${content.game_discount}"></span></h5>
-                                        <h5>판매가 : <span th:text="${content.game_sell}"></span></h5>
-                                        <h5>상품상세설명 : <span th:text="${content.game_content}"></span></h5>
+                                        <div class="detaillist">
+                                            <h5>난이도 : <span th:text="${content.game_level}"></span></h5>
+                                            <h5>총인원 : <span th:text="${content.game_total}"></span></h5>
+                                            <h5>가격 : <span th:text="${content.game_price}"></span></h5>
+                                            <h5>할인 : <span th:text="${content.game_discount}"></span></h5>
+                                            <h5>판매가 : <span th:text="${content.game_sell}"></span></h5>
+                                            <h6>상품상세설명 : <span th:text="${content.game_content}"></span></h6>
+                                        </div>
                                     </div>
                                 </div>
                                 </span>
@@ -69,6 +72,5 @@
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
-<script type="text/javascript" th:src="@{/js/admin/game/gameList.js}"></script>
 </body>
 </html>

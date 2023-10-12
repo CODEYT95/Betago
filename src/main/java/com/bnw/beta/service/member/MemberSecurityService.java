@@ -2,12 +2,16 @@ package com.bnw.beta.service.member;
 
 import com.bnw.beta.domain.member.dao.UserMapper;
 import com.bnw.beta.domain.member.dto.MemberDTO;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Enumeration;
 
 // 시큐리티 설정에서
 //formLogin((formLogin)->formLogin.loginPage("/login") 로긴 요청이 오면
@@ -26,15 +30,17 @@ public class MemberSecurityService implements UserDetailsService {
 
 
     //수업내용 UserSecurityService와 동일파일
+
     @Override
     public UserDetails loadUserByUsername(String member_id) throws UsernameNotFoundException {
+
+
         MemberDTO memberDTO = userMapper.findByMemberId(member_id);
-        System.out.println("MemberDTO: " + memberDTO);
+
         if (memberDTO == null) {
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다" + member_id);
 
         }
-
         return User
                 .withUsername(memberDTO.getMember_id())
                 .password(memberDTO.getMember_pw())
@@ -59,6 +65,4 @@ public class MemberSecurityService implements UserDetailsService {
         select * from user where email=> ?
         jpa기능인데 마이바티스로 변경해야해
         */
-
-
 }

@@ -23,10 +23,6 @@ public class MainController {
         @GetMapping("/main")
         public String mainPage(Model model) {
             NoticeDTO noticeDTO = new NoticeDTO();
-            List<NoticeDTO> noticeList = noticeService.noticeList(noticeDTO);
-
-
-            model.addAttribute("noticeList", noticeList);
 
             return "main/main";
         }

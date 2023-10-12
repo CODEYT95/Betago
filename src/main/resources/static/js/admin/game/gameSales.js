@@ -16,7 +16,7 @@ function fetchDataFromServer(period, startDate, endDate) {
     // AJAX를 사용하여 서버에 요청을 보냅니다.
     // 여기서는 서버로부터 예제 데이터를 받아옵니다.
     $.ajax({
-        url: '/api/sales-data', // 실제 서버 엔드포인트를 지정하세요.
+        url: '/game/gameSales', // 실제 서버 엔드포인트를 지정하세요.
         type: 'GET',
         data: {
             period: period,

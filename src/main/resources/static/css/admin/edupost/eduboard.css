@@ -1,20 +1,106 @@
 @charset "UTF-8";
-.content_in {
-    margin : auto;
+.head {
+    font-size: 18px;
+    font-weight: bold;
+    color: #454545;
+    margin-bottom: 30px;
+    line-height: 35px;
+}
+.edupost_category {
+    height: 29px;
+    border: 1px solid #d1d1d1;
+    text-align: center;
+    width: 20%;
+    margin-left: 31px;
+    font-size: 16px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+}
+.edupost_type {
+    height: 29px;
+    border: 1px solid #d1d1d1;
+    text-align: center;
+    width: 20%;
+    margin-left: 31px;
+    font-size: 16px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+}
+.edupost_service {
+    height: 29px;
+    border: 1px solid #d1d1d1;
+    text-align: center;
+    width: 20%;
+    margin-left: 16px;
+    font-size: 16px;
+}
+.texarea1 {
+    border: 1px solid #d1d1d1;
+    width: 80%;
+    margin-left: 10px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+
+}
+.texarea2 {
+    border: 1px solid #d1d1d1;
+    height: 300px;
+    width: 80%;
+    margin-left: 31px;
+    margin-bottom: 20px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+.opt {
+    margin-top: 15px;
 }
 
-.main-content{
-    width: 100%;
-    height: 780px;
-    display: flex;
-    flex-direction: column;
+.fileselect {
+    position: relative;
+    right: -4px;
 }
-
-.pay-datelist{
-    width: 100%;
-    display: flex;
-    margin-top: 10px;
-    justify-content: center;
+.fileup {
+    position: relative;
+    right: -35px;
+    width: 234px;
+    font-size: 12px;
+}
+.bt_1 {
+    position: relative;
+    right: -342px;
+    bottom: 29px;
+}
+.btn_sub {
+    position: relative;
+    left: 45rem;
+    width: 100px;
+    height: 36px;
+    color: white;
+    background: black;
+    cursor: pointer;
+}
+.btn_update {
+    border: none;
+    color: white;
+    background: black;
+    width: 100px;
+    height: 36px;
+    cursor: pointer;
+}
+.btn_del {
+    border: none;
+    color: white;
+    background: darkred;
+    width: 100px;
+    height: 36px;
+    cursor: pointer;
 }
 
 .form-container{
@@ -24,18 +110,6 @@
     height: 40px;
     width: 100%;
     margin-top:10px;
-}
-
-.pay-date{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    gap: 16px;
-    font-weight: bold;
-    font-size: 20px;
-    margin-left: 30px;
 }
 
 input{
@@ -49,86 +123,28 @@ input{
     height: 32px;
 }
 
-.pay-list{
-    width: 100%;
-    height: auto;
-}
-
-.pay-listbox{
-    margin: 10px;
+.contain {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    float: left;
+}
+td {
+    text-align: right;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+th, td {
+    padding-left: 15px;
 }
 
-.contents-container{
-    display: inline-block;
-    width: 300px;
-    height: auto;
-    margin-left:50px;
+.cont {
+    display: flex;
+    flex-direction: column;
 }
 
-.wrapper {
+.btn_box {
+    margin-bottom: 51px;
     position: relative;
-    width: 90%;
-    height: 90%;
-    padding: 20px;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-}
-
-.card {
-    position: relative;
-    width: 100%;
-    height: auto;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-}
-
-.card-details{
-    margin-top:12px;
-}
-
-.poster{
-    margin: 10px;
-    width: auto;
-    height: auto;
-    object-fit: cover;
-    transition: .3s;
-}
-
-img{
-    display: flex;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-}
-
-.details {
-    position: absolute;
-    bottom: -101%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 1.5em 1.5em 2em;
-    background: #000a;
-    backdrop-filter: blur(16px) saturate(120%);
-    color: #fff;
-    z-index: 2;
-    font-size: 20px;
-    /* transition: .3s; */
-}
-
-.card:hover .details {
-    bottom: 0;
-}
-
-h1, h2, h3, h4{
-    font-size: 17px;
-    display: flex;
-    justify-content: center;
+    right: -372px;
+    bottom: -30px;
 }

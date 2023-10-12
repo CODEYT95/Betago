@@ -10,7 +10,7 @@ public class TaskSendDTO {
     //전송된 숙제
     private int task_no;
     private int tasksend_no;
-    private int member_no;
+    private Integer member_no;
     private String task_content;
     private String task_chapter;
     private Date task_deadline;

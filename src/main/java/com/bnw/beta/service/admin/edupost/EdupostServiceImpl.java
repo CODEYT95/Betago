@@ -21,8 +21,16 @@ public class EdupostServiceImpl implements EdupostService {
     }
     //학습자료 목록보기
     @Override
-    public List<EdupostDTO> edulist() throws Exception {
-        return edupostDao.edulist();
+    public List<EdupostDTO> edulist(int pageNum, int size, String searchType, String keyword) throws Exception {
+        if(pageNum <= 0) {
+            pageNum = 1;
+        }
+        int offset = (pageNum-1) * size;
+        return edupostDao.edulist(offset, size, searchType, keyword);
+    }
+    @Override
+    public int count(String searchType, String keyword) {
+        return edupostDao.count(searchType, keyword);
     }
     //학습자료 상세정보
     @Override

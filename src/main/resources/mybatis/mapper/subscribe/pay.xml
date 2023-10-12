@@ -24,22 +24,4 @@
     </foreach>
 </select>
 
-<!--장바구니 제목과 금액 조회
-<select id="selectCart" parameterType="String" resultType="CartDTO">
-    <![CDATA[
-    SELECT c.*, g.game_title, g.game_price
-    FROM cart AS c
-    JOIN game AS g ON c.game_no = g.game_no
-    WHERE c.member_id = #{member_id};
-    ]]>
-</select>
--->
-<!--장바구니 제목과 금액 입력
-<insert id="insertIntoCart" parameterType="cartDTO">
-    <![CDATA[
-    INSERT INTO cart (game_no, member_id)
-    VALUES (#{game_no}, #{member_id});
-    ]]>
-</insert>
--->
 </mapper>

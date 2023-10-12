@@ -17,6 +17,7 @@ public class EdupostDTO {
     private String edupost_content;
     private String edupost_service;
     private String member_id;
+
     private List<MultipartFile> files = new ArrayList<>();
     private List<Long> removeFileIds = new ArrayList<>();
 }

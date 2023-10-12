@@ -1,10 +1,13 @@
 package com.bnw.beta.controller.member.login;
 
 import com.bnw.beta.service.member.MemberService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @Controller
@@ -18,7 +21,8 @@ public class MemberController {
 
     //시큐리티 통해서 로그인폼 보여주기
     @GetMapping("/login")
-    public String login(){
+    public String login(Principal principal, HttpSession session){
+        System.out.println("실패");
         return "member/login/login_form";
     }
 
@@ -37,20 +41,23 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping({"","/"})
-    public String index() {
-        return "main/maintest"; //메인페이지로 설정
+    public String index(Principal principal, HttpSession session) {
+
+        if(principal != null){
+            session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
+            session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
+            session.setMaxInactiveInterval(1800);
+        }
+        System.out.println("성공");
+
+        System.out.println(session.getAttribute("member_no"));
+        return "main/main"; //메인페이지로 설정
     }
 
-    /*@Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-*/
     @GetMapping("/loginForm") //기본주소로 설정시 시큐리티가 주소를 낚아채지만 SecurtiyConfig생성후 폼으로 정상 작동
     public String loginForm(){
         return "member/login/login_form"; //<-.html로 이동해라
     }
-
 
     @GetMapping("/joinForm")
     public String joinForm2(){

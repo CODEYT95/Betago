@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>학습 그룹 가입신청</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/student/groupJoin.css}">
+    <script type="text/javascript" th:src="@{/js/learning/group/student/groupJoin.js}"></script>
+</head>
+<body>
+    <div th:replace="~{common/fragments/header :: headerFragment}"></div>
+    <div class="content">
+        <div th:replace="~{common/sidebar/stu_sidebar :: stu_sidebarFragment}"></div>
+        <div class="content-wrap">
+            <div class="content_header">
+                <div class="keyword-container">
+                    <h2>그룹명</h2>
+                    <div class="select-menu-group">
+                        <div class="select-btn-group">
+                            <span class="sBtn-text">전체</span>
+                            <i class="bx bx-chevron-down"></i>
+                        </div>
+                        <ul class="options">
+                            <li class="option">
+                                <span class="option-text" th:value="${groupTitle}">전체</span>
+                            </li>
+                            <li class="option" th:each="title : ${title}">
+                                <span class="option-text" th:text="${title.group_name}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <h2>교육자명</h2>
+                    <div class="select-menu-educator">
+                        <div class="select-btn-educator">
+                            <span class="sBtn-text-educator" th:value="${educatorTitle}">전체</span>
+                            <i class="bx bx-chevron-down"></i>
+                        </div>
+                        <ul class="options">
+                            <li class="option">
+                                <span class="option-text-educator">전체</span>
+                            </li>
+                            <li class="option" th:each="educator : ${educator}">
+                                <span class="option-text-educator" th:text="${educator.member_name}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="search-btn">조회</button>
+                </div>
+                <div class="detailBtn-container">
+                    <input type="button" class="join-btn" value="가입신청">
+                </div>
+            </div>
+            <div class="content-container">
+                <ul class="list-box">
+                    <li class="" th:each="joinList : ${groupJoinList}" th:attr="data-game-no=${joinList.game_no}">
+                        <input hidden="hidden" class="attr" th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no}"/>
+                                <span class="checkbox-tile">
+                                <div class="card">
+                                    <div class="poster"><img th:src="@{/image/testBADUK2.png}"></div>
+                                    <div class="card-details"></div>
+                                    <div class="details">
+                                        <h5>그룹명 : <span th:text="${joinList.group_name}"></span></h5>
+                                        <h5>교육자명 : <span th:text="${joinList.member_name}"></span></h5>
+                                        <h5>학습 구독 기간 : <span th:text="${joinList.group_startdate}"></span> ~ <span th:text="${joinList.group_enddate}"></span></h5>
+                                        <h5>잔여 T/O : <span th:text="${joinList.group_cnt}-${joinList.group_nowcnt}+명"></span></h5>
+                                    </div>
+                                </div>
+                                </span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="content_footer">
+                <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCnt}"></span>)<i class="ri-arrow-down-s-line"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-checkerror" id="checkErrorModal">
+        <div class="modal-content">
+            <h3>그룹은 한 개만 선택해주세요.</h3>
+            <button class="modal-btn" onclick="closeModal()">확인</button>
+        </div>
+    </div>
+    <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/fragments/sidebar :: default_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="table-wrap">
+            <table >
+                <caption class="table-title">숙제 전송 목록👀</caption>
+                <thead class="table-head">
+                <tr>
+                    <th class="t_no">번호</th>
+                    <th class="t_name">학생이름</th>
+                    <th class="t_progress">학생 연락처</th>
+                    <th class="t_limit">승인 요청일자</th>
+                    <th class="t_send">승인</th>
+                    <th class="t_detail">거부</th>
+                </thead>
+                <tbody class="tbody-container">
+                <th:block th:if="${#lists.isEmpty(GroupPageDTO.groupList)}">
+                    <tr>
+                        <td colspan="6">가입 신청한 회원이 존재하지 않습니다.</td>
+                    </tr>
+                </th:block>
+                <th:block th:if="${not #lists.isEmpty(GroupPageDTO.groupList)}">
+                    <tr class="tr-list"  th:each="list, index : ${GroupPageDTO.groupList}">
+                        <td class="list_no" th:text="${index.index + GroupPageDTO.startIndex + 1}"></td>
+                        <td class="list_name" th:text="${list.member_name}"></td>
+                        <td class="list_content" th:text="${list.member_phone}" hidden="hidden"></td>
+                        <td class="list_progress" th:text="${list.join_date}"></td>
+                        <td class="list_limit" ><span ></span></td>
+                        <td class="list_send" ><span ></span></td>
+                        <td class="detailBtn-wrap">
+                            <button class="detailBtn" data-tasksend_no="${list.member_no}">
+                                <i class="ri-search-eye-line" data-tasksend_no="${list.member_no}"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <div class="paging">
+                <div class="text-center clearfix">
+                    <div class="pagingNum">
+                        <ul class="pagination-container" id="pagination">
+                            <li th:if="${GroupPageDTO.startPage > 5}" class="page-item">
+                                <a class="page-link" th:with="prevPage=${GroupPageDTO.startPage - 1}" th:href="@{/educator/createTaskForm(page=${prevPage})}">Prev</a>
+                            </li>
+                            <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(GroupPageDTO.startPage, taskPageDTO.endPage)}" class="page-item">
+                                <a th:href="@{/educator/createTaskForm(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                            </li>
+                            <li th:if="${GroupPageDTO.endPage < GroupPageDTO.totalPages}" class="page-item">
+                                <a class="page-link" th:with="nextPage=${GroupPageDTO.startPage + 5}" th:href="@{/educator/createTaskForm(page=${nextPage})}">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

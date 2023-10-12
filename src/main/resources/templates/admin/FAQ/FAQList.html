@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ리스트</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/FAQ/FaqList.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+
+        <table>
+            <thead>
+            <tr>
+                <th>NO</th>
+                <th>분류</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일시</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${faq.notice_category == 'FAQ'}" th:each="faq:${faqList}">
+                <td>
+                    <span th:text="${faq.notice_no}"></span>
+                </td>
+                <td>
+                    <span  th:text="${faq.notice_category}"></span>
+                </td>
+                <td class="faq_block js-faq_block">
+                    <div class="faq_header">
+                    <span th:text="${faq.notice_title}"></span>
+                    </div>
+                    <div class="faq_body">
+                        <span th:text="${faq.notice_content}"></span>
+                    </div>
+                </td>
+                <td>
+                    <span th:text="${faq.member_id}"></span>
+                </td>
+
+                <td>
+                    <span th:text="${faq.notice_regdate}"></span>
+                </td>
+                <td>
+                    <span th:text="${faq.view_cnt}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</div>
+</body>
+<script>
+    document.querySelectorAll('.faq_block .faq_header').forEach(function(header) {
+        header.addEventListener('click', function() {
+            var faqBlock = this.closest('.faq_block');
+            var faqBody = faqBlock.querySelector('.faq_body');
+
+            if (faqBlock.classList.contains('open')) {
+                faqBlock.classList.remove('open');
+                faqBody.style.maxHeight = '0';
+            } else {
+                faqBlock.classList.add('open');
+                faqBody.style.maxHeight = faqBody.scrollHeight + 'px';
+            }
+        });
+    });
+</script>
+
+</html>

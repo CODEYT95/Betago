@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bnw.beta.domain.admin.dao.EdupostDAO">
+    <!-- 게시글 검색
+    <sql id="search">
+        <if test='searchType.equals("edupost_title")'>
+            AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("edupost_content")'>
+            AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("title_content")'>
+            AND (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </sql>-->
+
     <insert id="eduinsert" useGeneratedKeys="true" keyProperty="edupost_no" parameterType="EdupostDTO">
         <![CDATA[
             insert into edupost(edupost_title, edupost_category, edupost_type, edupost_date, edupost_fileadd, edupost_service, member_id, edupost_content)
@@ -9,11 +22,38 @@
         ]]>
     </insert>
 
-    <select id="edulist" parameterType="map" resultType="EdupostDTO">
-        <![CDATA[
-            select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id
-            from edupost
-        ]]>
+    <select id="edulist" parameterType="EdupostDTO">
+        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id
+        from edupost
+        <where>
+        <if test='searchType.equals("edupost_title")'>
+            AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("edupost_content")'>
+            AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("title_content")'>
+            AND (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        </where>
+        order by edupost_date DESC
+        LIMIT #{page}, #{size};
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*)
+        from edupost
+        <where>
+        <if test='searchType.equals("edupost_title")'>
+            AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("edupost_content")'>
+            AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("title_content")'>
+            AND (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        </where>
     </select>
 
     <select id="findById" parameterType="long" resultType="EdupostDTO">

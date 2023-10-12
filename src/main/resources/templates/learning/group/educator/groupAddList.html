@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>학습 그룹 등록</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/educator/groupAddList.css}">
+    <script type="text/javascript" th:src="@{/js/learning/group/educator/groupAddList.js}"></script>
+</head>
+<body>
+    <div th:replace="~{common/fragments/header :: headerFragment}"></div>
+    <div class="content">
+        <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
+        <div class="content-wrap">
+            <div class="content_header">
+                <div class="keyword-container">
+                    <h2>게임 콘텐츠</h2>
+                    <div class="select-menu-group">
+                        <div class="select-btn-group">
+                            <span class="sBtn-text">전체</span>
+                            <input class="title" hidden="hidden" th:value="${title}">
+                            <i class="bx bx-chevron-down"></i>
+                        </div>
+                        <ul class="options">
+                            <li class="option" th:each="gameTitle : ${gameTitle}">
+                                <span class="option-text" th:text="${gameTitle.game_title}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="search-btn">조회</button>
+                </div>
+                <div class="detailBtn-container">
+                    <input type="button" class="detail-btn" value="학습 그룹 상세 입력">
+                </div>
+            </div>
+            <div class="content-container">
+                <ul class="list-box">
+                    <li class="" th:each="groupAddList : ${groupAddList}" th:attr="data-game-no=${groupAddList.game_no}">
+                        <div class="checkbox">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${groupAddList.game_no}"/>
+                                <span class="checkbox-tile">
+                                <div class="card">
+                                    <div class="poster"><img th:src="@{/image/testBADUK2.png}"></div>
+                                    <div class="card-details"></div>
+                                    <div class="details">
+                                        <h5>게임 콘텐츠 : <span th:text="${groupAddList.game_title}"></span></h5>
+                                        <h5>학습 구독 기간 : <span th:text="${groupAddList.game_startdate}"></span> ~ <span th:text="${groupAddList.game_enddate}"></span></h5>
+                                        <h5>학습 가능 인원 : <span th:attr="data-game-total=${groupAddList.game_total}" th:text="${groupAddList.game_total}+명"></span></h5>
+                                        <h5>그룹 지정된 인원 : <span th:attr="data-group-cnt=${groupAddList.group_nowcnt}" th:text="${groupAddList.group_nowcnt}+명"></span></h5>
+                                    </div>
+                                </div>
+                                </span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="content_footer">
+                <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCnt}"></span>)<i class="ri-arrow-down-s-line"></i></button>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

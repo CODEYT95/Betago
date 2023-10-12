@@ -1,8 +1,10 @@
 package com.bnw.beta.service.learning.group;
 
+import com.bnw.beta.domain.common.paging.GroupPageDTO;
 import com.bnw.beta.domain.learning.dao.GroupDAO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +79,9 @@ public class GroupServiceImpl implements GroupService {
     public List<GroupDTO> groupListSelect(String member_id, String group_name){
 
         GroupDTO groupDTO = new GroupDTO();
+        if (group_name.equals("전체")){
+            group_name="";
+        }
         groupDTO.setGroup_name(group_name);
         groupDTO.setMember_id(member_id);
 
@@ -88,12 +93,21 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDTO> selectGroupName(String member_id){return groupDAO.selectGroupName(member_id);}
 
+    //학습 그룹 상세 조회
+    @Override
+    public List<GroupDTO> selectGroupDetail(int group_no, String group_name) {
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroup_no(group_no);
+        groupDTO.setGroup_name("");
+        return groupDAO.selectGroupDetail(groupDTO);
+    }
+
     //학습 그룹 삭제
     @Override
     public String deleteGroup(List<Integer> group_no){
-        System.out.println("서비스 진입 성공");
+
         int result = groupDAO.deleteGroup(group_no);
-        System.out.println("result값"+result);
         if(result == 0){
 
             return "fail";
@@ -104,4 +118,87 @@ public class GroupServiceImpl implements GroupService {
 
         }
     }
+
+    //그룹 학생 가입 승인 목록
+    @Override
+    public GroupPageDTO selectGroupApprove(int member_no, String game_name, int pageNum, int size){
+        if(pageNum <= 0){
+            pageNum = 1;
+        }
+        int offset = (pageNum - 1) * size;
+
+        List<GroupDTO> groupList = groupDAO.selectGroupApprove(member_no, game_name, offset, size);
+        int listCount = groupDAO.selectGroupApproveCount(member_no, game_name);
+
+        GroupPageDTO groupPageDTO = new GroupPageDTO(listCount, pageNum, size, groupList);
+        groupPageDTO.setListCount(listCount);
+
+        return groupPageDTO;
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    //학습 그룹 가입 신청 목록
+    @Override
+    public List<GroupDTO> selectJoinGroup(int member_no, String group_name, String educator_name, int limit, int offset){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
+        groupDTO.setGroup_name(group_name);
+        groupDTO.setMember_name(educator_name);
+        groupDTO.setLIMIT(limit);
+        groupDTO.setOFFSET(offset);
+
+        return groupDAO.selectJoinGroup(groupDTO);}
+
+    //그룹 가입신청 가능한 목록 갯수
+    @Override
+    public int joinGroupCount(int member_no, String educator_name, String group_name){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
+        groupDTO.setGroup_name(group_name);
+        groupDTO.setMember_name(educator_name);
+
+        return groupDAO.joinGroupCount(groupDTO);}
+
+    //그룹명 목록 불러오기
+    @Override
+    public List<GroupDTO> selectGroupTitle(){return groupDAO.selectGroupTitle();}
+
+    //교육자명 불러오기
+    @Override
+    public List<GroupDTO> selectEducatorName(){return groupDAO.selectEducatorName();}
+
+    //그룹 신청 가능 실시간 체크
+    @Override
+    public String checkJoin(int group_no) {
+
+        int result = groupDAO.checkJoin(group_no);
+
+        if (result > 0) {
+
+            return "applyable";
+
+        } else {
+
+            return "unapplyable";
+        }
+    }
+
+    //학생 그룹 가입신청 Insert
+    @Override
+    public int insertGroupJoin(int member_no, int group_no, int game_no){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
+        groupDTO.setGroup_no(group_no);
+        groupDTO.setGame_no(game_no);
+        System.out.println("임플확인"+groupDTO);
+        return groupDAO.insertGroupJoin(groupDTO);
+    }
+
+    //학생 그룹 현재인원 Update
+    @Override
+    public int updateGroupJoin(int group_no){return groupDAO.updateGroupJoin(group_no);}
 }

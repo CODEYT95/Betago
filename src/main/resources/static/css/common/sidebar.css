@@ -39,14 +39,14 @@
 }
 
 .side-bar .menu .item a:hover{
-  background: #454545;
+  background: #96a0aa;
   color: #FFFFFF;
   transition: 0.3s ease;
 }
 
 .sub-btn-active{
-  background: #454545;
-  color: #FFFFFF;
+  background: #96a0aa;
+  color: #FFFFFF !important;
   transition: 0.3s ease;
 }
 

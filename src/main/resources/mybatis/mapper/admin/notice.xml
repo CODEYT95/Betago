@@ -1,102 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.admin.dao.NoticeDAO">
-    <!--게시글 저장-->
+    <!--게시글 등록-->
     <insert id="insert" parameterType="NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
         <![CDATA[
-            INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt)
-            VALUES (#{notice_title}, #{notice_content}, #{notice_category}, now(), "Y", #{member_id}, 0);
+        INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt,type)
+        VALUES (#{notice_title}, #{notice_content}, #{notice_category}, now(), "Y", #{member_id}, 0,#{type});
         ]]>
     </insert>
 
-    <!--게시글 상세조회-->
-    <select id="detail2" parameterType="long" resultType="NoticeDTO">
+    <!-- 공지글 파일 등록 & 수정 -->
+    <insert id="fileUpload" parameterType="NoticeFileDTO">
         <![CDATA[
-        SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
-               n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,
-               fn.file_no as file_no, fn.file_name as file_name, fn.file_rename as file_rename, fn.file_path as file_path, fn.file_date as file_date
-        FROM notice n
-                 LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no
-        WHERE n.notice_no = #{notice_No};
+        INSERT INTO filenotice (notice_no, file_name, file_rename, file_path, file_date)
+        VALUES (#{notice_no}, #{file_name}, #{file_rename}, #{file_path}, now())
         ]]>
-    </select>
+    </insert>
 
-    <!--게시글 상세조회-->
-    <select id="detail" parameterType="long" resultType="NoticeDTO">
+    <!--게시글 상세조회 -->
+        <select id="detail" parameterType="Long" resultType="NoticeDTO">
         <![CDATA[
-        SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
-               n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt,
-               fn.file_no as file_no, fn.file_name as file_name, fn.file_rename as file_rename, fn.file_path as file_path, fn.file_date as file_date
-        FROM notice n
-                 LEFT JOIN filenotice fn ON n.notice_no = fn.notice_no
-        WHERE n.notice_no = #{notice_No};
+            SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
+                   n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt
+            FROM notice n
+            WHERE n.notice_no = #{notice_no}
+            ]]>
+        </select>
+    <!--파일 상세조회-->
+    <select id="getNoticeFiles" parameterType="Long" resultType="NoticeFileDTO">
+        <![CDATA[
+        SELECT * FROM filenotice
+        WHERE notice_no = #{notice_no}
         ]]>
     </select>
 
     <!--게시글 수정-->
     <update id="update" parameterType="NoticeDTO">
-        <![CDATA[
-            UPDATE notice
-            SET
-                notice_regdate = NOW()
-              , notice_title = #{notice_title}
-              , notice_content = #{notice_content}
-              , notice_category = #{notice_category}
-            WHERE
-                notice_no = #{notice_no}
+       <![CDATA[
+        UPDATE notice
+        SET notice_title = #{notice_title}, notice_content = #{notice_content}, notice_category = #{notice_category}
+        WHERE notice_no = #{notice_no}
         ]]>
     </update>
-
-    <!--게시글 삭제-->
-    <delete id="deleteById" parameterType="long">
+    <!--사진 삭제-->
+    <delete id="deleteFile" parameterType="NoticeFileDTO">
         <![CDATA[
-            UPDATE notice
-            SET
-                notice_isshow = 'N'
-            WHERE
-                notice_no = #{notice_no}
+        DELETE FROM filenotice
+        WHERE notice_no = #{notice_no}
         ]]>
     </delete>
 
-    <!--공지게시판 리스트조회-->
-    <select id="noticeList" resultType="NoticeDTO">
+    <!--게시글 삭제-->
+    <delete id="delete" parameterType="long">
         <![CDATA[
-            SELECT notice_no, notice_title, notice_category, notice_regdate, member_id, view_cnt,notice_isshow
-            FROM
-            notice
-            WHERE
-                notice_isshow = 'Y'
-            ORDER BY
-            notice_no DESC
+        UPDATE notice
+        SET notice_isshow = 'N'
+        WHERE notice_no = #{notice_no}
         ]]>
+    </delete>
+
+    <!--게시글 목록 조회-->
+    <select id="noticeList"  parameterType="NoticeDTO">
+        SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type
+        FROM notice
+        WHERE notice_isshow = 'Y'
+        <if test='searchType.equals("notice_title")'>
+            AND notice_title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("notice_content")'>
+            AND notice_content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("title_content")'>
+            AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        ORDER BY type = 'upView' DESC, notice_regdate DESC
+        LIMIT #{page}, #{size};
     </select>
 
-    <!-- 공지글 파일 등록 -->
-    <insert id="fileUpload" parameterType="NoticeFileDTO">
+    <!-- 전체 글의 개수를 읽어 오는 SQL문 -->
+    <select id="listCnt" resultType="int">
         <![CDATA[
-        INSERT INTO filenotice (notice_no, file_name, file_rename, file_path, file_date)
-        VALUES (#{notice_no}, #{file_name}, #{file_rename}, #{file_path}, #{file_date})
-        ]]>
-    </insert>
+        SELECT count(*) as listCnt
+        FROM notice
+        WHERE true
+         ]]>
+        <if test='searchType.equals("notice_title")'>
+            AND notice_title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("notice_content")'>
+            AND notice_content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("title_content")'>
+            AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
 
-    <!-- member&File join..?
-    <resultMap id="noticeResultMap" type="NoticeDTO">
-        <id property="noticeNo" column="notice_no"/>
-        <result property="noticeTitle" column="notice_title"/>
-        <result property="noticeContent" column="notice_content"/>
-        <result property="noticeCategory" column="notice_category"/>
-        <result property="noticeRegdate" column="notice_regdate"/>
-        <result property="noticeIsshow" column="notice_isshow"/>
-        <result property="memberId" column="member_id"/>
-        <result property="viewCnt" column="view_cnt"/>
-
-        <collection property="noticeFiles" ofType="NoticeFileDTO">
-            <id property="fileNo" column="file_no"/>
-            <result property="fileName" column="file_name"/>
-            <result property="fileReName" column="file_rename"/>
-            <result property="filePath" column="file_path"/>
-            <result property="fileDate" column="file_date"/>
-        </collection>
-    </resultMap>
--->
+    </select>
 </mapper>
+
+<!--<choose>
+            <when test='searchType=="T"'>
+                AND notice_title LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='searchType=="C"'>
+                AND notice_content LIKE concat('%', #{keyword}, '%')
+            </when>
+            <otherwise>
+                AND (notice_title LIKE concat('%', #{keyword}, '%')
+                OR notice_content LIKE concat('%', #{keyword}, '%'))
+            </otherwise>
+        </choose> -->

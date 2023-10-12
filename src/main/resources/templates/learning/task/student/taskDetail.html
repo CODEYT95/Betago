@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|진도 등록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/taskModal.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/student/taskModal.js}"></script>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/stu_sidebar :: stu_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="modal-bg" onclick="goBack()"></div>
+        <form th:action="@{/student/saveTask}" method="post">
+            <div id="myModal" class="modal">
+                <div class="modal-wrap">
+                    <div class="modal-task-title">
+                        <span class="m_title" th:text="${taskDetail.game_title}"></span>
+                    </div>
+                    <div class="modal-task-educator">
+                        교육자 : <span class="m_educator" th:text="${taskDetail.member_name}"></span>
+                    </div>
+                    <div class="modal-task-content">
+                        <span>숙제내용:</span><br><span class="m_content" th:text="${taskDetail.task_content}"></span>
+                    </div>
+                    <div class="modal-task-chapter">
+                        진도: <span class="m_chapter" th:text="${taskDetail.task_chapter}"></span>
+                    </div>
+                    <div class="modal-task-deadline">
+                        제출 기한 : <span class="m_deadline" th:text="${#dates.format(taskDetail.task_deadline, 'yyyy-MM-dd')}"></span>
+                    </div>
+                    <div class="modal-task-state">
+                        상태 : <span class="m_state" th:text="${taskDetail.task_state}" th:style="${taskDetail.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                    </div>
+                </div>
+                <hr class="modal-divider">
+                <div class="modal-wrap2">
+                    <div class="modal-chapter">
+                        <input type="hidden" name="tasksend_no" th:value="${taskDetail.tasksend_no}">
+                        <input type="hidden" name="task_no" th:value="${taskDetail.task_no}">
+                        <span>진도</span>
+                        <input id="tasksubmit_chapter" class="tasksubmit_chapter" type="text" name="tasksubmit_chapter" maxlength="10">
+                    </div>
+                    <div class="modal-learning-content">
+                        <span>금번 학습 내용</span>
+                        <textarea id="tasksubmit_content" class="tasksubmit_content" type="text" name="tasksubmit_content" maxlength="100"></textarea>
+                    </div>
+                    <div class="modal-add-content">
+                        <span>추가 질의 내용</span>
+                        <input id="tasksubmit_add" class="tasksubmit_add" type="text" name="tasksubmit_add" maxlength="100">
+                    </div>
+                </div>
+                <div class="modalBtn">
+                    <button type="submit" class="saveBtn" disabled>저장</button>
+                    <input type="button" class="concealBtn" value="닫기" onclick="goBack()">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

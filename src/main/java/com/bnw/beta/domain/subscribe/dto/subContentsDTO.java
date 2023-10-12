@@ -13,7 +13,7 @@ public class subContentsDTO {
     private int group_no;
     private int game_price;
     private Date pay_date;
-    private Date game_date;
+    private String game_date;
     private String pay_type;
     private String member_id;
     private String group_name;

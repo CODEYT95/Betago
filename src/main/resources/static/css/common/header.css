@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://webfontworld.github.io/binggrae/Binggrae.css');
 
 * {
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: '빙그레체', sans-serif;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
 }
 
 body, input, textarea, select, button, table, a {
-  font-family: NanumSquareWebFont, "NanumSquareWebFont", "나눔고딕", NanumGothic, "맑은 고딕", Malgun Gothic, "Apple SD Gothic Neo", "돋움", dotum, Helvetica, arial, sans-serif;
+  font-family: , arial, sans-serif;
   font-size: 14px;
 }
 
@@ -30,10 +30,10 @@ a {
   text-decoration: none;
 }
 .header-image{
-  width: 180px;
-  position: absolute;
-  margin-right: 1334px;
-  margin-top: 20px;
+  width: 160px;
+      position: absolute;
+      margin-right: 1334px;
+      margin-top: 32px;
 }
 
 nav {
@@ -129,6 +129,10 @@ nav .header-navi .links li a {
   line-height: 18px;
 }
 
+.header-navi .links li .sub-menu li:hover{
+  color: #FFFFFF;
+}
+
 .links li:hover .useInfo-arrow,
 .links li:hover .subscribe-arrow,
 .links li:hover .learning-arrow,
@@ -148,7 +152,7 @@ nav .header-navi .links li .arrow {
 
 nav .header-navi .links li .sub-menu {
   position: absolute;
-  line-height: 39px;
+  line-height: 45px;
   display: none;
   z-index: 2;
   width: 173px;
@@ -168,15 +172,29 @@ nav .header-navi .links li:hover .admin-sub-menu {
   display: block;
 }
 
+.more{
+  display: flex;
+}
+
 .header-navi .links li .sub-menu li {
   padding: 0 22px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-navi .links li .sub-menu li:hover{
+  background: #96a0aa;
+  color: #FFFFFF !important;
 }
 
 .header-navi .links li .sub-menu a {
   color: #333;
   font-size: 15px;
   font-weight: 500;
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .header-navi .links li .sub-menu .more-arrow {
@@ -190,6 +208,7 @@ nav .header-navi .links li:hover .admin-sub-menu {
   border-radius: 0 4px 4px 4px;
   z-index: 1;
   display: none;
+  padding: 0;
 }
 
 .links li .sub-menu .more:hover .more-sub-menu {
@@ -257,7 +276,7 @@ nav .header-navi .links li:hover .admin-sub-menu {
   border: 1px solid;
   height: auto;
   min-height: 66vh;
-  width: 66%;
+  width: 1080px;
   margin-left: 253px;
   padding: 20px 30px 20px 30px;
 }
@@ -296,6 +315,7 @@ nav .header-navi .links li:hover .admin-sub-menu {
 
   .content-wrap{
     margin-left: 0px;
+    width: 1080px;
   }
 
   nav .header-navi {
@@ -380,7 +400,12 @@ nav .header-navi .links li:hover .admin-sub-menu {
     padding-top: 0;
   }
   nav .header-navi .links li .sub-menu li {
+    background: none !important;
     border-bottom: none;
+  }
+
+  .header-navi .links li .sub-menu a{
+    display: inline;
   }
 
   .header-navi .links li .sub-menu .more-sub-menu {
@@ -450,9 +475,9 @@ nav .header-navi .links li:hover .admin-sub-menu {
     max-width: 100%;
   }
 }
-.bxs-chevron-down:before {
+.bxs-chevron-up:before {
     content: "\ed35";
-    font-size: 20px;
+    font-size: 19px;
 }
 .bx-x:before {
     content: "\ec8d";
@@ -462,3 +487,4 @@ nav .header-navi .links li:hover .admin-sub-menu {
 .bx {
     margin: 0px;
 }
+

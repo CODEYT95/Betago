@@ -9,7 +9,6 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-<!--    <div th:replace="~{common/fragments/sidebar :: default_sidebarFragment}"></div>-->
     <div class="content-wrap">
         <div class="main-content">
         <!-- 첫번째 칸: 이미지 슬라이더 및 로그인 폼 -->
@@ -25,7 +24,7 @@
                     <!-- 로그인 폼 -->
                 <div class="loginbox">
                     <button type="button" onclick="location.href='/login'">로그인</button>
-                    <button type="button" onclick="location.href='/signup'">회원가입</button>
+                    <button type="button" onclick="location.href='/member/agree'">회원가입</button>
                 </div>
             </div>
 
@@ -50,6 +49,6 @@
 </div>
 </div>
 </div>
-<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </html>

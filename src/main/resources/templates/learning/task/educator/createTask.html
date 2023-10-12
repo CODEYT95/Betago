@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+  <meta charset="UTF-8">
+  <title>둑며들다|숙제 생성</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/educator/createTask.css}">
+  <script type="text/javascript" th:src="@{/js/learning/task/educator/createTask.js}"></script>
+  <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+  <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
+  <div class="content-wrap">
+    <form th:action="@{/educator/createTask}" method="post" class="task-form">
+      <div class="saveTask-wrap">
+        <div class="content-title">
+          <h2>숙제 생성📝</h2>
+          <hr>
+        </div>
+        <div class="task-wrap">
+          <div class="task-container">
+            <div class="task-span">
+              <span class="input-name">숙제명</span>
+              <span class="input-content">숙제 내용</span>
+              <span class="input-name">숙제 진도</span>
+              <span class="input-name">제출 기한</span>
+            </div>
+            <div class="task-input">
+              <div class="task-title">
+                <input type="text" name="task_title" class="input-area" maxlength="30"/>
+              </div>
+              <div class="task-content">
+                <textarea name="task_content" class="input-area" maxlength="100"></textarea>
+              </div>
+              <div class="task-chapter">
+                <input type="text" name="task_chapter" class="input-area" maxlength="10"/>
+              </div>
+              <div class="date-wrap">
+                <div class="date-year">
+                  <select name="year" id="select-year" class="input-area" onchange="javascript:lastday();">
+                    <option>년도</option>
+                  </select>
+                </div>
+                <div class="date-month">
+                  <select name="month" id="select-month" class="input-area" onchange="javascript:lastday();">
+                    <option>월</option>
+                  </select>
+                </div>
+                <div class="date-day">
+                  <select name="day" id="select-day" class="input-area">
+                    <option selected>일</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div th:if="${errorMessage}" class="error-message">
+          <p th:text="${errorMessage}"></p>
+        </div>
+        <div class="saveBtn-wrap">
+          <button type="submit" class="saveBtn" disabled>숙제 저장</button>
+          <button type="reset" class="resetBtn">취소</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div class="list-container">
+      <div class="main-table">
+        <div class="table-wrap">
+          <table >
+            <caption class="table-title">숙제 전송 목록👀</caption>
+            <thead class="table-head">
+            <tr>
+              <th class="t_no">번호</th>
+              <th class="t_name">숙제명</th>
+              <th class="t_progress">진도</th>
+              <th class="t_limit">제출기한</th>
+              <th class="t_send">전송일자</th>
+              <th class="t_detail">상세조회</th>
+            </thead>
+            <tbody class="tbody-container">
+            <th:block th:if="${#lists.isEmpty(taskPageDTO.taskList)}">
+              <tr>
+                <td colspan="6">전송한 숙제가 없습니다.</td>
+              </tr>
+            </th:block>
+            <th:block th:if="${not #lists.isEmpty(taskPageDTO.taskList)}">
+              <tr class="tr-list"  th:each="list, index : ${taskPageDTO.taskList}">
+                <td class="list_no" th:text="${index.index + taskPageDTO.startIndex + 1}"></td>
+                <td class="list_name" th:text="${list.task_title}"></td>
+                <td class="list_content" th:text="${list.task_content}" hidden="hidden"></td>
+                <td class="list_progress" th:text="${list.task_chapter}"></td>
+                <td class="list_limit" ><span th:text="${#dates.format(list.task_deadline, 'yyyy-MM-dd')}"></span></td>
+                <td class="list_send" ><span th:text="${#dates.format(list.task_senddate,'yyyy-MM-dd')}"></span></td>
+                <td class="detailBtn-wrap">
+                  <button class="detailBtn" data-tasksend_no="${list.tasksend_no}">
+                    <i class="ri-search-eye-line" data-tasksend_no="${list.tasksend_no}"></i>
+                  </button>
+                </td>
+              </tr>
+            </th:block>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <div class="paging">
+            <div class="text-center clearfix">
+              <div class="pagingNum">
+                <ul class="pagination-container" id="pagination">
+                  <li th:if="${taskPageDTO.startPage > 5}" class="page-item">
+                    <a class="page-link" th:with="prevPage=${taskPageDTO.startPage - 1}" th:href="@{/educator/createTaskForm(page=${prevPage})}">Prev</a>
+                  </li>
+                  <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(taskPageDTO.startPage, taskPageDTO.endPage)}" class="page-item">
+                    <a th:href="@{/educator/createTaskForm(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                  </li>
+                  <li th:if="${taskPageDTO.endPage < taskPageDTO.totalPages}" class="page-item">
+                    <a class="page-link" th:with="nextPage=${taskPageDTO.startPage + 5}" th:href="@{/educator/createTaskForm(page=${nextPage})}">Next</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--모달-->
+        <div class="modal-bg"></div>
+        <div id="myModal" class="modal" style="display:none;">
+          <div class="modal-wrap">
+            <div class="modal-task-title">
+              <div class="modal-content-title">
+                <div id="modal-task-title" class="modal-content-value">숙제명</div>
+              </div>
+            </div>
+            <hr class="modal-divider">
+            <div class="modal-content">
+              <div class="modal-task-content">
+                <div class="modal-content-label">내용</div>
+                <div id="modal-task-content" class="modal-content-value"></div>
+              </div>
+              <div class="modal-task-chapter">
+                <div class="modal-content-label">진도</div>
+                <div id="modal-task-chapter" class="modal-content-value"></div>
+              </div>
+              <div class="modal-task-deadline">
+                <div class="modal-content-label">제출기한</div>
+                <div id="modal-task-deadline" class="modal-content-value"></div>
+              </div>
+              <div class="modal-task-senddate">
+                <div class="modal-content-label">전송날짜</div>
+                <div id="modal-task-senddate" class="modal-content-value"></div>
+              </div>
+            </div>
+            <div class="modalBtn">
+              <button class="conceal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>
