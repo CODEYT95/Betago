@@ -2,10 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
     <meta charset="UTF-8">
-    <title>질문등록</title>
+    <title>질문상세보기</title>
     <!--공통으로 쓰이는 CSS 및  -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticelist.css}">
+
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -15,8 +14,9 @@
     <div th:replace="~{common/sidebar/question_sidebar :: question_sidebarFragment}"></div>
     <div class="content-wrap">
 
-        <div id="passwordFormDiv" th:if="${not isPasswordCorrect}">
-            <form action="/question/question/verifyPassword" method="post">
+        <!--<div id="passwordFormDiv" th:if="${not isPasswordCorrect}">-->
+        <div id="passwordFormDiv" th:unless="${isAdmin or isPasswordCorrect}">
+            <form action="/question/verifyPassword" method="post">
                 <input type="hidden" name="id" th:value="${question.qna_no}" />
                 <label for="pw">비밀번호 입력:</label>
                 <input type="password" id="pw" name="pw" required />
@@ -26,8 +26,8 @@
         </div>
 
         <!-- 게시글의 상세 내용 (초기에는 숨겨져 있음) -->
-        <div id="questionDetailDiv" th:if="${isPasswordCorrect}">
-
+        <!--<div id="questionDetailDiv" th:if="${isPasswordCorrect}">-->
+        <div id="questionDetailDiv" th:if="${isAdmin or isPasswordCorrect}">
 
 
             <table border="1">
@@ -69,6 +69,7 @@
                 </tr>
             </table>
 
+
             <!--수정-->
             <div class="my-3">
                 <!-- 질문수정버튼 - 로그인해야지만 수정가능, 로그인한유저가 글쓴이와 동일해야만 한다 -->
@@ -83,6 +84,18 @@
                    th:data-uri="@{|/question/delete/${question.qna_no}|}"
                    th:if="${ question.member_id!=null and #authentication.getPrincipal().getUsername()==question.member_id}"
                    th:text="삭제"></a>
+
+            </div>
+
+
+            <!--댓글-->
+            <div id="comments-section">
+
+                <form method="post" id="answerForm" th:action="@{|/answer/add/${question.qna_no}|}" th:object="${answerForm}">
+                    <textarea class="form-control" placeholder="댓글 내용을 입력해주세요." rows="8"  sec:authorize="hasRole('ADMIN')" th:field="*{answer}"></textarea>
+                    <p sec:authorize="!hasRole('ADMIN')">답글은 관리자만 작성할 수 있습니다</p>
+                    <input type="submit" value="Submit" class="comment-submit-button">
+                </form>
 
             </div>
 

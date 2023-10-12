@@ -50,10 +50,11 @@ public class QuestionServiceImpl implements QuestionService {
             String storedPath = storeFile(file);  // 파일 저장
             System.out.println("파일저장완료" + file);
             FileQuestionDTO fileQuestion = new FileQuestionDTO();
-//            fileQuestion.setQna_no(qna_no);
-//            fileQuestion.setFilequ_name(file.getOriginalFilename());
-//            fileQuestion.setFilequ_rename(storedPath);
-//            fileQuestion.setFilequ_path(storedPath);
+            fileQuestion.setQna_no(qna_no);
+            fileQuestion.setFilequ_name(file.getOriginalFilename());
+            fileQuestion.setFilequ_rename(storedPath);
+            fileQuestion.setFilequ_path(storedPath);
+            /*주석처리 하지말아주세요*/
 
 
             questionDAO.insertFileQuestion(fileQuestion);  // 파일 정보 데이터베이스에 저장

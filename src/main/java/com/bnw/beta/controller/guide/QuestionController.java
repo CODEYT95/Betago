@@ -1,5 +1,6 @@
 package com.bnw.beta.controller.guide;
 
+import com.bnw.beta.config.vaildation.question.AnswerForm;
 import com.bnw.beta.config.vaildation.question.QuestionForm;
 import com.bnw.beta.domain.guide.dao.QuestionDAO;
 import com.bnw.beta.domain.guide.dto.FileQuestionDTO;
@@ -17,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,11 +84,17 @@ public class QuestionController {
     /*이미지 파일*/
 
     //질문 게시글 조회전 비밀번호 확인
-    @PostMapping("/question/verifyPassword")
-    public String verifyPassword(@RequestParam String pw, @RequestParam(name="id") Integer id, Model model) {
+    @PostMapping("/verifyPassword")
+    public String verifyPassword(@RequestParam String pw, @RequestParam(name="id") Integer id, Model model, AnswerForm answerForm) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
+
         QuestionDTO question = questionService.selectQuestion(id);
         System.out.println(question);
         model.addAttribute(question.getQna_pw());
+        /* model.addAttribute("qna_pw", question.getQna_pw());*/
         if (question != null && question.getQna_pw().equals(pw)) {
             FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(id);
             /*model.addAttribute("fileQuestion", fileQuestion);*/
@@ -107,9 +117,13 @@ public class QuestionController {
 
     /*리다이렉션 할때 비밀번호를 보지 않는 상세조회*/
     @GetMapping("/detail/{qna_no}")
-    public String detail(@PathVariable("qna_no") Integer qna_no,
+    public String detail(@PathVariable("qna_no") Integer qna_no, AnswerForm answerForm,
                          @RequestParam(value = "afterEdit", required = false, defaultValue = "false") boolean afterEdit,
                          Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
 
         //1 파라미터 받기
         //2 비즈니스로직수행
@@ -153,27 +167,6 @@ public class QuestionController {
         return "guide/question/question_form"; //질문등록폼으로 이동
     }
 
-
-    /*질문수정처리*/
-    /*기존 게시글 수정
-    @PostMapping("/modify/{qna_no}")
-    public String modify(@Valid QuestionForm questionForm, BindingResult bindingResult,
-                         @PathVariable("qna_no") Integer qna_no, Principal principal){
-        //1파라미터받기
-        if(bindingResult.hasErrors()){
-            return "guide/question/question_form";
-        }
-        //2비즈니스로직
-        QuestionDTO question = questionService.selectQuestion(qna_no);
-        if( !question.getMember_id().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없다");
-        }
-
-        questionService.modify(question, questionForm.getSubject(), questionForm.getContent(),question.getQna_pw());
-        *//*return String.format( "redirect:/question/detail",qna_no);*//*
-        return String.format("redirect:/question/detail/%d?afterEdit=true", qna_no);
-    }
-*/
 
     @PostMapping("/modify/{qna_no}")
     public String modify(@Valid QuestionForm questionForm, BindingResult bindingResult,

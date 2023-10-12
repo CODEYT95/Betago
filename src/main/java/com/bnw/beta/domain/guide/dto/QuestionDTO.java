@@ -16,7 +16,8 @@ public class QuestionDTO {
     private String member_id;
     private LocalDateTime qna_regdate;
 
-    //private List<FileQuestionDTO> questionfiles;
+    private List<FileQuestionDTO> questionfiles;
+    /*주석하지말아주세요*/
 
 
 }
