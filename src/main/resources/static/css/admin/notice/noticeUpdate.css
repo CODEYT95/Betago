@@ -3,16 +3,6 @@
 }
 
 @charset "UTF-8";
-input[type="checkbox"] {
-    width: 20px; /* 원하는 너비 설정 */
-    height: 20px; /* 원하는 높이 설정 */
-}
-.opt2 {
-    margin-left: 107px;
-    margin-top: 15px;
-    display: block;
-}
-
 .head {
     font-size: 18px;
     font-weight: bold;
@@ -77,7 +67,7 @@ input[type="checkbox"] {
     border: 1px solid #d1d1d1;
     height: 300px;
     width: 80%;
-    margin-left: 67px;
+    margin-left: 31px;
     margin-bottom: 20px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
     box-radius : 5px;
@@ -111,9 +101,6 @@ input[type="checkbox"] {
     color: white;
     background: black;
     cursor: pointer;
-}
-.btn_submit {
-    text-align: center;
 }
 .btn_update {
     border: none;
@@ -180,7 +167,6 @@ th, td {
 
 .btn{
     text-align: center;
-    display: inline-block;
 }
 
 .drop-area {
@@ -193,8 +179,8 @@ th, td {
     font-size: 16px;
     text-align: center;
     display: inline-block;
-    margin-left: 106px;
-    margin-bottom: 38px;
+    margin-left: 102px;
+    margin-bottom: 25px;
     background-color: white;
 }
 
