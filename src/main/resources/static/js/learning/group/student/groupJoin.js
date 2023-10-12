@@ -94,11 +94,25 @@ document.addEventListener("DOMContentLoaded", function() {
     //게임 콘텐츠 선택 후 조회
     $(document).ready(function() {
         $(".search-btn").click(function() {
-            var title = $(".sBtn-text").text();
+            var groupName = $(".sBtn-text").text();
+            var educatorName = $(".sBtn-text-educator").text();
 
-            window.location.href = "/student/group/joinList?group_name=" + encodeURIComponent(title);
+            var url = "";
+
+            if(groupName === "전체" && educatorName !== "전체") {
+                url = "/student/group/joinList?educator_name=" + encodeURIComponent(educatorName);
+
+            } else if(educatorName === "전체" && groupName !== "전체") {
+                url = "/student/group/joinList?group_name=" + encodeURIComponent(groupName);
+
+            } else if(educatorName === "전체" && groupName === "전체") {
+                url = "/student/group/joinList";
+            }
+
+            window.location.href = url;
         });
     });
+    /*
     //게임 콘텐츠 목록 리스트
     $(document).ready(function() {
         const groupMenu = document.querySelector(".select-menu-group");
@@ -137,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     });
-    /*
+    */
     $(document).ready(function() {
             const groupMenu = document.querySelector(".select-menu-group");
             const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
@@ -197,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             });
         });
-    */
+
    $(document).ready(function() {
      $('.join-btn').click(function() {
        var group_no = $('.checkbox-input:checked').data('group-no');

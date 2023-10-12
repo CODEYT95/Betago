@@ -1,8 +1,10 @@
 package com.bnw.beta.service.learning.group;
 
+import com.bnw.beta.domain.common.paging.GroupPageDTO;
 import com.bnw.beta.domain.learning.dao.GroupDAO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -117,15 +119,33 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
-    //////////////////학습자////////////////////
+    //그룹 학생 가입 승인 목록
+    @Override
+    public GroupPageDTO selectGroupApprove(int member_no, String game_name, int pageNum, int size){
+        if(pageNum <= 0){
+            pageNum = 1;
+        }
+        int offset = (pageNum - 1) * size;
+
+        List<GroupDTO> groupList = groupDAO.selectGroupApprove(member_no, game_name, offset, size);
+        int listCount = groupDAO.selectGroupApproveCount(member_no, game_name);
+
+        GroupPageDTO groupPageDTO = new GroupPageDTO(listCount, pageNum, size, groupList);
+        groupPageDTO.setListCount(listCount);
+
+        return groupPageDTO;
+    }
+
+    ////////////////////////////////////////////////////////////////////////
 
     //학습 그룹 가입 신청 목록
     @Override
-    public List<GroupDTO> selectJoinGroup(int member_no, String group_name,int limit, int offset){
+    public List<GroupDTO> selectJoinGroup(int member_no, String group_name, String educator_name, int limit, int offset){
 
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setMember_no(member_no);
         groupDTO.setGroup_name(group_name);
+        groupDTO.setMember_name(educator_name);
         groupDTO.setLIMIT(limit);
         groupDTO.setOFFSET(offset);
 
@@ -133,11 +153,12 @@ public class GroupServiceImpl implements GroupService {
 
     //그룹 가입신청 가능한 목록 갯수
     @Override
-    public int joinGroupCount(int member_no, String group_name){
+    public int joinGroupCount(int member_no, String educator_name, String group_name){
 
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setMember_no(member_no);
         groupDTO.setGroup_name(group_name);
+        groupDTO.setMember_name(educator_name);
 
         return groupDAO.joinGroupCount(groupDTO);}
 

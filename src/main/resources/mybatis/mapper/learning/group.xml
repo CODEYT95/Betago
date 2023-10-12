@@ -121,6 +121,39 @@
         </foreach>
     </delete>
 
+    <!-- 그룹 학생 가입 승인 목록 -->
+    <select id="selectGroupApprove" parameterType="map" resultType="GroupDTO">
+        <![CDATA[
+        SELECT m.member_name, m.member_phone, m.member_no, sg.group_name, sg.group_cnt, sg.group_nowcnt, g.game_title
+        FROM groupmember gm
+        JOIN member m ON gm.member_no = m.member_no
+        JOIN studygroup sg ON gm.group_no = sg.group_no
+        JOIN game g ON gm.game_no = g.game_no
+        WHERE gm.member_no = #{member_no}
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND sg.group_name = #{group_name}
+        </if>
+        <![CDATA[
+        ORDER BY gm.aprove_date ASC
+        LIMIT #{page}, #{size};
+        ]]>
+    </select>
+
+    <select id="selectGroupApproveCount" parameterType="map" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*) AS record_count
+        FROM groupmember gm
+        JOIN member m ON gm.member_no = m.member_no
+        JOIN studygroup sg ON gm.group_no = sg.group_no
+        JOIN game g ON gm.game_no = g.game_no
+        WHERE gm.member_no = #{member_no};
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND sg.group_name = #{group_name}
+        </if>
+    </select>
+
     <!--/////////////////학습자/////////////////// -->
 
     <!-- 학습 그룹 가입 신청 목록 -->
@@ -156,6 +189,9 @@
         ]]>
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
+        </if>
+        <if test="member_name != null and member_name != ''">
+            AND m.member_name = #{member_name}
         </if>
     </select>
 
