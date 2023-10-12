@@ -32,7 +32,7 @@
                         제출 기한 : <span class="m_deadline" th:text="${#dates.format(taskEval.task_deadline, 'yyyy-MM-dd')}"></span>
                     </div>
                     <div class="modal-task-state">
-                        상태 : <span class="m_state" th:text="${taskEval.task_state}" th:style="${taskEval.task_state == '평가완료' ? 'color: #0025ff;' : 'color: green;'}"></span>
+                        상태 : <span class="m_state" th:text="${taskEval.task_state}"></span>
                         <input type="hidden" name="task_state" th:value="${taskEval.task_state}" />
                     </div>
                 </div>

@@ -14,4 +14,13 @@ document.addEventListener("DOMContentLoaded", function() {
     } else if (taskEval === '우수') {
         evalSpan.style.color = 'green';
     }
+
+    var stateSpan = document.querySelector(".m_state");
+    var state = stateSpan.textContent;
+
+    if(state === '제출완료'){
+        stateSpan.style.color = 'green';
+    } else {
+        stateSpan.style.color = '#8d8d8e';
+    }
 });
