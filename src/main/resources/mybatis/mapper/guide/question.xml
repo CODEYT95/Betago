@@ -13,9 +13,9 @@
         SELECT * FROM filequestion WHERE qna_no = #{qna_no} LIMIT 1
     </select>
 
-    <!-- 파일 삭제 (filequ_no를 통한 파일 삭제) -->
+    <!-- 파일삭제 (filequ_no를 통한 파일 삭제) -->
     <delete id="deleteFileQuestion" parameterType="int">
-        DELETE FROM filequestion WHERE filequ_no = #{filequ_no}
+        DELETE FROM filequestion WHERE qna_no = #{qna_no}
     </delete>
 
 
@@ -50,7 +50,7 @@
         SELECT qna_pw FROM question WHERE qna_no = #{pw}
     </select>
 
-    <delete id="deleteQuestion"  parameterType="Long">
+    <delete id="deleteQuestion"  parameterType="int">
         DELETE FROM question
         WHERE qna_no = #{qna_no}
     </delete>
