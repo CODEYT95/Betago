@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css"> <!-- 스타일 시트 파일 경로 -->
-
-    <!-- 페이지 제목 -->
     <title>Betago 웹사이트</title>
 </head>
 <body>
@@ -33,7 +30,7 @@
                 <ul class="links">
                     <li class="first_li"><a th:href="@{/}">홈</a></li>
                     <li class="first_li">
-                        <a href="#">이용안내</a>
+                        <a class="aa" href="#">이용안내</a>
                         <i class='bx bxs-chevron-up useInfo-arrow arrow'></i>
                         <ul class="useInfo-sub-menu sub-menu">
                             <li><a href="#">사이트 소개</a></li>
@@ -56,7 +53,7 @@
                         <a href="#">구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
-                            <li><a href="@{/game/list}">게임 컨텐츠 구매</a></li>
+                            <li><a th:href="@{/game/list}">게임 컨텐츠 구매</a></li>
                             <li><a th:href="@{/list}">내 게임 컨텐츠 조회</a></li>
                         </ul>
                     </li>
@@ -68,7 +65,6 @@
                             <li><a th:href="@{/student/submitTaskList}">제출 숙제 목록</a></li>
                         </ul>
                     </li>
-
                     <li class="first_li">
                         <a th:href="@{/educator/group/addList}">교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
                         <ul id="service" class="educator-sub-menu sub-menu">

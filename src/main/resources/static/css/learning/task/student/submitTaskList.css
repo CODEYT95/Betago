@@ -31,8 +31,9 @@
     width: 292px;
 }
 
-h1 {
+.h1 {
     font-size: 20px;
+    margin: 0.67em 0;
 }
 
 .checkbox-input {
