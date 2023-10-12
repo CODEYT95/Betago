@@ -14,7 +14,7 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/sidebar/notice_sidebar :: notice_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="container">
             <form name="gameContent" th:action="@{/game/gameInsert}" method="post" onsubmit="return validateForm()">
@@ -67,28 +67,29 @@
                 <div class="form-group">
                     <label for="game_discount">할인율</label>
                     <div class="input-group">
-                        <input type="number" name="game_discount" id="game_discount" min="0" max="100" step="1" value="0">%
+                        <input type="number" name="game_discount" id="game_discount" min="0" max="100" step="1" value="0" readonly>%
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="game_sell">판매가</label>
-                    <input type="text" name="game_sell" id="game_sell">
+                    <input type="text" name="game_sell" id="game_sell" readonly>
                 </div>
                 <div class="form-group">
                     <label for="game_content">패키지 내용</label>
-                    <textarea name="game_content" id="game_content" placeholder="내용을 입력해주세요"></textarea>
+                    <textarea name="game_content" id="game_content" placeholder="내용을 입력해주세요"  maxlength="100"></textarea>
+                    <span id="charCount">0 / 100</span>
                 </div>
 
-                    <div class="thumbnail">
-                        <label for="thumbnail" class="thumbnail-title">썸네일</label>
-                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="thumbnail">
-                        <div class="filebox">
-                            <label for="file">이미지업로드</label>
-                            <input type="file" id="file">
-                        </div>
+                <div class="thumbnail">
+                    <label for="thumbnail" class="thumbnail-title">썸네일</label>
+                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="thumbnail">
+                    <div class="filebox">
+                        <label for="file">이미지업로드</label>
+                        <input type="file" id="file">
                     </div>
+                </div>
 
-                <div class="form-group">
+                <div class="form-group1">
                     <input type="submit" value="등록하기">
                 </div>
             </form>

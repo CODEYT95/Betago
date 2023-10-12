@@ -75,3 +75,16 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("게임을 선택하세요!");
         }
     });
+
+   // 구독 버튼 클릭 시 처리
+   subscribeButton.addEventListener('click', function () {
+       const checkedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
+       const selectedGameNo = Array.from(checkedCheckboxes).map(cb => cb.getAttribute('data-game-no'));
+
+       if (selectedGameNo.length > 0) {
+           const gameNoParam = selectedGameNo.join(",");
+           window.location.href = "/cartList?game_no=" + gameNoParam;
+       } else {
+           alert("게임을 선택하세요!");
+       }
+   });

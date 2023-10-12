@@ -14,7 +14,7 @@
     <insert  id="insertGame" parameterType="GameDTO">
             <![CDATA[
                 insert into game (game_title, game_level, game_date, game_total,
-                game_price,game_discount, game_sell, game_content, member_id)
+                game_price, game_discount, game_sell, game_content, member_id)
                 values (#{game_title}, #{game_level}, #{game_date}, #{game_total}
                 , #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id});
                 ]]>
