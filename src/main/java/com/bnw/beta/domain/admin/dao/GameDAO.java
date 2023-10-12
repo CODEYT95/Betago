@@ -27,6 +27,4 @@ public interface GameDAO {
     //게임콘텐츠 제목검색
     List<GameDTO> searchByTitle(@Param("game_title") String game_title);
 
-
-
 }

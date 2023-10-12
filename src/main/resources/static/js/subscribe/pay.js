@@ -24,7 +24,10 @@ function updateTotalPrice() {
 
 //발리데이션
 
-document.getElementById("submitbutton").addEventListener("click", function() {
+document.addEventListener("DOMContentLoaded", function() {
+    // 이벤트 리스너 등록 및 기타 작업들
+    var submitButton = document.getElementById("submitbutton");
+    submitButton.addEventListener("click", function(event) {
     var checkboxes = document.getElementsByName("pay_type");
     var isChecked = false;
 
@@ -115,6 +118,10 @@ function validateName(name) {
     return /^[가-힣a-zA-Z]+$/.test(name) && name.length >= 2;
 }
 
+function validatePayDepositor(depositor) {
+    return /^[가-힣a-zA-Z]{2,}$/.test(depositor);
+}
+
 function validatePhone(phone) {
     if (!/^(010)\d{8}$/.test(phone)) {
         return false;
@@ -122,40 +129,93 @@ function validatePhone(phone) {
 
     return /^\d+$/.test(phone);
 }
+}); // 이 부분에 주석을 닫아주어야 합니다.
+
+function handleCheckboxChange(checkbox) {
+    if (checkbox.checked) {
+        const gameTitle = checkbox.getAttribute('data-game-title');
+        const gamePrice = checkbox.getAttribute('data-game-price');
+        const gameNo = checkbox.getAttribute('data-game-no');
+
+        // sessionStorage에 선택한 게임 정보 저장
+        sessionStorage.setItem('selectedGameNo', gameNo);
+        sessionStorage.setItem('selectedGameTitle', gameTitle);
+        sessionStorage.setItem('selectedGamePrice', gamePrice);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     const selectedGameNo = sessionStorage.getItem('selectedGameNo');
     const selectedGameTitle = sessionStorage.getItem('selectedGameTitle');
     const selectedGamePrice = sessionStorage.getItem('selectedGamePrice');
 
-    // 여기에 로깅 코드를 추가
-    console.log('Selected Game Price from sessionStorage:', selectedGamePrice);
-
     if (selectedGameNo && selectedGameTitle && selectedGamePrice) {
-        // 상품 드롭다운에 선택한 게임 추가
-        const productDropdown = document.querySelector('.mypaylist');
-        const newOption = document.createElement('option');
-        newOption.value = selectedGameNo;
-        newOption.textContent = `${selectedGameTitle} - ${selectedGamePrice}원`; // 제목과 가격을 함께 출력
-        productDropdown.appendChild(newOption);
-        newOption.selected = true; // 선택한 옵션을 기본으로 설정
+        // 원하는 방식으로 선택한 게임 정보를 사용
+        console.log('Selected Game Title:', selectedGameTitle);
+        console.log('Selected Game Price:', selectedGamePrice);
 
-        // 결제금액 입력란에 가격 설정
-        updateTotalPrice();
-
-        // 필요한 정보들이 사용되었으므로 sessionStorage에서 삭제
+        // 저장된 정보를 사용한 후 sessionStorage에서 삭제
         sessionStorage.removeItem('selectedGameNo');
         sessionStorage.removeItem('selectedGameTitle');
         sessionStorage.removeItem('selectedGamePrice');
     }
 });
 
-function updateTotalPrice() {
-    const productDropdown = document.querySelector('.mypaylist');
-    const selectedOption = productDropdown.options[productDropdown.selectedIndex];
-    const selectedGamePrice = selectedOption.getAttribute('data-price');
 
-    const orderTotalInput = document.querySelector('.order-total');
-    orderTotalInput.value = selectedGamePrice || 0; // 선택한 게임의 가격이 없을 경우 0으로 설정
-}
+////////////////////////////////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+    var totalPrice = 0;
+    var gameNos = [];
 
+    //delete-btn 클릭 시 가격 업데이트 및 태그 삭제
+    document.querySelectorAll('.delete-btn').forEach(function(button) {
+        gameNos.push(button.getAttribute('data-game-no'));
+        button.addEventListener('click', deleteTag);
+    });
+
+    document.querySelectorAll('.price').forEach(function(input) {
+        totalPrice += parseFloat(input.value);
+    });
+
+    updateTotalPrice();
+
+    //태그 삭제 하고 url에 넣을 game_no배열 업데이트하는 함수
+    function deleteTag(event) {
+        event.preventDefault();
+
+        const tag = event.target.closest('.tag');
+        if (tag) {
+            var deletedGamePriceInput = tag.querySelector('input[hidden]');
+            var deletedGamePrice = parseFloat(deletedGamePriceInput.value);
+
+            const gameNo = tag.querySelector('.delete-btn').getAttribute('data-game-no');
+
+            const index = gameNos.indexOf(gameNo);
+            if (index > -1) {
+                gameNos.splice(index, 1);
+            }
+
+            tag.remove();
+
+            totalPrice -= deletedGamePrice;
+
+           updateTotalPrice();
+           updateUrl();
+        }
+    }
+     //태그 삭제시 url 업데이트 해주는 함수
+     function updateUrl() {
+         let newUrl = 'http://localhost:8800/cartList?game_no=' + gameNos.join(',');
+         window.history.replaceState({}, null, newUrl);
+     }
+     //가격 업데이트 해주는 함수
+     function updateTotalPrice() {
+         var productListSpan = document.querySelector('span[name=productName].mypaylist');
+         productListSpan.textContent = Math.round(totalPrice) + "원";
+     }
+
+     backButton.addEventListener('click', function () {
+         // 이전 페이지로 돌아감
+         window.history.back();
+     });
+});

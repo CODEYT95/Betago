@@ -39,7 +39,24 @@ function fetchData() {
         // start date가 변경될 때 end date를 업데이트하는 추가적인 로직을 여기에 작성할 수 있어
         // 예를 들어, 특정 기간 이후의 날짜만 end date로 선택 가능하게 하는 등의 조건을 설정할 수 있어
     });
+    window.onload = function() {
+        var dateDiffs = document.querySelectorAll('.dateDiff');
 
+        dateDiffs.forEach(function(element) {
+            var date1 = new Date(element.getAttribute('data-enddate'));
+            var date2 = new Date(element.getAttribute('data-startdate'));
+
+            var diff = Math.abs(date1.getTime() - date2.getTime());
+            var diffMonths = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+            var diffDays = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30.44;
+
+            if (diffMonths === 0) {
+                element.innerText = diffDays + "일";
+            } else {
+                element.innerText = diffMonths + "개월 " + diffDays + "일";
+            }
+        });
+    }
 
 //체크박스
     const checkboxes = document.querySelectorAll('.checkbox-input');
