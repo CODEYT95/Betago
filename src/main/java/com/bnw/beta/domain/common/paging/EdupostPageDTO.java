@@ -2,10 +2,12 @@ package com.bnw.beta.domain.common.paging;
 
 import com.bnw.beta.domain.admin.dto.EdupostDTO;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
 public class EdupostPageDTO {
     private int total;
     private List<EdupostDTO> edupostList;
@@ -14,7 +16,8 @@ public class EdupostPageDTO {
     private int startPage;
     private int endPage;
     private int startIndex;
-
+    private String searchType;
+    private String keyword = "";
 
     public EdupostPageDTO(int total, int currentPage, int size, List<EdupostDTO> edupostList){
         this.total=total;

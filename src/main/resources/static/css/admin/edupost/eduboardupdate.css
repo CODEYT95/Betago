@@ -144,6 +144,7 @@ th, td {
 }
 
 .btn_box {
+    margin-bottom: 51px;
     position: relative;
     right: -372px;
     bottom: -30px;

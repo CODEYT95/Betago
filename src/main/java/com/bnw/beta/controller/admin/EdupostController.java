@@ -4,7 +4,6 @@ import com.bnw.beta.config.post.FileUtils;
 import com.bnw.beta.domain.admin.dto.EdupostDTO;
 import com.bnw.beta.domain.admin.dto.FilepostDTO;
 import com.bnw.beta.domain.common.paging.EdupostPageDTO;
-import com.bnw.beta.domain.common.paging.TaskPageDTO;
 import com.bnw.beta.service.admin.edupost.EdupostService;
 import com.bnw.beta.service.admin.edupost.FileEduService;
 import lombok.RequiredArgsConstructor;
@@ -52,16 +51,24 @@ public class EdupostController {
     @GetMapping("/list")
     public String postList(@RequestParam(value = "page", defaultValue = "1") int page,
                            @RequestParam(value = "size", defaultValue = "5") int size,
+                           @RequestParam(value = "searchType", defaultValue = "all") String searchType,
+                           @RequestParam(value = "keyword", defaultValue = "") String keyword,
                            Model model) throws Exception {
-        int listCount = edupostService.count();
+        System.out.println("키워드 : "+searchType);
+        int listCount = edupostService.count(searchType, keyword);
         int totalPages = (int) Math.ceil((double) listCount / size);
         page = Math.min(Math.max(1, page), totalPages);
-        List<EdupostDTO> edupostList = edupostService.edulist(page, size);
+        List<EdupostDTO> edupostList = edupostService.edulist(page, size, searchType, keyword);
         EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, page, size, edupostList);
+
+        edupostPageDTO.setSearchType(searchType);
+        edupostPageDTO.setKeyword(keyword);
 
         model.addAttribute("currentPage", page);
         model.addAttribute("listCount", listCount);
         model.addAttribute("edupostPageDTO", edupostPageDTO);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
             return "admin/edupost/eduboardlist";
     }
     //학습자료 세부내용

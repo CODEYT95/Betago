@@ -9,9 +9,9 @@ public interface EdupostService {
 
     Long eduinsert(EdupostDTO dto) throws Exception;
 
-    public List<EdupostDTO> edulist(int pageNum, int size) throws Exception;
+    public List<EdupostDTO> edulist(int pageNum, int size, String searchType, String keyword) throws Exception;
 
-    public int count();
+    public int count(String searchType, String keyword);
     EdupostDTO findPostId(final Long edupost_no);
 
     Long update(final EdupostDTO dto);
