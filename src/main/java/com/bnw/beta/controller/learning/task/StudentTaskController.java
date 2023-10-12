@@ -20,15 +20,12 @@ public class StudentTaskController {
 
     @Autowired
     private TaskService taskService;
-    private HttpSession session;
-    Integer member_no = (Integer) session.getAttribute("member_no");
 
     //전송된 숙제 조회하기
     @GetMapping("/taskList")
-    public String selectTaskById(Model model){
+    public String selectTaskById(Model model, HttpSession session){
         System.out.println(session.getAttribute("member_name"));
-        System.out.println(member_no);
-            // member_no가 null이 아닌 경우에만 숙제 조회를 수행합니다.
+        Integer member_no = (Integer) session.getAttribute("member_no");
             if (member_no != null) {
                 List<TaskDTO> taskList = taskService.selectTaskById(member_no);
                 model.addAttribute("member_name", session.getAttribute("member_name"));
@@ -39,9 +36,9 @@ public class StudentTaskController {
 
     //모달창 숙제 정보 불러오기
     @GetMapping("/taskDetail/{tasksend_no}")
-    public String taskDetail(@PathVariable int tasksend_no, Model model){
+    public String taskDetail(@PathVariable int tasksend_no, Model model, HttpSession session){
 
-        TaskSendDTO taskDetail = taskService.selectTaskByNo(tasksend_no, member_no);
+        TaskSendDTO taskDetail = taskService.selectTaskByNo(tasksend_no, (Integer) session.getAttribute("member_no"));
         model.addAttribute("taskDetail", taskDetail);
         return "learning/task/student/taskDetail";
     }
@@ -63,9 +60,8 @@ public class StudentTaskController {
 
     //숙제 수정페이지
     @GetMapping("/taskModify/{tasksend_no}")
-    public String taskModify(@PathVariable int tasksend_no, Model model){
-        TaskSubmitDTO taskSubmit = taskService.modifyTask(tasksend_no, member_no);
-        System.out.println(taskSubmit);
+    public String taskModify(@PathVariable int tasksend_no, Model model, HttpSession session){
+        TaskSubmitDTO taskSubmit = taskService.modifyTask(tasksend_no, (Integer) session.getAttribute("member_no"));
         model.addAttribute("taskSubmit", taskSubmit);
         return "learning/task/student/taskModify";
     }
@@ -89,19 +85,22 @@ public class StudentTaskController {
     //숙제 제출하기
     @PostMapping("/submitTask")
     public String submitTask(@RequestParam("tasksend_no[]") List<Integer> tasksend_no){
-        int member_no = 99;
         int result = taskService.submitTask(tasksend_no);
         if(result > 0){
-            return "redirect:/student/submitTaskList/" + member_no;
+            return "redirect:/student/submitTaskList";
         }
-        return "redirect:/student/taskList/" + member_no;
+        return "redirect:/student/taskList";
     }
 
     //제출 숙제 조회
     @GetMapping("/submitTaskList")
-    public String selectSubmitTask(Model model){
-        List<TaskSubmitDTO> submitList =  taskService.selectSubmitTask(member_no);
-        model.addAttribute("submitList", submitList);
+    public String selectSubmitTask(Model model, HttpSession session){
+        Integer member_no = (Integer) session.getAttribute("member_no");
+        if (member_no != null) {
+            List<TaskSubmitDTO> submitList =  taskService.selectSubmitTask(member_no);
+            model.addAttribute("member_name", session.getAttribute("member_name"));
+            model.addAttribute("submitList", submitList);
+        }
         return "learning/task/student/submitTaskList";
     }
 }

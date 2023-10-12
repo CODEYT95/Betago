@@ -20,19 +20,19 @@
                         <span class="m_title" th:text="${taskDetail.game_title}"></span>
                     </div>
                     <div class="modal-task-educator">
-                        <span class="m_educator" th:text="${taskDetail.member_name}"></span>
+                        교육자 : <span class="m_educator" th:text="${taskDetail.member_name}"></span>
                     </div>
                     <div class="modal-task-content">
                         <span>숙제내용:</span><br><span class="m_content" th:text="${taskDetail.task_content}"></span>
                     </div>
                     <div class="modal-task-chapter">
-                        <span class="m_chapter" th:text="${taskDetail.task_chapter}"></span>
+                        진도: <span class="m_chapter" th:text="${taskDetail.task_chapter}"></span>
                     </div>
                     <div class="modal-task-deadline">
-                        <span class="m_deadline" th:text="${#dates.format(taskDetail.task_deadline, 'yyyy-MM-dd')}"></span>
+                        제출 기한 : <span class="m_deadline" th:text="${#dates.format(taskDetail.task_deadline, 'yyyy-MM-dd')}"></span>
                     </div>
                     <div class="modal-task-state">
-                        <span class="m_state" th:text="${taskDetail.task_state}" th:style="${taskDetail.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
+                        상태 : <span class="m_state" th:text="${taskDetail.task_state}" th:style="${taskDetail.task_state == '미작성' ? 'color: red;' : 'color: green;'}"></span>
                     </div>
                 </div>
                 <hr class="modal-divider">
