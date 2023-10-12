@@ -8,6 +8,7 @@ import com.bnw.beta.domain.member.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 @Service
 @AllArgsConstructor
-public class QuestionServiceImpl implements QuestionService{
+public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionDAO questionDAO;
 
@@ -25,20 +26,9 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
 
-  /*  기존 글등록
-    public void add(String subject, String content, String pw, MemberDTO memberDTO){
-        QuestionDTO question = new QuestionDTO();
-        question.setQna_title(subject);
-        question.setQna_content(content);
-        question.setQna_pw(pw);
-        question.setQna_regdate(LocalDateTime.now());
-        question.setMember_id(memberDTO.getMember_id());
-        questionDAO.insertQuestion(question);
-    }
-*/
-
     /*파일업로드 용*/
-    public void add(String subject, String content, String pw, MultipartFile file, MemberDTO memberDTO){
+    @Transactional
+    public void add(String subject, String content, String pw, MultipartFile file, MemberDTO memberDTO) {
         QuestionDTO question = new QuestionDTO();
         question.setQna_title(subject);
         question.setQna_content(content);
@@ -46,18 +36,24 @@ public class QuestionServiceImpl implements QuestionService{
         question.setQna_regdate(LocalDateTime.now());
         question.setMember_id(memberDTO.getMember_id());
 
-        int qna_no = questionDAO.insertQuestion(question);
+        /*int qna_no = questionDAO.insertQuestion(question);
+        이거 때문에 안되고 있었음
+        * */
+
+        questionDAO.insertQuestion(question);
+        int qna_no = question.getQna_no();
+        System.out.println("생성된 qna_no: " + qna_no);
 
         // 파일이 제공되었는지 확인
-        if(file != null && !file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             System.out.println("파일업로드 진행 중");
             String storedPath = storeFile(file);  // 파일 저장
-            System.out.println("파일저장완료"+file);
+            System.out.println("파일저장완료" + file);
             FileQuestionDTO fileQuestion = new FileQuestionDTO();
-            fileQuestion.setQna_no(qna_no);
-            fileQuestion.setFilequ_name(file.getOriginalFilename());
-            fileQuestion.setFilequ_rename(storedPath);
-            fileQuestion.setFilequ_path(storedPath);
+//            fileQuestion.setQna_no(qna_no);
+//            fileQuestion.setFilequ_name(file.getOriginalFilename());
+//            fileQuestion.setFilequ_rename(storedPath);
+//            fileQuestion.setFilequ_path(storedPath);
 
 
             questionDAO.insertFileQuestion(fileQuestion);  // 파일 정보 데이터베이스에 저장
@@ -69,22 +65,47 @@ public class QuestionServiceImpl implements QuestionService{
         return questionDAO.selectQuestionById(qna_no);
     }
 
-    public void modify(QuestionDTO question, String subject, String content,String pw) {
+    public void modify(QuestionDTO question, String subject, String content, String pw, MultipartFile file) {
         question.setQna_title(subject);
         question.setQna_content(content);
         question.setQna_pw(pw);
         question.setQna_regdate(LocalDateTime.now());
         questionDAO.updateQuestion(question);
+
+        if (file != null && !file.isEmpty()) {
+            questionDAO.deleteFileQuestion(question.getQna_no());
+
+            String storedPath = storeFile(file);
+            FileQuestionDTO fileQuestion = new FileQuestionDTO();
+            fileQuestion.setQna_no(question.getQna_no());
+            fileQuestion.setFilequ_name(file.getOriginalFilename());
+            fileQuestion.setFilequ_rename(storedPath);
+            fileQuestion.setFilequ_path(storedPath);
+
+            // 데이터베이스에 파일 정보를 업데이트 (여기서는 새로운 정보로 추가하였지만, 필요하면 기존 정보를 수정하도록 로직을 변경해야 함)
+            questionDAO.insertFileQuestion(fileQuestion);
+        }
     }
+
+
+
 
     @Override
     public boolean isPasswordCorrect(Integer id, String inputPw) {
         return false;
     }
 
-    public void delete(QuestionDTO question) {
+    /*public void delete(QuestionDTO question) {
         questionDAO.deleteQuestion(question.getQna_no());
     }
+    */
+    public void delete(QuestionDTO question) {
+        // 먼저 파일 정보를 삭제
+        questionDAO.deleteFileQuestion(question.getQna_no());
+        // 그 다음 질문 정보 삭제
+        questionDAO.deleteQuestion(question.getQna_no());
+    }
+    /*파일삭제*/
 
 
     /*이미지 파일 업로드*/

@@ -20,16 +20,21 @@ public class StudentGroupController {
     @GetMapping("joinList")
     public String groupJoin(@RequestParam(name = "offset", defaultValue = "0") int offset,
                             @RequestParam(name = "group_name", defaultValue = "") String group_name,
+                            @RequestParam(name = "educator_name", defaultValue = "") String educator_name,
                             Model model, HttpSession session){
+
+        System.out.println(group_name+educator_name);
 
         int member_no = (int) session.getAttribute("member_no");
 
         int limit = 1;
 
+        model.addAttribute("groupTitle", group_name);
+        model.addAttribute("educatorTitle", educator_name);
         model.addAttribute("title", groupService.selectGroupTitle());
         model.addAttribute("educator", groupService.selectEducatorName());
-        model.addAttribute("totalCnt", groupService.joinGroupCount(member_no, group_name));
-        model.addAttribute("groupJoinList", groupService.selectJoinGroup(member_no,group_name,limit,offset));
+        model.addAttribute("totalCnt", groupService.joinGroupCount(member_no, educator_name, group_name));
+        model.addAttribute("groupJoinList", groupService.selectJoinGroup(member_no, group_name, educator_name, limit, offset));
         return "/learning/group/student/groupJoin";
     }
 
@@ -38,13 +43,14 @@ public class StudentGroupController {
     @ResponseBody
     public List<GroupDTO> groupJoinAdd(@RequestParam(name = "offset", defaultValue = "0") int offset,
                                        @RequestParam(name = "group_name", defaultValue = "") String group_name,
+                                       @RequestParam(name = "educator_name", defaultValue = "") String educator_name,
                                        Model model, HttpSession session){
 
         int member_no = (int) session.getAttribute("member_no");
 
         int limit = 1;
 
-        return groupService.selectJoinGroup(member_no, group_name,limit,offset);
+        return groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset);
     }
 
     //그룹 가능 실시간 체크

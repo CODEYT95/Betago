@@ -1,64 +1,77 @@
-function submitForm() {
-    document.getElementById("searchForm").submit();
-}
-
-//체크박스
+document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.checkbox-input');
     const subscribeButton = document.getElementById('subscribeButton');
 
-    // 체크박스 중 하나라도 체크되어 있다면 true를 반환, 아니면 false를 반환
-function isAnyCheckboxChecked() {
-    const checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-    console.log('Any checkbox checked:', checked);
-    return checked;
-}
-    // 체크박스의 상태에 따라 버튼 활성화/비활성화 설정
+    // 어떤 체크박스라도 선택되었는지 확인
+    function isAnyCheckboxChecked() {
+        return Array.from(checkboxes).some(checkbox => checkbox.checked);
+    }
+
+    // 체크박스 상태에 따라 "subscribeButton"의 상태 업데이트
     function updateSubscribeButtonState() {
-        console.log('Updating button state...');
         if (isAnyCheckboxChecked()) {
             subscribeButton.removeAttribute('disabled');
         } else {
             subscribeButton.setAttribute('disabled', 'disabled');
         }
     }
-    // 체크박스 상태 변경 시 함수 호출
+
     checkboxes.forEach((checkbox) => {
         checkbox.addEventListener('change', updateSubscribeButtonState);
     });
-    // 초기 로드 시 한 번 확인
-    updateSubscribeButtonState();
-    document.addEventListener('DOMContentLoaded', function() {
-        // 선택한 체크박스의 값을 저장할 배열
-        const selectedGameNos = [];
 
-        // 체크박스 변경 시 배열에 추가 또는 제거
-        const checkboxes = document.querySelectorAll('.checkbox-input');
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener('change', function() {
-                const gameNo = checkbox.getAttribute('data-game-no');
-                if (checkbox.checked) {
-                    selectedGameNos.push(Number(gameNo));
-                } else {
-                    const index = selectedGameNos.indexOf(Number(gameNo));
-                    if (index !== -1) {
-                        selectedGameNos.splice(index, 1);
-                    }
+    updateSubscribeButtonState();
+
+    const selectedGameNos = [];
+
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', function() {
+            const gameNo = checkbox.getAttribute('data-game-no');
+            if (checkbox.checked) {
+                selectedGameNos.push(Number(gameNo));
+            } else {
+                const index = selectedGameNos.indexOf(Number(gameNo));
+                if (index !== -1) {
+                    selectedGameNos.splice(index, 1);
                 }
-            });
+            }
         });
     });
-function goToPayList() {
-    const selectedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
 
-    // 선택한 체크박스의 game_no 값을 배열로 가져옵니다.
-    const selectedGameNos = Array.from(selectedCheckboxes).map(cb => cb.getAttribute('data-game-no'));
+    const gameTitleSelect = document.getElementById("gameTitleSelect");
+    const searchButton = document.getElementById("searchButton");
+    const gameItems = document.querySelectorAll('.list-box li');
 
-    if (selectedGameNos.length > 0) {
-        // 배열을 콤마로 연결한 문자열로 변환합니다.
-        const gameNosParam = selectedGameNos.join(",");
+    gameTitleSelect.addEventListener("change", function() {
+        const selectedGameTitle = gameTitleSelect.options[gameTitleSelect.selectedIndex].text;
+        const defaultOption = gameTitleSelect.querySelector("option[value='game_title']");
+        defaultOption.textContent = selectedGameTitle;
+    });
 
-        window.location.href = `/paylist?game_nos=${gameNosParam}`;
-    } else {
-        alert("게임을 선택하세요!");
-    }
-}
+    searchButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const selectedGameTitle = gameTitleSelect.value;
+
+        gameItems.forEach(item => {
+            const gameTitle = item.getAttribute('data-game-title');
+            if (gameTitle === selectedGameTitle || !selectedGameTitle) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    subscribeButton.addEventListener('click', function() {
+        const checkedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
+        const selectedGameNo = Array.from(checkedCheckboxes).map(cb => cb.getAttribute('data-game-no'));
+
+        if (selectedGameNo.length > 0) {
+            const gameNoParam = selectedGameNo.join(",");
+            window.location.href = "/cartList?game_no=" + gameNoParam;
+        } else {
+            alert("게임을 선택하세요!");
+        }
+    });
+});

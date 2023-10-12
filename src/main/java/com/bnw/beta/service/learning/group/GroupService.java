@@ -1,6 +1,8 @@
 package com.bnw.beta.service.learning.group;
 
+import com.bnw.beta.domain.common.paging.GroupPageDTO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -34,13 +36,16 @@ public interface GroupService {
     //학습 그룹 삭제
     String deleteGroup(List<Integer> group_no);
 
+    //그룹 학생 가입 승인 목록
+    GroupPageDTO selectGroupApprove(@Param("member_no") int member_no, @Param("group_name") String group_name, @Param("page") int page, @Param("size") int size);
+
     //////////////////학습자////////////////////
 
     //학습 그룹 가입 신청 목록
-    List<GroupDTO> selectJoinGroup(int member_no, String group_name,int limit, int offset);
+    List<GroupDTO> selectJoinGroup(int member_no, String group_name, String educator_name, int limit, int offset);
 
     //그룹 가입신청 가능한 목록 갯수
-    int joinGroupCount(int member_no, String group_name);
+    int joinGroupCount(int member_no, String educator_name, String group_name);
 
     //그룹명 목록 불러오기
     List<GroupDTO> selectGroupTitle();

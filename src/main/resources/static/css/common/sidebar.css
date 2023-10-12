@@ -23,11 +23,6 @@
   width: 100%;
 }
 
-
-.header-navi .links li .sub-menu li:active{
-background-color: #96A0AA;
-}
-
 .side-bar .menu .item{
   position: relative;
   cursor: pointer;
@@ -50,8 +45,8 @@ background-color: #96A0AA;
 }
 
 .sub-btn-active{
-  background: #454545;
-  color: #FFFFFF;
+  background: #96a0aa;
+  color: #FFFFFF !important;
   transition: 0.3s ease;
 }
 

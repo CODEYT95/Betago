@@ -53,4 +53,10 @@ public class EducatorTaskController {
         return "learning/task/educator/createTask";
     }
 
+    //제출된 숙제 조회하기
+    @GetMapping("/evalTask")
+    public String evalTask(){
+        return "learning/task/educator/evalTask";
+    }
+
 }

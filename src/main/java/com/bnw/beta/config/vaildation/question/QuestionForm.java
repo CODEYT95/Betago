@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class QuestionForm {
+
+    private MultipartFile file;
+
     @NotBlank(message = "제목은 필수 입력사항입니다.")
     @Size(max=200) //Question Entity에서 @Colum(length=200)에 맞춰
     private String subject;//제목

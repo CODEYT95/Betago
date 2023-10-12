@@ -31,8 +31,15 @@
     width: 292px;
 }
 
-h1 {
+.h1 {
     font-size: 20px;
+    margin: 0.67em 0;
+}
+
+.guide {
+    margin: 0 0 15px 42px;
+    font-weight: bold;
+    color: #6360fd;
 }
 
 .checkbox-input {
@@ -141,7 +148,7 @@ h1 {
     right: 2px;
 }
 
-.writeBtn, .modifyBtn {
+.detailBtn, .modifyBtn {
     border: none;
     width: 70px;
     height: 30px;
@@ -150,22 +157,7 @@ h1 {
     cursor: pointer;
 }
 
-.submitBtn[disabled] {
-  background: #ccc;
-  color: #fff;
-}
-
-.submitBtn {
-    border: none;
-    width: 80px;
-    height: 40px;
-    border-radius: 5px;
-    background-color: #2260ff;
-    color: #fff;
-    cursor: pointer;
-}
-
-.writeBtn:hover, .modifyBtn:hover {
+.detailBtn:hover, .modifyBtn:hover {
     background-color: #2260ff;
     color: #fff;
 }

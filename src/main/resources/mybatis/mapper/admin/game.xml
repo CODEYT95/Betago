@@ -5,17 +5,19 @@
 <!--게임콘텐츠 모든 목록 조회-->
     <select id="selectAll" resultType="GameDTO">
         <![CDATA[
-        SELECT game_no, game_title, game_level, game_startdate, game_enddate, game_total,
+        SELECT game_no, game_title, game_level, game_date, game_total,
                game_sell, game_content, member_id
-        FROM game;
+        FROM game
+        order by game_no desc;
         ]]>
     </select>
     <!--게임콘텐츠 등록-->
     <insert  id="insertGame" parameterType="GameDTO">
             <![CDATA[
-                insert into game (game_title, game_level, game_startdate, game_enddate, game_total,
-                game_sell, game_content, member_id) values (#{game_title}, #{game_level}, #{game_startdate}, #{game_enddate}, #{game_total}
-                , #{game_sell}, #{game_content}, #{member_id});
+                insert into game (game_title, game_level, game_date, game_total,
+                game_price,game_discount, game_sell, game_content, member_id)
+                values (#{game_title}, #{game_level}, #{game_date}, #{game_total}
+                , #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id});
                 ]]>
     </insert>
     <!--월간 (일일 단위 매출조회)-->
