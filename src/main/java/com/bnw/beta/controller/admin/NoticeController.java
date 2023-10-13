@@ -2,11 +2,9 @@ package com.bnw.beta.controller.admin;
 
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
-import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.admin.notice.NoticeServiceImpl;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +12,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Controller
 @AllArgsConstructor
 public class NoticeController {
     private final NoticeServiceImpl noticeService;
+
     //리스트 목록 + 페이징 + 검색
     @GetMapping("/notice/list")
     public String noticeList(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -29,24 +27,24 @@ public class NoticeController {
                              @RequestParam(value = "searchType", defaultValue = "all") String searchType,
                              @RequestParam(value = "keyword", defaultValue = "") String keyword,
                              Model model) {
-        int listCount = noticeService.listCnt(searchType, keyword);
+        //상단고정 게시물
+        List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
+        System.out.println("Ddd"+topNoticeList);
 
-        int totalPages = (int) Math.ceil((double) listCount / size);
-        page = Math.min(Math.max(1, page), totalPages);
-        List<NoticeDTO> noticeList = noticeService.noticeList(page, size, searchType, keyword);
-        NoticePage noticePage = new NoticePage(listCount, page, size, noticeList);
+        NoticePage noticePage = noticeService.noticeList(page, size, searchType, keyword);
+
 
         noticePage.setKeyword(keyword);
         noticePage.setSearchType(searchType);
+        noticePage.setTopNoticeList(topNoticeList);
 
         model.addAttribute("currentPage", page);
-        model.addAttribute("listCount", listCount);
         model.addAttribute("noticePage", noticePage);
-        model.addAttribute("searchType",searchType);
-        model.addAttribute("keyword",keyword);
+        model.addAttribute("topNoticeList", topNoticeList);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
         return "admin/notice/noticeList";
     }
-
 
     //공지게시판 글작성 폼
     @GetMapping("/admin/notice/write")
@@ -60,25 +58,26 @@ public class NoticeController {
     public String noticeWrite(@ModelAttribute NoticeDTO noticeDTO,
                               @RequestParam("file") MultipartFile[][] file,
                               @RequestParam(name = "type", defaultValue = "일반") String type,
-                              Model model,Principal principal) throws IOException {
+                              @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")Date timeWrite,
+                              Model model, Principal principal) throws IOException {
         noticeDTO.setMember_id(principal.getName());
         System.out.println(noticeDTO);
         try {
             System.out.println(noticeDTO);
-            noticeService.insert(noticeDTO, file, type);
+            noticeService.insert(noticeDTO, file, type, timeWrite);
             return "redirect:/notice/list";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "글 작성 중 오류가 발생했습니다: " + e.getMessage());
             return "error";
         }
-
     }
 
     //공지게시판 상세내용
     @GetMapping("/notice/detail/{notice_no}")
     public String noticeDetail(@PathVariable("notice_no") Long notice_no, Model model) {
         NoticeDTO noticeDTO = (NoticeDTO) noticeService.detail(notice_no);
+        noticeService.viewCnt(noticeDTO);
         model.addAttribute("noticeDTO", noticeDTO);
         System.out.println("컨트롤DTO=" + noticeDTO);
         return "admin/notice/noticeDetail";

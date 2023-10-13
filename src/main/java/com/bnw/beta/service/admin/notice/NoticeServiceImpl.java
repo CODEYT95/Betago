@@ -3,15 +3,13 @@ package com.bnw.beta.service.admin.notice;
 import com.bnw.beta.domain.admin.dao.NoticeDAO;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
-import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.domain.common.paging.NoticePage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.util.*;
 
 @Service
@@ -21,13 +19,34 @@ public class NoticeServiceImpl implements NoticeService {
 
     //공지게시판 리스트 조회
     @Override
-    public List<NoticeDTO> noticeList(int pageNum, int size,String searchType, String keyword) {
+    public NoticePage noticeList(int pageNum, int size,String searchType, String keyword) {
+        int offset = (pageNum-1) * size;
         if (pageNum <= 0) {
             pageNum = 1;
         }
-        int offset = (pageNum-1) * size;
-        return noticeDAO.noticeList(offset, size, searchType, keyword);
-        }
+
+        //상단고정게시물
+        List<NoticeDTO> topNoticeList = noticeDAO.noticeTop();
+
+        // 공지게시판 리스트 조회 - 상단고정 게시물과 일반 게시물을 병합
+        List<NoticeDTO> allNoticeList = new ArrayList<>();
+        allNoticeList.addAll(topNoticeList);
+
+        // 일반 게시물 목록을 가져와서 allNoticeList에 추가
+        List<NoticeDTO> noticeList = noticeDAO.noticeList(offset, size, searchType, keyword, topNoticeList);
+        allNoticeList.addAll(noticeList);
+
+        int listCnt = noticeDAO.listCnt(searchType,keyword);
+
+        NoticePage noticePage = new NoticePage(listCnt,pageNum,size,allNoticeList, topNoticeList,searchType,keyword);
+        noticePage.setListCnt(listCnt);
+        return noticePage;
+    }
+    //상단 고정 게시물
+    @Override
+    public List<NoticeDTO> getTopNoticeList(){
+        return noticeDAO.noticeTop();
+    }
 
     //총 게시글 개수 확인
     @Override
@@ -35,15 +54,19 @@ public class NoticeServiceImpl implements NoticeService {
         return this.noticeDAO.listCnt(searchType,keyword);
     }
 
-
-
     //공지게시판 글 등록
     @Override
-    public void insert(NoticeDTO noticeDTO, MultipartFile[][] file,@RequestParam(name = "type")String type) throws IOException {
+    public void insert(NoticeDTO noticeDTO, MultipartFile[][] file,
+                       String type, Date timeWrite) throws IOException {
+
+        System.out.println("dd"+timeWrite);
         noticeDTO.setType(type);
+        if(timeWrite !=null){
+            java.sql.Date TimeWrite = new java.sql.Date(timeWrite.getTime());
+            noticeDTO.setNotice_reservation((TimeWrite));
+        }
         boolean file1Empty = file[0][0] == null || file[0][0].isEmpty();
         boolean file2Empty = file[1][0] == null || file[1][0].isEmpty();
-
         if (file1Empty && file2Empty) {
             noticeDAO.insert(noticeDTO);
         }else {
@@ -64,7 +87,6 @@ public class NoticeServiceImpl implements NoticeService {
                         String savedPath = path + reName;
                         File savedFile = new File(path, reName);
                         nofile.transferTo(savedFile);
-
                         noticeFileDTO.setFile_name(originName);
                         noticeFileDTO.setFile_rename(reName);
                         noticeFileDTO.setFile_path(savedPath);
@@ -135,6 +157,10 @@ public class NoticeServiceImpl implements NoticeService {
         noticeDAO.delete(notice_no);
     }
 
-
+    //조회수 증가 + 중복 방지
+    @Override
+    public void viewCnt(NoticeDTO noticeDTO) {
+        noticeDAO.viewCnt(noticeDTO);
+    }
 
 }
