@@ -1,7 +1,6 @@
 package com.bnw.beta.domain.common.paging;
 
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
-import com.bnw.beta.domain.learning.dto.TaskDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,20 +14,23 @@ public class NoticePage {
 
     private int total;
     private List<NoticeDTO> noticeList;
+    private List<NoticeDTO> topNoticeList; // 상단 노출 게시글 목록
     private int currentPage;
     private int totalPages;
     private int startPage;
     private int endPage;
     private int startIndex;
+    private int listCnt;
     private String searchType;
     private String keyword = "";
 
-    public NoticePage(int total, int currentPage, int size, List<NoticeDTO> noticeList){
-        this.keyword = keyword;
-        this.searchType = searchType;
+    public NoticePage(int total, int currentPage, int size, List<NoticeDTO> noticeList,List<NoticeDTO> topNoticeList, String searchType, String keyword){
         this.total=total;
         this.currentPage=currentPage;
         this.noticeList=noticeList;
+        this.topNoticeList=topNoticeList;
+        this.searchType = searchType;
+        this.keyword = keyword;
         if(total==0) {
             totalPages=0;
             startPage=0;

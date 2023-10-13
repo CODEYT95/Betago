@@ -9,13 +9,14 @@
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<form id="notice" th:action="@{/admin/notice/write}" enctype="multipart/form-data" method="post">
+
 
     <div class="content">
         <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
 
         <div class="content-wrap">
             <div class="edupost_cont">
+            <form id="notice" th:action="@{/admin/notice/write}" enctype="multipart/form-data" method="post">
                 <div class="edupost_write_box">
                     <h2 class="head">공지 등록창</h2>
 
@@ -40,9 +41,9 @@
                     </div>
                     <div class="opt2">
                     <label for="upLoadNow" class="view">즉시등록
-                        <input type="checkbox" id="upLoadNow" value="upView"></label>
-                    <label for="upDateChoice" class="view">게시일자등록
-                        <input type="checkbox"  id="upDateChoice" value="allView"></label><br/>
+                        <input type="checkbox" id="upLoadNow" ></label>
+                        <label for="upDateChoice" class="view">게시일자등록
+                        <input type="date"  id="upDateChoice" name="timeWrite"></label><br/></div>
                     </div>
                     <div class="opt">
                         <label for="notice_content"
@@ -69,22 +70,13 @@
                         <button type="button" class="btn_sub" >취소</button>
                     </a>
                     </div>
+            </form>
                     </div>
                 </div>
             </div>
-        </div>
-</form>
 </body>
 
 <script>
-
-    /* function logMessage() {
-         console.log("Button clicked!");
-         var form = document.getElementById('notice');
-         form.submit();
-     } */
-
-
     var dropArea = document.getElementById('dropArea');
     var fileInput = document.getElementById('fileInput');
 
@@ -125,5 +117,17 @@
         }
         document.getElementById('here').textContent = fileName.join(',');
     }
+
+    //예약글
+    // 현재 날짜 가져오기
+    var today = new Date();
+    // 내일 날짜 계산 (현재 날짜에 1을 더해줌)
+    var tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    // 내일 날짜를 YYYY-MM-DD 형식으로 변환
+    var tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+    // 내일 날짜를 min 속성에 설정
+    document.getElementById("upDateChoice").setAttribute("min", tomorrowFormatted);
+
 </script>
 </html>
