@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="search-container">
-                    <form id="searchForm" method="get" th:action="@{notice/list}" autocomplete="off">
+                    <form id="searchForm" method="get" th:action="@{/notice/list}" autocomplete="off">
                         <div class="sch_group">
                             <label>
                                 <select class="search-box" name="searchType">
@@ -71,7 +71,32 @@
                     </tr>
                     </thead>
                     <tbody id="list">
-                    <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice:${noticePage.noticeList}">
+
+                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type != '일반'}" th:each="notice : ${topNoticeList}" >
+                        <td>
+                            <span class="no" th:text="${notice.notice_no}" ></span>
+                        </td>
+                        <td>
+                            <span class="type" name="type" th:text="${notice.notice_category}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
+                                <span th:text="${notice.notice_title}" style="background-color: #8f8f8f"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="writer" th:text="${notice.member_id}"></span>
+                        </td>
+
+                        <td>
+                            <span class="writer" th:text="${notice.notice_regdate}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${notice.view_cnt}"></span>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type == '일반'}" th:each="notice:${noticePage.noticeList}">
                         <td>
                             <span class="no" th:text="${notice.notice_no}"></span>
                         </td>
@@ -102,20 +127,14 @@
                         <div class="text-center clearfix">
                             <div class="pagingNum">
                     <ul class="pagination-container" style="display: inline;">
-                        <li th:if="${noticePage.startPage > 5}" style="display: inline;">
-                            <a th:with="prevPage=${noticePage.startPage - 1}"
-                               th:href="@{/notice/list(page=${prevPage}, size=${noticePage.noticeList.size}, searchType=${searchType}, keyword=${keyword})}">Prev</a>
+                        <li th:if="${noticePage.startPage > 5}" class="page-item">
+                            <a class="page-link" th:with="prevPage=${noticePage.startPage - 1}" th:href="@{/notice/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword})}">Prev</a>
                         </li>
-                        <li th:if="${pageNum > 0}"
-                            th:each="pageNum : ${#numbers.sequence(noticePage.startPage, noticePage.endPage)}"
-                            style="display: inline;">
-                            <a th:href="@{/notice/list(page=${pageNum}, size=${noticePage.noticeList.size}, searchType=${searchType}, keyword=${keyword})}"
-                               th:classappend="${noticePage.currentPage == pageNum} ? 'active-page' : ''"><span
-                                    th:text="${pageNum}"></span></a>
+                        <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(noticePage.startPage, noticePage.endPage)}" class="page-item">
+                            <a th:href="@{/notice/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword})}" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
                         </li>
-                        <li th:if="${noticePage.endPage < noticePage.totalPages}" style="display: inline;">
-                            <a th:with="nextPage=${noticePage.endPage + 1}"
-                               th:href="@{/notice/list(page=${nextPage}, size=${noticePage.noticeList.size}, searchType=${searchType}, keyword=${keyword})}">Next</a>
+                        <li th:if="${noticePage.endPage < noticePage.totalPages}" class="page-item">
+                            <a class="page-link" th:with="nextPage=${noticePage.startPage + 5}" th:href="@{/notice/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword})}">Next</a>
                         </li>
                     </ul>
                 </div>

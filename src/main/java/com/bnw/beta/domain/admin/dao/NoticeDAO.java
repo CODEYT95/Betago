@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -14,14 +15,19 @@ public interface NoticeDAO {
 
     //게시글 목록 조회
     List<NoticeDTO> noticeList(@Param("page") int page, @Param("size") int size,
-                               @Param("searchType") String searchType, @Param("keyword") String keyword);
+                               @Param("searchType") String searchType, @Param("keyword") String keyword,List<NoticeDTO>topNoticeList );
 
+    //게시글 상단노출
+    List<NoticeDTO> noticeTop();
 
     //총 게시글 개수 확인
     int listCnt(@Param("searchType") String searchType, @Param("keyword") String keyword);
 
     //게시글 등록
     Long insert(NoticeDTO noticeDTO);
+
+    //예약글 등록
+    Long timeInsert(NoticeDTO noticeDTO);
 
     //파일 등록
     void fileUpload(NoticeFileDTO noticeFileDTO);
@@ -41,6 +47,6 @@ public interface NoticeDAO {
    //게시글 삭제
     void delete(Long notice_no);
 
-
-
+    //조회수 증가
+    void viewCnt(NoticeDTO noticeDTO);
 }
