@@ -16,18 +16,18 @@ public interface QuestionDAO {
     /*파일등록*/
     void insertFileQuestion(FileQuestionDTO fileDTO);
 
+    int insertQuestion(QuestionDTO question);
+
+
     /*파일삭제*/
-    FileQuestionDTO deleteFileQuestion(Long qna_no);
+    void deleteFileQuestion(int qna_no);
+
 
     /*파일조회*/
     FileQuestionDTO selectFilesByQnaNo(int qna_no);
 
     QuestionDTO selectQuestionById(Integer id);
 
-    /*기존 글등록 void insertQuestion(QuestionDTO questionDTO);*/
-
-    /*파일업로드 글등록*/
-    int insertQuestion(QuestionDTO questionDTO);
 
     MemberDTO findUserByUsername(String username);
 
@@ -35,5 +35,5 @@ public interface QuestionDAO {
 
     void updateQuestion(QuestionDTO question);
 
-    void deleteQuestion(Long qna_no);
+    void deleteQuestion(int qna_no);
 }

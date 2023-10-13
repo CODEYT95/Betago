@@ -48,11 +48,16 @@
                     <td th:text="${question.qna_isshow}"></td>
                 </tr>
 
+
                 <!-- 이미지 미리보기 -->
-                <img src="/image/qna/${fileQuestion.filequ_name}" alt="Uploaded image" width="300">
+                <div th:if="${fileQuestion != null && fileQuestion.filequ_name != null}">
+                    <img th:src="@{/question/image/{name}(name=${fileQuestion.filequ_name})}" alt="Uploaded image" width="300">
+                </div>
 
                 <!-- 첨부파일 다운로드 링크 -->
-                <a href="/uploadfile/question_img/${fileQuestion.filequ_rename}" download>Download attached image</a>
+                <div th:if="${fileQuestion != null && fileQuestion.filequ_name != null}">
+                    <a th:href="@{/question/download/{name}(name=${fileQuestion.filequ_name})}">이미지 다운</a>
+                </div>
 
                 <tr>
                     <td>Registration Date</td>

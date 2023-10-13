@@ -24,7 +24,7 @@ public interface QuestionService {
 
     public String storeFile(MultipartFile file);
 
-    void modify(QuestionDTO question, String subject, String content,String pw);
+    void modify(QuestionDTO question, String subject, String content,String pw, MultipartFile file);
 
 
     boolean isPasswordCorrect(Integer id, String inputPw);

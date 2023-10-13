@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>학습조회리스트</title>
+    <title>회원목록</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/edupost/eduboardlist.css}">
 </head>
@@ -14,39 +14,41 @@
         <div id="bbsList">
 
             <div id="bbsList_title">
-                <h2 class="head">교육자료 등록 리스트</h2>
+                <h2 class="head">회원목록</h2>
             </div>
-            <div id="bbsList_header">
-                        <div id="leftHeader">
-                            <form id="searchForm" th:action="@{/edupost/list}" method="get" name="searchForm">
-                                <select name="searchType" class="selectField" title="검색 유형 선택">
-                                    <option name="edupost_title" value="edupost_title" th:classappend="${(searchType == 'edupost_title') ? 'selected' : ''}">제목</option>
-                                    <option value="edupost_content" th:classappend="${(searchType == 'edupost_content') ? 'selected' : ''}">내용</option>
-                                    <option value="title_content" th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용</option>
-                                </select>
-                            <!--    <select name="searchType">
-                                    <option value="edupost_category" th:>자료구분</option>
-                                </select>-->
-                                <input type="text" name="keyword" class="textField"/>
-                                <input type="submit" value=" 검 색 " class="btn2"/>
-                            </form>
-                        </div>
-            </div>
+<!--            <div id="bbsList_header">
+                <div id="leftHeader">
+                    <form id="searchForm" th:action="@{/edupost/list}" method="get" name="searchForm">
+                        <select name="searchType" class="selectField" title="검색 유형 선택">
+                            <option name="edupost_title" value="edupost_title" th:classappend="${(searchType == 'edupost_title') ? 'selected' : ''}">제목</option>
+                            <option value="edupost_content" th:classappend="${(searchType == 'edupost_content') ? 'selected' : ''}">내용</option>
+                            <option value="title_content" th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용</option>
+                        </select>
+                        &lt;!&ndash;    <select name="searchType">
+                                <option value="edupost_category" th:>자료구분</option>
+                            </select>&ndash;&gt;
+                        <input type="text" name="keyword" class="textField"/>
+                        <input type="submit" value=" 검 색 " class="btn2"/>
+                    </form>
+                </div>
+            </div>-->
 
             <div id="bbsList_list">
                 <table>
                     <thead id="title">
                     <tr>
-                        <th class="num">번호</th>
-                        <th class="subject">자료구분</th>
-                        <th class="type">자료유형</th>
-                        <th class="eduname">학습자료명</th>
-                        <th class="user">작성자</th>
-                        <th class="createdate">등록일시</th>
+                        <th class="num">No</th>
+                        <th class="subject">구분</th>
+                        <th class="type">성명</th>
+                        <th class="eduname">아이디</th>
+                        <th class="user">연락처</th>
+                        <th class="user">이메일</th>
+                        <th class="user">자격</th>
+                        <th class="createdate">가입일자</th>
                     </tr>
                     </thead>
-                    <tbody id="list">
-                    <th:block th:if="${#lists.isEmpty(edupostPageDTO.edupostList)}">
+                 <!--   <tbody id="list">
+                    <th:block th:if="${#lists.isEmpty(MemherDTO.edupostList)}">
                         <tr>
                             <td colspan="6">등록된 학습자료가 없습니다.</td>
                         </tr>
@@ -64,7 +66,7 @@
                             <td class="writer" th:text="${list.member_id}">작성자</td>
                             <td class="writer" th:text="${list.edupost_date}">등록일시</td>
                         </tr>
-                    </th:block>
+                    </th:block>-->
 
                     <!-- <tr th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
 
@@ -79,7 +81,7 @@
 
                     </tbody>
                 </table>
-                <div class="pagination">
+         <!--       <div class="pagination">
                     <div class="paging">
                         <div class="text-center clearfix">
                             <div class="pagingNum">
@@ -97,12 +99,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
             </div>
         </div>
-    <script th:src="@{/js/admin/edupost/function.js}"></script>
-    <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
+        <script th:src="@{/js/admin/edupost/function.js}"></script>
+        <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

@@ -10,7 +10,12 @@ import com.bnw.beta.service.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -20,6 +25,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
@@ -27,6 +37,37 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
+
+    /*이미지 파일 서빙 미리보기*/
+    @GetMapping("/image/{filequ_name}")
+    public ResponseEntity<InputStreamResource> showImage(@PathVariable String filequ_name) {
+        try {
+            Path imagePath = Paths.get("C:/uploadfile/question_img/", filequ_name);
+            InputStreamResource resource = new InputStreamResource(Files.newInputStream(imagePath));
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG) // or another appropriate type
+                    .body(resource);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
+        }
+    }
+
+    @GetMapping("/download/{filequ_name}")
+    public ResponseEntity<InputStreamResource> downloadImage(@PathVariable String filequ_name) {
+        try {
+            Path imagePath = Paths.get("C:/uploadfile/question_img/", filequ_name);
+            InputStreamResource resource = new InputStreamResource(Files.newInputStream(imagePath));
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header("Content-Disposition", "attachment; filename=\"" + filequ_name + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
+        }
+    }
+
 
 
     @Autowired
@@ -36,6 +77,8 @@ public class QuestionController {
 
     private final MemberService memberService;
 
+    /*이미지 파일*/
+
     //질문 게시글 조회전 비밀번호 확인
     @PostMapping("/question/verifyPassword")
     public String verifyPassword(@RequestParam String pw, @RequestParam(name="id") Integer id, Model model) {
@@ -44,7 +87,10 @@ public class QuestionController {
         model.addAttribute(question.getQna_pw());
         if (question != null && question.getQna_pw().equals(pw)) {
             FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(id);
-            model.addAttribute("fileQuestion", fileQuestion);
+            /*model.addAttribute("fileQuestion", fileQuestion);*/
+            if (fileQuestion != null) {
+                model.addAttribute("fileQuestion", fileQuestion);
+            }
 
             model.addAttribute("question", question);
             System.out.println(model.asMap());
@@ -69,7 +115,10 @@ public class QuestionController {
         //2 비즈니스로직수행
         QuestionDTO question = questionService.selectQuestion(qna_no);
         FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(qna_no);
-        model.addAttribute("fileQuestion", fileQuestion);
+
+        if (fileQuestion != null) {
+            model.addAttribute("fileQuestion", fileQuestion);
+        }
         model.addAttribute("qna_pw", question.getQna_pw());
         //3 Model
         model.addAttribute("question", question);
@@ -106,6 +155,7 @@ public class QuestionController {
 
 
     /*질문수정처리*/
+    /*기존 게시글 수정
     @PostMapping("/modify/{qna_no}")
     public String modify(@Valid QuestionForm questionForm, BindingResult bindingResult,
                          @PathVariable("qna_no") Integer qna_no, Principal principal){
@@ -120,10 +170,27 @@ public class QuestionController {
         }
 
         questionService.modify(question, questionForm.getSubject(), questionForm.getContent(),question.getQna_pw());
-        /*return String.format( "redirect:/question/detail",qna_no);*/
+        *//*return String.format( "redirect:/question/detail",qna_no);*//*
         return String.format("redirect:/question/detail/%d?afterEdit=true", qna_no);
     }
+*/
 
+    @PostMapping("/modify/{qna_no}")
+    public String modify(@Valid QuestionForm questionForm, BindingResult bindingResult,
+                         @PathVariable("qna_no") Integer qna_no, Principal principal){
+        //1파라미터받기
+        if(bindingResult.hasErrors()){
+            return "guide/question/question_form";
+        }
+        //2비즈니스로직
+        QuestionDTO question = questionService.selectQuestion(qna_no);
+        if( !question.getMember_id().equals(principal.getName())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없다");
+        }
+        questionService.modify(question, questionForm.getSubject(), questionForm.getContent(),question.getQna_pw(), questionForm.getFile());
+
+        return String.format("redirect:/question/detail/%d?afterEdit=true", qna_no);
+    }
 
     @GetMapping("/delete/{qna_no}")
     public String questionDelete(@PathVariable("qna_no") Integer qna_no,
@@ -175,9 +242,5 @@ public class QuestionController {
         model.addAttribute("questions",questions);
         return "guide/question/question_list";//  templates폴더하위  question_list.html문서
     }
-    /*이미지 파일 보여주기*/
-/*    @GetMapping("/image/{filequ_name}")
-    public Resource showImage(@PathVariable String filequ_name) throws MalformedURLException {
-        return new UrlResource("file:" + file.getFullPath(filequ_name));
-    }*/
+
 }

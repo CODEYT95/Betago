@@ -37,4 +37,8 @@ public interface TaskService {
 
     //제출 숙제 조회
     List<TaskSubmitDTO> selectSubmitTask(Integer member_no);
+
+    //평가 완료된 숙제 조회
+    TaskSubmitDTO selectSubmitTaskByNo(int tasksend_no, int member_no);
 }
+

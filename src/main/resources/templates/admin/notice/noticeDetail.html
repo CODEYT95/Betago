@@ -4,41 +4,71 @@
     <meta charset="UTF-8">
     <title>게시판 상세보기</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeDetail.css}">
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<div class="content">
-    <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
-    <div class="content-wrap" >
-        <form enctype="multipart/form-data" method="post">
-            <label> 공지구분
-                <input  th:value="${noticeDTO.notice_category}">
-            </label><br/>
+<form enctype="multipart/form-data" method="post">
+    <div class="content">
+        <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+        <div class="content-wrap">
+            <div class="edupost_cont">
+                <div class="edupost_write_box">
+                    <h2 class="head">공지 상세페이지</h2>
+                    <div class="opt">
+                        <laber for="notice_title" style="font-size: 16px; margin-right: 9px;">제목</laber>
+                        <input type="text" class="texarea1" id="notice_title" th:value="${noticeDTO.notice_title}"/>
+                    </div>
 
-            <input type="text" name="member_id" th:value="${noticeDTO.member_id}">
-            <span>제목 <input type="text" name="notice_title" th:value="${noticeDTO.notice_title}"></span><br/>
+                    <div class="opt">
+                        <laber for="member_id" style="font-size: 16px; margin-right: 9px;">작성자</laber>
+                        <input type="text" style="margin-left: 42px;" class="texarea1" id="member_id"
+                               name="notice_title" th:value="${noticeDTO.member_id}" readonly/>
+                    </div>
 
-            <textarea rows="10" cols="50" name="notice_content" th:text="${noticeDTO.notice_content}"></textarea><br/>
-            <input th:value="${noticeDTO.notice_regdate}">
+                    <div class="opt">
+                        <laber for="notice_regdate" style="font-size: 16px; margin-right: 9px;">작성일</laber>
+                        <input type="text" style="margin-left: 42px;" class="texarea1" id="notice_regdate"
+                               name="notice_title" th:value="${noticeDTO.notice_regdate}" readonly/>
+                    </div>
 
-            <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}">
-               <img th:src="@{|/image/notice/${noticefile.file_rename}|}" width="300" height="300" alt="image">
-            </div><br/>
+                    <div class="opt">
+                        <label for="notice_category" style="font-size: 16px;">공지 구분</label>
+                        <input id="notice_category" name="notice_category" class="notice_category"
+                                th:value="${noticeDTO.notice_category}">
+                        </input>
+                    </div>
 
-            <a th:href="@{'/notice/edit/' + ${noticeDTO.getNotice_no}}">
-                <button type="button">수정</button>
-            </a>
+                    <div class="opt">
+                        <label for="notice_content"
+                               style="position: relative; font-size: 16px; bottom: 19rem">내용</label>
+                        <textarea class="texarea2" style="margin-left: 66px;" id="notice_content" name="notice_content"
+                                  th:text="${noticeDTO.notice_content}"></textarea>
+                        <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}"
+                             style="margin-left: 103px; margin-bottom: 32px;">
+                            <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300"
+                                 alt="image">
+                        </div>
+                    </div>
 
-            <a th:href="@{'/notice/delete/' + ${noticeDTO.getNotice_no}}">
-                <button type="button">삭제</button>
-            </a>
+                    <div class="btn">
+                    <a th:href="@{'/admin/edit/' + ${noticeDTO.getNotice_no}}">
+                        <button type="button" class="btn_sub">수정</button>
+                    </a>
 
-            <a th:href="@{'/notice/list'}">
-                <button type="button">목록</button>
-            </a>
-        </form>
+                    <a th:href="@{'/admin/notice/delete/' + ${noticeDTO.getNotice_no}}">
+                        <button type="button" class="btn_sub">삭제</button>
+                    </a>
+
+                    <a th:href="@{'/notice/list'}">
+                        <button type="button" class="btn_sub">목록</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</form>
 
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>

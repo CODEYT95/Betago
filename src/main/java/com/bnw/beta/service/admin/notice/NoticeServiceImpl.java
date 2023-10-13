@@ -3,6 +3,7 @@ package com.bnw.beta.service.admin.notice;
 import com.bnw.beta.domain.admin.dao.NoticeDAO;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
+import com.bnw.beta.domain.member.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.*;
 
 @Service
@@ -37,9 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     //공지게시판 글 등록
     @Override
-    public void insert(NoticeDTO noticeDTO, MultipartFile[][] file, String member_id, @RequestParam(name = "type")String type) throws IOException {
-        System.out.println("글정보?" + noticeDTO);
-        noticeDTO.setMember_id(member_id);
+    public void insert(NoticeDTO noticeDTO, MultipartFile[][] file,@RequestParam(name = "type")String type) throws IOException {
         noticeDTO.setType(type);
         boolean file1Empty = file[0][0] == null || file[0][0].isEmpty();
         boolean file2Empty = file[1][0] == null || file[1][0].isEmpty();

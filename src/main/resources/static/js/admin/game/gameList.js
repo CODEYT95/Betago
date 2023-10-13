@@ -1,19 +1,14 @@
-document.addEventListener('DOMContentLoaded', function () {
-
-    // 클래스가 "checkbox-input"인 모든 체크박스 가져오기
+document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.checkbox-input');
     const subscribeButton = document.getElementById('subscribeButton');
 
     // 어떤 체크박스라도 선택되었는지 확인
     function isAnyCheckboxChecked() {
-        const checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-        console.log('어떤 체크박스가 선택되었는가:', checked);
-        return checked;
+        return Array.from(checkboxes).some(checkbox => checkbox.checked);
     }
 
     // 체크박스 상태에 따라 "subscribeButton"의 상태 업데이트
     function updateSubscribeButtonState() {
-        console.log('버튼 상태 업데이트 중...');
         if (isAnyCheckboxChecked()) {
             subscribeButton.removeAttribute('disabled');
         } else {
@@ -21,20 +16,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // 체크박스 변경에 대한 이벤트 리스너 추가
     checkboxes.forEach((checkbox) => {
         checkbox.addEventListener('change', updateSubscribeButtonState);
     });
 
-    // 초기 로드 시 버튼 상태 업데이트
     updateSubscribeButtonState();
 
-    // 선택한 게임 번호를 저장할 배열
     const selectedGameNos = [];
 
-    // 체크박스 변경에 대한 이벤트 리스너 추가하여 선택한 게임 번호 추적
     checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', function () {
+        checkbox.addEventListener('change', function() {
             const gameNo = checkbox.getAttribute('data-game-no');
             if (checkbox.checked) {
                 selectedGameNos.push(Number(gameNo));
@@ -46,25 +37,33 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-});
- // <select> 요소를 가져옵니다.
-    var gameTitleSelect = document.getElementById("gameTitleSelect");
 
-    // <select> 요소의 변경 이벤트를 감지하고 선택한 값을 <option> 요소에 추가합니다.
+    const gameTitleSelect = document.getElementById("gameTitleSelect");
+    const searchButton = document.getElementById("searchButton");
+    const gameItems = document.querySelectorAll('.list-box li');
+
     gameTitleSelect.addEventListener("change", function() {
-        var selectedGameTitle = gameTitleSelect.options[gameTitleSelect.selectedIndex].text;
-
-        // 선택한 게임 제목을 "게임 선택" 옵션 아래에 표시합니다.
-        var defaultOption = gameTitleSelect.querySelector("option[value='game_title']");
+        const selectedGameTitle = gameTitleSelect.options[gameTitleSelect.selectedIndex].text;
+        const defaultOption = gameTitleSelect.querySelector("option[value='game_title']");
         defaultOption.textContent = selectedGameTitle;
     });
-    function submitForm() {
-            document.getElementById("searchForm").submit();
-        }
 
-    //구독하기 - 도훈
-    // 구독 버튼 클릭 시 처리
-    subscribeButton.addEventListener('click', function () {
+    searchButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const selectedGameTitle = gameTitleSelect.value;
+
+        gameItems.forEach(item => {
+            const gameTitle = item.getAttribute('data-game-title');
+            if (gameTitle === selectedGameTitle || !selectedGameTitle) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    subscribeButton.addEventListener('click', function() {
         const checkedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
         const selectedGameNo = Array.from(checkedCheckboxes).map(cb => cb.getAttribute('data-game-no'));
 
@@ -75,3 +74,4 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("게임을 선택하세요!");
         }
     });
+});

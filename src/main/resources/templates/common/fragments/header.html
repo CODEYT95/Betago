@@ -10,7 +10,7 @@
 <th:block th:fragment="headerFragment">
     <nav>
         <section class="header-navi">
-            <img th:src="@{/image/baduk5.png}" alt="Betago Header Image" class="header-image">
+            <img th:src="@{/image/baduk7.png}" alt="Betago Header Image" class="header-image">
             <i id="main_sideBtn" class='bx bx-menu'></i>
             <section class="header_top">
                 <span class="top_info">Betago를 보다 편리하고 안전하게 이용하세요.</span>
@@ -44,9 +44,9 @@
                                     <li><a href="#">바둑 영상</a></li>
                                 </ul>
                             </li>
-                            <li><a href="/notice/list">공지사항</a></li>
-                            <li><a href="/FAQ/list">FAQ</a></li>
-                            <li><a href="#">Q&A</a></li>
+                            <li><a th:href="@{/notice/list}">공지사항</a></li>
+                            <li><a th:href="@{/FAQ/list}">FAQ</a></li>
+                            <li><a th:href="@{/question/list}">Q&A</a></li>
                         </ul>
                     </li>
                     <li class="first_li">
@@ -61,12 +61,13 @@
                         <a th:href="@{/student/group/joinList}">학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
                         <ul class="learning-sub-menu sub-menu">
                             <li><a th:href="@{/student/group/joinList}">학습그룹 가입신청</a></li>
-                            <li><a th:href="@{/student/taskList}">숙제 진도 등록</a></li>
-                            <li><a th:href="@{/student/submitTaskList}">제출 숙제 목록</a></li>
+                            <li><a th:href="@{/student/group/joinList}">학습그룹 신청 내역</a></li>
+                            <li><a th:href="@{/student/taskList}">숙제 제출</a></li>
+                            <li><a th:href="@{/student/submitTaskList}">숙제 제출 목록</a></li>
                         </ul>
                     </li>
                     <li class="first_li">
-                        <a th:href="@{/educator/group/addList}"s>교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
+                        <a th:href="@{/educator/group/addList}">교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
                         <ul id="service" class="educator-sub-menu sub-menu">
                             <li><a th:href="@{/educator/group/addList}">학습그룹 등록</a></li>
                             <li><a th:href="@{/educator/group/list}">학습그룹 조회</a></li>

@@ -5,6 +5,8 @@ import com.bnw.beta.domain.member.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface MemberDAO {
@@ -30,4 +32,6 @@ public interface MemberDAO {
     //////////멤버 정보 불러오기///////////
     MemberDTO getMemberInfo(String member_id);
 
+    /*회원목록조회 관리자용*/
+    List<MemberDTO> memberlist();
 }

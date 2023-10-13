@@ -1,3 +1,7 @@
+.btn_file{
+    display: none;
+}
+
 @charset "UTF-8";
 .head {
     font-size: 18px;
@@ -6,7 +10,7 @@
     margin-bottom: 30px;
     line-height: 35px;
 }
-.edupost_category {
+.notice_category {
     height: 29px;
     border: 1px solid #d1d1d1;
     text-align: center;
@@ -15,6 +19,20 @@
     font-size: 16px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
     box-radius : 5px;
+}
+
+.type{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ccc;
+    border: 1px solid #888;
+}
+
+.view{
+    font-size: 16px;
 }
 .edupost_type {
     height: 29px;
@@ -37,7 +55,7 @@
 .texarea1 {
     border: 1px solid #d1d1d1;
     width: 80%;
-    margin-left: 10px;
+    margin-left: 58px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
     box-radius : 5px;
     font-size: 16px;
@@ -78,14 +96,11 @@
     bottom: 29px;
 }
 .btn_sub {
-    position: relative;
-    left: 45rem;
     width: 100px;
     height: 36px;
     color: white;
     background: black;
     cursor: pointer;
-    border: none;
 }
 .btn_update {
     border: none;
@@ -144,8 +159,31 @@ th, td {
 }
 
 .btn_box {
-    margin-bottom: 51px;
     position: relative;
     right: -372px;
     bottom: -30px;
+    text-align: center;
+}
+
+.btn{
+    text-align: center;
+}
+
+.drop-area {
+    width: 500px;
+    height: 150px;
+    border: 1px solid #d1d1d1;
+    padding: 10px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    border-radius : 5px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    margin-left: 102px;
+    margin-bottom: 25px;
+    background-color: white;
+}
+
+#here {
+    padding: 50px;
 }

@@ -143,6 +143,12 @@
     margin: 0.67em 0;
 }
 
+.guide {
+    margin: 0 0 15px 42px;
+    font-weight: bold;
+    color: #6360fd;
+}
+
 .member-name span {
     float: right;
     font-size: 19px;
@@ -156,7 +162,7 @@
 
 .data {
     font-weight: bold;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .task-content {

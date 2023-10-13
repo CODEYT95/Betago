@@ -108,16 +108,15 @@ public class EducatorGroupController {
     @GetMapping("approveList")
     public String approveStudent(@RequestParam(value = "page", defaultValue = "1") int page,
                                  @RequestParam(value = "size", defaultValue = "10") int size,
-                                 @RequestParam(value = "group_name", defaultValue = "바둑 기사 모여라3") String group_name,
-                                 Model model, HttpSession session){
-        int member_no = (int) session.getAttribute("member_no");
-
-        GroupPageDTO groupPageDTO = groupService.selectGroupApprove(member_no, group_name, page,size);
+                                 @RequestParam(value = "group_no", required = false) Integer group_no,
+                                 Model model, Principal principal){
+        GroupPageDTO groupPageDTO = groupService.selectGroupApprove(principal.getName(), group_no, page,size);
         model.addAttribute("currentPage", groupPageDTO.getCurrentPage());
         model.addAttribute("listCount", groupPageDTO.getListCount());
-        model.addAttribute("groupPageDTO", groupPageDTO);
-
-        return "/learning/group/educator/joinApprove/";
+        model.addAttribute("GroupPageDTO", groupPageDTO);
+        model.addAttribute("group_name", groupService.selectGroupName(principal.getName()));
+        model.addAttribute("check",group_no);
+        return "/learning/group/educator/joinApprove";
     }
 }
 
