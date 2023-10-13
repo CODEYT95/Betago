@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- 공통으로 쓰이는 CSS 및 JS 파일 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameSales.css}">
+    <script type="text/javascript" th:src="@{/js/admin/game/gameSales.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
     <link th:replace="~{common/fragments/config :: configFragment}"/>
 </head>
@@ -14,15 +16,15 @@
     <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="sales">
-            <div class="salesContent" style="margin-top: 88px; padding-bottom: 55px">
+            <div class="salesContent">
                 <div class="side-content" style="margin-bottom: 73px;">
                     <form name="gameContent" th:action="@{/game/gameSales}" method="get" style="margin-top: -95px;">
                         <div class="period">
                             <div class="searchPeriod">
                                 <div>조회기간</div>
                                 <div>
-                                    <input type="date" class="game_startsearch" id="game_startsearch">
-                                    <input type="date" class="game_endsearch" id="game_endsearch">
+                                    <input type="date" class="sales_startsearch" id="sales_startsearch">
+                                    <input type="date" class="sales_endsearch" id="sales_endsearch">
                                 </div>
                             </div>
                             <div class="unit">
@@ -34,12 +36,12 @@
                         </div>
                         <div>
                             <div th:each="game : ${salesList}" class="game">
-                                <div class="game_amount">총 매출액 :
-                                    <input type="number" class="game_amount" readonly th:value="${game.game_sell * game.game_sales}"/>
+                                <div class="sales_totalamount">총 매출액 :
+                                    <input type="number" class="sales_totalamount" readonly th:value="${game.game_sell * sales.sales_count}"/>
                                     <span>원</span>
                                 </div>
-                                <div class="game_sales">건수 :
-                                    <input type="number" class="game_sales" readonly th:value="${game.game_sales}" />
+                                <div class="sales_totalcount">건수 :
+                                    <input type="number" class="sales_totalcount" readonly th:value="${sales.sales_totalcount}"/>
                                     <span>개</span>
                                 </div>
                             </div>
@@ -72,15 +74,10 @@
                     </ul>
                     <!-- 나머지 li 태그들 추가 -->
                 </div>
-                <div>
-                <!--차트를 그릴 <canvas> 요소 추가-->
-                <canvas id="salesChart" width="400" height="400"></canvas>
-                </div>
             </div>
         </div>
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
-<script type="text/javascript" th:src="@{/js/admin/game/salesChart.js}"></script>
 </body>
 </html>
