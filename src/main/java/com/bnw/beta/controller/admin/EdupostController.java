@@ -50,23 +50,19 @@ public class EdupostController {
     //학습자료 목록
     @GetMapping("/list")
     public String postList(@RequestParam(value = "page", defaultValue = "1") int page,
-                           @RequestParam(value = "size", defaultValue = "5") int size,
+                           @RequestParam(value = "size", defaultValue = "2") int size,
                            @RequestParam(value = "searchType", defaultValue = "all") String searchType,
                            @RequestParam(value = "keyword", defaultValue = "") String keyword,
                            Model model) throws Exception {
-        System.out.println("키워드 : "+searchType);
-        int listCount = edupostService.count(searchType, keyword);
-        int totalPages = (int) Math.ceil((double) listCount / size);
-        page = Math.min(Math.max(1, page), totalPages);
-        List<EdupostDTO> edupostList = edupostService.edulist(page, size, searchType, keyword);
-        EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, page, size, edupostList);
 
-        edupostPageDTO.setSearchType(searchType);
-        edupostPageDTO.setKeyword(keyword);
+        System.out.println("페이지 : "+ page);
+        System.out.println("사이즈 :" + size);
+        EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, keyword);
 
-        model.addAttribute("currentPage", page);
-        model.addAttribute("listCount", listCount);
-        model.addAttribute("edupostPageDTO", edupostPageDTO);
+        System.out.println(edupostList.getListCount());
+        model.addAttribute("currentPage", edupostList.getCurrentPage());
+        model.addAttribute("listCount", edupostList.getListCount());
+        model.addAttribute("edupostPageDTO", edupostList);
         model.addAttribute("searchType", searchType);
         model.addAttribute("keyword", keyword);
             return "admin/edupost/eduboardlist";

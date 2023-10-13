@@ -16,6 +16,7 @@ public class EdupostPageDTO {
     private int startPage;
     private int endPage;
     private int startIndex;
+    private int listCount;
     private String searchType;
     private String keyword = "";
 

@@ -1,6 +1,7 @@
 package com.bnw.beta.domain.admin.dao;
 
 import com.bnw.beta.domain.admin.dto.EdupostDTO;
+import com.bnw.beta.domain.common.paging.EdupostPageDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
