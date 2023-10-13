@@ -1,0 +1,351 @@
+@charset "UTF-8";
+
+.select-menu-group{
+    width: auto;
+    margin-right: 16px;
+}
+.select-menu-group .select-btn-group{
+    display: flex;
+    height: 40px;
+    background: #fff;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 8px;
+    align-items: center;
+    cursor: pointer;
+    justify-content: space-between;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.select-btn i{
+    font-size: 25px;
+    transition: 0.3s;
+}
+.select-menu-group.active .select-btn i{
+    transform: rotate(-180deg);
+}
+.select-menu-group .options{
+    position: absolute;
+    padding: 10px;
+    margin-top: 10px;
+    width: 150px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,0.1);
+    display: none;
+    transition: max-height 0.5s ease-in-out;
+    z-index: 3;
+}
+.select-menu-group.active .options{
+    display: block;
+}
+.options .option{
+    display: flex;
+    height: 45px;
+    cursor: pointer;
+    padding: 0 16px;
+    border-radius: 8px;
+    align-items: center;
+    background: #fff;
+}
+.options .option:hover{
+    background: #F3D973;
+}
+.option i{
+    font-size: 25px;
+    margin-right: 12px;
+}
+.option .option-text{
+    font-size: 18px;
+    color: #333;
+}
+.keyword-container h2{
+    margin-right: 15px;
+    line-height: 44px;
+}
+.select-menu-group .options{
+    max-height: 0;
+    overflow: hidden;
+}
+
+.select-menu-group.active .options {
+    width: auto;
+    z-index: 4;
+    max-height: max-content;
+}
+
+@keyframes slideDown {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 200px;
+    }
+}
+
+.content-header{
+    display: flex;
+    justify-content: space-around;
+}
+
+.content-header > div{
+    margin: 0;
+}
+
+.content-header div:first-child {
+
+}
+
+.main-table{
+    display: flex;
+    width: 100%;
+    justify-items: center;
+    flex-direction: column;
+}
+
+.table-title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+th, td {
+    text-align: center;
+    padding: 2px;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.t_no, .list_no{
+    position: relative;
+    width: 8%;
+}
+
+.t_name, .list_name{
+    position: relative;
+    width: 20%;
+}
+
+.t_phone, .list_phone{
+    position: relative;
+    width: 25%;
+}
+
+.t_date, .list_date{
+    position: relative;
+    width: 28%;
+}
+
+.t_approve, .list_approve{
+    position: relative;
+    width: 10%;
+}
+
+.t_reject, .detailBtn-reject{
+    position: relative;
+    width: 9%;
+}
+
+.detailBtn {
+    border: none;
+    border-radius: 5px;
+    font-size: 22px;
+    color: #222;
+    cursor: pointer;
+}
+
+.tr-list td{
+    border-radius: 0px;
+}
+
+thead {
+    background: #b2d3ff;
+    line-height: 40px;
+}
+
+table {
+    table-layout: fixed;
+    width: 95%;
+    margin-bottom: 20px;
+    padding: 18px;
+    overflow-y: scroll;
+    margin-top: 10px;
+    border: 1px solid #D9E0E3;
+    border-radius: 10px;
+    box-shadow: 6px 7px 10px 1px #b9b9b947;
+}
+
+tr:nth-child(even) {background-color: #e4e9ec;}
+
+.table-head tr {
+    align-items: center;
+    justify-content: space-around;
+  }
+
+.main-table ul{
+    width: 100%;
+    height: 35px;
+}
+
+.tbody-container {
+    line-height: 35px;
+    padding: 3px;
+    margin: 3px;
+    border-bottom: 1px solid #ccc;
+}
+.tbody-container tr{
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.main-table li{
+    display: flex;
+    line-height: 18px;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+    width: 35px;
+    height: 30px;
+}
+
+#pagination{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.pagination-container a {
+    float: left;
+    text-decoration: none;
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius : 5px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.active-page {
+    background: #b2d3ff;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.checkbox-wrap {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-wrap input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark:after {
+    content: "\f0c8";
+    font-family: "FontAwesome";
+    position: relative;
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 25px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+
+.checkbox-wrap input:checked ~ .checkmark:after {
+    display: block;
+    content: "\f14a";
+    font-family: "FontAwesome";
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-wrap {
+    color: #40bfc1;
+}
+
+.checkbox-wrap input:checked ~ .checkmark:after {
+    color: #456CD9;
+}
+
+.checkmark{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.checkbox-wrap2 {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-wrap2 input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark2:after {
+    content: "\f0c8";
+    font-family: "FontAwesome";
+    position: relative;
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 25px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+
+.checkbox-wrap2 input:checked ~ .checkmark2:after {
+    display: block;
+    content: "\f2d3";
+    font-family: "FontAwesome";
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-wrap2 {
+    color: #40bfc1;
+}
+
+.checkbox-wrap2 input:checked ~ .checkmark2:after {
+    color: #d94545;
+}
+
+.checkmark2{
+    display: flex;
+    justify-content: center;
+}

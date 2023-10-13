@@ -121,14 +121,14 @@ public class GroupServiceImpl implements GroupService {
 
     //그룹 학생 가입 승인 목록
     @Override
-    public GroupPageDTO selectGroupApprove(int member_no, String game_name, int pageNum, int size){
+    public GroupPageDTO selectGroupApprove(String member_id, Integer group_no, int pageNum, int size){
         if(pageNum <= 0){
             pageNum = 1;
         }
         int offset = (pageNum - 1) * size;
 
-        List<GroupDTO> groupList = groupDAO.selectGroupApprove(member_no, game_name, offset, size);
-        int listCount = groupDAO.selectGroupApproveCount(member_no, game_name);
+        List<GroupDTO> groupList = groupDAO.selectGroupApprove(member_id, group_no, offset, size);
+        int listCount = groupDAO.selectGroupApproveCount(member_id, group_no);
 
         GroupPageDTO groupPageDTO = new GroupPageDTO(listCount, pageNum, size, groupList);
         groupPageDTO.setListCount(listCount);
