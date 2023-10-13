@@ -77,7 +77,7 @@
         border-radius: 5px;
         cursor: pointer;
         width: 300px;
-        margin-left: 333px;
+        margin-left: 300px;
     }
 
     .form-group1 input[type="submit"]:hover {
@@ -88,8 +88,7 @@
     border:1px solid red;
     }
     .thumbnail{
-        width: 100%;
-            border: 1px solid red;
+            width: 100%;
             display: flex;
             height: 70px;
             justify-content: start;
@@ -104,10 +103,12 @@
            font-weight: bold;
     }
     .tn{
-      border: 1px solid black;
       display: flex;
       margin: 0;
       padding: 9px;
+      font-weight: bold;
+      font-size: 14px;
+      padding-left: 0;
 
     }
 
@@ -116,7 +117,6 @@
 
 
     .filebox{
-        border:1px solid red;
         margin-left: 10px;
         display: flex;
     }
@@ -140,6 +140,7 @@
     cursor: pointer;
     height: 40px;
     margin-left: 10px;
+    white-space: nowrap;
 }
 
 
@@ -152,3 +153,4 @@
        overflow: hidden;
        border: 0;
 }
+
