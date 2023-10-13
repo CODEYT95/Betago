@@ -97,4 +97,20 @@ public class MemberServiceImpl implements MemberService {
 
         return memberDAO.getMemberInfo(member_id);}
 
+
+    //////////멤버 ROLE 불러오기/////////// 김현민
+    public String getRoleById(String member_id) {
+        MemberDTO member = memberDAO.getRoleById(member_id);
+        return member.getRole();
+    }
+
+    //////////로그인된 아이디 불러오기/////////// 김현민
+    public MemberDTO loginByUsername(String username) {
+        return memberDAO.loginByUsername(username);
+
+    }
+
+
+
+
 }

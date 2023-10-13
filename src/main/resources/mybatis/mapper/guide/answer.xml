@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bnw.beta.domain.guide.dao.AnswerDAO">
+
+<insert id="insertAnswer" parameterType="AnswerDTO">
+    INSERT INTO answer (qna_no, ans_content, ans_regdate, member_id)
+    VALUES (#{qna_no}, #{ans_content}, #{ans_regdate}, #{member_id});
+</insert>
+
+</mapper>

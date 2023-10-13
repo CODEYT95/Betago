@@ -14,9 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
+
     @Autowired
     private QuestionDAO questionDAO;
 
@@ -50,10 +53,11 @@ public class QuestionServiceImpl implements QuestionService {
             String storedPath = storeFile(file);  // 파일 저장
             System.out.println("파일저장완료" + file);
             FileQuestionDTO fileQuestion = new FileQuestionDTO();
-//            fileQuestion.setQna_no(qna_no);
-//            fileQuestion.setFilequ_name(file.getOriginalFilename());
-//            fileQuestion.setFilequ_rename(storedPath);
-//            fileQuestion.setFilequ_path(storedPath);
+            fileQuestion.setQna_no(qna_no);
+            fileQuestion.setFilequ_name(file.getOriginalFilename());
+            fileQuestion.setFilequ_rename(storedPath);
+            fileQuestion.setFilequ_path(storedPath);
+            /*주석처리 하지말아주세요*/
 
 
             questionDAO.insertFileQuestion(fileQuestion);  // 파일 정보 데이터베이스에 저장
@@ -61,9 +65,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
 
+
+
     public QuestionDTO selectQuestion(Integer qna_no) {
         return questionDAO.selectQuestionById(qna_no);
     }
+
+    public List<QuestionDTO> getQuestionInfo(Integer id){
+        return questionDAO.getQuestionInfo(id);
+    };
 
     public void modify(QuestionDTO question, String subject, String content, String pw, MultipartFile file) {
         question.setQna_title(subject);
@@ -71,6 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setQna_pw(pw);
         question.setQna_regdate(LocalDateTime.now());
         questionDAO.updateQuestion(question);
+        System.out.println("Received password: " + pw);
 
         if (file != null && !file.isEmpty()) {
             questionDAO.deleteFileQuestion(question.getQna_no());
@@ -99,12 +110,18 @@ public class QuestionServiceImpl implements QuestionService {
         questionDAO.deleteQuestion(question.getQna_no());
     }
     */
-    public void delete(QuestionDTO question) {
+    /*public void delete(QuestionDTO question) {
         // 먼저 파일 정보를 삭제
         questionDAO.deleteFileQuestion(question.getQna_no());
         // 그 다음 질문 정보 삭제
         questionDAO.deleteQuestion(question.getQna_no());
+
+    }*/
+
+    public void deleteY(QuestionDTO question){
+    questionDAO.deleteQuestionY(question.getQna_no());
     }
+
     /*파일삭제*/
 
 
@@ -127,5 +144,7 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDAO.getQuestionById(id);
     }
 */
+
+
 
 }

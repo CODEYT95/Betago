@@ -15,12 +15,14 @@ public interface QuestionService {
 
     QuestionDTO selectQuestion(Integer qna_no);
 
+    List<QuestionDTO> getQuestionInfo(Integer id);
+
     /*기존꺼
     void add(String subject, String content, MemberDTO memberDTO);*/
     void add(String subject, String content, String pw, MultipartFile file, MemberDTO memberDTO);
 
 
-    void delete(QuestionDTO question);
+    void deleteY(QuestionDTO question);
 
     public String storeFile(MultipartFile file);
 
@@ -28,6 +30,7 @@ public interface QuestionService {
 
 
     boolean isPasswordCorrect(Integer id, String inputPw);
+
 
 
 }

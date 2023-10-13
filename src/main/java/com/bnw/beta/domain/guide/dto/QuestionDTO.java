@@ -16,7 +16,13 @@ public class QuestionDTO {
     private String member_id;
     private LocalDateTime qna_regdate;
 
-    //private List<FileQuestionDTO> questionfiles;
+    private List<FileQuestionDTO> questionfiles;
+    /*주석하지말아주세요*/
 
+    private List<AnswerDTO> answerList;
 
+    //댓글 컬럼
+    private int ans_no;
+    private String ans_content;
+    private LocalDateTime ans_regdate;
 }
