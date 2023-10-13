@@ -21,7 +21,7 @@
     <!--월간 (일일 단위 매출조회)-->
    <select id="selectDailySales" resultType="SalesDTO">
         <![CDATA[
-            select DATE_FORMAT(pay_date, '%Y-%m-%d') AS date, sales_count, SUM(sales_count * game_sell) AS sales_amount
+            select DATE_FORMAT(pay_date, '%Y-%m-%d') AS sales_date, sales_count, sales_amount
             from sales s
             join game g ON s.game_no = g.game_no
             where pay_date between #{sales_startsearch} and #{sales_endsearch}
@@ -32,7 +32,7 @@
     <!--년간 (월 단위 매출조회)-->
     <select id="selectMonthlySales" resultType="SalesDTO">
         <![CDATA[
-            select DATE_FORMAT(pay_date, '%Y-%m') AS date, sales_count, SUM(sales_count * game_sell) AS sales_amount
+            select DATE_FORMAT(pay_date, '%Y-%m') AS sales_date, sales_count, sales_amount
             from sales s
             where pay_date between #{sales_startsearch} and #{sales_endsearch}
             group by DATE_FORMAT(pay_date, '%Y-%m')
@@ -47,8 +47,6 @@
             where game_title = #{game_title}
         ]]>
     </select>
-
-
 </mapper>
 
 

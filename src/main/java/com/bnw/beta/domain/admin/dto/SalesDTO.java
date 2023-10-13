@@ -7,12 +7,7 @@ import java.util.Date;
 
 @Data
 public class SalesDTO {
-
-    private int sales_no;
-    private int game_no;
     private int sales_amount;
     private int sales_count;
-    private Date sales_startsearch;
-    private Date sales_endsearch;
-    private Date pay_date;
+    private Date sales_date;
 }
