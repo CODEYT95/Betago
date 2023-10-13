@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     return true;
 });
+});
 
 function validateForm() {
     var buyerName = document.getElementById("buyer-name").value;
@@ -129,7 +130,7 @@ function validatePhone(phone) {
 
     return /^\d+$/.test(phone);
 }
-}); // 이 부분에 주석을 닫아주어야 합니다.
+
 
 function handleCheckboxChange(checkbox) {
     if (checkbox.checked) {
@@ -205,17 +206,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
      //태그 삭제시 url 업데이트 해주는 함수
      function updateUrl() {
-         let newUrl = 'http://localhost:8800/cartList?game_no=' + gameNos.join(',');
-         window.history.replaceState({}, null, newUrl);
+         let newUrl = 'http://localhost:8800/cartList?game_nos=' + gameNos.join(',');
+         window.history.pushState({}, null, newUrl);
      }
      //가격 업데이트 해주는 함수
      function updateTotalPrice() {
          var productListSpan = document.querySelector('span[name=productName].mypaylist');
          productListSpan.textContent = Math.round(totalPrice) + "원";
      }
-
-     backButton.addEventListener('click', function () {
-         // 이전 페이지로 돌아감
-         window.history.back();
-     });
 });
