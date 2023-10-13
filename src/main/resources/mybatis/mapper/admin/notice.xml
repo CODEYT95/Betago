@@ -66,9 +66,11 @@
 
     <!--게시글 목록 조회-->
     <select id="noticeList"  parameterType="NoticeDTO">
-        SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type
+        <![CDATA[
+        SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type, notice_reservation
         FROM notice
-        WHERE notice_isshow = 'Y' AND type = '일반' AND DATEDIFF(notice_reservation, NOW()) > 0;
+        WHERE notice_isshow = 'Y' AND type = '일반' AND (notice_reservation < now() OR notice_reservation is null)
+        ]]>
         <if test='searchType.equals("notice_title")'>
             AND notice_title LIKE CONCAT('%', #{keyword}, '%')
         </if>
@@ -78,8 +80,11 @@
         <if test='searchType.equals("title_content")'>
             AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
         </if>
+        <![CDATA[
         ORDER BY notice_regdate DESC
         LIMIT #{page}, #{size};
+        ]]>
+
     </select>
 
     <!--예약글 조회-->
@@ -88,7 +93,7 @@
     <select id="noticeTop" parameterType="NoticeDTO">
         <![CDATA[
         SELECT * FROM notice
-        WHERE notice_isshow = 'Y' AND (type = 'upView' OR type ='upView,allView')
+        WHERE notice_isshow = 'Y' AND (type = 'upView' OR type ='upView,allView') AND (notice_reservation < now() OR notice_reservation IS NULL)
         ORDER BY notice_regdate DESC
         LIMIT 0, 3;
         ]]>
