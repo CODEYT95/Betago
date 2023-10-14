@@ -49,12 +49,9 @@ public class JoinController {
 
     //회원가입 처리
     @PostMapping("/join")
-    public String memberJoin(@Valid JoinForm joinForm, BindingResult bindingResult, HttpSession session,
+    public String memberJoin(@Valid JoinForm joinForm, HttpSession session,
                              @RequestParam("member_birth") String birth,Model model) {
-
-        if(bindingResult.hasErrors()) {
-            return "/member/join/join";
-        }
+        System.out.println("또 왜 안되누");
 
         //생년월일 session에 담기
         JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");
@@ -93,14 +90,10 @@ public class JoinController {
         return cnt;
     }
 
-
-
-    
     //이용약관 팝업창 띄우기
     @GetMapping("/check/{checkId}")
     public String openPopup(@PathVariable String checkId) {
         System.out.println(checkId);
-        return "member/join/" + checkId;
+        return "member/join/join" + checkId;
     }
-
 }

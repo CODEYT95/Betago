@@ -194,6 +194,12 @@ select[name="dd"] {
     font-size: 20px;
 }
 
+button:disabled {
+    background-color: #CCCCCC; /* 비활성화 시 배경색 변경 */
+    color: #999999; /* 비활성화 시 텍스트 색상 변경 */
+    cursor: not-allowed; /* 비활성화 시 커서 모양 변경 */
+}
+
 /*id중복체크 안내 메세지*/
 .id_ok{
     color:red;

@@ -39,43 +39,50 @@
                 <span class="spanName">아이디</span> <input type="text" class="idInput" id="id" th:field="*{member_id}" onchange = "checkId()" placeholder="아이디를 입력하세요.">
                 <span class="id_ok">사용 가능한 아이디입니다.</span>
                 <span class="id_already">이미 사용중인 아이디입니다.</span>
+                <span class="id_required" style="display: none; color: red;">아이디를 입력해주세요.</span>
+                <span class="id_pattern" style="display: none; color: red;">아이디는 영어 소문자와 숫자를 사용하여 4~20자리여야 합니다.</span>
                 <br/>
 
-                <span class="spanName">비밀번호</span><input type="password" id="pw" class="pwInput" th:field="*{member_pw}" placeholder="비밀번호를 입력하세요."><br/>
+                <span class="spanName">비밀번호</span><input type="password" id="pw" class="pwInput" th:field="*{member_pw}" placeholder="비밀번호를 입력하세요.">
+                <span class="pw_required" style="display: none; color: red;">비밀번호를 입력해주세요.</span>
+                <span class="pw_pattern" style="display: none; color: red;">비밀번호는 최소 8자 이상, 영어, 숫자, 특수 문자가 포함되어야 합니다.</span><br/>
 
-                <span class="spanName">비밀번호 확인</span><input type="password" id="repw" class="pwReInput" th:field="*{member_repw}" onchange = "checkPwd()" placeholder="비밀번호를 확인해주세요."><br/>
+                <span class="spanName">비밀번호 확인</span><input type="password" id="repw" class="pwReInput" th:field="*{member_repw}" onchange = "checkPwd()" placeholder="비밀번호를 확인해주세요.">
                 <span class="pwCheck">입력하신 비밀번호와 일치하지 않습니다.</span><br/>
 
-                <div class="birth">
+                <div class="birth" id="info__birth">
                 <input type="hidden" name="member_birth" id="member_birth" th:field="*{member_birth}">
                 <span class="birthName">생년월일</span>
                 <select name="yy" id="year"><option disabled selected>출생 연도</option></select>
                 <select name="mm" id="month"><option disabled selected>월</option></select>
                 <select name="dd" id="day"><option disabled selected>일</option></select><br/>
+                    <div class="error-msg"></div>
                 </div>
 
                 <!--  인증 정보에 없는 값의 input이 보여져야함.  -->
                 <div id="phoneField">
                     <span class="spanName">휴대폰번호</span>
-                    <input type="text" class="phoneInput" th:field="*{member_phone}" placeholder="휴대폰번호를 입력해주세요."><br/>
-                </div>
+                    <input type="text" class="phoneInput" id="phone" th:field="*{member_phone}" placeholder="휴대폰번호를 입력해주세요.">
+                    <span class="phone_required" style="display: none; color: red;">핸드폰번호를 입력해주세요.</span>
+                    <span class="phone_pattern" style="display: none; color: red;">-(하이픈)을 제외한 10~11자리의 핸드폰 번호를 입력해주세요.</span>
+                </div><br/>
 
                 <div id="emailField">
                     <span class="emailName">이메일</span>
-                    <input type="text" class="emainInput" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
-                    <div class="err06" th:if="${#fields.hasErrors('member_email')}">
-                        <span th:errors="*{member_email}"></span>
-                    </div>
+                    <input type="text" class="emainInput" id="email" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
+                    <span class="email_required" style="display: none; color: red;">이메일을 입력해주세요.</span>
+                    <span class="email_pattern" style="display: none; color: red;">이메일을 다시 확인해주세요.</span>
                 </div>
 
                 <label>
                     <span class="spanName">회원유형</span>
                     <select th:field="*{role}" class="role">
                         <option value="">회원 유형을 선택해주세요.</option>
-                        <option value="ROLE_ADMIN">관리자</option>
-                        <option value="ROLE_TEACHER">선생님</option>
+                        <option value="ROLE_ADMIN" >관리자</option>
+                        <option value="ROLE_TEACHER" >선생님</option>
                         <option value="ROLE_USER">학생</option>
                     </select>
+                    <span class="role_required" style="display: none; color: red;">회원 유형을 선택해주세요.</span>
                 </label><br/>
 
 
@@ -202,9 +209,43 @@
         }
     });
 
+    //아이디 유효성
+    $("#id").keyup(function() {
+        var idValue = $(this).val();
+        var idPattern = /^(?=.*[a-z])(?=.*\d)[a-z0-9]{4,20}$/;
+        var id_ok = $(".id_ok");
+        var id_required = $(".id_required");
+        var id_pattern = $(".id_pattern");
+
+        if (idValue === "") {
+            id_required.show();
+            id_pattern.hide();
+            id_ok.hide();
+            return;
+        }
+
+        if (!idPattern.test(idValue)) {
+            id_required.hide();
+            id_pattern.show();
+            id_ok.hide();
+            return;
+        }
+
+        id_required.hide();
+        id_pattern.hide();
+        id_ok.show();
+
+        //아이디 중복검사
+        checkId(idValue);
+    });
+
     //아이디 동기화방식 중복체크
     function checkId(){
         var id = $('#id').val();
+        if (idValue === "") {
+            // 아이디가 비어있으면 중복 검사를 실행하지 않음
+            return;
+        }
         $.ajax({
             url:'idCheck', //controller요청주소
             type:'post',
@@ -226,6 +267,30 @@
         });
     }
 
+    //비밀번호 유효성
+    $("#pw").keyup(function() {
+        var pwValue = $(this).val();
+        var pwPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        var pw_required = $(".pw_required");
+        var pw_pattern = $(".pw_pattern");
+
+        if (pwValue === "") {
+            pw_required.show();
+            pw_pattern.hide();
+            return;
+        }
+
+        if (!pwPattern.test(pwValue)) {
+            pw_required.hide();
+            pw_pattern.show();
+            return;
+        }
+
+        pw_required.hide();
+        pw_pattern.hide();
+
+    });
+
     //비밀번호 일치여부 확인
     function checkPwd(){
         var pw = $("#pw").val();
@@ -238,5 +303,164 @@
         }
     }
 
-    //
+    //생년월일 유효성
+    const birthArr = [-1, -1, -1];
+    const birthErrorMsgEl = document.querySelector('.error-msg');
+
+    const birthYearEl = document.querySelector('#year');
+    const birthMonthEl = document.querySelector('#month');
+    const birthDayEl = document.querySelector('#day');
+
+    birthYearEl.addEventListener('change', () => {
+        birthArr[0] = birthYearEl.value;
+        checkBirthValid(birthArr);
+    });
+
+    birthMonthEl.addEventListener('change', () => {
+        birthArr[1] = birthMonthEl.value;
+        checkBirthValid(birthArr);
+    });
+
+    birthDayEl.addEventListener('change', () => {
+        birthArr[2] = birthDayEl.value;
+        checkBirthValid(birthArr);
+    });
+
+    function checkBirthValid(birthArr) {
+        let isBirthValid = true;
+        const y = parseInt(birthArr[0]);
+        const m = parseInt(birthArr[1]);
+        const d = parseInt(birthArr[2]);
+
+        if (y > 0 && m > 0 && d > 0) {
+            if (m === 4 || m === 6 || m === 9 || m === 11) {
+                if (d === 31) {
+                    isBirthValid = false;
+                }
+            } else if (m === 2) {
+                if (((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0)) {
+                    if (d > 29) {
+                        isBirthValid = false;
+                    }
+                } else {
+                    if (d > 28) {
+                        isBirthValid = false;
+                    }
+                }
+            } else {
+                if (d > 31) {
+                    isBirthValid = false;
+                }
+            }
+
+            if (isBirthValid) {
+                birthErrorMsgEl.textContent = "";
+                // 이 부분에서 생년월일을 취합할 수 있습니다.
+                const birthDate = y + '-' + (m < 10 ? '0' : '') + m + '-' + (d < 10 ? '0' : '') + d;
+                document.getElementById('member_birth').value = birthDate;
+            } else {
+                birthErrorMsgEl.textContent = "생년월일을 다시 확인해주세요";
+                birthErrorMsgEl.style.color = "red";
+                document.getElementById('member_birth').value = "";
+            }
+        }
+    }
+
+    //핸드폰번호 유효성
+    $("#phone").keyup(function() {
+        var phoneValue = $(this).val();
+        var phonePattern = /^01[016789]\d{3,4}\d{4}$/;
+        var phone_required = $(".phone_required");
+        var phone_pattern = $(".phone_pattern");
+
+        if (phoneValue === "") {
+            phone_required.show();
+            phone_pattern.hide();
+            return;
+        }
+
+        if (!phonePattern.test(phoneValue)) {
+            phone_required.hide();
+            phone_pattern.show();
+            return;
+        }
+
+        phone_required.hide();
+        phone_pattern.hide();
+    });
+
+    //이메일 유효성
+    $("#email").keyup(function() {
+        var emailValue = $(this).val();
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        var email_required = $(".email_required");
+        var email_pattern = $(".email_pattern");
+
+        if (emailValue === "") {
+            email_required.show();
+            email_pattern.hide();
+            return;
+        }
+
+        if (!emailPattern.test(emailValue)) {
+            email_required.hide();
+            email_pattern.show();
+            return;
+        }
+
+        email_required.hide();
+        email_pattern.hide();
+    });
+
+    //회원유형 유효성
+    $(document).ready(function () {
+        var roleSelect = $(".role");
+        var roleRequired = $(".role_required");
+
+        roleSelect.change(function () {
+            var selectedRole = roleSelect.val();
+
+            // 유효성 검사
+            if (selectedRole === "") {
+                roleRequired.show();
+            } else {
+                roleRequired.hide();
+            }
+        });
+    });
+
+    // 회원가입 버튼 비활성화
+    $(document).ready(function () {
+        // 회원가입 버튼과 필드를 선택합니다.
+        var submitButton = $("button[type='submit']");
+        var fields = $("input[type='text'], input[type='password'], select");
+        var telNumberSelect = $("#telNumberSelect");
+
+        // 초기에 버튼을 비활성화합니다.
+        submitButton.prop("disabled", true);
+
+        // 필드가 변경될 때마다 확인합니다.
+        fields.on("change keyup", function () {
+            var allFieldsFilled = true;
+
+            // 각 필드를 확인합니다.
+            fields.each(function () {
+                if ($(this).val() === "") {
+                    allFieldsFilled = false;
+                    return false; // 하나라도 빈 필드가 있으면 종료합니다.
+                }
+            });
+
+            // 모든 필드가 값으로 채워졌을 때 버튼을 활성화합니다.
+            if (allFieldsFilled || (telNumberSelect.val() === "none")) {
+                submitButton.prop("disabled", false);
+            } else {
+                submitButton.prop("disabled", true);
+            }
+        });
+    });
+
+
+
+
 </script>
