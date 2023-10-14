@@ -11,15 +11,28 @@
         order by game_no desc;
         ]]>
     </select>
-    <!--게임콘텐츠 등록-->
-    <insert  id="insertGame" parameterType="GameDTO">
-            <![CDATA[
-                insert into game (game_title, game_level, game_date, game_total,
-                game_price,game_discount, game_sell, game_content, member_id)
-                values (#{game_title}, #{game_level}, #{game_date}, #{game_total}
-                , #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id});
-                ]]>
+    
+   <!--게임콘텐츠 등록-->
+    <insert id="insertGame" parameterType="GameDTO">
+        <selectKey keyProperty="game_no" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        <![CDATA[
+        INSERT INTO game (game_title, game_level, game_date, game_total,
+          game_price, game_discount, game_sell, game_content, member_id)
+        VALUES (#{game_title}, #{game_level}, #{game_date}, #{game_total},
+          #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id})
+        ]]>
     </insert>
+
+    <!-- 게임콘텐츠 썸네일 Insert -->
+    <insert id="insertGameImage" parameterType="GameDTO">
+        <![CDATA[
+        INSERT INTO filegame (game_no, filegame_name, filegame_path, filegame_date)
+        VALUES (#{game_no}, #{filegame_name}, #{filegame_path}, now())
+        ]]>
+    </insert>
+    
     <!--월간 (일일 단위 매출조회)-->
    <select id="selectDailySales" resultType="GameDTO">
         <![CDATA[
