@@ -18,22 +18,6 @@ public class PayController {
     @Autowired
     private PayService payService;
 
-    /*
-    @PostMapping(value = "/addCart")
-    public String addToCart(@RequestParam("selectedGameNos") int[] selectedGameNos, String member_id) {
-        member_id="dumy";
-        StringBuilder redirectUrl = new StringBuilder("redirect:/cartList?");
-        for (int gameNo : selectedGameNos) {
-            redirectUrl.append("GameNos=").append(gameNo);
-
-            payService.insertIntoCart(gameNo, member_id);
-        }
-
-        // "/cartList"로 바로 리다이렉트
-        return "redirect:/cartList";
-    }
-*/
-    //제가 한 컨트롤러
     @GetMapping("/cartList")
     public String cartList(Model model, @RequestParam("game_no") List<Integer> game_no) {
         List<payDTO> cartlist = payService.selectBuylist(game_no);
@@ -56,6 +40,6 @@ public class PayController {
             System.out.println(payDTO);
             payService.insertIntoPay(payDTO);
         }
-        return "redirect:/subscribe/paylist";
+        return "redirect:/list";
     }
 }
