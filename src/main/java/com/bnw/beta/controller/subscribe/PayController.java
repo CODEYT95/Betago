@@ -23,7 +23,6 @@ public class PayController {
     public String cartList(Model model, @RequestParam("game_no") List<Integer> game_no) {
         List<payDTO> cartlist = payService.selectBuylist(game_no);
         model.addAttribute("cartlist", cartlist);
-        System.out.println(cartlist);
         return "subscribe/pay";
     }
 
