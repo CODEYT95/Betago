@@ -56,10 +56,10 @@
                         <table>
                         <div id="salesTable">
                             <tr>
-                                <td>No</td>
-                                <td>일/월</td>
-                                <td>건수</td>
-                                <td>매출금액</td>
+                                <td class="table-header">No</td>
+                                <td class="table-header">일/월</td>
+                                <td class="table-header">건수</td>
+                                <td class="table-header">매출금액</td>
                             </tr>
                             <tr th:each="sales : ${saleslist}">
                                 <td th:text="${sales.sales_no}"></td>

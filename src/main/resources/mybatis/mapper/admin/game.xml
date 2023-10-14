@@ -19,24 +19,28 @@
                 ]]>
     </insert>
     <!--월간 (일일 단위 매출조회)-->
-   <select id="selectDailySales" resultType="SalesDTO">
+   <select id="selectDailySales" resultType="GameDTO">
         <![CDATA[
-            select DATE_FORMAT(pay_date, '%Y-%m-%d') AS sales_date, sales_count, sales_amount
-            from sales s
-            join game g ON s.game_no = g.game_no
-            where pay_date between #{sales_startsearch} and #{sales_endsearch}
-            group by DATE_FORMAT(pay_date, '%Y-%m-%d')
-            order by DATE_FORMAT(pay_date, '%Y-%m-%d') desc;
+            SELECT
+            DATE(pay_date) AS sale_date,
+            SUM(game_sell) AS total_sales
+            FROM pay
+            WHERE
+            DATE(pay_date) = '특정날짜'
+            GROUP BY
+            DATE(pay_date);
         ]]>
    </select>
     <!--년간 (월 단위 매출조회)-->
-    <select id="selectMonthlySales" resultType="SalesDTO">
+    <select id="selectMonthlySales" resultType="GameDTO">
         <![CDATA[
-            select DATE_FORMAT(pay_date, '%Y-%m') AS sales_date, sales_count, sales_amount
-            from sales s
-            where pay_date between #{sales_startsearch} and #{sales_endsearch}
-            group by DATE_FORMAT(pay_date, '%Y-%m')
-            order by DATE_FORMAT(pay_date, '%Y-%m') desc;
+            SELECT
+            DATE_FORMAT(pay_date, '%Y-%m') AS sale_month,
+            SUM(game_sell) AS total_sales
+            FROM
+            pay
+            GROUP BY
+            DATE_FORMAT(pay_date, '%Y-%m');
         ]]>
     </select>
 <!--게임콘텐츠 제목 검색-->
