@@ -23,7 +23,7 @@ public class NoticeController {
     //리스트 목록 + 페이징 + 검색
     @GetMapping("/notice/list")
     public String noticeList(@RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "size", defaultValue = "10") int size,
+                             @RequestParam(value = "size", defaultValue = "7") int size,
                              @RequestParam(value = "searchType", defaultValue = "all") String searchType,
                              @RequestParam(value = "keyword", defaultValue = "") String keyword,
                              Model model) {
@@ -32,11 +32,11 @@ public class NoticeController {
         System.out.println("Ddd"+topNoticeList);
 
         NoticePage noticePage = noticeService.noticeList(page, size, searchType, keyword);
-
-
         noticePage.setKeyword(keyword);
         noticePage.setSearchType(searchType);
-        noticePage.setTopNoticeList(topNoticeList);
+
+        // 모든 게시물 목록을 모델에 추가
+        model.addAttribute("allNoticeList", noticePage.getAllNoticeList());
 
         model.addAttribute("currentPage", page);
         model.addAttribute("noticePage", noticePage);
@@ -58,7 +58,7 @@ public class NoticeController {
     public String noticeWrite(@ModelAttribute NoticeDTO noticeDTO,
                               @RequestParam("file") MultipartFile[][] file,
                               @RequestParam(name = "type", defaultValue = "일반") String type,
-                              @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")Date timeWrite,
+                              @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")Date timeWrite,
                               Model model, Principal principal) throws IOException {
         noticeDTO.setMember_id(principal.getName());
         System.out.println(noticeDTO);

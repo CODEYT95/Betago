@@ -40,6 +40,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         NoticePage noticePage = new NoticePage(listCnt,pageNum,size,allNoticeList, topNoticeList,searchType,keyword);
         noticePage.setListCnt(listCnt);
+        noticePage.setAllNoticeList(noticeList);
         return noticePage;
     }
     //상단 고정 게시물

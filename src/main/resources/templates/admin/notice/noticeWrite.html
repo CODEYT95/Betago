@@ -129,5 +129,22 @@
     // 내일 날짜를 min 속성에 설정
     document.getElementById("upDateChoice").setAttribute("min", tomorrowFormatted);
 
+    //등록일시 체크 여부
+    document.getElementById('btn').addEventListener('click', function (e) {
+        // upLoadNow 체크박스의 상태 가져오기
+        var upLoadNowCheckbox = document.getElementById('upLoadNow');
+        var upLoadNowChecked = upLoadNowCheckbox.checked;
+
+        // upDateChoice 입력 필드의 값 가져오기
+        var upDateChoiceInput = document.getElementById('upDateChoice');
+        var upDateChoiceValue = upDateChoiceInput.value;
+
+        // upLoadNow 또는 upDateChoice 중 하나 이상이 선택되었는지 확인
+        if (!upLoadNowChecked && upDateChoiceValue === '') {
+            alert('즉시등록 또는 게시일자를 선택해야 합니다.'); // 알림 메시지 표시
+            e.preventDefault(); // 폼 제출을 중지
+        }
+    });
+
 </script>
 </html>

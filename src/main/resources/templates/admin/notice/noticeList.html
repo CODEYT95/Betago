@@ -96,7 +96,13 @@
                         </td>
                     </tr>
 
-                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type == '일반'}" th:each="notice:${noticePage.noticeList}">
+                    <tr th:if="${noticePage.allNoticeList.size() == 0}">
+                        <td colspan="6" style="text-align: center;">
+                            <span >해당 검색어와 일치하는 글이 없습니다.</span>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice:${noticePage.allNoticeList}">
                         <td>
                             <span class="no" th:text="${notice.notice_no}"></span>
                         </td>
@@ -153,6 +159,7 @@
     function changePageSize() {
         document.getElementById("pageSizeForm").submit();
     }
+
 
 </script>
 

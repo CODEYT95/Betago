@@ -51,7 +51,6 @@ public class JoinController {
     @PostMapping("/join")
     public String memberJoin(@Valid JoinForm joinForm, HttpSession session,
                              @RequestParam("member_birth") String birth,Model model) {
-        System.out.println("또 왜 안되누");
 
         //생년월일 session에 담기
         JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");
@@ -94,6 +93,6 @@ public class JoinController {
     @GetMapping("/check/{checkId}")
     public String openPopup(@PathVariable String checkId) {
         System.out.println(checkId);
-        return "member/join/join" + checkId;
+        return "/member/join/" + checkId;
     }
 }

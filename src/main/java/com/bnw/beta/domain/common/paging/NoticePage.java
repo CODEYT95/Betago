@@ -13,8 +13,9 @@ import java.util.List;
 public class NoticePage {
 
     private int total;
-    private List<NoticeDTO> noticeList;
+    private List<NoticeDTO> noticeList; //일반글
     private List<NoticeDTO> topNoticeList; // 상단 노출 게시글 목록
+    private List<NoticeDTO> allNoticeList; //전체글
     private int currentPage;
     private int totalPages;
     private int startPage;
