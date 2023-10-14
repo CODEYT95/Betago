@@ -54,6 +54,7 @@
             order by game_startsearch desc;
         ]]>
     </select>
+
 <!--게임콘텐츠 제목 검색-->
     <select id="searchByTitle" resultType="GameDTO">
         <![CDATA[

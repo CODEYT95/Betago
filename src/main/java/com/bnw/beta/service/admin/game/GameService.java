@@ -2,6 +2,7 @@ package com.bnw.beta.service.admin.game;
 
 
 import com.bnw.beta.domain.admin.dto.GameDTO;
+import com.bnw.beta.domain.admin.dto.GameFileDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;

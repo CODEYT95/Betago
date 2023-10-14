@@ -1,6 +1,7 @@
 package com.bnw.beta.controller.admin;
 
 import com.bnw.beta.domain.admin.dto.GameDTO;
+import com.bnw.beta.domain.admin.dto.GameFileDTO;
 import com.bnw.beta.service.admin.game.GameService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -52,6 +56,10 @@ public class GameController {
                 e.printStackTrace();
             }
         }
+        redirectAttributes.addFlashAttribute("message", "등록이 완료되었습니다.");
+        return "redirect:/game/list";
+    }
+
     //게임콘텐츠 조회
     @GetMapping("/list")
     public String selectAll(Model model) {
