@@ -4,6 +4,7 @@ import com.bnw.beta.domain.admin.dto.GameDTO;
 import com.bnw.beta.service.admin.game.GameService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 
@@ -61,10 +63,26 @@ public class GameController {
         }
         return "admin/game/gameList";
     }
-}
+
+    //월간 (일일 단위 매출조회)
+    @GetMapping("/dailySales")
+    public String selectDailySales(Model model, @RequestParam(value = "game_startsearch", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    Date game_startsearch, @RequestParam(value = "game_endsearch", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date game_endsearch) {
+        List<GameDTO> saleslist = gameService.selectDailySales(game_startsearch, game_endsearch);
+        model.addAttribute("saleslist", saleslist);
+        return "game/gameSales";
+    }
+    //년간 (월 단위 매출조회)
+    @GetMapping("/monthlySales")
+    public String selectMonthlySales(Model model, @RequestParam(value = "game_startsearch", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    Date game_startsearch, @RequestParam(value = "game_endsearch", required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date game_endsearch) {
+        List<GameDTO> saleslist = gameService.selectDailySales(game_startsearch, game_endsearch);
+        model.addAttribute("saleslist", saleslist);
+        return "game/gameSales";
+    }
 
 
-    /*월간 (일일 단위 매출조회)
+   /* //월간 (일일 단위 매출조회)
     @GetMapping("/dailyList")
     public String selectDailySales() {
         return "admin/game/gameSales";
@@ -75,9 +93,10 @@ public class GameController {
     public String selectMonthlySales() {
         return "admin/game/gameSales";
     }
+*/
 
-    //월별/일별 판매 건수, 판매금액 ajax로 가져오기
+  /*  //월별/일별 판매 건수, 판매금액 ajax로 가져오기
     @ResponseBody
     @PostMapping("/getChartDataAjax")
-    public void getChartDataAjax() {
-     */
+    public void getChartDataAjax() {}*/
+}

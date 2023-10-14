@@ -23,8 +23,8 @@
                             <div class="searchPeriod">
                                 <div>조회기간</div>
                                 <div>
-                                    <input type="date" class="sales_startsearch" id="sales_startsearch">
-                                    <input type="date" class="sales_endsearch" id="sales_endsearch">
+                                    <input type="date" class="game_startsearch" name="game_startsearch" id="game_startsearch">
+                                    <input type="date" class="game_endsearch"  name="game_endsearch" id="game_endsearch">
                                 </div>
                             </div>
                             <div class="unit">
@@ -40,9 +40,9 @@
 
 
                         <div>
-                            <div th:each="game : ${salesList}" class="game">
+                            <div th:each="game : ${saleslist}" class="game">
                                 <div class="sales_totalamount">총 매출액 :
-                                    <input type="number" class="sales_totalamount" readonly th:value="${game.game_sell * sales.sales_count}"/>
+                                    <input type="number" class="sales_totalamount" readonly th:value="${game.game_sell * SUM(game_sell)}"/>
                                     <span>원</span>
                                 </div>
                                 <div class="sales_totalcount">건수 :
@@ -54,7 +54,7 @@
 
                         <!-- 조회 결과를 표시할 테이블 -->
                         <table>
-                        <div id="salesTable">
+                        <div class="salesTable">
                             <tr>
                                 <td class="table-header">No</td>
                                 <td class="table-header">일/월</td>

@@ -1,3 +1,4 @@
+/*
 package com.bnw.beta.domain.admin.dao;
 
 import com.bnw.beta.domain.admin.dto.GameDTO;
@@ -17,3 +18,4 @@ public interface SalesDAO {
     //년간 (월 단위 매출조회)
     List<SalesDTO> selectMonthlySales(Date sales_startsearch, Date sales_endsearch);
 }
+*/

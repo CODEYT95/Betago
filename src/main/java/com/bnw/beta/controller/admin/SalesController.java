@@ -1,3 +1,4 @@
+/*
 package com.bnw.beta.controller.admin;
 
 import com.bnw.beta.service.admin.sales.SalesService;
@@ -25,3 +26,4 @@ public class SalesController {
         return "admin/game/gameSales";
     }
 }
+*/

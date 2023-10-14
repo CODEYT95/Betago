@@ -1,3 +1,4 @@
+/*
 package com.bnw.beta.service.admin.sales;
 
 import com.bnw.beta.domain.admin.dao.SalesDAO;
@@ -26,3 +27,4 @@ public class SalesServiceImpl implements SalesService{
     { return salesDAO.selectMonthlySales(sales_startsearch, sales_endsearch);}
 
 }
+*/

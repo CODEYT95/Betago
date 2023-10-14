@@ -15,10 +15,10 @@ public class GameDTO {
     private int game_total;
     private int game_price;
     private int game_discount;
-    private String game_sell;
+    private int game_sell;
     private String game_content;
     private String member_id;
     private int game_amount;
-    private Date game_startsearch;
-    private Date game_endsearch;
+    private Date sale_date;
+    private int total_sales;
 }

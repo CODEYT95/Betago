@@ -1,3 +1,4 @@
+/*
 package com.bnw.beta.domain.admin.dto;
 
 
@@ -11,3 +12,4 @@ public class SalesDTO {
     private int sales_count;
     private Date sales_date;
 }
+*/

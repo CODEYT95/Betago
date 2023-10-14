@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var searchButton = document.getElementById('searchButton');
     searchButton.addEventListener('click', function() {
         var period = document.querySelector('input[name="period"]:checked').value;
-        var startDate = document.getElementById('sales_startsearch').value;
-        var endDate = document.getElementById('sales_endsearch').value;
+        var startDate = document.getElementById('game_startsearch').value;
+        var endDate = document.getElementById('game_endsearch').value;
 
         fetchDataFromServer(period, startDate, endDate);
     });
@@ -32,8 +32,8 @@ function updateTable(data) {
     var dataList = document.getElementById('data-list');
     dataList.innerHTML = '';
     data.forEach(function(item, index) {
-        var newRow = document.createElement('li');
-        newRow.classList.add('col');
+        var newRow = document.createElement('div');
+        newRow.classList.add('row');
         newRow.innerHTML = `
             <span class="cell">${index + 1}</span>
             <span class="cell">${item.date}</span>
