@@ -18,19 +18,19 @@
         <div class="sales">
             <div class="salesContent">
                 <div class="side-content" style="margin-bottom: 73px;">
-                    <form name="gameContent" th:action="@{/game/gameSales}" method="get" style="margin-top: -95px;">
+                    <form th:action="@{/game/gameSales}" method="get" style="margin-top: -95px;">
                         <div class="period">
                             <div class="searchPeriod">
                                 <div>조회기간</div>
                                 <div>
-                                    <input type="date" class="game_startsearch" name="game_startsearch" id="game_startsearch">
-                                    <input type="date" class="game_endsearch"  name="game_endsearch" id="game_endsearch">
+                                    <input type="date" class="game_startsearch"id="game_startsearch">
+                                    <input type="date" class="game_endsearch"  id="game_endsearch">
                                 </div>
                             </div>
                             <div class="unit">
-                                <input type="radio" name="period" value="daily" id="daily" checked>
+                                <input type="radio"  value="daily" id="daily" checked>
                                 <label for="daily">일단위</label><br>
-                                <input type="radio" name="period" value="monthly" id="monthly">
+                                <input type="radio"  value="monthly" id="monthly">
                                 <label for="monthly">월단위</label><br>
                             </div>
                         </div>
