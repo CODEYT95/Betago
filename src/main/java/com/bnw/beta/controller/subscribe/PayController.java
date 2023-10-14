@@ -29,7 +29,7 @@ public class PayController {
     public String submitPay(@RequestParam("game_no[]") List<Integer> game_no,
                             payDTO payDTO, String member_id) {
 
-        member_id="baduk";
+
 
         for (int i = 0; i < game_no.size(); i++) {
             Integer gameNo = game_no.get(i);
