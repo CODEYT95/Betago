@@ -125,17 +125,28 @@
 
 .content-header{
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
+    margin-bottom: 20px;
 }
 
-.content-header > div{
+.content-header2{
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 40px 0 40px;
+    gap: 50px;
+    margin-bottom: 20px;
+}
+
+.content-header > div, .content-header2 > div{
     margin: 0;
 }
 
-.content-header div:first-child {
+.container {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
+    padding: 0 40px 0 40px;
     gap: 10px;
 }
 

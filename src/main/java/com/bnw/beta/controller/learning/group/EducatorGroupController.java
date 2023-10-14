@@ -116,6 +116,10 @@ public class EducatorGroupController {
         model.addAttribute("GroupPageDTO", groupPageDTO);
         model.addAttribute("group_name", groupService.selectGroupName(principal.getName()));
         model.addAttribute("check",group_no);
+        if(group_no != null){
+            model.addAttribute("groupInfo",groupService.selectGroupInfo(group_no));
+            System.out.println("여기들어옴"+groupService.selectGroupInfo(group_no));
+        }
         return "/learning/group/educator/joinApprove";
     }
 }

@@ -28,6 +28,7 @@ public class GroupDTO {
     private String member_phone;
     private String member_email;
     private Date approve_date;
+    private int member_count;
 
     //
     private int LIMIT;

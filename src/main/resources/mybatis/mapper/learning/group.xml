@@ -121,7 +121,7 @@
         </foreach>
     </delete>
 
-    <!-- 그룹 학생 가입 승인 목록 -->
+    <!-- 그룹 학생 가입승인 목록 -->
     <select id="selectGroupApprove" parameterType="map" resultType="GroupDTO">
         <![CDATA[
         SELECT sg.group_name, sg.group_cnt, sg.group_nowcnt,
@@ -131,6 +131,7 @@
         JOIN groupmember AS gm ON sg.group_no = gm.group_no
         JOIN member AS m ON gm.member_no = m.member_no
         WHERE sg.group_nowcnt < sg.group_cnt
+        AND gm.approve_state = '미승인'
         ]]>
         <if test="member_id != null and member_id != ''">
             AND sg.member_id = #{member_id}
@@ -147,6 +148,7 @@
         ]]>
     </select>
 
+    <!-- 그룹 학생 가입승인 목록 갯수 -->
     <select id="selectGroupApproveCount" parameterType="map" resultType="Integer">
         <![CDATA[
         SELECT COUNT(*) AS record_count
@@ -155,19 +157,28 @@
         JOIN studygroup sg ON gm.group_no = sg.group_no
         JOIN game g ON gm.game_no = g.game_no
         WHERE sg.member_id = #{member_id}
+        AND gm.approve_state = '미승인'
         ]]>
         <if test="group_no != null and group_no != ''">
             AND sg.group_no = #{group_no}
         </if>
     </select>
 
-    <select id="selectGroupInfo" resultType="GroupDTO">
-        <![CDATA[
-        SELECT *
-        FROM studygroup
-        WHERE group_no = #{group_no};
-        ]]>
+    <!-- 그룹 학생 가입승인 정보 -->
+    <select id="selectGroupInfo" parameterType="Integer" resultType="GroupDTO">
+        <if test="group_no != null and group_no != ''">
+            <![CDATA[
+            SELECT sg.group_no, sg.group_name, sg.group_cnt, sg.group_nowcnt, g.game_title,
+            COUNT(CASE WHEN gm.approve_state = '승인' THEN 1 END) AS member_count
+            FROM studygroup sg
+            JOIN game g ON sg.game_no = g.game_no
+            LEFT JOIN groupmember gm ON sg.group_no = gm.group_no
+            WHERE sg.group_no = #{group_no}
+            GROUP BY sg.group_no;
+            ]]>
+        </if>
     </select>
+
     <!--///////////////////학습자/////////////////// -->
 
     <!-- 학습 그룹 가입 신청 목록 -->

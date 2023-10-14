@@ -136,6 +136,10 @@ public class GroupServiceImpl implements GroupService {
         return groupPageDTO;
     }
 
+    //그룹 학생 가입승인 정보
+    @Override
+    public GroupDTO selectGroupInfo(int group_no){return groupDAO.selectGroupInfo(group_no);};
+
     ////////////////////////////////////////////////////////////////////////
 
     //학습 그룹 가입 신청 목록

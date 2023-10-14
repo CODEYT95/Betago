@@ -44,6 +44,9 @@ public interface GroupDAO {
     //그룹 학생 가입 승인 목록 Count
     int selectGroupApproveCount(@Param("member_id") String member_id, @Param("group_no") Integer group_no);
 
+    //그룹 학생 가입승인 정보
+    GroupDTO selectGroupInfo(int group_no);
+
     //////////////////학습자////////////////////
 
     //학습 그룹 가입 신청 목록

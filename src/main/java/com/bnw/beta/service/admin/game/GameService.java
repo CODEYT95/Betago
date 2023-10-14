@@ -2,6 +2,7 @@ package com.bnw.beta.service.admin.game;
 
 
 import com.bnw.beta.domain.admin.dto.GameDTO;
+import com.bnw.beta.domain.admin.dto.GameFileDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -11,6 +12,9 @@ public interface GameService {
 
     //게임콘텐츠 등록
     public int insertGame(GameDTO dto);
+
+    //게임콘텐츠 썸네일 등록
+    int insertGameImage(GameFileDTO gameFileDTO);
 
     //게임콘텐츠 조회
    public List<GameDTO> selectAll();
