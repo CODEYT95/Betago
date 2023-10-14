@@ -3,6 +3,7 @@ package com.bnw.beta.config.vaildation.member;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.Getter;
 
 
 @Data

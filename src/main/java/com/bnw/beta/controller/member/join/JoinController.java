@@ -52,6 +52,9 @@ public class JoinController {
     public String memberJoin(@Valid JoinForm joinForm, BindingResult bindingResult, HttpSession session,
                              @RequestParam("member_birth") String birth,Model model) {
 
+        if(bindingResult.hasErrors()) {
+            return "/member/join/join";
+        }
 
         //생년월일 session에 담기
         JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");

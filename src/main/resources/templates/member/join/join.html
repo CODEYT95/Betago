@@ -63,6 +63,9 @@
                 <div id="emailField">
                     <span class="emailName">이메일</span>
                     <input type="text" class="emainInput" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
+                    <div class="err06" th:if="${#fields.hasErrors('member_email')}">
+                        <span th:errors="*{member_email}"></span>
+                    </div>
                 </div>
 
                 <label>
