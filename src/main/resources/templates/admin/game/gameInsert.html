@@ -17,7 +17,7 @@
     <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="container">
-            <form name="gameContent" th:action="@{/game/gameInsert}" method="post" onsubmit="return validateForm()">
+            <form name="gameContent" th:action="@{/game/gameInsert}" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="game_title">게임콘텐츠명</label>
                     <input type="text" name="game_title" id="game_title">
@@ -85,7 +85,7 @@
                         <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="thumbnail">
                         <div class="filebox">
                             <label for="file">이미지업로드</label>
-                            <input type="file" id="file">
+                            <input type="file" id="file" name ="imageFile" accept=".jpg, .jpeg, .png, .gif">
                         </div>
                     </div>
 
