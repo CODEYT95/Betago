@@ -36,7 +36,7 @@
             </div>
             <div class="content-container">
                 <ul class="list-box">
-                    <li th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no},data-game-title=${content.game_title}">
+                    <li th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />

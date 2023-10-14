@@ -65,11 +65,11 @@
         resize: none;
     }
 
-    .form-group input[type="file"] {
+    .thumbnail input[type="file"] {
         padding: 5px;
     }
 
-    .form-group input[type="submit"] {
+    .form-group1 input[type="submit"] {
         background-color: #c5ebc6;
         color: #000000;
         padding: 10px 20px;
@@ -77,10 +77,10 @@
         border-radius: 5px;
         cursor: pointer;
         width: 300px;
-        margin-left: 333px;
+        margin-left: 300px;
     }
 
-    .form-group input[type="submit"]:hover {
+    .form-group1 input[type="submit"]:hover {
         background-color: #0056b3;
     }
 
@@ -88,9 +88,8 @@
     border:1px solid red;
     }
     .thumbnail{
-        width: 100%;
-            border: 1px solid red;
-            display: grid;
+            width: 100%;
+            display: flex;
             height: 70px;
             justify-content: start;
     }
@@ -103,9 +102,23 @@
            font-size: 14px;
            font-weight: bold;
     }
+    .tn{
+      display: flex;
+      margin: 0;
+      padding: 9px;
+      font-weight: bold;
+      font-size: 14px;
+      padding-left: 0;
+
+    }
+
+
+
+
 
     .filebox{
-        border:1px solid red;
+        margin-left: 10px;
+        display: flex;
     }
 
     .filebox .upload-name {
@@ -118,7 +131,26 @@
    color: #999999;
    }
 
-//이미지파일첨부버튼
-   .filebox input[type="file"] {
-
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+    white-space: nowrap;
 }
+
+
+   .filebox input[type="file"] {
+       display: none;
+       position: absolute;
+       width: 0;
+       height: 0;
+       padding: 0;
+       overflow: hidden;
+       border: 0;
+}
+
