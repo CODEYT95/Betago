@@ -16,9 +16,9 @@
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
             <div class="navbar">
-                <a href="#" onclick="handleNavClick('무통장 입금', this)">무통장 입금</a>
-                <a href="#" onclick="handleNavClick('계좌이체', this)">계좌이체</a>
-                <a href="#" onclick="handleNavClick('카카오페이', this)">카카오페이</a>
+                <a onclick="handleNavClick('무통장 입금', this)">무통장 입금</a>
+                <a onclick="handleNavClick('계좌이체', this)">계좌이체</a>
+                <a onclick="handleNavClick('카카오페이', this)">카카오페이</a>
             </div>
             <div class="content-row">  <!-- 추가된 부분 -->
                 <div class="image-container">
@@ -28,6 +28,7 @@
                 <div class="pay-box">
                     <div class="pay-titlebox">
                         <div class="pay-title">결제방법 선택</div>
+                        <input type="text" id="pay_type" name="pay_type" hidden="hidden">
                         <div class="pay-titlecontent" id="selectedPaymentMethod"></div>
                     </div>
                     <div class="pay-orderbox">
@@ -36,9 +37,9 @@
                             <div class="tag-container">
                                 <div class="tag-container">
                                     <div th:each="game : ${cartlist}" class="tag">
-                                        <input class="price" hidden="hidden" th:value="${game.game_price}">
+                                        <input class="price" name="game_sell[]" hidden="hidden" th:value="${game.game_sell}">
                                         <input hidden="hidden" name="game_no[]" th:value="${game.game_no}">
-                                        <div th:text="${game.game_title}" th:attr="data-game-price=${game.game_price}"></div>
+                                        <div th:text="${game.game_title}" th:attr="data-game-price=${game.game_sell}"></div>
                                         <a class="delete-btn" th:attr="data-game-no=${game.game_no}">x</a>
                                     </div>
                                 </div>

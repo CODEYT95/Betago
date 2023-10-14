@@ -1,6 +1,8 @@
 function handleNavClick(paymentMethod, clickedElement) {
     // 선택한 결제 방법을 표시하는 요소를 가져옵니다.
     const paymentDisplay = document.getElementById('selectedPaymentMethod');
+    const payType = document.getElementById('pay_type');
+    payType.textContent = paymentMethod;
     paymentDisplay.textContent = paymentMethod;
 
     // 모든 navbar의 a 태그들에 대하여 반복
@@ -192,4 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
          alert('결제가 완료되었습니다.');
          document.querySelector('.pay-list').submit();
      }
+
+     //뒤로가기 클릭 시 게임 콘텐츠 목록 페이지로 바로 이동
+     window.onpopstate = function(event) {
+         window.location.href = "http://localhost:8800/game/list";
+     };
 });

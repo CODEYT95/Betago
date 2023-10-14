@@ -74,4 +74,17 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("게임을 선택하세요!");
         }
     });
+
+    //뒤로가기 해서 해당 페이지로 올 시 체크박스 초기화
+    window.onload = function() {
+        initializePage();
+    };
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            initializePage();
+        }
+    };
+    function initializePage() {
+        $(".checkbox-input:checked").prop("checked", false);
+    }
 });
