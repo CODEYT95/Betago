@@ -26,10 +26,8 @@ public class EdupostServiceImpl implements EdupostService {
         if(pageNum <= 0) {
             pageNum = 1;
         }
-        System.out.println("size :" + size);
         int offset = (pageNum-1) * size;
         List<EdupostDTO> edupostList = edupostDao.edulist(offset, size, searchType, keyword);
-        System.out.println("size2 :" + size);
         int listCount = edupostDao.count(searchType, keyword);
 
         EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, pageNum, size, edupostList);

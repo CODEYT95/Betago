@@ -86,41 +86,41 @@
     //     }
     // }());
     //
-    // window.onload = () => {
-    //     findAllFile();
-    //
-    // }
-    //
-    // //전체 파일 조회
-    // function findAllFile() {
-    //
-    //     // 1. 신규 등록/수정 체크
-    //     const post = [[ ${edupost_no}]];
-    //
-    //     // 2. API 호출
-    //     const response = getJson(`/eduposts/${post}/files`);
-    //
-    //     // 3. 로직 종료
-    //     if ( !response.length ) {
-    //         return false;
-    //     }
-    //
-    //     // 4. 업로드 영역 추가
-    //     for (let i = 0, len = (response.length - 1); i < len; i++) {
-    //         addFile();
-    //     }
-    //
-    //     // 5. 파일 선택 & 삭제 이벤트 재선언 & 파일명 세팅
-    //     const filenameInputs = document.querySelectorAll('.file_list input[type="text"]');
-    //     filenameInputs.forEach((input, i) => {
-    //         const fileInput = input.nextElementSibling.firstElementChild;
-    //         const fileRemoveBtn = input.parentElement.nextElementSibling;
-    //         fileInput.setAttribute('onchange', `selectFile(this, ${response[i].id})`);
-    //         fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`);
-    //         input.value = response[i].filepost_no;
-    //
-    //     })
-    // }
+    window.onload = () => {
+        findAllFile();
+
+    }
+
+    //전체 파일 조회
+    function findAllFile() {
+
+        // 1. 신규 등록/수정 체크
+        const post = [[ ${edupost_no}]];
+
+        // 2. API 호출
+        const response = getJson(`/eduposts/${post}/files`);
+
+        // 3. 로직 종료
+        if ( !response.length ) {
+            return false;
+        }
+
+        // 4. 업로드 영역 추가
+        for (let i = 0, len = (response.length - 1); i < len; i++) {
+            addFile();
+        }
+
+        // 5. 파일 선택 & 삭제 이벤트 재선언 & 파일명 세팅
+        const filenameInputs = document.querySelectorAll('.file_list input[type="text"]');
+        filenameInputs.forEach((input, i) => {
+            const fileInput = input.nextElementSibling.firstElementChild;
+            const fileRemoveBtn = input.parentElement.nextElementSibling;
+            fileInput.setAttribute('onchange', `selectFile(this, ${response[i].id})`);
+            fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`);
+            input.value = response[i].filepost_no;
+
+        })
+    }
     // 파일 추가
     function addFile() {
         const fileDiv = document.createElement('div');

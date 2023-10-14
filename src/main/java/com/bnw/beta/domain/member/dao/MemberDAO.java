@@ -3,6 +3,8 @@ package com.bnw.beta.domain.member.dao;
 import com.bnw.beta.domain.member.dto.AgreeCheckDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,5 +35,7 @@ public interface MemberDAO {
     MemberDTO getMemberInfo(String member_id);
 
     /*회원목록조회 관리자용*/
-    List<MemberDTO> memberlist();
+    List<MemberDTO> memberlist(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("keyword") String keyword);
+
+    int count(@Param("searchType") String searchType, @Param("keyword") String keyword);
 }

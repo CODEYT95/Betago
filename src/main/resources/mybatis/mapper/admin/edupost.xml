@@ -43,7 +43,7 @@
             values (#{edupost_title},#{edupost_category},#{edupost_type}, NOW(), #{edupost_fileadd}, #{edupost_service}, #{member_id},#{edupost_content})
         ]]>
     </insert>
-
+    <!--교육자료 목록보기-->
     <select id="edulist" parameterType="map" resultType="EdupostDTO">
         select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id
         from edupost

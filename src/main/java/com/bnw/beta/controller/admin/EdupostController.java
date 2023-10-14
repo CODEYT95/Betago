@@ -55,11 +55,8 @@ public class EdupostController {
                            @RequestParam(value = "keyword", defaultValue = "") String keyword,
                            Model model) throws Exception {
 
-        System.out.println("페이지 : "+ page);
-        System.out.println("사이즈 :" + size);
         EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, keyword);
 
-        System.out.println(edupostList.getListCount());
         model.addAttribute("currentPage", edupostList.getCurrentPage());
         model.addAttribute("listCount", edupostList.getListCount());
         model.addAttribute("edupostPageDTO", edupostList);

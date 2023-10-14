@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Data
@@ -21,6 +22,8 @@ public class MemberDTO implements UserDetails {
     private String member_agreeP;
     private String member_isshow;
     private String role;
+    private String license;
+    private LocalDateTime join_date;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

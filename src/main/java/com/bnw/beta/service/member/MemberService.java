@@ -1,6 +1,7 @@
 package com.bnw.beta.service.member;
 
 import com.bnw.beta.config.vaildation.member.JoinForm;
+import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,8 @@ public interface MemberService {
 
         //////////멤버 정보 불러오기///////////
         MemberDTO getMemberInfo(String member_id);
-
-
+        /*회원 목록보기*/
+        public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword);
 
 
 
