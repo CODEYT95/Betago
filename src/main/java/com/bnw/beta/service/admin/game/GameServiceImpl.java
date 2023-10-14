@@ -20,6 +20,10 @@ public class GameServiceImpl implements GameService {
         return gameDAO.insertGame(dto);
     }
 
+     //게임콘텐츠 썸네일 등록
+    @Override
+    public int insertGameImage(GameFileDTO gameFileDTO){return gameDAO.insertGameImage(gameFileDTO);}
+
     /*게임콘텐츠 조회*/
    @Override
     public List<GameDTO> selectAll() {
