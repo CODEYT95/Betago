@@ -12,6 +12,9 @@ public interface GameService {
     //게임콘텐츠 등록
     public int insertGame(GameDTO dto);
 
+    //게임콘텐츠 썸네일 등록
+    int insertGameImage(GameFileDTO gameFileDTO);
+
     //게임콘텐츠 조회
    public List<GameDTO> selectAll();
 
