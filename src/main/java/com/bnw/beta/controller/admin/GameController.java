@@ -29,16 +29,29 @@ public class GameController {
     }
 
     @PostMapping("/gameInsert")
-    public String insertGame(@ModelAttribute GameDTO dto, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String insertGame(@ModelAttribute GameDTO dto, @RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String member_id = "admin1";
         dto.setMember_id(member_id);
         int result = gameService.insertGame(dto);
         System.out.println(result);
 
-        redirectAttributes.addFlashAttribute("message", "등록이 완료되었습니다.");
-        return "redirect:/game/list";
-    }
+        if (!imageFile.isEmpty()) {
+            String fileName = imageFile.getOriginalFilename();
+            String filePath = "C:/uploadfile/game_img/" + fileName;
+            try {
+                GameFileDTO gameFileDTO = new GameFileDTO();
+                gameFileDTO.setGame_no(dto.getGame_no());
+                gameFileDTO.setFilegame_name(fileName);
+                gameFileDTO.setFilegame_path(filePath);
 
+                gameService.insertGameImage(gameFileDTO);
+
+                imageFile.transferTo(new File(filePath));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     //게임콘텐츠 조회
     @GetMapping("/list")
     public String selectAll(Model model) {
