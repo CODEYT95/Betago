@@ -81,7 +81,7 @@
     <!-- 학습 그룹 name 조회 -->
     <select id="selectGroupName" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT group_name
+        SELECT group_name, group_no
         FROM studygroup
         WHERE member_id = #{member_id}
         ]]>
@@ -161,7 +161,14 @@
         </if>
     </select>
 
-    <!--/////////////////학습자/////////////////// -->
+    <select id="selectGroupInfo" resultType="GroupDTO">
+        <![CDATA[
+        SELECT *
+        FROM studygroup
+        WHERE group_no = #{group_no};
+        ]]>
+    </select>
+    <!--///////////////////학습자/////////////////// -->
 
     <!-- 학습 그룹 가입 신청 목록 -->
     <select id="selectJoinGroup" resultType="GroupDTO">

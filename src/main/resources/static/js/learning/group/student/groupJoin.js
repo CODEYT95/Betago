@@ -122,19 +122,19 @@ document.addEventListener("DOMContentLoaded", function() {
         const educatorSBtnText = educatorMenu.find(".sBtn-text-educator");
 
         selectGroupBtn.on("click", (e) => {
-            e.stopPropagation();  // prevent the event from reaching the document
+            e.stopPropagation();
             educatorMenu.removeClass("active");
             groupMenu.toggleClass("active");
         });
 
         selectEducatorBtn.on("click", (e) => {
-            e.stopPropagation();  // prevent the event from reaching the document
+            e.stopPropagation();
             groupMenu.removeClass("active");
             educatorMenu.toggleClass("active");
         });
 
         groupOptions.on('click', function(e) {
-            e.stopPropagation();  // prevent the event from reaching the document
+            e.stopPropagation();
 
             let selectedOption = $(this).find('.option-text').text();
             if (educatorSBtnText.text() !== '전체' && selectedOption !== '전체') {

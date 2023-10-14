@@ -91,7 +91,6 @@ public class EducatorGroupController {
     public List<GroupDTO> selectGroupDetail(@RequestParam(name = "group_no") int group_no,
                                             @RequestParam(name = "group_name",defaultValue = "") String group_name){
 
-
         return groupService.selectGroupDetail(group_no,group_name);
     }
 
@@ -110,6 +109,7 @@ public class EducatorGroupController {
                                  @RequestParam(value = "size", defaultValue = "10") int size,
                                  @RequestParam(value = "group_no", required = false) Integer group_no,
                                  Model model, Principal principal){
+
         GroupPageDTO groupPageDTO = groupService.selectGroupApprove(principal.getName(), group_no, page,size);
         model.addAttribute("currentPage", groupPageDTO.getCurrentPage());
         model.addAttribute("listCount", groupPageDTO.getListCount());

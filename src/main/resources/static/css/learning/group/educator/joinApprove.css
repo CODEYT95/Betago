@@ -106,9 +106,27 @@
     }
 }
 
+.search-btn{
+    height: 40px;
+    background: #fff;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    font-weight: 400;
+    border-radius: 8px;
+    line-height: 0;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.search-btn:hover{
+    background: #F4D96E;
+}
+
 .content-header{
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 .content-header > div{
@@ -116,7 +134,9 @@
 }
 
 .content-header div:first-child {
-
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .main-table{
