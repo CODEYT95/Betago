@@ -38,10 +38,8 @@ public class NoticePage {
             endPage=0;
         }else {
 
-            totalPages=total/size;
-            if(total%size>0) {
-                totalPages++;
-            }
+            totalPages = (int) Math.ceil((double) total / size);
+
 
             int modVal = currentPage%5;
             startPage=currentPage/5*5+1;

@@ -8,4 +8,10 @@ import java.util.List;
 @Service
 public interface FAQService {
     List<NoticeDTO> faqList();
+
+    //수정
+    void update(NoticeDTO noticeDTO, Long notice_no);
+    
+    //삭제
+    void delete(Long notice_no);
 }

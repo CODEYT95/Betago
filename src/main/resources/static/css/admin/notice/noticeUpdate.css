@@ -187,3 +187,16 @@ th, td {
 #here {
     padding: 50px;
 }
+
+
+.content1{
+    display: inline-flex;
+    margin-left: 102px;
+    margin-bottom: 25px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: space-evenly;
+    align-items: baseline;
+
+}

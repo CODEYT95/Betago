@@ -10,4 +10,10 @@ import java.util.List;
 @Repository
 public interface FaqDAO {
     List<NoticeDTO> faqList();
+
+    //게시글 수정
+    int update(NoticeDTO noticeDTO);
+
+    //게시글 삭제
+    void delete(Long notice_no);
 }

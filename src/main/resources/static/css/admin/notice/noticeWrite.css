@@ -193,11 +193,19 @@ th, td {
     font-size: 16px;
     text-align: center;
     display: inline-block;
-    margin-left: 106px;
+    margin-left: 38px;
     margin-bottom: 38px;
     background-color: white;
+    cursor: pointer;
 }
 
 #here {
-    padding: 50px;
+    padding: 20px;
+    height: auto;
+}
+#fileInput {
+    display: none;
+}
+#dropArea:hover {
+    cursor: pointer;
 }

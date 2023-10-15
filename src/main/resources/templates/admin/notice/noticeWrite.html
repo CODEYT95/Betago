@@ -11,11 +11,11 @@
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 
 
-    <div class="content">
-        <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
 
-        <div class="content-wrap">
-            <div class="edupost_cont">
+    <div class="content-wrap">
+        <div class="edupost_cont">
             <form id="notice" th:action="@{/admin/notice/write}" enctype="multipart/form-data" method="post">
                 <div class="edupost_write_box">
                     <h2 class="head">공지 등록창</h2>
@@ -40,110 +40,128 @@
                         <input type="checkbox" name="type" id="allView" value="allView">
                     </div>
                     <div class="opt2">
-                    <label for="upLoadNow" class="view">즉시등록
-                        <input type="checkbox" id="upLoadNow" ></label>
+                        <label for="upLoadNow" class="view">즉시등록
+                            <input type="checkbox" id="upLoadNow"></label>
                         <label for="upDateChoice" class="view">게시일자등록
-                        <input type="date"  id="upDateChoice" name="timeWrite"></label><br/></div>
-                    </div>
-                    <div class="opt">
-                        <label for="notice_content"
-                               style="position: relative; font-size: 16px; bottom: 19rem">내용</label>
-                        <textarea class="texarea2" id="notice_content" name="notice_content"></textarea>
-                    </div>
-
-                    <div class="file_input">
-                        <label class="fileselect" style="font-size: 16px;"> 파일 등록
-                            <input type="file" class="fileup" multiple="multiple" ><br/>
-                        </label>
-                    </div>
-
-                    <div id="ex9">
-                        <div class="drop-area" id="dropArea">
-                            <p id="here">여기에 파일을 드래그 앤 드롭하세요.</p>
-                            <input class="btn_file" multiple="multiple" type="file" name="file" id="fileInput">
-                        </div>
-                    </div>
-
-                    <div class="btn_submit">
-                    <button type="submit" id="btn" class="btn_sub" >등록</button>
-                    <a th:href="@{'/notice/list'}">
-                        <button type="button" class="btn_sub" >취소</button>
-                    </a>
-                    </div>
-            </form>
-                    </div>
+                            <input type="date" id="upDateChoice" name="timeWrite"></label><br/></div>
                 </div>
-            </div>
+                <div class="opt">
+                    <label for="notice_content"
+                           style="position: relative; font-size: 16px; bottom: 19rem">내용</label>
+                    <textarea class="texarea2" id="notice_content" name="notice_content"></textarea>
+                </div>
+
+                <div class="file_input">
+                    <label id="custom-button" for="custom-upload" style="display: none"> 파일 등록 </label>
+                    <input type="file" class="fileup" id="custom-upload" name="file" multiple="multiple" style="display: none"><br/>
+                </div>
+
+                <div id="ex9">
+                    <label> 파일 등록
+                        <div class="drop-area" id="dropArea">
+                            <p id="here">여기에 파일을 드래그 앤 드롭하거나 클릭하세요.</p>
+                        </div>
+                    </label>
+                </div>
+
+
+                <div class="btn_submit">
+                    <button type="submit" id="btn" class="btn_sub">등록</button>
+                    <a th:href="@{'/notice/list'}">
+                        <button type="button" class="btn_sub">취소</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 
 <script>
-    var dropArea = document.getElementById('dropArea');
-    var fileInput = document.getElementById('fileInput');
+    document.addEventListener("DOMContentLoaded", function () {
+        var dropArea = document.getElementById('dropArea');
+        var fileInput = document.getElementById('custom-upload');
+        // 드래그 앤 드롭 영역을 클릭하면 파일 선택 창이 열리도록 설정
+        dropArea.addEventListener('click', function () {
+            fileInput.click(); // input 요소를 클릭합니다.
+        });
 
-    dropArea.addEventListener('dragenter', function (e) {
-        e.preventDefault();
-        dropArea.classList.add('active');
-    });
+        dropArea.addEventListener('dragenter', function (e) {
+            e.preventDefault();
+            dropArea.classList.add('active');
+        });
 
-    dropArea.addEventListener('dragover', function (e) {
-        e.preventDefault();
-    });
+        dropArea.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            dropArea.classList.add('highlight');
+        });
 
-    dropArea.addEventListener('dragleave', function () {
-        dropArea.classList.remove('active');
-    });
+        dropArea.addEventListener('dragleave', function () {
+            dropArea.classList.remove('active');
+            dropArea.classList.remove('highlight');
+        });
 
-    dropArea.addEventListener('drop', function (e) {
-        e.preventDefault();
-        dropArea.classList.remove('active');
+        //드래그앤드롭으로 업로들할때
+        dropArea.addEventListener('drop', function (e) {
+            e.preventDefault();
+            dropArea.classList.remove('active');
+            dropArea.classList.remove('highlight');
 
-        var files = e.dataTransfer.files;
-        fileInput.files = files;
+            var files = e.dataTransfer.files;
+            fileInput.files = files;
 
-        var formData = new FormData();
-        for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+            fileName(files);
+        });
+        //클릭으로 업로드할때
+        fileInput.addEventListener('change', function () {
+            var files = fileInput.files;
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+            fileName(files);
+        });
+
+        //업로드된 파일 이름을 출력
+        function fileName(files) {
+            var fileName = [];
+            for (var i = 0; i < files.length; i++) {
+                fileName.push(files[i].name);
+            }
+            document.getElementById('here').textContent = fileName.join('\n');
         }
 
-        fileName(files);
+        //예약글
+        // 현재 날짜 가져오기
+        var today = new Date();
+        // 내일 날짜 계산 (현재 날짜에 1을 더해줌)
+        var tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        // 내일 날짜를 YYYY-MM-DD 형식으로 변환
+        var tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+        // 내일 날짜를 min 속성에 설정
+        document.getElementById("upDateChoice").setAttribute("min", tomorrowFormatted);
 
-    });
+        //등록일시 체크 여부
+        document.getElementById('btn').addEventListener('click', function (e) {
+            // upLoadNow 체크박스의 상태 가져오기
+            var upLoadNowCheckbox = document.getElementById('upLoadNow');
+            var upLoadNowChecked = upLoadNowCheckbox.checked;
 
-    //업로드된 파일 이름을 출력
-    function fileName(files) {
-        var fileName = [];
-        for (var i = 0; i < files.length; i++) {
-            fileName.push(files[i].name);
-        }
-        document.getElementById('here').textContent = fileName.join(',');
-    }
+            // upDateChoice 입력 필드의 값 가져오기
+            var upDateChoiceInput = document.getElementById('upDateChoice');
+            var upDateChoiceValue = upDateChoiceInput.value;
 
-    //예약글
-    // 현재 날짜 가져오기
-    var today = new Date();
-    // 내일 날짜 계산 (현재 날짜에 1을 더해줌)
-    var tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    // 내일 날짜를 YYYY-MM-DD 형식으로 변환
-    var tomorrowFormatted = tomorrow.toISOString().split('T')[0];
-    // 내일 날짜를 min 속성에 설정
-    document.getElementById("upDateChoice").setAttribute("min", tomorrowFormatted);
-
-    //등록일시 체크 여부
-    document.getElementById('btn').addEventListener('click', function (e) {
-        // upLoadNow 체크박스의 상태 가져오기
-        var upLoadNowCheckbox = document.getElementById('upLoadNow');
-        var upLoadNowChecked = upLoadNowCheckbox.checked;
-
-        // upDateChoice 입력 필드의 값 가져오기
-        var upDateChoiceInput = document.getElementById('upDateChoice');
-        var upDateChoiceValue = upDateChoiceInput.value;
-
-        // upLoadNow 또는 upDateChoice 중 하나 이상이 선택되었는지 확인
-        if (!upLoadNowChecked && upDateChoiceValue === '') {
-            alert('즉시등록 또는 게시일자를 선택해야 합니다.'); // 알림 메시지 표시
-            e.preventDefault(); // 폼 제출을 중지
-        }
+            // upLoadNow 또는 upDateChoice 중 하나 이상이 선택되었는지 확인
+            if (!upLoadNowChecked && upDateChoiceValue === '') {
+                alert('즉시등록 또는 게시일자를 선택해야 합니다.'); // 알림 메시지 표시
+                e.preventDefault(); // 폼 제출을 중지
+            }
+        });
     });
 
 </script>

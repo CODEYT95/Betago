@@ -8,4 +8,22 @@
         ORDER BY type = 'upView' DESC, notice_regdate DESC
         ]]>
     </select>
+
+    <!--게시글 수정-->
+    <update id="update" parameterType="NoticeDTO">
+       <![CDATA[
+        UPDATE notice
+        SET notice_title = #{notice_title}, notice_content = #{notice_content}, notice_category = #{notice_category}
+        WHERE notice_no = #{notice_no}
+        ]]>
+    </update>
+
+    <!--게시글 삭제-->
+    <delete id="delete" parameterType="long">
+        <![CDATA[
+        UPDATE notice
+        SET notice_isshow = 'N'
+        WHERE notice_no = #{notice_no}
+        ]]>
+    </delete>
 </mapper>
