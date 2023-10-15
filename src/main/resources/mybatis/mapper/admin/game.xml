@@ -5,10 +5,13 @@
 <!--게임콘텐츠 모든 목록 조회-->
     <select id="selectAll" resultType="GameDTO">
         <![CDATA[
-        SELECT game_no, game_title, game_level, game_date, game_total,
-               game_sell, game_content, member_id
-        FROM game
-        order by game_no desc;
+        SELECT
+            g.game_no, g.game_title, g.game_level, g.game_date, g.game_total,
+            g.game_sell, g.game_content, g.member_id,
+            f.filegame_name, f.filegame_path, f.filegame_date
+        FROM game g
+        LEFT JOIN filegame f ON g.game_no = f.game_no
+        ORDER BY g.game_no DESC;
         ]]>
     </select>
     

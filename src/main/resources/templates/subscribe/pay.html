@@ -22,7 +22,7 @@
             </div>
             <div class="content-row">  <!-- 추가된 부분 -->
                 <div th:each="game : ${cartlist}" class="image-container">
-                    <div class="poster"><img class="test" th:src="@{|/image/game/${game.filegame_name}|}" th:alt="${game.filegame_name}"></div>
+                    <div class="poster"><img class="image" th:src="@{|/image/game/${game.filegame_name}|}" th:alt="${game.filegame_name}"></div>
                 </div>
             <form th:action="@{/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
                 <div class="pay-box">
