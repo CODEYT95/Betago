@@ -19,7 +19,7 @@ public interface GameDAO {
     List<GameDTO> selectAll();
 
     //월간 (일일 단위 매출조회)
-    List<GameDTO> selectDailySales(Date game_startsearch, Date game_endsearch);
+    List<GameDTO> selectDailySales(@Param("game_startsearch") Date game_startsearch, @Param("game_endsearch") Date game_endsearch);
 
     //년간 (월 단위 매출조회)
     List<GameDTO> selectMonthlySales(Date game_startsearch, Date game_endsearch);
