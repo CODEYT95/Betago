@@ -15,11 +15,21 @@
 
     <div class="content-wrap" style="height: auto;">
         <div class="main-content">
-            <form th:action="@{/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
+            <div class="navbar">
+                <a onclick="handleNavClick('무통장 입금', this)">무통장 입금</a>
+                <a onclick="handleNavClick('계좌이체', this)">계좌이체</a>
+                <a onclick="handleNavClick('카카오페이', this)">카카오페이</a>
+            </div>
+            <div class="content-row">  <!-- 추가된 부분 -->
+                <div th:each="game : ${cartlist}" class="image-container">
+                    <div class="poster"><img class="image" th:src="${game.filegame_name} ? @{|/image/game/${game.filegame_name}|} : @{/image/캡처.png}" th:alt="${game.filegame_name}"></div>
+                </div>
+            <form th:action="@{/pay/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
                 <div class="pay-box">
                     <div class="pay-titlebox">
-                        <div class="pay-title">결제방법 선택 안내</div>
-                        <div class="pay-titlecontent">모바일에서도 신용카드, 무통장 입금 등 결제가 가능합니다.</div>
+                        <div class="pay-title">결제방법 선택</div>
+                        <input type="text" id="pay_type" name="pay_type" hidden="hidden">
+                        <div class="pay-titlecontent" id="selectedPaymentMethod"></div>
                     </div>
                     <div class="pay-orderbox">
                         <div class="pay-ordertitle">주문할 상품</div>
@@ -27,9 +37,10 @@
                             <div class="tag-container">
                                 <div class="tag-container">
                                     <div th:each="game : ${cartlist}" class="tag">
-                                        <input class="price" hidden="hidden" th:value="${game.game_price}">
+                                        <input class="price" hidden="hidden" th:value="${game.game_sell}">
+                                        <input class="price" hidden="hidden" name="game_date[]" th:value="${game.game_date}">
                                         <input hidden="hidden" name="game_no[]" th:value="${game.game_no}">
-                                        <div th:text="${game.game_title}" th:attr="data-game-price=${game.game_price}"></div>
+                                        <div th:text="${game.game_title}" th:attr="data-game-price=${game.game_sell}"></div>
                                         <a class="delete-btn" th:attr="data-game-no=${game.game_no}">x</a>
                                     </div>
                                 </div>
@@ -40,29 +51,22 @@
                         <div class="pay-infotitle">구매자 정보</div>
                         <div class="pay-name">
                             구매자명 : <input type="text" class="buyer-name" name="buy_name" id="buyer-name">
-                                      <div class="error-message" id="buyer-name-error"></div>
+                            <div class="error-message" id="buyer-name-error"></div>
                         </div>
                         <div class="pay-phone">
                             연락처 : <input type="tel" class="buyer-phone" name="pay_phone" id="buyer-phone">
-                        <div class="error-message" id="buyer-phone-error"></div>
+                            <div class="error-message" id="buyer-phone-error"></div>
                         </div>
-                    </div>
-                    <div class="pay-choicebox">
-                        <div class="pay-choietitle">결제</div>
-                        <input type="checkbox" name="pay_type" class="checkbox" value="무통장 입금" onchange="handleCheckboxChange(this)"> 무통장 입금
-                        <input type="checkbox" name="pay_type" class="checkbox" value="계좌이체" onchange="handleCheckboxChange(this)"> 계좌이체
-                        <input type="checkbox" name="pay_type" class="checkbox" value="카카오페이" onchange="handleCheckboxChange(this)"> 카카오페이
-                    </div>
-                    <div class="pay-depotiorbox">
                         <div class="depotiortitle">
                             입금자명 : <input type="text" class="pay-depositor" name="pay_name" id="payname">
-                            <div class="error-message2" id="pay-name-error"></div>
+                            <div class="error-message" id="pay-name-error"></div>
                         </div>
                     </div>
                     <div class="pay-pricebox">
-                    <div class="pricetitle">
-                        결제금액 :
-                        <span name="productName" class="mypaylist"></span>
+                        <div class="pricetitle">
+                            결제금액 :
+                            <span name="productName" class="mypaylist"></span>
+                        </div>
                     </div>
                     <div class="buttonbox">
                         <div class="pay-submit">
@@ -70,11 +74,11 @@
                         </div>
                     </div>
                 </div>
-                </div>
             </form>
         </div>
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</div>
 </body>
 </html>

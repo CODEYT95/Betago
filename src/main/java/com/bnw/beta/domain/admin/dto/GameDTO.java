@@ -21,4 +21,10 @@ public class GameDTO {
     private int game_amount;
     private Date game_startsearch;
     private Date game_endsearch;
+
+    //파일
+    private int filegame_no;
+    private String filegame_name;
+    private String filegame_path;
+    private Date filegame_date;
 }
