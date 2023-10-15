@@ -30,10 +30,10 @@ a {
   text-decoration: none;
 }
 .header-image{
-  width: 160px;
-      position: absolute;
-      margin-right: 1334px;
-      margin-top: 32px;
+    width: 186px;
+    position: absolute;
+    margin-right: 1334px;
+    margin-top: 76px;
 }
 
 nav {
