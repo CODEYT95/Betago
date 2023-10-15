@@ -11,5 +11,5 @@ public class GameFileDTO {
     private int game_no;
     private String filegame_name;
     private String filegame_path;
-    private Date game_date;
+    private Date filegame_date;
 }
