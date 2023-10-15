@@ -1,13 +1,20 @@
+function topFunction() {
+    const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+
+    if (currentScroll > 0) {
+        window.requestAnimationFrame(topFunction);
+        window.scrollTo(0, currentScroll - (currentScroll / 10));
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.checkbox-input');
     const subscribeButton = document.getElementById('subscribeButton');
 
-    // 어떤 체크박스라도 선택되었는지 확인
     function isAnyCheckboxChecked() {
         return Array.from(checkboxes).some(checkbox => checkbox.checked);
     }
 
-    // 체크박스 상태에 따라 "subscribeButton"의 상태 업데이트
     function updateSubscribeButtonState() {
         if (isAnyCheckboxChecked()) {
             subscribeButton.removeAttribute('disabled');
@@ -75,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    //뒤로가기 해서 해당 페이지로 올 시 체크박스 초기화
     window.onload = function() {
         initializePage();
     };
@@ -87,4 +93,23 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializePage() {
         $(".checkbox-input:checked").prop("checked", false);
     }
+
+    const myButton = document.getElementById("myBtn");
+
+    window.onscroll = function() {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            myButton.style.display = "block";
+        } else {
+            myButton.style.display = "none";
+        }
+    }
+
+    myButton.addEventListener("click", function(event) {
+        event.stopPropagation();
+        topFunction();
+    });
 });

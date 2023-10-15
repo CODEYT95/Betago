@@ -110,6 +110,7 @@
     justify-content: center;
     border-radius: 10px;
     width: 100%;
+    height: 290px;
 }
 
 .details {
@@ -166,6 +167,7 @@ h1, h2, h3, h4{
 
 .checkbox{
     margin-bottom: 25px;
+    width: 285px;
 }
 
 .checkbox-input {
@@ -270,40 +272,22 @@ h1, h2, h3, h4{
     margin: 0;
 }
 
-.scroll-to-top {
-    position: fixed;
-    bottom: 50px;
-    right: 40px;
-    display: none;
-    width:154px;
-    color:white;
-}
+#myBtn {
+        display: none; /* Hidden by default */
+        position: fixed; /* Fixed/sticky position */
+        bottom: 20px; /* Place the button at the bottom of the page */
+        right: 30px; /* Place the button 30px from the right */
+        z-index: 99; /* Make sure it does not overlap */
+        border: none; /* Remove borders */
+        outline: none; /* Remove outline */
+        background-color: #555; /* Set a background color */
+        color: white; /* Text color */
+        cursor: pointer; /* Add a mouse pointer on hover */
+        padding: 15px; /* Some padding */
+        border-radius: 10px; /* Rounded corners */
+        font-size: 18px; /* Increase font size */
+    }
 
-.scroll-to-top a {
-    text-decoration: none;
-    padding: 15px 15px;
-    background-color: #5073FB;
-    border-radius: 45px;
-    font-size: 24px;
-}
-
-.scroll-to-top a:hover {
-    background-color: #395cdd;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #myBtn:hover {
+        background-color: #555; /* Add a dark-grey background on hover */
+    }
