@@ -24,4 +24,12 @@
     </foreach>
 </select>
 
+<select id="selectPaySales">
+    <![CDATA[
+    SELECT *
+    FROM pay
+    WHERE pay_date >= CONCAT('2023-10', '-01') AND pay_date <= LAST_DAY(CONCAT('2023-10', '-01'));
+    ]]>
+</select>
+
 </mapper>

@@ -122,5 +122,10 @@ public class EducatorGroupController {
         }
         return "/learning/group/educator/joinApprove";
     }
+
+    @GetMapping("/test")
+    public String get(){
+        return "test";
+    }
 }
 
