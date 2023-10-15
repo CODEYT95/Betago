@@ -25,13 +25,13 @@ public interface NoticeService {
     List<NoticeDTO> getTopNoticeList();
 
     //공지게시판 글등록
-    void insert(NoticeDTO noticeDTO, MultipartFile[][] file, String type, Date timeWrite) throws IOException, ParseException;
+    void insert(NoticeDTO noticeDTO, MultipartFile[] file, String type, Date timeWrite) throws IOException, ParseException;
 
     //공지게시판 상세조회
     NoticeDTO detail(Long notice_no) ;
 
     //공지게시판 수정
-    NoticeDTO update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] file) throws IOException;
+    int update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] file) throws IOException;
 
     //공지게시판 삭제
     void delete(Long notice_no);

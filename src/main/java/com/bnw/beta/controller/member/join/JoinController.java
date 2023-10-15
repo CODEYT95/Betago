@@ -24,7 +24,7 @@ public class JoinController {
 
     //약관동의 및 본인 인증처리
     @PostMapping("/agree")
-    public String member(@Valid JoinForm joinForm, BindingResult bindingResult, Model model,
+    public String member(@Valid JoinForm joinForm, Model model,
                          @RequestParam("next") String next, @RequestParam("check_3") String check3,
                          @RequestParam("check_4") String check4, @RequestParam("check_5") String check5, HttpSession session) {
 

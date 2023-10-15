@@ -12,14 +12,8 @@ import java.util.List;
 
 @Controller
 public class MainController {
-    private final NoticeService noticeService;
 
 
-
-    public  MainController(NoticeService noticeService ){
-
-        this.noticeService = noticeService;
-    }
         @GetMapping("/main")
         public String mainPage(Model model) {
             NoticeDTO noticeDTO = new NoticeDTO();
