@@ -10,8 +10,8 @@
 
 <insert id="insertIntoPay" parameterType="payDTO">
     <![CDATA[
-    INSERT INTO pay (member_id, game_no, pay_name, pay_phone, pay_type, buy_name)
-    VALUES (#{member_id}, #{game_no}, #{pay_name}, #{pay_phone}, #{pay_type}, #{buy_name});
+    INSERT INTO pay (member_id, game_no, pay_name, pay_phone, pay_type, buy_name, pay_enddate)
+    VALUES (#{member_id}, #{game_no}, #{pay_name}, #{pay_phone}, #{pay_type}, #{buy_name}, DATE_ADD(CURRENT_DATE(), INTERVAL #{game_date} MONTH));
     ]]>
 </insert>
 <select id="selectBuylist" parameterType="java.util.List" resultType="payDTO">
