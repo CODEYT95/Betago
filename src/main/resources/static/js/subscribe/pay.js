@@ -2,7 +2,7 @@ function handleNavClick(paymentMethod, clickedElement) {
     // 선택한 결제 방법을 표시하는 요소를 가져옵니다.
     const paymentDisplay = document.getElementById('selectedPaymentMethod');
     const payType = document.getElementById('pay_type');
-    payType.textContent = paymentMethod;
+    payType.value = paymentMethod;
     paymentDisplay.textContent = paymentMethod;
 
     // 모든 navbar의 a 태그들에 대하여 반복

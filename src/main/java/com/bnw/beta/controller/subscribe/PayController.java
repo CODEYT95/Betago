@@ -6,15 +6,13 @@ import com.bnw.beta.service.subscribe.pay.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping("pay")
 public class PayController {
     @Autowired
     private PayService payService;
@@ -22,23 +20,22 @@ public class PayController {
     @GetMapping("/cartList")
     public String cartList(Model model, @RequestParam("game_no") List<Integer> game_no) {
         List<payDTO> cartlist = payService.selectBuylist(game_no);
+        System.out.println("test"+cartlist);
         model.addAttribute("cartlist", cartlist);
         return "subscribe/pay";
     }
 
     @PostMapping("/payment")
     public String submitPay(@RequestParam("game_no[]") List<Integer> game_no,
-                            @RequestParam("game_sell[]") List<Integer> game_sell,
+                            @RequestParam("pay_type") String pay_type,
                             payDTO payDTO, Principal principal) {
-
+        System.out.println("테스트"+pay_type);
         String member_id = principal.getName();
 
         for (int i = 0; i < game_no.size(); i++) {
             Integer gameNo = game_no.get(i);
-            Integer gemeSell = game_sell.get(i);
             payDTO.setMember_id(member_id);
             payDTO.setGame_no(gameNo);
-            payDTO.setGame_sell(gemeSell);
             System.out.println(payDTO);
             payService.insertIntoPay(payDTO);
         }

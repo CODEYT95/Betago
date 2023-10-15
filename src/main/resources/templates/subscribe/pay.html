@@ -22,7 +22,7 @@
             </div>
             <div class="content-row">  <!-- 추가된 부분 -->
                 <div th:each="game : ${cartlist}" class="image-container">
-                    <div class="poster"><img class="image" th:src="@{|/image/game/${game.filegame_name}|}" th:alt="${game.filegame_name}"></div>
+                    <div class="poster"><img class="image" th:src="${game.filegame_name} ? @{|/image/game/${game.filegame_name}|} : @{/image/캡처.png}" th:alt="${game.filegame_name}"></div>
                 </div>
             <form th:action="@{/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
                 <div class="pay-box">
@@ -32,12 +32,12 @@
                         <div class="pay-titlecontent" id="selectedPaymentMethod"></div>
                     </div>
                     <div class="pay-orderbox">
-                        <div class="pay-ordertitle">주문할 상품</div>
+                        <div class="pay-o rdertitle">주문할 상품</div>
                         <div class="pay-ordercontent">
                             <div class="tag-container">
                                 <div class="tag-container">
                                     <div th:each="game : ${cartlist}" class="tag">
-                                        <input class="price" name="game_sell[]" hidden="hidden" th:value="${game.game_sell}">
+                                        <input class="price" hidden="hidden" th:value="${game.game_sell}">
                                         <input hidden="hidden" name="game_no[]" th:value="${game.game_no}">
                                         <div th:text="${game.game_title}" th:attr="data-game-price=${game.game_sell}"></div>
                                         <a class="delete-btn" th:attr="data-game-no=${game.game_no}">x</a>
