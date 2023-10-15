@@ -61,6 +61,20 @@ public class TaskServiceImpl implements TaskService{
         return taskDAO.createTask(taskDTO);
     }
 
+    //숙제 조회
+    @Override
+    public List<String> selectTaskTitle(String member_id) {
+        return taskDAO.selectTaskTitle(member_id);
+    }
+    @Override
+    public List<TaskDTO> selectTaskByTitle(String task_title, String member_id) {
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTask_title(task_title);
+        taskDTO.setMember_id(member_id);
+
+        return taskDAO.selectTaskByTitle(taskDTO);
+    }
+
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
     @Override

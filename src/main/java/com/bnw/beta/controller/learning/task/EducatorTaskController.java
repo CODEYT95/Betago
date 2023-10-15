@@ -1,6 +1,7 @@
 package com.bnw.beta.controller.learning.task;
 
 import com.bnw.beta.domain.common.paging.TaskPageDTO;
+import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.service.learning.Task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/educator")
@@ -52,6 +55,21 @@ public class EducatorTaskController {
 
         return "learning/task/educator/createTask";
     }
+
+    //숙제 제목 조회하기
+    @GetMapping("/sendTask")
+    public String selectTaskDetailByTitle(Authentication authentication, Model model, @RequestParam(defaultValue = "") String task_title){
+        String member_id = authentication.getName();
+        List<String> taskTitle = taskService.selectTaskTitle(member_id);
+        List<TaskDTO> taskDetail = taskService.selectTaskByTitle(task_title, member_id);
+
+        model.addAttribute("taskTitle", taskTitle);
+        model.addAttribute("taskDetail", taskDetail);
+        return "learning/task/educator/sendTask";
+    }
+
+    //숙제 제목으로 상세 조회
+    @PostMapping("/selectTask")
 
     //제출된 숙제 조회하기
     @GetMapping("/evalTask")

@@ -16,6 +16,10 @@ public interface TaskService {
     //전송한 숙제 조회
     TaskPageDTO sendTaskList(@Param("member_id") String member_id, @Param("page") int page, @Param("size") int size);
 
+    //숙제 조회하기
+    List<String> selectTaskTitle(String member_id);
+    List<TaskDTO> selectTaskByTitle(String task_title, String member_id);
+
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
     List<TaskDTO> selectTaskById(Integer member_no);
