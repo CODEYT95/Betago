@@ -34,4 +34,10 @@ public interface MemberDAO {
 
     /*회원목록조회 관리자용*/
     List<MemberDTO> memberlist();
+
+    /////////멤버 롤 가져오기/////////////김현민
+    MemberDTO getRoleById(String member_id);
+
+    /////////로그인 된 아이디 가져오기/////////////김현민
+    MemberDTO loginByUsername(String username);
 }
