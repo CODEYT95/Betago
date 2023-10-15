@@ -37,7 +37,10 @@ public interface GroupService {
     String deleteGroup(List<Integer> group_no);
 
     //그룹 학생 가입 승인 목록
-    GroupPageDTO selectGroupApprove(@Param("member_no") int member_no, @Param("group_name") String group_name, @Param("page") int page, @Param("size") int size);
+    GroupPageDTO selectGroupApprove(@Param("member_id") String member_id, @Param("group_no") Integer group_no, @Param("page") int page, @Param("size") int size);
+
+    //그룹 학생 가입승인 정보
+    GroupDTO selectGroupInfo(int group_no);
 
     //////////////////학습자////////////////////
 
