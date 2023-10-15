@@ -11,28 +11,28 @@
     <link th:replace="~{common/fragments/config :: configFragment}"/>
 </head>
 <body>
-<div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<div class="content">
-    <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
-    <div class="content-wrap">
-        <div class="sales">
-            <div class="salesContent">
-                <div class="side-content" style="margin-bottom: 73px;">
-                    <form th:action="@{/game/gameSales}" method="get" style="margin-top: -95px;">
-                        <div class="period">
-                            <div class="searchPeriod">
-                                <div>조회기간</div>
-                                <div>
-                                    <input type="date" class="game_startsearch"id="game_startsearch">
-                                    <input type="date" class="game_endsearch"  id="game_endsearch">
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>******
+    <div class="content">
+        <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
+        <div class="content-wrap">
+            <div class="sales">
+                <div class="salesContent">
+                    <div class="side-content" style="margin-bottom: 73px;">
+                        <form th:action="@{/game/gameSales}" method="get" style="margin-top: -95px;">
+                            <div class="period">
+                                <div class="searchPeriod">
+                                    <div>조회기간</div>
+                                    <div>
+                                        <input type="date" class="game_startsearch"id="game_startsearch">
+                                        <input type="date" class="game_endsearch"  id="game_endsearch">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="unit">
-                                <input type="radio"  value="daily" id="daily" checked>
-                                <label for="daily">일단위</label><br>
-                                <input type="radio"  value="monthly" id="monthly">
-                                <label for="monthly">월단위</label><br>
-                            </div>
+                                <div class="unit">
+                                    <input type="radio"  value="daily" id="daily" checked>
+                                    <label for="daily">일단위</label><br>
+                                    <input type="radio"  value="monthly" id="monthly">
+                                    <label for="monthly">월단위</label><br>
+                                </div>
                         </div>
                         <div class="button">
                             <input type="button" value="검색" id="searchButton">
