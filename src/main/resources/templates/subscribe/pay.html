@@ -21,8 +21,8 @@
                 <a onclick="handleNavClick('카카오페이', this)">카카오페이</a>
             </div>
             <div class="content-row">  <!-- 추가된 부분 -->
-                <div class="image-container">
-                    <div class="poster"><img id="paymentImage" src=""></div>
+                <div th:each="game : ${cartlist}" class="image-container">
+                    <div class="poster"><img class="test" th:src="@{|/image/game/${game.filegame_name}|}" th:alt="${game.filegame_name}"></div>
                 </div>
             <form th:action="@{/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
                 <div class="pay-box">
@@ -78,5 +78,6 @@
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</div>
 </body>
 </html>

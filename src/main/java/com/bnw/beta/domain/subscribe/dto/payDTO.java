@@ -2,6 +2,8 @@ package com.bnw.beta.domain.subscribe.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class payDTO {
     private int game_no;
@@ -15,4 +17,10 @@ public class payDTO {
     private String pay_name;
     private String buy_name;
     private String pay_date;
+
+    //파일
+    private int filegame_no;
+    private String filegame_name;
+    private String filegame_path;
+    private Date filegame_date;
 }

@@ -16,12 +16,15 @@
 </insert>
 <select id="selectBuylist" parameterType="java.util.List" resultType="payDTO">
     <![CDATA[
-    SELECT * FROM game
-    WHERE game_no IN
+    SELECT g.*, f.filegame_name, f.filegame_path, f.filegame_date
+    FROM game g
+    INNER JOIN filegame f ON g.game_no = f.game_no
+    WHERE g.game_no IN
     ]]>
     <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
         #{item}
     </foreach>
 </select>
+
 
 </mapper>

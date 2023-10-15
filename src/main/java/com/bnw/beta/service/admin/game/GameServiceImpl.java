@@ -2,6 +2,7 @@ package com.bnw.beta.service.admin.game;
 
 import com.bnw.beta.domain.admin.dao.GameDAO;
 import com.bnw.beta.domain.admin.dto.GameDTO;
+import com.bnw.beta.domain.admin.dto.GameFileDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class GameServiceImpl implements GameService {
     public int insertGame(GameDTO dto) {
         return gameDAO.insertGame(dto);
     }
+
+     //게임콘텐츠 썸네일 등록
+    @Override
+    public int insertGameImage(GameFileDTO gameFileDTO){return gameDAO.insertGameImage(gameFileDTO);}
 
     /*게임콘텐츠 조회*/
    @Override
