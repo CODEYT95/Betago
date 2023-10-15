@@ -6,8 +6,7 @@
     <select id="selectAll" resultType="GameDTO">
         <![CDATA[
         SELECT
-            g.game_no, g.game_title, g.game_level, g.game_date, g.game_total,
-            g.game_sell, g.game_content, g.member_id,
+            g.*,
             f.filegame_name, f.filegame_path, f.filegame_date
         FROM game g
         LEFT JOIN filegame f ON g.game_no = f.game_no

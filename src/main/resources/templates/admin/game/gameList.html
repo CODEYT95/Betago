@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
@@ -23,10 +24,10 @@
             <div class="gameContent-search">
                 <form action="/game/searchByTitle" method="get" class="form-container" id="searchForm">
                     <div class="searchReq">
-                            <select name="game_title" class="titlelist" id="gameTitleSelect">
-                                <option selected>게임 선택</option>
-                                <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
-                            </select>
+                        <select name="game_title" class="titlelist" id="gameTitleSelect">
+                            <option selected>게임 선택</option>
+                            <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
+                        </select>
                         <input type="submit" value="조회하기" id="searchButton" />
                     </div>
                 </form>
@@ -69,7 +70,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 </div>
 <button id="myBtn" title="Go to top">Top</button>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
