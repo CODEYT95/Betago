@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (selectedGameNo.length > 0) {
             const gameNoParam = selectedGameNo.join(",");
-            window.location.href = "/cartList?game_no=" + gameNoParam;
+            window.location.href = "/pay/cartList?game_no=" + gameNoParam;
         } else {
             alert("게임을 선택하세요!");
         }

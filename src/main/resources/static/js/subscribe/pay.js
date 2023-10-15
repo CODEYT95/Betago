@@ -30,6 +30,7 @@ function updateTotalPrice() {
     // 결과를 화면에 출력
     var totalPriceInput = document.querySelector('.order-total');
     totalPriceInput.value = selectedGamePrice;
+    console.log(totalPriceInput);
 }
 
 //발리데이션

@@ -27,6 +27,7 @@ public class PayController {
 
     @PostMapping("/payment")
     public String submitPay(@RequestParam("game_no[]") List<Integer> game_no,
+                            @RequestParam("game_date[]") List<String> game_date,
                             @RequestParam("pay_type") String pay_type,
                             payDTO payDTO, Principal principal) {
         System.out.println("테스트"+pay_type);
@@ -34,8 +35,10 @@ public class PayController {
 
         for (int i = 0; i < game_no.size(); i++) {
             Integer gameNo = game_no.get(i);
+            String gameDate = game_date.get(i);
             payDTO.setMember_id(member_id);
             payDTO.setGame_no(gameNo);
+            payDTO.setGame_date(gameDate);
             System.out.println(payDTO);
             payService.insertIntoPay(payDTO);
         }
