@@ -78,7 +78,7 @@ public class GameController {
     Date game_startsearch, @RequestParam(value = "game_endsearch", required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date game_endsearch) {
         List<GameDTO> saleslist = gameService.selectDailySales(game_startsearch, game_endsearch);
         model.addAttribute("saleslist", saleslist);
-        return "admion/game/gameSales";
+        return "admin/game/gameSales";
     }
 
 
