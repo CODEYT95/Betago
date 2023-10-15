@@ -4,7 +4,6 @@ import com.bnw.beta.domain.common.paging.GroupPageDTO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
 import com.bnw.beta.service.member.MemberService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -121,11 +120,6 @@ public class EducatorGroupController {
             System.out.println("여기들어옴"+groupService.selectGroupInfo(group_no));
         }
         return "/learning/group/educator/joinApprove";
-    }
-
-    @GetMapping("/test")
-    public String get(){
-        return "test";
     }
 }
 

@@ -9,125 +9,135 @@
 </head>
 
 <script type="text/javascript">
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['년도', '매출액', '건수'],
-        ['1월', 1+'원',1+'건'],
-        ['2월', 2+'원',2+'건'],
-        ['3월', 3+'원',3+'건'],
-        ['4월', 4+'원',4+'건'],
-        ['5월', 4033+'원',5+'건'],
-        ['6월', 2+'원',6+'건'],
-        ['7월', 4222+'원',7+'건'],
-        ['8월', 422+'원',1+'건'],
-        ['9월', 4000+'원',2+'건'],
-        ['10월', 4000+'원',2+'건'],
-        ['11월', 4000+'원',6+'건'],
-        ['12월', 4000+'원', 2+'건']
-      ]);
-var options = {
-  chart: {
-    title: '',
-    subtitle: ''
-  },
-  series: {
-    0: { axis: '건수', annotations: { stemColor: 'none' } }
-  },
-  vAxes: {
-    0: {  // 세로 선을 표시할 매출 데이터 축
-      gridlines: {
-        count: 0 // 매출 데이터 축에 5개의 세로 선을 표시
+    document.addEventListener("DOMContentLoaded", function () {
+      // 데이터 요소 가져오기
+      var dayValues = document.querySelectorAll('.data-value#dayValue');
+      var totalSellValues = document.querySelectorAll('.data-value#totalSellValue');
+      var totalSalesValues = document.querySelectorAll('.data-value#totalSalesValue');
+
+      // 데이터 배열 초기화
+      var years = [];
+      var sales = [];
+      var transactions = [];
+
+      // 데이터 추출
+      for (var i = 0; i < dayValues.length; i++) {
+          years.push(dayValues[i].value);
+          sales.push(totalSellValues[i].value);
+          transactions.push(totalSalesValues[i].value);
       }
-    },
-    1: {  // 건수 데이터 축
-      gridlines: {
-        count: 1 // 건수 데이터 축에는 세로 선을 표시하지 않음
+
+      // Google Charts 로드
+      google.charts.load('current', { 'packages': ['bar'] });
+      google.charts.setOnLoadCallback(drawChart);
+
+      // 차트 그리기 함수
+      function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+              ['년도', '매출액', '건수']
+          ]);
+
+          for (var i = 0; i < years.length; i++) {
+              data.addRow([years[i], sales[i] + '원', transactions[i] + '건']);
+          }
+
+          var options = {
+              chart: {
+                  title: '',
+                  subtitle: ''
+              },
+              series: {
+                  0: { axis: '건수', annotations: { stemColor: 'none' } }
+              },
+              vAxes: {
+                  0: {
+                      gridlines: {
+                          count: 0
+                      }
+                  },
+                  1: {
+                      gridlines: {
+                          count: 1
+                      }
+                  }
+              }
+          };
+
+          var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+          chart.draw(data, google.charts.Bar.convertOptions(options));
       }
+
+      // 검색 버튼 이벤트 리스너 추가
+      var searchBtn = document.querySelector(".search-btn");
+      searchBtn.addEventListener("click", function () {
+          var intervalRadio = document.querySelector('input[name="interval"]:checked');
+          var startDateSingle = document.getElementById('startdate_single').value;
+          var startDate = document.getElementById('startdate').value;
+          var endDate = document.getElementById('enddate').value;
+
+          var testURL = '/pay/test?pay_date=' + encodeURIComponent(startDateSingle);
+
+          if (intervalRadio && intervalRadio.value === 'month') {
+              // 월단위 선택 시, startDate와 endDate를 URL에 추가
+              testURL = '/pay/test?pay_date=' + encodeURIComponent(startDate) + '&pay_enddate=' + encodeURIComponent(endDate);
+          }
+
+          window.location.href = testURL;
+      });
+  });
+document.addEventListener("DOMContentLoaded", function () {
+    // 라디오 버튼 요소 가져오기
+    var dayRadio = document.querySelector('input[value="day"]');
+    var monthRadio = document.querySelector('input[value="month"]');
+
+    // 날짜 입력 요소 가져오기
+    var dateRange = document.getElementById('daterange');
+    var startDateSingle = document.getElementById('startdate_single');
+    var startDate = document.getElementById('startdate'); // startdate 입력 요소 가져오기
+    var endDate = document.getElementById('enddate');     // enddate 입력 요소 가져오기
+
+    // "일단위" 라디오 버튼에 대한 이벤트 리스너 추가
+    dayRadio.addEventListener("change", function () {
+        dateRange.style.display = 'none'; // 날짜 범위 숨기기
+        startDateSingle.style.display = ''; // 단일 날짜 표시
+    });
+
+    // "월단위" 라디오 버튼에 대한 이벤트 리스너 추가
+    monthRadio.addEventListener("change", function () {
+        dateRange.style.display = ''; // 날짜 범위 표시
+        startDateSingle.style.display = 'none'; // 단일 날짜 숨기기
+    });
+
+    // startdate 값이 변경될 때 enddate의 min 및 max 값을 설정
+    startDate.addEventListener("input", function() {
+        endDate.min = startDate.value;
+
+        // 년도와 월을 분리
+        var parts = startDate.value.split('-');
+        var year = parseInt(parts[0]);
+        var month = parseInt(parts[1]);
+
+        // 년도를 1년 증가시키고 해당 날짜를 max로 설정
+        var maxDate = new Date(year + 1, month - 1); // month는 0부터 시작하므로 -1
+        var maxYear = maxDate.getFullYear();
+        var maxMonth = String(maxDate.getMonth() + 1).padStart(2, '0'); // 월도 0부터 시작하므로 +1, 두 자리 숫자로 포매팅
+
+        endDate.max = `${maxYear}-${maxMonth}`;
+    });
+
+    // 페이지 로드 시 초기 설정
+    if (dayRadio.checked) {
+        dateRange.style.display = 'none';
+        startDateSingle.style.display = '';
+    } else if (monthRadio.checked) {
+        dateRange.style.display = '';
+        startDateSingle.style.display = 'none';
     }
-  }
-};
-
-      var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-      chart.draw(data, google.charts.Bar.convertOptions(options));
-    }
-function handleIntervalChange(interval) {
-  var daterange = document.getElementById('daterange');
-  var startdateSingle = document.getElementById('startdate_single');
-var startdateInput = document.getElementById("startdate");
-var enddateInput = document.getElementById("enddate");
-
-startdateInput.addEventListener("change", function() {
-  var startDate = new Date(this.value);
-
-  // 시작일로부터 12개월 후의 날짜 계산
-  var endDate = new Date(startDate.getFullYear() + 1, startDate.getMonth(), startDate.getDate());
-
-  // YYYY-MM 형식으로 변환하여 값 설정
-  var formattedEndDate =
-    endDate.getFullYear() +
-    "-" +
-    ("0" + (endDate.getMonth() + 1)).slice(-2);
-
-   // 최대값 설정
-   enddateInput.setAttribute('max', formattedEndDate);
-
 });
 
-function disableOtherFields() {
-   var inputs = document.querySelectorAll("#startdate, #enddate");
-
-   for (var i = 0; i < inputs.length; i++) {
-      if (inputs[i].id !== "enddate") {
-         inputs[i].disabled = true;
-      }
-   }
-}
-
-// startdate 변경 시 enddate 초기화 및 제한
-startdateInput.addEventListener("input", function() {
-    var selectedDate = new Date(this.value);
-    var today = new Date();
-
-    if (selectedDate >= today) {
-        enddateInput.removeAttribute('min');
-        enddateInput.value = '';
-    } else {
-        enddateInput.setAttribute('min', this.value);
-        enddateInput.value = this.value;
-    }
-});
-  if (interval === 'day') {
-    // 일단위 선택 시 월 단위 선택 제한
-    daterange.style.display = 'none';
-    startdateSingle.style.display = '';
-
-    // 현재 날짜로 초기화
-    var today = new Date().toISOString().split("T")[0];
-    document.getElementById('startdate_single').value = today;
-
-  } else if (interval === 'month') {
-     // 월단위 선택 시 최대 12개월 이전까지만 선택 가능하도록 제한
-     daterange.style.display = 'block';
-     startdateSingle.style.display = 'none';
-
-     var startdate = document.getElementById('startdate');
-     var enddate = document.getElementById('enddate');
-
-
-   }
-}
-document.getElementById("startdate").addEventListener("change", function() {
-  var startDate = new Date(this.value);
-  var maxDate = new Date(startDate.getFullYear(), startDate.getMonth() + 12, 0);
-
-  var enddateInput = document.getElementById("enddate");
-  enddateInput.setAttribute('max', maxDate.toISOString().split("T")[0]);
-});
 </script>
+
 <style>
 .date-container, .info-container{
     display: flex;
@@ -146,13 +156,13 @@ document.getElementById("startdate").addEventListener("change", function() {
                         <span>~</span>
                         <input type="month" id="enddate">
                     </div>
-                    <input type="month" id="startdate_single" style="">
+                    <input type="month" id="startdate_single">
                 </div>
                 <div>
                     <span>일단위</span>
-                    <input type="radio" name="interval" value="day" checked onclick="handleIntervalChange('day')">
+                    <input type="radio" name="interval" value="day" checked>
                     <span>월단위</span>
-                    <input type="radio" name= "interval" value= "month" onclick= "handleIntervalChange('month') ">
+                    <input type="radio" name= "interval" value= "month">
                 </div>
             </div>
             </div>
@@ -169,6 +179,9 @@ document.getElementById("startdate").addEventListener("change", function() {
         <div id="columnchart_material" style="width: 100%; min-width: 25%; height: 500px;"></div>
         </div>
     </div>
+<input type="hidden" th:each="dayList : ${dayList}" th:value="${dayList.day}" id="dayValue" class="data-value">
+<input type="hidden" th:each="dayList : ${dayList}" th:value="${dayList.total_sell}" id="totalSellValue" class="data-value">
+<input type="hidden" th:each="dayList : ${dayList}" th:value="${dayList.total_sales}" id="totalSalesValue" class="data-value">
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

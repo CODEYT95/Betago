@@ -198,7 +198,6 @@ public class GroupServiceImpl implements GroupService {
         groupDTO.setMember_no(member_no);
         groupDTO.setGroup_no(group_no);
         groupDTO.setGame_no(game_no);
-        System.out.println("임플확인"+groupDTO);
         return groupDAO.insertGroupJoin(groupDTO);
     }
 
