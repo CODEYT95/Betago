@@ -41,7 +41,7 @@
                                 <span class="option-text-educator">전체</span>
                             </li>
                             <li class="option" th:each="educator : ${educator}">
-                                <span class="option-text-educator" th:text="${educator.member_name}"></span>
+                                <span class="option-text-educator" th:attr="data-m-no=${educator.member_no}" th:text="${educator.member_name}"></span>
                             </li>
                         </ul>
                     </div>

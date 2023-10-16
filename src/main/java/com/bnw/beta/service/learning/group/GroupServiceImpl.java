@@ -21,30 +21,31 @@ public class GroupServiceImpl implements GroupService {
 
     //그룹 등록 가능한 게임콘텐츠 Cnt
     @Override
-    public int groupAddListCnt(String game_title){
+    public int groupAddListCnt(String memeber_id, String game_title){
 
         if (game_title.equals("전체")){
             game_title="";
         }
-        return groupDAO.groupAddListCnt(game_title);
+        return groupDAO.groupAddListCnt(memeber_id, game_title);
     }
 
     //게임 콘텐츠 title 조회
     @Override
-    public List<GroupDTO> selectGameTitle(){return groupDAO.selectGameTitle();}
+    public List<GroupDTO> selectGameTitle(String member_id){return groupDAO.selectGameTitle(member_id);}
 
     //그룹 등록 가능한 게임콘텐츠 조회(무한스크롤)
     @Override
-    public List<GroupDTO> groupAddList(String game_title, int limit, int offset) {
+    public List<GroupDTO> groupAddList(String member_id, String game_title, int limit, int offset) {
 
         GroupDTO groupDTO = new GroupDTO();
         if (game_title.equals("전체")){
             game_title="";
         }
+        groupDTO.setMember_id(member_id);
         groupDTO.setGame_title(game_title);
         groupDTO.setLIMIT(limit);
         groupDTO.setOFFSET(limit*offset);
-
+        System.out.println(groupDTO);
         List<GroupDTO> grouplist = groupDAO.groupAddList(groupDTO);
         return grouplist;
     }
@@ -57,19 +58,15 @@ public class GroupServiceImpl implements GroupService {
 
     //학습 그룹 등록(상세)
     @Override
-    public int insertGroup(int game_no, String id, String groupName, int count, Date sdate, Date edate){
+    public int insertGroup(GroupDTO groupDTO, String id, Date sdate, Date edate){
 
-        GroupDTO groupDTO = new GroupDTO();
-        groupDTO.setGame_no(game_no);
         groupDTO.setMember_id(id);
-        groupDTO.setGroup_name(groupName);
-        groupDTO.setGroup_cnt(count);
         java.sql.Date sqlStartDate = new java.sql.Date(sdate.getTime());
         java.sql.Date sqlEndDate = new java.sql.Date(edate.getTime());
 
         groupDTO.setGroup_startdate(sqlStartDate);
         groupDTO.setGroup_enddate(sqlEndDate);
-
+        System.out.println("insert"+groupDTO);
         return groupDAO.insertGroup(groupDTO);
     }
 
@@ -140,6 +137,26 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDTO selectGroupInfo(int group_no){return groupDAO.selectGroupInfo(group_no);};
 
+    //그룹 학생 목록 업데이트
+    @Override
+    //그룹 학생 목록 업데이트
+    public String updateGroupMembber(List<Integer> approveList, List<Integer> rejectList, int group_no){
+
+        String state;
+
+        if(approveList != null){
+            state = "승인";
+            groupDAO.updateGroupMembber(state,approveList);
+            groupDAO.updateGroupJoin(approveList.size(), group_no);
+        }
+
+        if(rejectList != null){
+            state = "거부";
+            groupDAO.updateGroupMembber(state,rejectList);
+        }
+        return "update";
+    }
+
     ////////////////////////////////////////////////////////////////////////
 
     //학습 그룹 가입 신청 목록
@@ -201,7 +218,41 @@ public class GroupServiceImpl implements GroupService {
         return groupDAO.insertGroupJoin(groupDTO);
     }
 
-    //학생 그룹 현재인원 Update
+    //가입신청 내역 목록
     @Override
-    public int updateGroupJoin(int group_no){return groupDAO.updateGroupJoin(group_no);}
+    public List<GroupDTO> myjoinList(int member_no, String group_name, String educator_name, int limit, int offset){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
+        groupDTO.setGroup_name(group_name);
+        groupDTO.setMember_name(educator_name);
+        groupDTO.setLIMIT(limit);
+        groupDTO.setOFFSET(offset);
+
+        return groupDAO.myjoinList(groupDTO);
+    }
+
+    //가입신청 내역 목록 갯수
+    @Override
+    public int myjoinListCount(int member_no, String group_name, String educator_name){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setMember_no(member_no);
+        groupDTO.setGroup_name(group_name);
+        groupDTO.setMember_name(educator_name);
+
+        return groupDAO.myjoinListCount(groupDTO);
+    }
+
+    //가입신청 내역 그룹명 목록
+    @Override
+    public List<GroupDTO> myjoinListTitle(int member_no){
+        return groupDAO.myjoinListTitle(member_no);
+    }
+
+    //가입신청 교육자 타이틀 목록
+    @Override
+    public List<GroupDTO> myjoinListEducator(int member_no){
+        return groupDAO.myjoinListEducator(member_no);
+    }
 }

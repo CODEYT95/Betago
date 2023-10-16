@@ -38,7 +38,7 @@
                                 <div class="tag-container">
                                     <div th:each="game : ${cartlist}" class="tag">
                                         <input class="price" hidden="hidden" th:value="${game.game_sell}">
-                                        <input class="price" hidden="hidden" name="game_date[]" th:value="${game.game_date}">
+                                        <input hidden="hidden" name="game_date[]" th:value="${game.game_date}">
                                         <input hidden="hidden" name="game_no[]" th:value="${game.game_no}">
                                         <div th:text="${game.game_title}" th:attr="data-game-price=${game.game_sell}"></div>
                                         <a class="delete-btn" th:attr="data-game-no=${game.game_no}">x</a>
