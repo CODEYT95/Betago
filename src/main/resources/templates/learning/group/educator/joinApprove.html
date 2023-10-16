@@ -57,6 +57,68 @@
             }
         });
     });
+    function saveData() {
+    var approveCheckboxes = $('.checkbox:checked');
+    var rejectCheckboxes = $('.checkbox2:checked');
+    var group_no = document.getElementById('group_no').value;
+
+    var approveData = approveCheckboxes.map(function () {
+        return $(this).data('approve-no');
+    }).get();
+
+    var rejectData = rejectCheckboxes.map(function () {
+        return $(this).data('reject-no');
+    }).get();
+
+    // 데이터 객체 생성
+    var dataToSend = {
+        'approve[]': approveData,
+        'reject[]': rejectData,
+        'group_no': group_no
+    };
+
+    var memberCountElement = document.getElementById('member_count');
+    var groupCountElement = document.getElementById('group_cnt');
+
+    if (groupCountElement && memberCountElement) {
+        var memberCount = parseInt(memberCountElement.value);
+        var groupCount = parseInt(groupCountElement.value);
+        if (memberCount + approveData.length > groupCount) {
+            alert("구독 가능 인원을 초과하였습니다. 구독 가능 인원을 확인해주세요.");
+            return;
+        }
+    }
+    // AJAX 요청 보내기
+    $.ajax({
+        type: 'POST',
+        url: '/educator/group/approveUpdate',
+        data: dataToSend,
+        success: function (response) {
+            openModal('joinCompleteModal');
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+            // 요청이 실패했을 때 처리할 작업
+        }
+    });
+    }
+    function openModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.style.display = 'block';
+}
+
+function closeModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.style.display = 'none';
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  var closeButton = document.querySelector('.modal-btn-confirm');
+  closeButton.addEventListener('click', function () {
+      closeModal('joinCompleteModal');
+      location.reload();
+  });
+});
 </script>
 
 <body>
@@ -66,6 +128,9 @@
     <div class="content-wrap">
         <div class="content-header">
             <div class="container">
+                <input hidden="hidden" id="member_count" th:value="${groupInfo != null ? groupInfo.member_count : 0}">
+                <input hidden="hidden" id="group_cnt" th:value="${groupInfo != null ? groupInfo.group_cnt : 0}">
+                <input hidden="hidden" id="group_no" th:value="${groupInfo != null ? groupInfo.group_no : 0}">
                 <form style="display: contents;" th:action="@{/educator/group/approveList}" method="get">
                     <h3>학습 그룹</h3>
                     <!-- 그룹 선택 메뉴 -->
@@ -84,12 +149,11 @@
                     <button type="submit" class="search-btn">조회</button>
                 </form>
             </div>
+        </div>
+        <div class="content-header2">
             <div>
                 <h3>게임콘텐츠: <span th:text="${groupInfo != null ? groupInfo.game_title : '게임콘텐츠를 선택해주세요.'}"></span></h3>
             </div>
-
-        </div>
-        <div class="content-header2">
             <div>
                 <h3>구독 가능인원: <span th:text="${groupInfo != null ? groupInfo.group_cnt+'명' : '0명'}"></span></h3>
             </div>
@@ -129,13 +193,13 @@
                             <td class="list_date" th:text="${list.approve_date}"></td>
                             <td class="list_approve">
                                 <label class="checkbox-wrap">
-                                    <input class="checkbox" type="checkbox" th:attr="data-approve-no=${list.member_no}">
+                                    <input class="checkbox" type="checkbox" th:attr="data-approve-no=${list.gm_no}">
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
                             <td class="list_reject">
                                 <label class="checkbox-wrap2">
-                                    <input class="checkbox2" type="checkbox" th:attr="data-reject-no=${list.member_no}">
+                                    <input class="checkbox2" type="checkbox" th:attr="data-reject-no=${list.gm_no}">
                                     <span class="checkmark2"></span>
                                 </label>
                             </td>
@@ -146,7 +210,7 @@
             </div>
             <div class="btn-container">
                 <div>
-                    <input type="button" value="저장하기">
+                    <input type="button" value="저장하기" onclick="saveData()">
                 </div>
             </div>
             <th:block th:if="${check != null}">
@@ -171,6 +235,14 @@
                 </div>
             </th:block>
         </div>
+    </div>
+</div>
+<div class="modal" id="joinCompleteModal">
+    <div class="modal-content">
+        <div>
+            <h3>저장이 완료 되었습니다.</h3>
+        </div>
+        <button class="modal-btn-confirm" onclick="closeModal('joinCompleteModal')">확인</button>
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

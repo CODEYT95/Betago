@@ -1,90 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
     <meta charset="UTF-8">
     <title>학습 그룹 등록</title>
-    <!--공통으로 쓰이는 CSS 및  -->
+    <!--공통으로 쓰이는 CSS 및 -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/educator/groupAdd.css}">
     <script type="text/javascript" th:src="@{/js/learning/group/educator/groupAdd.js}"></script>
 </head>
+
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
+
 <div class="content" th:each="groupInfo : ${gameGroupInfo}">
     <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
-        <div class="content-wrap">
-            <form th:action="@{/educator/group/addInsert}" method="post">
-            <input type="hidden" name="game_no" th:value="${groupInfo.game_no}">
+
+    <div class="content-wrap">
+        <form th:action="@{/educator/group/addInsert}" method="post">
+            <input type="hidden" name="game_no" th:value="${groupInfo.game_no}" th:if="${groupInfo.game_no != null}">
+
             <header class="content-header">
                 <div class="header-container">
-                <span>게임 콘텐츠명 : <span th:text="${groupInfo.game_title}"></span></span>
-                <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.game_total}"></span></span>
-                <span>그룹 총배정인원 : <span class="currentNum" th:text="${groupInfo.group_nowcnt}"></span></span>
+                    <span>게임 콘텐츠명 : <span th:text="${groupInfo.game_title}"></span></span>
+                    <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.game_total}"></span></span>
+                    <span>그룹 총배정인원 : <span class="currentNum" th:text="${groupInfo.group_nowcnt}"></span></span>
                 </div>
             </header>
             <div class="main-container">
-            <div class="main-content">
-                <div class="title">
-                <span>그룹 상세 정보</span>
+                <div class="main-content">
+                    <div class="title">
+                        <span>그룹 상세 정보</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="write-container">
-                <div class="educator-name-wrap">
-                    <span>교육자명</span>
-                    <label>
-                        <input class= "educator-name" type="text" name="name" th:value="${member_name}" readonly>
-                    </label>
-                </div>
-                <div class="group-name-wrap">
-                    <span>그룹명</span>
-                    <label>
-                        <input class="group-name" type="text" name="groupName" placeholder="그룹명을 입력해주세요.(최대 20자)" maxlength="20">
-                    </label>
-                </div>
-                <div class="group-people-wrap">
-                    <span>그룹 인원</span>
-                    <label>
-                        <select class="group-people"  name="count" placeholder="숫자로 입력해주세요.">
+                <div class="write-container">
+                    <div class="educator-name-wrap">
+                        <span>교육자명</span>
+                        <input class="educator-name" type="text" name="name" th:value="${member_name}" readonly>
+                    </div>
+                    <div class="group-name-wrap">
+                        <span>그룹명</span>
+                        <input class="group-name" type="text" name="group_name" placeholder="그룹명을 입력해주세요.(최대 20자)" maxlength="20">
+                    </div>
+                    <div class="group-people-wrap">
+                        <span>그룹 인원</span>
+                        <select class="group-people" name="group_cnt" placeholder="숫자로 입력해주세요.">
                             <option>인원 선택</option>
                         </select>
-                    </label>
-                </div>
-                <div class="period-wrap">
-                    <span>구독 기간</span>
-                    <label>
-                        <div class="date-wrap">
-                        <span>시작일</span>
-                        <input class="startDate" type="date" name="sdate">
-                        </div>
-                        <div class="date-wrap">
-                        <span>종료일</span>
-                        <input class="endDate" type="date" name="edate">
-                        </div>
-                    </label>
-                </div>
-                <div class="other-items-wrap">
-                    <div class="items1">
-                    <span>기타 항목1</span>
-                    <label>
-                        <input type="text">
-                    </label>
                     </div>
-                    <div class="items2">
-                    <span>기타 항목2</span>
-                    <label>
-                        <input type="text">
-                    </label>
+                    <div class="period-wrap">
+                        <span>구독 기간</span>
+                        <label>
+                            <div class="date-wrap">
+                                <span>시작일</span>
+                                <input class="startDate" type="date" name="sdate">
+                            </div>
+                            <div class="date-wrap">
+                                <span>종료일</span>
+                                <input class="endDate" type="date" name="edate">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="other-items-wrap">
+                        <div class="items1">
+                            <span>그룹 소개글</span>
+                            <textarea name="group_intro" placeholder="최대 100글자까지 작성 가능합니다." type="text" maxlength="100"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             <div class="addBtn-container">
-            <button id="submitButton" type="submit">학습 그룹 등록하기</button>
+                <button id="submitButton" type="submit">학습 그룹 등록하기</button>
             </div>
-            </form>
-        </div>
+        </form>
     </div>
+</div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

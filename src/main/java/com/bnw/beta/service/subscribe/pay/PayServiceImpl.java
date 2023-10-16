@@ -3,10 +3,13 @@ package com.bnw.beta.service.subscribe.pay;
 import com.bnw.beta.domain.subscribe.dao.payDAO;
 import com.bnw.beta.domain.subscribe.dto.CartDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,9 +34,9 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    public int insertIntoPay(payDTO payDTO) {
-        return payDAO.insertIntoPay(payDTO);
-    }
+        public int insertIntoPay(payDTO payDTO) {
+            return payDAO.insertIntoPay(payDTO);
+        }
 
     @Override
     public int insertIntoCart(int game_no, String member_id) {
@@ -45,4 +48,25 @@ public class PayServiceImpl implements PayService {
     }
 
 
+    //매출
+    //일단위 조회
+    public List<payDTO> selectDaySales(Date pay_date){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        String startDate = dateFormat.format(pay_date);
+
+        return payDAO.selectDaySales(startDate);
+    }
+
+    //월단위 조회
+    public List<payDTO> selectMonthSales(Date pay_date, Date pay_enddate){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        String startDate = dateFormat.format(pay_date);
+        String endDate = dateFormat.format(pay_enddate);
+
+        System.out.println(startDate+"ee"+endDate);
+
+        return payDAO.selectMonthSales(startDate,endDate);
+    }
 }
