@@ -84,7 +84,7 @@
     <!--전송한 숙제 조회-->
     <select id="sendTaskList" parameterType="map" resultType="TaskDTO">
         <![CDATA[
-        SELECT t.task_no, s.task_senddate, MAX(t.task_title) AS task_title,
+        SELECT t.task_no, s.tasksend_no, s.task_senddate, MAX(t.task_title) AS task_title,
                                                                     MAX(t.task_content) AS task_content, MAX(t.task_chapter) AS task_chapter,
                                                                     MAX(t.task_regdate) AS task_regdate, MAX(t.task_deadline) AS task_deadline,
                                                                     MAX(t.member_id) AS member_id, MAX(s.tasksend_no) AS tasksend_no
@@ -108,6 +108,31 @@
             WHERE t.member_id = #{member_id}
             GROUP BY t.task_no, s.task_senddate
         ) AS subquery;
+        ]]>
+    </select>
+
+    <!--전송 숙제 조회-->
+    <select id="selectSendTask">
+        <![CDATA[
+        SELECT ts.tasksend_no, ts.member_id, ts.task_senddate, t.task_title, t.task_content, t.task_chapter,t.task_deadline
+        FROM tasksend AS ts
+        JOIN task AS t ON ts.task_no = t.task_no
+        WHERE ts.member_id = #{member_id};
+        ]]>
+    </select>
+
+    <!--제출된 숙제 조회-->
+    <select id="evalTaskList" parameterType="String" resultType="TaskSubmitDTO">
+        <![CDATA[
+        SELECT sub.tasksubmit_no, sub.tasksubmit_chapter, sub.tasksubmit_content, sub.tasksubmit_add, sub.tasksubmit_regdate, m.member_name, ts.member_id
+        FROM tasksubmit AS sub
+        JOIN member AS m ON sub.member_id = m.member_id
+        JOIN tasksend AS ts ON sub.tasksend_no = ts.tasksend_no
+        JOIN task AS t ON sub.task_no = t.task_no
+        WHERE ts.member_id = '#{member_id}'
+        AND sub.tasksubmit_no = #{tasksubmit_no}
+        AND ts.task_state = '제출완료'
+        AND t.task_deadline < now();
         ]]>
     </select>
 
