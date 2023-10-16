@@ -20,7 +20,7 @@
             <div class="button-container">
                 <div class="writeBtn right-aligned">
                     <a class="btnWrite" th:href="@{/admin/notice/write}">
-                        <button class="btnWrite">글쓰기</button>
+                        <button class="btnWrite" sec:authorize="hasRole('ROLE_ADMIN')">글쓰기</button>
                     </a>
                 </div>
 

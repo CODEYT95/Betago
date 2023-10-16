@@ -12,12 +12,13 @@
 <div class="content">
     <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
     <div class="content-wrap">
-
         <section class="section section-faq">
             <div class="container mx-auto">
-                <h1>FAQ</h1>
+                <h1>자주 묻는 질문</h1>
                 <h4>궁금하신 내용이 FAQ에 없으면 Q&A로 문의주세요!</h4><br/>
                 <div th:if="${faq.notice_category == 'FAQ'}" th:each="faq:${faqList}">
+                    <input type="hidden" name="notice_no" th:value="${faq.notice_no}">
+
                     <div class="faq-box">
                         <ul>
                             <li>
@@ -27,15 +28,30 @@
                                 <div class="faq-box__answer">
                                     <span>A. <span th:text="${faq.notice_content}"></span></span>
                                 </div>
-                                <a class="button" th:href="@{'/admin/FAQ/edit/' + ${faq.getNotice_no}}">
-                                    <button type="button" class="btn_sub">수정</button>
-                                </a>
-                                <a th:href="@{'/admin/FAQ/delete/' + ${faq.getNotice_no}}">
-                                    <button type="button" class="btn_sub">삭제</button>
-                                </a>
                             </li>
+                            <div>
+                            <a class="button" th:href="@{'/admin/FAQ/edit/' + ${faq.getNotice_no}}">
+                                <button type="button" class="btn_sub" sec:authorize="hasRole('ROLE_ADMIN')">수정</button>
+                            </a>
+                            <a th:href="@{'/admin/FAQ/delete/' + ${faq.getNotice_no}}">
+                                <button type="button" class="btn_sub" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
+                            </a>
+                            </div>
                         </ul>
                     </div>
+                </div>
+                <div class="img">
+                    <a href="/question/list">
+                    <img id="QnA" src="/image/Q&A.png" style="float: left;">
+                    </a>
+                    <img id="info" src="/image/info.png" style="float: left;" usemap="#image-map">
+                    <map name="image-map">
+                        <!-- 아이디 찾기 영역 -->
+                        <area shape="rect" coords="15,80,80,110" th:href="@{/findId}" alt="아이디 찾기">
+
+                        <!-- 비밀번호 찾기 영역 -->
+                        <area shape="rect" coords="80,80,190,110"  th:href="@{/findPw}" alt="비밀번호 찾기">
+                    </map>
                 </div>
             </div>
         </section>

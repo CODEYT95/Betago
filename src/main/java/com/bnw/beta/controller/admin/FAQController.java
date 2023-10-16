@@ -44,16 +44,17 @@ public class FAQController {
                          @ModelAttribute NoticeDTO noticeDTO,
                          Principal principal) throws IOException {
         noticeDTO.setMember_id(principal.getName());
+        System.out.println("faq컨트롤"+noticeDTO);
         faqService.update(noticeDTO,notice_no);
-        return "admin/FAQ/FAQList";
+        return "redirect:/FAQ/list";
     }
 
     //FAQ삭제
-    //공지게시판 삭제
     @GetMapping("/admin/FAQ/delete/{notice_no}")
     public String delete(@PathVariable("notice_no") Long notice_no) {
+        System.out.println("FAQ삭제"+notice_no);
         faqService.delete(notice_no);
-        return "admin/FAQ/FAQList";
+        return "redirect:/FAQ/list";
     }
 
 }

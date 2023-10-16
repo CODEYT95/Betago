@@ -96,16 +96,13 @@
                         <span>여자</span></label><br/>
                 </div>
 
-
                 <div class="abver1">
                     <span class="telName">집전화번호</span>
-                    <select id="telNumberSelect" class="input">
-                        <option value="">전화번호를 입력해주세요.</option>
-                        <option value="none">없음</option>
-                        <option value="custom">직접입력</option>
-                    </select>
-                    <input type="text" class="input" id="customTelNumber" th:field="*{member_tell}" placeholder="전화번호를 입력해주세요." style="display: none;">
+                    <input type="text" class="input" id="telNumberSelect" th:field="*{member_tell}" placeholder="전화번호를 입력해주세요.">
+                    <input type="checkbox" id="noPhoneNumber" th:value="none">
+                    <label for="noPhoneNumber">없음</label>
                 </div>
+
                 <label class="abver">
                     <span class="agree">이벤트, 커리큘럼, 신규콘텐츠 등 광고 메세지 수신</span>
                     <input type="checkbox" th:field="*{member_agreeM}" value="동의">이메일
@@ -193,21 +190,6 @@
         document.getElementById("member_birth").value = birth;
 
     }
-
-
-    // 집전화 드롭다운 변경 이벤트 감지
-    var telNumberSelect = document.getElementById("telNumberSelect");
-    var customTelNumber = document.getElementById("customTelNumber");
-
-    telNumberSelect.addEventListener("change", function() {
-        if (this.value === "custom") {
-            customTelNumber.style.display = "block"; // 입력란을 보이도록 설정
-            telNumberSelect.style.display = "none"; // 드롭다운을 숨김 처리
-        } else {
-            customTelNumber.style.display = "none"; // 입력란을 숨김 처리
-            telNumberSelect.style.display = "block"; // 드롭다운을 보이도록 설정
-        }
-    });
 
     //아이디 유효성
     $("#id").keyup(function() {
@@ -434,7 +416,7 @@
         // 회원가입 버튼과 필드를 선택합니다.
         var submitButton = $("button[type='submit']");
         var fields = $("input[type='text'], input[type='password'], select");
-        var telNumberSelect = $("#telNumberSelect");
+        var noPhoneNumber = $("#noPhoneNumber");
 
         // 초기에 버튼을 비활성화합니다.
         submitButton.prop("disabled", true);
@@ -452,15 +434,12 @@
             });
 
             // 모든 필드가 값으로 채워졌을 때 버튼을 활성화합니다.
-            if (allFieldsFilled || (telNumberSelect.val() === "none")) {
+            if (allFieldsFilled || (noPhoneNumber.val() === "none")) {
                 submitButton.prop("disabled", false);
             } else {
                 submitButton.prop("disabled", true);
             }
         });
     });
-
-
-
 
 </script>

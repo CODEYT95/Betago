@@ -43,7 +43,8 @@
                         <label for="upLoadNow" class="view">즉시등록
                             <input type="checkbox" id="upLoadNow"></label>
                         <label for="upDateChoice" class="view">게시일자등록
-                            <input type="date" id="upDateChoice" name="timeWrite"></label><br/></div>
+                            <input type="date" id="upDateChoice" name="timeWrite"></label><br/>
+                    </div>
                 </div>
                 <div class="opt">
                     <label for="notice_content"
@@ -148,6 +149,12 @@
 
         //등록일시 체크 여부
         document.getElementById('btn').addEventListener('click', function (e) {
+            // FAQ가 선택된 경우에만 실행
+            var selectedOption = document.getElementById('notice_category').value;
+            if (selectedOption === 'FAQ') {
+                return; // FAQ가 선택되었을 때 코드 실행 중단
+            }
+
             // upLoadNow 체크박스의 상태 가져오기
             var upLoadNowCheckbox = document.getElementById('upLoadNow');
             var upLoadNowChecked = upLoadNowCheckbox.checked;
@@ -163,6 +170,26 @@
             }
         });
     });
+
+    //FAQ선택시?
+    document.getElementById("notice_category").addEventListener("change", function () {
+        var selectedOption = this.value;
+        var opt2Elements = document.querySelectorAll(".opt2");
+        var ex9Element = document.getElementById("ex9");
+
+        if (selectedOption === "FAQ") {
+            for (var i = 0; i < opt2Elements.length; i++) {
+                opt2Elements[i].style.display = "none"; // opt2 요소 숨김 처리
+            }
+            ex9Element.style.display = "none"; // ex9 요소 숨김 처리
+        } else {
+            for (var i = 0; i < opt2Elements.length; i++) {
+                opt2Elements[i].style.display = "block"; // opt2 요소 활성화
+            }
+            ex9Element.style.display = "block"; // ex9 요소 활성화
+        }
+    });
+
 
 </script>
 </html>

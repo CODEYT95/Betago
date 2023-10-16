@@ -69,7 +69,7 @@
         <![CDATA[
         SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type, notice_reservation
         FROM notice
-        WHERE notice_isshow = 'Y' AND (notice_reservation < now() OR notice_reservation is null)
+        WHERE notice_isshow = 'Y' AND notice_category != 'FAQ' AND (notice_reservation < now() OR notice_reservation is null)
         ]]>
         <if test='searchType.equals("notice_title")'>
             AND notice_title LIKE CONCAT('%', #{keyword}, '%')

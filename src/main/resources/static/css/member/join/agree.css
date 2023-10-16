@@ -23,8 +23,9 @@
     padding: 6px 0 0 16px;
     width: 382px;
     height: 53.5px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-top: 7px;
+
 }
 .spanName{
     padding: 0 40px 12px;
@@ -54,12 +55,13 @@
     font-size: 22px;
     line-height: 22px;
     font-weight: 600;
-    margin-bottom: 24px;
-    margin-top: 30px;
+    margin-bottom: -10px;
+    margin-top: 22px;
 }
 
 #selectphone{
-    margin-left: 60px;
+    margin-left: 58px;
+    margin-top: 10px
 }
 #mail{
     margin-left: 60px;
@@ -113,4 +115,10 @@ radiodiv{
 .radio input[type="radio"]:checked + span {
     background-color: #2260ff;
     color: white;
+}
+
+.form{
+    display: table;
+    width: 70%;
+    margin-top: -15px;
 }

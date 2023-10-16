@@ -48,16 +48,16 @@
                     </div>
 
                     <div class="file_input">
-                        <label class="fileselect" style="font-size: 16px;"> 파일 등록
-                            <input type="file" class="fileup" multiple="multiple"><br/>
-                        </label>
+                        <label id="custom-button" for="custom-upload" style="display: none"> 파일 등록 </label>
+                        <input type="file" class="fileup" id="custom-upload" name="file" multiple="multiple" style="display: none"><br/>
                     </div>
 
                     <div id="ex9">
-                        <div class="drop-area" id="dropArea">
-                            <p id="here">여기에 파일을 드래그 앤 드롭하세요.</p>
-                            <input class="btn_file" multiple="multiple" type="file" name="file" id="fileInput">
-                        </div>
+                        <label> 파일 등록
+                            <div class="drop-area" id="dropArea">
+                                <p id="here">여기에 파일을 드래그 앤 드롭하거나 클릭하세요.</p>
+                            </div>
+                        </label>
                     </div>
 
                     <div class="content1">
@@ -92,37 +92,53 @@
 </html>
 
 <script>
-    var dropArea = document.getElementById('dropArea');
-    var fileInput = document.getElementById('fileInput');
+    document.addEventListener("DOMContentLoaded", function () {
+        var dropArea = document.getElementById('dropArea');
+        var fileInput = document.getElementById('custom-upload');
+        // 드래그 앤 드롭 영역을 클릭하면 파일 선택 창이 열리도록 설정
+        dropArea.addEventListener('click', function () {
+            fileInput.click(); // input 요소를 클릭합니다.
+        });
 
-    dropArea.addEventListener('dragenter', function (e) {
-        e.preventDefault();
-        dropArea.classList.add('active');
-    });
+        dropArea.addEventListener('dragenter', function (e) {
+            e.preventDefault();
+            dropArea.classList.add('active');
+        });
 
-    dropArea.addEventListener('dragover', function (e) {
-        e.preventDefault();
-    });
+        dropArea.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            dropArea.classList.add('highlight');
+        });
 
-    dropArea.addEventListener('dragleave', function () {
-        dropArea.classList.remove('active');
-    });
+        dropArea.addEventListener('dragleave', function () {
+            dropArea.classList.remove('active');
+            dropArea.classList.remove('highlight');
+        });
 
-    dropArea.addEventListener('drop', function (e) {
-        e.preventDefault();
-        dropArea.classList.remove('active');
+        //드래그앤드롭으로 업로들할때
+        dropArea.addEventListener('drop', function (e) {
+            e.preventDefault();
+            dropArea.classList.remove('active');
+            dropArea.classList.remove('highlight');
 
-        var files = e.dataTransfer.files;
-        fileInput.files = files;
+            var files = e.dataTransfer.files;
+            fileInput.files = files;
 
-        var formData = new FormData();
-        for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
-        }
-
-        fileName(files);
-
-    });
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+            fileName(files);
+        });
+        //클릭으로 업로드할때
+        fileInput.addEventListener('change', function () {
+            var files = fileInput.files;
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+            fileName(files);
+        });
 
     //업로드된 파일 이름을 출력
     function fileName(files) {

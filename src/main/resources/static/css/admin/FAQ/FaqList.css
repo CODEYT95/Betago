@@ -32,3 +32,26 @@
     margin-top: 10px;
 }
 
+.img{
+    margin-top: 10px;
+}
+
+#QnA{
+    height: 127px;
+    width: 300px;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 180px;
+}
+#info{
+    height: 123px;
+    width: 300px;
+    margin-top: 11px;
+}
+area[alt="아이디 찾기"] {
+    cursor: pointer;
+}
+
+area[alt="비밀번호 찾기"] {
+    cursor: pointer;
+}

@@ -26,12 +26,15 @@ public class FAQServiceImpl implements FAQService{
     //FAQ업데이트
     @Override
     public void update(NoticeDTO noticeDTO, Long notice_no) {
+        noticeDTO.setNotice_no(notice_no);
+        System.out.println("faq서비스"+noticeDTO);
         faqDAO.update(noticeDTO);
     }
+
     //FAQ삭제
-    //공지게시판 삭제
     @Override
     public void delete(Long notice_no) {
+        System.out.println("FAQ삭제"+notice_no);
         faqDAO.delete(notice_no);
     }
 }
