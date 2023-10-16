@@ -5,6 +5,7 @@
     <title>사이트 제목</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/subscribe/pay.css}">
     <script type="text/javascript" th:src="@{/js/subscribe/pay.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -20,9 +21,15 @@
                 <a onclick="handleNavClick('계좌이체', this)">계좌이체</a>
                 <a onclick="handleNavClick('카카오페이', this)">카카오페이</a>
             </div>
-            <div class="content-row">  <!-- 추가된 부분 -->
-                <div  class="image-container">
-                    <div class="poster"><img th:each="game : ${cartlist}" class="image" th:src="${game.filegame_name} ? @{|/image/game/${game.filegame_name}|} : @{/image/캡처.png}" th:alt="${game.filegame_name}"></div>
+            <div class="content-row">
+                <div class="image-container">
+                    <div th:each="game : ${cartlist}" class="poster">
+                        <img class="image" th:src="${game.filegame_name} ? @{|/image/game/${game.filegame_name}|} : @{/image/캡처.png}" th:alt="${game.filegame_name}">
+                    </div>
+                    <div class="img-button">
+                    <button onclick="prevImage()"></button>
+                    <button onclick="nextImage()"i class="fa-solid fa-circle-chevron-right fa-sm"></i></button>
+                    </div>
                 </div>
             <form th:action="@{/pay/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
                 <div class="pay-box">
