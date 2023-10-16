@@ -23,7 +23,8 @@ public interface TaskDAO {
 
     //숙제 조회하기
     List<String> selectTaskTitle(String member_id);
-    List<TaskDTO> selectTaskByTitle(TaskDTO taskDTO);
+    List<TaskDTO> selectTaskByTitle(String task_title, String member_id, @Param("page") int page, @Param("size") int size);
+    int taskLisitCount(String member_id);
 
     //숙제 전송하기
     int sendTask(TaskSendDTO taskSendDTO);

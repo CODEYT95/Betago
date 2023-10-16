@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     $("#taskTableBody").html(tbodyHtml);
 
                     // 모달 열기 버튼에 클릭 이벤트 리스너 다시 연결
-                    attachModalListeners();
+                    ModalListeners();
                 },
                 error: function () {
                     alert("작업을 가져오는 중 오류가 발생했습니다.");

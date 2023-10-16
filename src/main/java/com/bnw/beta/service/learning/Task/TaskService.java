@@ -18,7 +18,7 @@ public interface TaskService {
 
     //숙제 조회하기
     List<String> selectTaskTitle(String member_id);
-    List<TaskDTO> selectTaskByTitle(String task_title, String member_id);
+    TaskPageDTO selectTaskByTitle(String task_title, String member_id, @Param("page") int page, @Param("size") int size);
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회

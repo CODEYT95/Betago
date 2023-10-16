@@ -15,9 +15,11 @@
     <!--숙제 제목으로 조회-->
     <select id="selectTaskTitle" parameterType="String" resultType="String">
         <![CDATA[
-        SELECT DISTINCT task_title FROM task
+        SELECT DISTINCT task_title , task_regdate
+        FROM task
         WHERE member_id = #{member_id}
-        AND task_deadline > now();
+        AND task_deadline > now()
+        ORDER BY task_regdate DESC;
         ]]>
     </select>
 
@@ -34,8 +36,16 @@
       </if>
     <![CDATA[
     AND member_id = #{member_id}
-    AND task_deadline > now();
+    AND task_deadline > now()
+    ORDER BY task_regdate DESC
+    LIMIT #{page}, #{size};
     ]]>
+    </select>
+
+    <select id="taskLisitCount" parameterType="String" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*) FROM task WHERE member_id = #{member_id};
+        ]]>
     </select>
 
     <!--그룹 이름 조회-->
