@@ -1,6 +1,7 @@
 package com.bnw.beta.controller.learning.task;
 
 import com.bnw.beta.domain.common.paging.TaskPageDTO;
+import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.service.learning.Task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/educator")
 public class EducatorTaskController {
@@ -20,7 +23,7 @@ public class EducatorTaskController {
     //숙제 생성 폼 보여주기 (페이징)
     @GetMapping("/createTaskForm")
     public String saveTaskForm(@RequestParam(value = "page", defaultValue = "1") int page,
-                                                       @RequestParam(value = "size", defaultValue = "10") int size,
+                                                       @RequestParam(value = "size", defaultValue = "3") int size,
                                                         Authentication authentication, Model model) {
 
         String member_id = authentication.getName();
@@ -51,6 +54,24 @@ public class EducatorTaskController {
         }
 
         return "learning/task/educator/createTask";
+    }
+
+    //숙제 제목 조회하기
+    @GetMapping("/sendTask")
+    public String selectTaskDetailByTitle(Authentication authentication, Model model, @RequestParam(defaultValue = "") String task_title,
+                                                                    @RequestParam(value = "page", defaultValue = "1") int page,
+                                                                    @RequestParam(value = "size", defaultValue = "3") int size){
+
+        String member_id = authentication.getName();
+        List<String> taskTitle = taskService.selectTaskTitle(member_id);
+
+        TaskPageDTO taskPageDTO = taskService.selectTaskByTitle(task_title, member_id, page, size);
+        model.addAttribute("currentPage", taskPageDTO.getCurrentPage());
+        model.addAttribute("listCount", taskPageDTO.getListCount());
+        model.addAttribute("taskPageDTO", taskPageDTO);
+
+        model.addAttribute("taskTitle", taskTitle);
+        return "learning/task/educator/sendTask";
     }
 
     //제출된 숙제 조회하기
