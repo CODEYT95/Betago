@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
@@ -23,10 +24,10 @@
             <div class="gameContent-search">
                 <form action="/game/searchByTitle" method="get" class="form-container" id="searchForm">
                     <div class="searchReq">
-                            <select name="game_title" class="titlelist" id="gameTitleSelect">
-                                <option selected>게임 선택</option>
-                                <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
-                            </select>
+                        <select name="game_title" class="titlelist" id="gameTitleSelect">
+                            <option selected>게임 선택</option>
+                            <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
+                        </select>
                         <input type="submit" value="조회하기" id="searchButton" />
                     </div>
                 </form>
@@ -42,7 +43,7 @@
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
                                 <span class="checkbox-tile">
                                 <div class="card">
-                                    <div class="poster"><img th:src="@{/image/testBADUK2.png}"></div>
+                                    <div class="poster"><img class="image" th:src="${content.filegame_name} ? @{|/image/game/${content.filegame_name}|} : @{/image/캡처.png}" th:alt="${content.filegame_name}"></div>
                                     <div class="card-details"></div>
                                     <div class="details">
                                         <h5>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h5>
@@ -69,8 +70,9 @@
             </div>
         </div>
     </div>
-    </div>
 </div>
+</div>
+<button id="myBtn" title="Go to top">Top</button>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

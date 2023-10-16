@@ -105,144 +105,135 @@ document.addEventListener("DOMContentLoaded", function() {
             } else if(educatorName === "전체" && groupName !== "전체") {
                 url = "/student/group/joinList?group_name=" + encodeURIComponent(groupName);
 
-            } else if(educatorName === "전체" && groupName === "전체") {
-                url = "/student/group/joinList";
             }
-
             window.location.href = url;
         });
     });
-    /*
-    //게임 콘텐츠 목록 리스트
+
     $(document).ready(function() {
-        const groupMenu = document.querySelector(".select-menu-group");
-        const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
-        const groupOptions = groupMenu.querySelectorAll(".option");
-        const groupSBtnText = groupMenu.querySelector(".sBtn-text");
+        const groupMenu = $(".select-menu-group");
+        const selectGroupBtn = groupMenu.find(".select-btn-group");
+        const groupOptions = groupMenu.find(".option");
+        const groupSBtnText = groupMenu.find(".sBtn-text");
 
-        const educatorMenu = document.querySelector(".select-menu-educator");
-        const selectEducatorBtn = educatorMenu.querySelector(".select-btn-educator");
-        const educatorOptions = educatorMenu.querySelectorAll(".option");
-        const educatorSBtnText = educatorMenu.querySelector(".sBtn-text-educator");
+        const educatorMenu = $(".select-menu-educator");
+        const selectEducatorBtn = educatorMenu.find(".select-btn-educator");
+        const educatorOptions = educatorMenu.find(".option");
+        const educatorSBtnText = educatorMenu.find(".sBtn-text-educator");
 
-        selectGroupBtn.addEventListener("click", () => {
-            educatorMenu.classList.remove("active");
-            groupMenu.classList.toggle("active");
+        selectGroupBtn.on("click", (e) => {
+            e.stopPropagation();
+            educatorMenu.removeClass("active");
+            groupMenu.toggleClass("active");
         });
 
-        selectEducatorBtn.addEventListener("click", () => {
-            groupMenu.classList.remove("active");
-            educatorMenu.classList.toggle("active");
+        selectEducatorBtn.on("click", (e) => {
+            e.stopPropagation();
+            groupMenu.removeClass("active");
+            educatorMenu.toggleClass("active");
         });
 
-        groupOptions.forEach(option => {
-            option.addEventListener("click", () => {
-                let selectedOption = option.querySelector(".option-text").innerText;
-                groupSBtnText.innerText = selectedOption;
-                groupMenu.classList.remove("active");
-            });
+        groupOptions.on('click', function(e) {
+            e.stopPropagation();
+
+            let selectedOption = $(this).find('.option-text').text();
+            if (educatorSBtnText.text() !== '전체' && selectedOption !== '전체') {
+                alert('둘 중 하나만 선택할 수 있습니다.');
+                educatorOptions.removeClass('selected');
+                groupOptions.removeClass('selected');
+                educatorSBtnText.text('전체');
+                groupSBtnText.text('전체');
+                groupMenu.removeClass("active");
+            } else {
+                groupSBtnText.text(selectedOption);
+                $(this).addClass('selected').siblings().removeClass('selected');
+            }
         });
 
-        educatorOptions.forEach(option => {
-            option.addEventListener("click", () => {
-                let selectedOption = option.querySelector(".option-text-educator").innerText;  // NOTE: using option-text-educator
-                educatorSBtnText.innerText = selectedOption;
-                educatorMenu.classList.remove("active");
-            });
+        educatorOptions.on('click', function(e) {
+            e.stopPropagation();  // prevent the event from reaching the document
+
+            let selectedOption = $(this).find('.option-text-educator').text();
+            if (groupSBtnText.text() !== '전체' && selectedOption !== '전체') {
+                alert('둘 중 하나만 선택할 수 있습니다.');
+                educatorOptions.removeClass('selected');
+                groupOptions.removeClass('selected');
+                groupSBtnText.text('전체');
+                educatorSBtnText.text('전체');
+                educatorMenu.removeClass("active");
+            } else {
+                educatorSBtnText.text(selectedOption);
+                $(this).addClass('selected').siblings().removeClass('selected');
+            }
+        });
+
+        // Close menus when clicking outside
+        $(document).on("click", function() {
+            groupMenu.removeClass("active");
+            educatorMenu.removeClass("active");
         });
     });
-    */
-    $(document).ready(function() {
-            const groupMenu = document.querySelector(".select-menu-group");
-            const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
-            const groupOptions = groupMenu.querySelectorAll(".option");
-            const groupSBtnText = groupMenu.querySelector(".sBtn-text");
 
-            const educatorMenu = document.querySelector(".select-menu-educator");
-            const selectEducatorBtn = educatorMenu.querySelector(".select-btn-educator");
-            const educatorOptions = educatorMenu.querySelectorAll(".option");
-            const educatorSBtnText = educatorMenu.querySelector(".sBtn-text-educator");
-
-            selectGroupBtn.addEventListener("click", () => {
-                educatorMenu.classList.remove("active");
-                groupMenu.classList.toggle("active");
-            });
-
-            selectEducatorBtn.addEventListener("click", () => {
-                groupMenu.classList.remove("active");
-                educatorMenu.classList.toggle("active");
-            });
-
-            groupOptions.forEach(option => {
-                option.addEventListener("click", () => {
-                    let selectedOption = option.querySelector(".option-text").innerText;
-                    if (selectedOption === "전체") {
-                        groupOptions.forEach(opt => {
-                            opt.classList.remove("selected");
-                        });
-                        groupSBtnText.innerText = "전체";
-                    } else {
-                        groupOptions.forEach(opt => {
-                            opt.classList.remove("selected");
-                        });
-                        option.classList.add("selected");
-                        groupSBtnText.innerText = selectedOption;
-                    }
-                    groupMenu.classList.remove("active");
-                });
-            });
-
-            educatorOptions.forEach(option => {
-                option.addEventListener("click", () => {
-                    let selectedOption = option.querySelector(".option-text-educator").innerText;
-                    if (selectedOption === "전체") {
-                        educatorOptions.forEach(opt => {
-                            opt.classList.remove("selected");
-                        });
-                        educatorSBtnText.innerText = "전체";
-                    } else {
-                        educatorOptions.forEach(opt => {
-                            opt.classList.remove("selected");
-                        });
-                        option.classList.add("selected");
-                        educatorSBtnText.innerText = selectedOption;
-                    }
-                    educatorMenu.classList.remove("active");
-                });
-            });
-        });
 
    $(document).ready(function() {
-     $('.join-btn').click(function() {
-       var group_no = $('.checkbox-input:checked').data('group-no');
-       var game_no = $('.checkbox-input:checked').data('game-no');
-
-       if (group_no && game_no) { // 그룹을 선택한 경우
-         $.ajax({
-           type: 'POST',
-           url: '/student/group/join',
-           data: {
-             group_no: group_no,
-             game_no: game_no
-           },
-           dataType: 'text',
-           success: function(response) {
-             if (response === "applyable") {
-               alert('가입이 완료 되었습니다.');
-               location.reload();
-             } else {
-               alert('잔여 T/O가 없어 가입이 불가능 합니다.');
-               location.reload();
-             }
-           },
-           error: function(xhr, status, error) {
-             console.error('오류 발생:', error);
-           }
-         });
-       } else {
-         alert('그룹을 선택해주세요.');
+       function showModal(modalId) {
+           $('#' + modalId).css('display', 'block');
        }
-     });
+
+       function closeModal(modalId) {
+           $('#' + modalId).css('display', 'none');
+       }
+
+       $('.join-btn').click(function() {
+           if (!$('.checkbox-input:checked').length) {
+               alert('그룹을 선택해주세요.');
+               return;
+           }
+           showModal('joinConfirmModal');
+       });
+
+       $('#joinCompleteModal .modal-btn-confirm, #noRemainingModal .modal-btn-confirm').click(function() {
+               location.reload();
+       });
+
+       $('#joinConfirmModal .modal-btn-confirm').click(function() {
+           var group_no = $('.checkbox-input:checked').data('group-no');
+           var game_no = $('.checkbox-input:checked').data('game-no');
+           var group_name = $('.checkbox-input:checked').data('group-name');
+
+           if (group_no && game_no) {
+               $.ajax({
+                   type: 'POST',
+                   url: '/student/group/join',
+                   data: {
+                       group_no: group_no,
+                       game_no: game_no
+                   },
+                   dataType: 'text',
+                   success: function(response) {
+                       closeModal('joinConfirmModal');
+                       if (response === "applyable") {
+                           $('.modalGroupName').text(group_name);
+                           showModal('joinCompleteModal');
+                       } else {
+                           showModal('noRemainingModal');
+                       }
+                   },
+                   error: function(xhr, status, error) {
+                       console.error('오류 발생:', error);
+                   }
+               });
+           }
+       });
+
+       $('.modal-btn-cancel').click(function() {
+           closeModal('joinConfirmModal');
+       });
+
+       $('.modal-btn-confirm').click(function() {
+           var parentModalId = $(this).closest('div[id]').attr('id');
+           closeModal(parentModalId);
+       });
    });
 
     window.onload = function() {

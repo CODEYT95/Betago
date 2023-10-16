@@ -30,10 +30,10 @@ a {
   text-decoration: none;
 }
 .header-image{
-  width: 160px;
-      position: absolute;
-      margin-right: 1334px;
-      margin-top: 32px;
+    width: 186px;
+    position: absolute;
+    margin-right: 1334px;
+    margin-top: 76px;
 }
 
 nav {
@@ -273,7 +273,6 @@ nav .header-navi .links li:hover .admin-sub-menu {
 }
 
 .content-wrap{
-  border: 1px solid;
   height: auto;
   min-height: 66vh;
   width: 1080px;

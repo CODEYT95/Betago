@@ -1,70 +1,175 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>사이트 제목</title>
-    <!--공통으로 쓰이는 CSS 및  -->
+    <title>학습그룹 가입 승인</title>
+    <!-- CSS 파일 링크 -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/educator/joinApprove.css}">
+    <!-- 공통 구성 요소 포함 -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
+<script>
+    // 페이지 로드가 완료되면 실행되는 스크립트
+    document.addEventListener("DOMContentLoaded", function() {
+        // 체크박스 관련 동작 설정
+        document.querySelectorAll('.checkbox, .checkbox2').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                // 선택된 체크박스의 부모 노드 (tr) 찾기
+                var row = this.closest('.tr-list');
+                var approveCheckbox = row.querySelector('.checkbox');
+                var rejectCheckbox = row.querySelector('.checkbox2');
+
+                // 둘 다 선택되었는지 확인
+                if (approveCheckbox.checked && rejectCheckbox.checked) {
+                    alert('둘 중 하나만 체크가 가능합니다.');
+                    // 현재 선택한 체크박스의 선택을 취소
+                    this.checked = false;
+                }
+            });
+        });
+
+        // 선택된 그룹 번호를 저장하는 변수
+        let selectedGroupNo = null;
+
+        const groupMenu = document.querySelector(".select-menu-group");
+        const selectGroupBtn = groupMenu.querySelector(".select-btn-group");
+        const groupOptions = groupMenu.querySelectorAll(".option");
+        const groupSBtnText = groupMenu.querySelector(".sBtn-text");
+        const hiddenInput = document.querySelector("#groupNoInput"); // 숨겨진 입력 필드
+
+        // 그룹 메뉴 열기/닫기 토글
+        selectGroupBtn.addEventListener("click", () => groupMenu.classList.toggle("active"));
+
+        groupOptions.forEach(option => {
+            option.addEventListener("click", () => {
+                let selectedOption = option.querySelector(".option-text").innerText;
+                groupSBtnText.innerText = selectedOption;
+                selectedGroupNo = option.querySelector(".option-text").getAttribute("data-group-no");
+                hiddenInput.value = selectedGroupNo; // 숨겨진 입력 필드의 값을 바로 설정
+                groupMenu.classList.remove("active");
+            });
+        });
+
+        // 다른 영역 클릭 시 그룹 메뉴 닫기
+        document.addEventListener('click', function(event) {
+            if (!groupMenu.contains(event.target) && !selectGroupBtn.contains(event.target)) {
+                groupMenu.classList.remove('active');
+            }
+        });
+    });
+</script>
+
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div th:replace="~{common/fragments/sidebar :: default_sidebarFragment}"></div>
+    <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
     <div class="content-wrap">
-        <div class="table-wrap">
-            <table >
-                <caption class="table-title">숙제 전송 목록👀</caption>
-                <thead class="table-head">
-                <tr>
-                    <th class="t_no">번호</th>
-                    <th class="t_name">학생이름</th>
-                    <th class="t_progress">학생 연락처</th>
-                    <th class="t_limit">승인 요청일자</th>
-                    <th class="t_send">승인</th>
-                    <th class="t_detail">거부</th>
-                </thead>
-                <tbody class="tbody-container">
-                <th:block th:if="${#lists.isEmpty(GroupPageDTO.groupList)}">
-                    <tr>
-                        <td colspan="6">가입 신청한 회원이 존재하지 않습니다.</td>
-                    </tr>
-                </th:block>
-                <th:block th:if="${not #lists.isEmpty(GroupPageDTO.groupList)}">
-                    <tr class="tr-list"  th:each="list, index : ${GroupPageDTO.groupList}">
-                        <td class="list_no" th:text="${index.index + GroupPageDTO.startIndex + 1}"></td>
-                        <td class="list_name" th:text="${list.member_name}"></td>
-                        <td class="list_content" th:text="${list.member_phone}" hidden="hidden"></td>
-                        <td class="list_progress" th:text="${list.join_date}"></td>
-                        <td class="list_limit" ><span ></span></td>
-                        <td class="list_send" ><span ></span></td>
-                        <td class="detailBtn-wrap">
-                            <button class="detailBtn" data-tasksend_no="${list.member_no}">
-                                <i class="ri-search-eye-line" data-tasksend_no="${list.member_no}"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-        </div>
-        <div class="pagination">
-            <div class="paging">
-                <div class="text-center clearfix">
-                    <div class="pagingNum">
-                        <ul class="pagination-container" id="pagination">
-                            <li th:if="${GroupPageDTO.startPage > 5}" class="page-item">
-                                <a class="page-link" th:with="prevPage=${GroupPageDTO.startPage - 1}" th:href="@{/educator/createTaskForm(page=${prevPage})}">Prev</a>
-                            </li>
-                            <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(GroupPageDTO.startPage, taskPageDTO.endPage)}" class="page-item">
-                                <a th:href="@{/educator/createTaskForm(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
-                            </li>
-                            <li th:if="${GroupPageDTO.endPage < GroupPageDTO.totalPages}" class="page-item">
-                                <a class="page-link" th:with="nextPage=${GroupPageDTO.startPage + 5}" th:href="@{/educator/createTaskForm(page=${nextPage})}">Next</a>
+        <div class="content-header">
+            <div class="container">
+                <form style="display: contents;" th:action="@{/educator/group/approveList}" method="get">
+                    <h3>학습 그룹</h3>
+                    <!-- 그룹 선택 메뉴 -->
+                    <div class="select-menu-group">
+                        <div class="select-btn-group">
+                            <span class="sBtn-text" th:text="${groupInfo != null ? groupInfo.group_name : '선택'}"></span>
+                            <i class="bx bx-chevron-down"></i>
+                        </div>
+                        <ul class="options">
+                            <li class="option" th:each="group : ${group_name}">
+                                <span class="option-text" th:text="${group.group_name}" th:attr="data-group-no=${group.group_no}"></span>
                             </li>
                         </ul>
                     </div>
+                    <input type="hidden" id="groupNoInput" name="group_no" value="">
+                    <button type="submit" class="search-btn">조회</button>
+                </form>
+            </div>
+            <div>
+                <h3>게임콘텐츠: <span th:text="${groupInfo != null ? groupInfo.game_title : '게임콘텐츠를 선택해주세요.'}"></span></h3>
+            </div>
+
+        </div>
+        <div class="content-header2">
+            <div>
+                <h3>구독 가능인원: <span th:text="${groupInfo != null ? groupInfo.group_cnt+'명' : '0명'}"></span></h3>
+            </div>
+            <div>
+                <h3>승인 인원:<span th:text="${groupInfo != null ? groupInfo.member_count+'명' : '0명'}"></span></h3>
+            </div>
+        </div>
+        <div class="main-table">
+            <div class="table-wrap">
+                <table>
+                    <caption class="table-title">그룹 가입신청 목록👀</caption>
+                    <thead class="table-head">
+                    <tr>
+                        <th class="t_no">번호</th>
+                        <th class="t_name">학생이름</th>
+                        <th class="t_phone">학생 연락처</th>
+                        <th class="t_date">승인 요청일자</th>
+                        <th class="t_approve">승인</th>
+                        <th class="t_reject">거부</th>
+                    </thead>
+                    <tbody class="tbody-container">
+                    <th:block th:if="${check == null}">
+                        <tr>
+                            <td colspan="6">그룹을 선택 후 조회 해주세요.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${groupNo != null and #lists.isEmpty(GroupPageDTO.groupList) or listCount == 0}">
+                        <tr>
+                            <td colspan="6">가입 신청한 회원이 존재하지 않습니다.</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:if="${not #lists.isEmpty(GroupPageDTO.groupList)}">
+                        <tr class="tr-list" th:each="list, index : ${GroupPageDTO.groupList}">
+                            <td class="list_no" th:text="${index.index + GroupPageDTO.startIndex + 1}"></td>
+                            <td class="list_name" th:text="${list.member_name}"></td>
+                            <td class="list_phone" th:text="${list.member_phone}"></td>
+                            <td class="list_date" th:text="${list.approve_date}"></td>
+                            <td class="list_approve">
+                                <label class="checkbox-wrap">
+                                    <input class="checkbox" type="checkbox" th:attr="data-approve-no=${list.member_no}">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            <td class="list_reject">
+                                <label class="checkbox-wrap2">
+                                    <input class="checkbox2" type="checkbox" th:attr="data-reject-no=${list.member_no}">
+                                    <span class="checkmark2"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <div class="btn-container">
+                <div>
+                    <input type="button" value="저장하기">
                 </div>
             </div>
+            <th:block th:if="${check != null}">
+                <div class="pagination">
+                    <div class="paging">
+                        <div class="text-center clearfix">
+                            <div class="pagingNum">
+                                <ul class="pagination-container" id="pagination">
+                                    <li th:if="${GroupPageDTO.startPage > 5}" class="page-item">
+                                        <a class="page-link" th:with="prevPage=${GroupPageDTO.startPage - 1}" th:href="@{/educator/group/approveList(page=${prevPage})}">Prev</a>
+                                    </li>
+                                    <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(GroupPageDTO.startPage, GroupPageDTO.endPage)}" class="page-item">
+                                        <a th:href="@{/educator/group/approveList(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                    </li>
+                                    <li th:if="${GroupPageDTO.endPage < GroupPageDTO.totalPages}" class="page-item">
+                                        <a class="page-link" th:with="nextPage=${GroupPageDTO.startPage + 5}" th:href="@{/educator/group/approveList(page=${nextPage})}">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
         </div>
     </div>
 </div>

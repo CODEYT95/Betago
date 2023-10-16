@@ -1,13 +1,21 @@
+function topFunction() {
+    const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+
+    if (currentScroll > 0) {
+        window.requestAnimationFrame(topFunction);
+        window.scrollTo(0, currentScroll - (currentScroll / 10));
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+
     const checkboxes = document.querySelectorAll('.checkbox-input');
     const subscribeButton = document.getElementById('subscribeButton');
 
-    // 어떤 체크박스라도 선택되었는지 확인
     function isAnyCheckboxChecked() {
         return Array.from(checkboxes).some(checkbox => checkbox.checked);
     }
 
-    // 체크박스 상태에 따라 "subscribeButton"의 상태 업데이트
     function updateSubscribeButtonState() {
         if (isAnyCheckboxChecked()) {
             subscribeButton.removeAttribute('disabled');
@@ -63,15 +71,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    subscribeButton.addEventListener('click', function() {
+    // "구독하기" 버튼 클릭 이벤트 통합 부분 시작
+    subscribeButton.addEventListener('click', function(e) {
+        if (!isAnyCheckboxChecked()) {
+            e.preventDefault();
+            alert("게임을 선택해주세요!");
+            return;
+        }
+
         const checkedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
         const selectedGameNo = Array.from(checkedCheckboxes).map(cb => cb.getAttribute('data-game-no'));
 
-        if (selectedGameNo.length > 0) {
-            const gameNoParam = selectedGameNo.join(",");
-            window.location.href = "/cartList?game_no=" + gameNoParam;
-        } else {
-            alert("게임을 선택하세요!");
+        const gameNoParam = selectedGameNo.join(",");
+        window.location.href = "/pay/cartList?game_no=" + gameNoParam;
+    });
+    // "구독하기" 버튼 클릭 이벤트 통합 부분 끝
+
+    window.onload = function() {
+        initializePage();
+    };
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            initializePage();
         }
+    };
+    function initializePage() {
+        $(".checkbox-input:checked").prop("checked", false);
+    }
+
+    const myButton = document.getElementById("myBtn");
+
+    window.onscroll = function() {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            myButton.style.display = "block";
+        } else {
+            myButton.style.display = "none";
+        }
+    }
+
+    myButton.addEventListener("click", function(event) {
+        event.stopPropagation();
+        topFunction();
     });
 });

@@ -81,7 +81,7 @@
     <!-- 학습 그룹 name 조회 -->
     <select id="selectGroupName" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT DISTINCT group_name
+        SELECT group_name, group_no
         FROM studygroup
         WHERE member_id = #{member_id}
         ]]>
@@ -121,25 +121,34 @@
         </foreach>
     </delete>
 
-    <!-- 그룹 학생 가입 승인 목록 -->
+    <!-- 그룹 학생 가입승인 목록 -->
     <select id="selectGroupApprove" parameterType="map" resultType="GroupDTO">
         <![CDATA[
-        SELECT m.member_name, m.member_phone, m.member_no, sg.group_name, sg.group_cnt, sg.group_nowcnt, g.game_title
-        FROM groupmember gm
-        JOIN member m ON gm.member_no = m.member_no
-        JOIN studygroup sg ON gm.group_no = sg.group_no
-        JOIN game g ON gm.game_no = g.game_no
-        WHERE gm.member_no = #{member_no}
+        SELECT sg.group_name, sg.group_cnt, sg.group_nowcnt,
+               gm.group_no, gm.member_no, gm.approve_date,
+               m.member_name, m.member_phone
+        FROM studygroup AS sg
+        JOIN groupmember AS gm ON sg.group_no = gm.group_no
+        JOIN member AS m ON gm.member_no = m.member_no
+        WHERE sg.group_nowcnt < sg.group_cnt
+        AND gm.approve_state = '미승인'
         ]]>
-        <if test="group_name != null and group_name != ''">
-            AND sg.group_name = #{group_name}
+        <if test="member_id != null and member_id != ''">
+            AND sg.member_id = #{member_id}
+        </if>
+        <if test="group_no != null and group_no != ''">
+            AND sg.group_no = #{group_no}
+        </if>
+        <if test="group_no == null">
+            AND 1 = 0
         </if>
         <![CDATA[
-        ORDER BY gm.aprove_date ASC
+        ORDER BY gm.approve_date ASC
         LIMIT #{page}, #{size};
         ]]>
     </select>
 
+    <!-- 그룹 학생 가입승인 목록 갯수 -->
     <select id="selectGroupApproveCount" parameterType="map" resultType="Integer">
         <![CDATA[
         SELECT COUNT(*) AS record_count
@@ -147,14 +156,30 @@
         JOIN member m ON gm.member_no = m.member_no
         JOIN studygroup sg ON gm.group_no = sg.group_no
         JOIN game g ON gm.game_no = g.game_no
-        WHERE gm.member_no = #{member_no};
+        WHERE sg.member_id = #{member_id}
+        AND gm.approve_state = '미승인'
         ]]>
-        <if test="group_name != null and group_name != ''">
-            AND sg.group_name = #{group_name}
+        <if test="group_no != null and group_no != ''">
+            AND sg.group_no = #{group_no}
         </if>
     </select>
 
-    <!--/////////////////학습자/////////////////// -->
+    <!-- 그룹 학생 가입승인 정보 -->
+    <select id="selectGroupInfo" parameterType="Integer" resultType="GroupDTO">
+        <if test="group_no != null and group_no != ''">
+            <![CDATA[
+            SELECT sg.group_no, sg.group_name, sg.group_cnt, sg.group_nowcnt, g.game_title,
+            COUNT(CASE WHEN gm.approve_state = '승인' THEN 1 END) AS member_count
+            FROM studygroup sg
+            JOIN game g ON sg.game_no = g.game_no
+            LEFT JOIN groupmember gm ON sg.group_no = gm.group_no
+            WHERE sg.group_no = #{group_no}
+            GROUP BY sg.group_no;
+            ]]>
+        </if>
+    </select>
+
+    <!--///////////////////학습자/////////////////// -->
 
     <!-- 학습 그룹 가입 신청 목록 -->
     <select id="selectJoinGroup" resultType="GroupDTO">
@@ -179,11 +204,12 @@
     </select>
 
     <!-- 그룹 가입신청 가능한 목록 갯수 -->
-    <select id="joinGroupCount" parameterType="GroupDTO" resultType="Integer">
+    <select id="joinGroupCount" parameterType="map" resultType="Integer">
         <![CDATA[
         SELECT count(*)
         FROM studygroup sg
         LEFT JOIN groupmember gm ON sg.group_no = gm.group_no AND gm.member_no = #{member_no}
+        LEFT JOIN member m ON gm.member_no = m.member_no
         WHERE sg.group_nowcnt < sg.group_cnt
         AND gm.member_no IS NULL
         ]]>

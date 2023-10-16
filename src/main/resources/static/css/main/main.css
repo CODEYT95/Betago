@@ -8,7 +8,7 @@ display: inline-table;
 
 .first-box {
     border: 1px solid blue;
-    height: 190px;
+    height: 212px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@ display: inline-table;
 
 .imgbox{
     border: 1px solid red;
-    height: 170px;
+    height: 200px;
     width: 790px;
     margin: 10px;
 }

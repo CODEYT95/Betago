@@ -5,44 +5,58 @@
 <!--게임콘텐츠 모든 목록 조회-->
     <select id="selectAll" resultType="GameDTO">
         <![CDATA[
-        SELECT *
-        FROM game;
+        SELECT
+            g.*,
+            f.filegame_name, f.filegame_path, f.filegame_date
+        FROM game g
+        LEFT JOIN filegame f ON g.game_no = f.game_no
+        ORDER BY g.game_no DESC;
         ]]>
     </select>
-    <!--게임콘텐츠 등록-->
-    <insert  id="insertGame" parameterType="GameDTO">
-            <![CDATA[
-                insert into game (game_title, game_level, game_date, game_total,
-                game_price, game_discount, game_sell, game_content, member_id)
-                values (#{game_title}, #{game_level}, #{game_date}, #{game_total}
-                , #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id});
-                ]]>
+    
+   <!--게임콘텐츠 등록-->
+    <insert id="insertGame" parameterType="GameDTO">
+        <selectKey keyProperty="game_no" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        <![CDATA[
+        INSERT INTO game (game_title, game_level, game_date, game_total,
+          game_price, game_discount, game_sell, game_content, member_id)
+        VALUES (#{game_title}, #{game_level}, #{game_date}, #{game_total},
+          #{game_price}, #{game_discount}, #{game_sell}, #{game_content}, #{member_id})
+        ]]>
     </insert>
+
+    <!-- 게임콘텐츠 썸네일 Insert -->
+    <insert id="insertGameImage" parameterType="GameDTO">
+        <![CDATA[
+        INSERT INTO filegame (game_no, filegame_name, filegame_path, filegame_date)
+        VALUES (#{game_no}, #{filegame_name}, #{filegame_path}, now())
+        ]]>
+    </insert>
+    
     <!--월간 (일일 단위 매출조회)-->
    <select id="selectDailySales" resultType="GameDTO">
         <![CDATA[
-            SELECT
-            DATE(pay_date) AS sale_date,
-            SUM(game_sell) AS total_sales
-            FROM pay
-            WHERE
-            DATE(pay_date) = '특정날짜'
-            GROUP BY
-            DATE(pay_date);
+            select DATE_FORMAT(game_startsearch, '%m-%d') AS game_startsearch, game_sales, SUM(game_sales * game_sell) AS game_dailyamount
+            from game
+            where game_startsearch between #{game_startsearch} and #{game_endsearch}
+            group by DATE_FORMAT(game_startsearch, '%m-%d')
+            order by game_startsearch desc;
         ]]>
    </select>
     <!--년간 (월 단위 매출조회)-->
     <select id="selectMonthlySales" resultType="GameDTO">
         <![CDATA[
-            SELECT
-            DATE_FORMAT(pay_date, '%Y-%m') AS sale_month,
-            SUM(game_sell) AS total_sales
-            FROM
-            pay
-            GROUP BY
-            DATE_FORMAT(pay_date, '%Y-%m');
+            select DATE_FORMAT(game_startsearch, '%Y-%m') AS game_startsearch, game_sales, SUM(game_sales*game_sell)
+            AS game_monthlyamount
+            from game
+            where game_startsearch between #{game_startsearch} and #{game_endsearch}
+            group by DATE_FORMAT(game_startsearch, '%Y-%m')
+            order by game_startsearch desc;
         ]]>
     </select>
+
 <!--게임콘텐츠 제목 검색-->
     <select id="searchByTitle" resultType="GameDTO">
         <![CDATA[
@@ -51,6 +65,8 @@
             where game_title = #{game_title}
         ]]>
     </select>
+
+
 </mapper>
 
 

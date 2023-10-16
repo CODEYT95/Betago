@@ -14,8 +14,32 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    .form-row .form-group:last-child {
+        margin-right: 0;
+    }
+
+    .img-game{
+      DISPLAY: flex;
+      width: 940px;
+      height: 152px;
+
+      margin-bottom: 20px;
+      margin-top: -21px;
+      margin-left: -20px;
+    }
+
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 12px;
     }
 
     .form-group label {
