@@ -1,3 +1,40 @@
+let currentImageIndex = 0;
+
+function prevImage() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length === 0) return;
+
+    // 현재 이미지를 숨김
+    posters[currentImageIndex].style.opacity = '0';
+
+    // 이전 이미지의 인덱스를 계산
+    currentImageIndex = (currentImageIndex - 1 + posters.length) % posters.length;
+
+    // 이전 이미지를 표시
+    posters[currentImageIndex].style.opacity = '1';
+}
+
+function nextImage() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length === 0) return;
+
+    // 현재 이미지를 숨김
+    posters[currentImageIndex].style.opacity = '0';
+
+    // 다음 이미지의 인덱스를 계산
+    currentImageIndex = (currentImageIndex + 1) % posters.length;
+
+    // 다음 이미지를 표시
+    posters[currentImageIndex].style.opacity = '1';
+}
+
+// 페이지 로딩 시 첫 번째 이미지만 표시하고 나머지는 숨김
+document.addEventListener('DOMContentLoaded', function() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length > 0) {
+        posters[0].style.opacity = '1';
+    }
+});
 function handleNavClick(paymentMethod, clickedElement) {
     // 선택한 결제 방법을 표시하는 요소를 가져옵니다.
     const paymentDisplay = document.getElementById('selectedPaymentMethod');
