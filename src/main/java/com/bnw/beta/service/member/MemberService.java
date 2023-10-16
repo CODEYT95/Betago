@@ -38,11 +38,7 @@ public interface MemberService {
         //////////로그인된 사용자불러오기/////////// 김현민
         MemberDTO loginByUsername(String username);
 
-        //////////멤버 role 불러오기/////////// 김현민
-        public String getRoleById(String member_id);
 
-        //////////로그인된 사용자불러오기/////////// 김현민
-        MemberDTO loginByUsername(String username);
 
 
 
