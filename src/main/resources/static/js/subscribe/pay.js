@@ -19,19 +19,19 @@ function handleNavClick(paymentMethod, clickedElement) {
 
     // 여기에 다른 로직 (예: 이미지 변경)을 추가할 수 있습니다.
 }
-//function updateTotalPrice() {
-//    // 선택된 게임의 인덱스 가져오기
-//    var selectedGameIndex = document.querySelector('.mypaylist').selectedIndex;
-//
-//    // 해당 인덱스의 게임 정보 가져오기
-//    var selectedGame = document.querySelectorAll('.mypaylist option')[selectedGameIndex];
-//    var selectedGamePrice = selectedGame.dataset.price;
-//
-//    // 결과를 화면에 출력
-//    var totalPriceInput = document.querySelector('.order-total');
-//    totalPriceInput.value = selectedGamePrice;
-//    console.log(totalPriceInput);
-//}
+function updateTotalPrice() {
+    // 선택된 게임의 인덱스 가져오기
+    var selectedGameIndex = document.querySelector('.mypaylist').selectedIndex;
+
+    // 해당 인덱스의 게임 정보 가져오기
+    var selectedGame = document.querySelectorAll('.mypaylist option')[selectedGameIndex];
+   var selectedGamePrice = selectedGame.dataset.price;
+
+    // 결과를 화면에 출력
+    var totalPriceInput = document.querySelector('.order-total');
+    totalPriceInput.value = selectedGamePrice;
+    console.log(totalPriceInput);
+}
 
 //발리데이션
 
