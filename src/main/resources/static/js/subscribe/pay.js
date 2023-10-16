@@ -177,10 +177,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-////////////////////////////////////////////////////////////////////////
+
 document.addEventListener('DOMContentLoaded', function() {
-    var totalPrice = 0;
-    var gameNos = [];
+    let totalPrice = 0;
+    let gameNos = [];
 
     //delete-btn 클릭 시 가격 업데이트 및 태그 삭제
     document.querySelectorAll('.delete-btn').forEach(function(button) {
@@ -194,30 +194,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateTotalPrice();
 
-    //태그 삭제 하고 url에 넣을 game_no배열 업데이트하는 함수
-    function deleteTag(event) {
-        event.preventDefault();
+    // 태그 및 이미지 삭제
+function deleteTag(event) {
+    event.preventDefault();
 
-        const tag = event.target.closest('.tag');
-        if (tag) {
-            var deletedGamePriceInput = tag.querySelector('input[hidden]');
-            var deletedGamePrice = parseFloat(deletedGamePriceInput.value);
+    const tag = event.target.closest('.tag');
+    if (tag) {
+        // 가격 삭제 로직
+        const deletedGamePriceInput = tag.querySelector('.price');
+        const deletedGamePrice = parseFloat(deletedGamePriceInput.value);
 
-            const gameNo = tag.querySelector('.delete-btn').getAttribute('data-game-no');
+        // 게임의 파일 이름을 추출
+        const gameFileName = tag.getAttribute('data-game-name');
 
-            const index = gameNos.indexOf(gameNo);
-            if (index > -1) {
-                gameNos.splice(index, 1);
-            }
+        const gameNo = tag.getAttribute('data-game-no');
 
-            tag.remove();
+        console.log(gameNo);
+        // 태그 삭제
+        tag.remove();
 
-            totalPrice -= deletedGamePrice;
+        // 해당하는 이미지 삭제 로직
+         if (gameNo) {
+                    // data-game-no 값을 사용하여 해당하는 이미지를 찾습니다.
+                    const gameImage = document.querySelector(`.image-container .image[data-game-no='${gameNo}']`);
+                    if (gameImage) {
+                        gameImage.parentElement.remove(); // 이미지의 부모인 'poster' 클래스를 포함한 div도 함께 삭제
+                    }
+                }
 
-           updateTotalPrice();
-           updateUrl();
-        }
+        // 가격 갱신 로직
+        totalPrice -= deletedGamePrice;
+        updateTotalPrice();
     }
+}
      //태그 삭제시 url 업데이트 해주는 함수
      function updateUrl() {
          let newUrl = 'http://localhost:8800/pay/cartList?game_nos=' + gameNos.join(',');

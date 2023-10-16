@@ -85,8 +85,13 @@ background-color: #333;
     z-index: 2;
     display: flex;
     gap: 360px;
-    margin-top: 500px;
+    margin-top: 512px;
 }
+.fa-solid, .fas {
+    font-weight: bold;
+    border: none;
+    font-size: 34px;
+    }
 
 .pay-list {
     flex: 2;  /* 오른쪽 영역을 좀 더 넓게 설정 (선택적) */
