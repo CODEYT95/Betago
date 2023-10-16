@@ -21,12 +21,12 @@ public interface GameDAO {
 
     //게임콘텐츠 조회
     List<GameDTO> selectAll();
-/*
+
     //월간 (일일 단위 매출조회)
-    List<GameDTO> selectDailySales(Date game_startsearch, Date game_endsearch);
+    List<GameDTO> selectDailySales(@Param("game_startsearch") Date game_startsearch, @Param("game_endsearch") Date game_endsearch);
 
     //년간 (월 단위 매출조회)
-    List<GameDTO> selectMonthlySales(Date game_startsearch, Date game_endsearch);*/
+    List<GameDTO> selectMonthlySales(@Param("game_startsearch")Date game_startsearch, @Param("game_endsearch")Date game_endsearch);
 
     //게임콘텐츠 제목검색
     List<GameDTO> searchByTitle(@Param("game_title") String game_title);
