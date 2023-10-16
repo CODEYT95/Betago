@@ -2,6 +2,7 @@ package com.bnw.beta.service.learning.Task;
 
 import com.bnw.beta.domain.common.paging.TaskPageDTO;
 import com.bnw.beta.domain.learning.dao.TaskDAO;
+import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
@@ -67,21 +68,48 @@ public class TaskServiceImpl implements TaskService{
         return taskDAO.selectTaskTitle(member_id);
     }
     @Override
-    public TaskPageDTO selectTaskByTitle(String task_title, String member_id, int pageNum, int size) {
+    public List<TaskDTO> selectTaskByTitle(String task_title, String member_id) {
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setTask_title(task_title);
         taskDTO.setMember_id(member_id);
 
-        if (pageNum <= 0) {
-            pageNum = 1;
-        }
-        int offset = (pageNum - 1) * size;
-        List<TaskDTO> taskList =  taskDAO.selectTaskByTitle(task_title, member_id, offset, size);
-        int listCount = taskDAO.taskLisitCount(member_id);
-        TaskPageDTO taskPageDTO = new TaskPageDTO(listCount, pageNum, size, taskList);
-        taskPageDTO.setListCount(listCount);
+        return taskDAO.selectTaskByTitle(taskDTO);
+    }
 
-        return taskPageDTO;
+    //그룹 조회
+    @Override
+    public List<String> selectGroupName(String member_id) {
+        return taskDAO.selectGroupName(member_id);
+    }
+    @Override
+    public List<GroupDTO> selectGroupByName(String group_name, String member_id) {
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroup_name(group_name);
+        groupDTO.setMember_id(member_id);
+
+        return taskDAO.selectGroupByName(groupDTO);
+    }
+
+    //숙제 전송
+    @Override
+    public String sendTask(List<Integer> task_no,  List<Integer> member_no,  Integer group_no, String member_id) {
+        TaskSendDTO taskSendDTO = new TaskSendDTO();
+
+        for (int i = 0; i < task_no.size(); i++) {
+            Integer taskNo = task_no.get(i);
+            Integer memberNo = member_no.get(i);
+            String memberId = member_id;
+            Integer groupNo = group_no;
+
+            taskSendDTO.setTask_no(taskNo);
+            taskSendDTO.setMember_no(memberNo);
+            taskSendDTO.setMember_id(memberId);
+            taskSendDTO.setGroup_no(groupNo);
+            taskDAO.sendTask(taskSendDTO);
+            System.out.println(taskNo+"mno"+memberNo+"id"+memberId);
+        }
+
+        return "success";
     }
 
     /*학습자 부분--------------------------------------------------------*/

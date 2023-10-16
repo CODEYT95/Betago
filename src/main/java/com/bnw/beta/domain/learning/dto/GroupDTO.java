@@ -21,6 +21,7 @@ public class GroupDTO {
     private int group_cnt;
     private int group_nowcnt;
     private String member_id;
+    private String member_level;
 
     //회원
     private String member_name;

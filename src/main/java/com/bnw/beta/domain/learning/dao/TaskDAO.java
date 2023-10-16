@@ -1,5 +1,6 @@
 package com.bnw.beta.domain.learning.dao;
 
+import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
@@ -23,8 +24,11 @@ public interface TaskDAO {
 
     //숙제 조회하기
     List<String> selectTaskTitle(String member_id);
-    List<TaskDTO> selectTaskByTitle(String task_title, String member_id, @Param("page") int page, @Param("size") int size);
-    int taskLisitCount(String member_id);
+    List<TaskDTO> selectTaskByTitle(TaskDTO taskDTO);
+
+    //그룹 조회하기
+    List<String> selectGroupName(String member_id);
+    List<GroupDTO> selectGroupByName(GroupDTO groupDTO);
 
     //숙제 전송하기
     int sendTask(TaskSendDTO taskSendDTO);

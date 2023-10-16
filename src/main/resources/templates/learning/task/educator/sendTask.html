@@ -15,55 +15,133 @@
         <div class="table-title-wrap">
             <div class="select-box">
                 <select id="selectTaskTitle" name="task_title">
-                    <option value="">전체</option>
+                    <option value="" name="task_title">전체</option>
                     <th:block th:each="title : ${taskTitle}">
                         <option th:value="${title}" th:text="${title}" name="task_title"></option>
                     </th:block>
                 </select>
                 <input type="button" class="selectTaskBtn" value="조회하기" id="selectTaskBtn">
             </div>
-            <div class="task-wrap">
-                <div class="task-detail" >
-                    <div class="table-wrap">
-                        <table class="list-table">
-                            <caption class="table-title">숙제 목록👀</caption>
-                            <thead class="table-head">
-                            <tr>
-                                <th class="t_no"> </th>
-                                <th class="t_name">숙제명</th>
-                                <th class="t_content">숙제내용</th>
-                                <th class="t_progress">진도</th>
-                                <th class="t_deadline">제출기한</th>
-                                <th class="t_detail">상세조회</th>
-                            </tr>
-                            </thead>
-                            <tbody class="tbody-container" id="taskTableBody">
-                            <th:block th:if="${#lists.isEmpty(taskDetail)}">
+            <form th:action="@{/educator/sendToMember}" method="post">
+                <div class="task-wrap">
+                    <div class="task-detail" >
+                        <div class="table-wrap">
+                            <table class="list-table">
+                                <caption class="table-title">숙제 목록👀</caption>
+                                <thead class="table-head">
                                 <tr>
-                                    <td colspan="4">생성한 숙제가 없습니다.</td>
+                                    <th class="t_no"> </th>
+                                    <th class="t_name">숙제명</th>
+                                    <th class="t_content">숙제내용</th>
+                                    <th class="t_progress">진도</th>
+                                    <th class="t_deadline">제출기한</th>
+                                    <th class="t_detail">상세조회</th>
                                 </tr>
+                                </thead>
+                                <tbody class="tbody-container" id="taskTableBody">
+                                <th:block th:if="${#lists.isEmpty(taskDetail)}">
+                                    <tr>
+                                        <td colspan="4">생성한 숙제가 없습니다.</td>
+                                    </tr>
+                                </th:block>
+                                <th:block th:if="${not #lists.isEmpty(taskDetail)}">
+                                    <tr class="tr-list"  th:each="list : ${taskDetail}">
+                                        <td class="list_no"><input type="checkbox" th:value="${list.task_no}" name="task_no[]"></td>
+                                        <td class="list_name" th:text="${list.task_title}"></td>
+                                        <td class="list_content" th:text="${list.task_content}"></td>
+                                        <td class="list_progress" th:text="${list.task_chapter}"></td>
+                                        <td class="list_limit" ><span th:text="${#dates.format(list.task_deadline, 'yyyy-MM-dd')}"></span></td>
+                                        <td class="detailBtn-wrap">
+                                            <button class="detailBtn" data-task_no="${list.task_no}">
+                                                <i class="ri-search-eye-line" data-task_no="${list.task_no}"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="table-title-wrap">
+                    <div class="select-box">
+                        <select id="selectGroupTitle" name="group_no" onchange="updateGroupNo(this)">
+                            <option value="" >전체</option>
+                            <th:block th:each="title : ${groupName}">
+                                <option th:value=${game_no} th:text="${title}" name="group_name">"${title}"</option>
                             </th:block>
-                            <th:block th:if="${not #lists.isEmpty(taskDetail)}">
-                                <tr class="tr-list"  th:each="list : ${taskDetail}">
-                                    <td class="list_no"><input type="checkbox" th:value="${list.task_no}"></td>
-                                    <td class="list_name" th:text="${list.task_title}"></td>
-                                    <td class="list_content" th:text="${list.task_content}"></td>
-                                    <td class="list_progress" th:text="${list.task_chapter}"></td>
-                                    <td class="list_limit" ><span th:text="${#dates.format(list.task_deadline, 'yyyy-MM-dd')}"></span></td>
-                                    <td class="detailBtn-wrap">
-                                        <button class="detailBtn" data-task_no="${list.task_no}">
-                                            <i class="ri-search-eye-line" data-task_no="${list.task_no}"></i>
-                                        </button>
-                                    </td>
+                        </select>
+                        <div class="button-wrap">
+                            <input type="button" class="selectTaskBtn" value="조회하기" id="selectGroupBtn">
+                            <input type="button" class="selectTaskBtn" value="전체선택" id="selectAllBtn">
+                            <button type="submit" class="selectTaskBtn"  id="sendTaskBtn">전송하기</button>
+                        </div>
+                    </div>
+                    <div class="table-title-wrap">
+                        <h2 class="table-title">수강생 목록👩‍👩‍👧</h2>
+                    </div>
+                    <div class="member_wrap">
+                        <div class="table-container">
+                            <div class="table-left">
+                                <table class="list-table">
+                                    <thead class="table-head">
+                                    <tr>
+                                        <th class="t_no"> </th>
+                                        <th class="t_member">학습자명</th>
+                                        <th class="t_phone">전화번호</th>
+                                        <th class="t_level">현재 레벨</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="tbody-container" id="memberTableBodyLeft">
+                                    <th:block th:if="${not #lists.isEmpty(groupDetail)}">
+                                        <tr class="tr-list" th:each="list, iterStat : ${groupDetail}">
+                                            <th:block th:if="${iterStat.index % 2 == 0}">
+                                                <td class="list_groupNo">
+                                                    <input type="checkbox" class="student-checkbox" th:value="${list.member_no}" name="member_no[]">
+                                                    <input type="hidden" th:value="${list.group_no}">
+                                                </td>
+                                                <td class="list_member" th:text="${list.member_name}"></td>
+                                                <td class="list_phone" th:text="${list.member_phone}"></td>
+                                                <td class="list_level" th:text="${list.member_level}"></td>
+                                            </th:block>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="table-right">
+                            <table class="list-table">
+                                <thead class="table-head">
+                                <tr>
+                                    <th class="t_no"> </th>
+                                    <th class="t_name">학습자명</th>
+                                    <th class="t_phone">전화번호</th>
+                                    <th class="t_level">현재 레벨</th>
                                 </tr>
-                            </th:block>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody class="tbody-container" id="memberTableBodyRight">
+                                <!-- 오른쪽 테이블에 뿌려질 내용 -->
+                                <th:block th:if="${not #lists.isEmpty(groupDetail)}">
+                                    <tr class="tr-list" th:each="list, iterStat : ${groupDetail}">
+                                        <!-- 홀수 번째 행만 오른쪽 테이블에 나타나도록 필터링 -->
+                                        <th:block th:if="${iterStat.index % 2 != 0}">
+                                            <td class="list_groupNo"><input type="checkbox" class="student-checkbox" th:value="${list.member_no}" name="member_no[]"></td>
+                                            <td class="list_name" th:text="${list.member_name}"></td>
+                                            <td class="list_phone" th:text="${list.member_phone}"></td>
+                                            <td class="list_level" th:text="${list.member_level}"></td>
+                                        </th:block>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+</div>
 </div>
 <!--모달-->
 <div class="modal-bg"></div>
@@ -94,6 +172,6 @@
         </div>
     </div>
 </div>
-<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </html>

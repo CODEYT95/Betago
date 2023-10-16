@@ -1,6 +1,7 @@
 package com.bnw.beta.service.learning.Task;
 
 import com.bnw.beta.domain.common.paging.TaskPageDTO;
+import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
@@ -18,7 +19,15 @@ public interface TaskService {
 
     //숙제 조회하기
     List<String> selectTaskTitle(String member_id);
-    TaskPageDTO selectTaskByTitle(String task_title, String member_id, @Param("page") int page, @Param("size") int size);
+    List<TaskDTO> selectTaskByTitle(String task_title, String member_id);
+
+    //그룹 조회하기
+    List<String> selectGroupName(String member_id);
+    List<GroupDTO> selectGroupByName(String group_name, String member_id);
+
+    //숙제 전송하기
+    String sendTask(List<Integer> task_no,  List<Integer> member_no, Integer group_no, String member_id);
+
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회

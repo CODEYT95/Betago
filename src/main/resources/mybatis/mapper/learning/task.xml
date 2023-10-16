@@ -24,25 +24,24 @@
     </select>
 
     <select id="selectTaskByTitle" parameterType="TaskDTO" resultType="TaskDTO">
-    <![CDATA[
-    SELECT * FROM task
-    WHERE
-    ]]>
-      <if test="task_title != null and task_title != ''">
-        task_title = #{task_title}
-      </if>
-      <if test="task_title == null or task_title == ''">
-        1=1
-      </if>
-    <![CDATA[
-    AND member_id = #{member_id}
-    AND task_deadline > now()
-    ORDER BY task_regdate DESC
-    LIMIT #{page}, #{size};
-    ]]>
+        <![CDATA[
+        SELECT * FROM task
+        WHERE
+        ]]>
+          <if test="task_title != null and task_title != ''">
+            task_title = #{task_title}
+          </if>
+          <if test="task_title == null or task_title == ''">
+            1=1
+          </if>
+        <![CDATA[
+        AND member_id = #{member_id}
+        AND task_deadline > now()
+        ORDER BY task_regdate DESC;
+        ]]>
     </select>
 
-    <select id="taskLisitCount" parameterType="String" resultType="Integer">
+    <select id="taskListCount" parameterType="String" resultType="Integer">
         <![CDATA[
         SELECT COUNT(*) FROM task WHERE member_id = #{member_id};
         ]]>
@@ -51,32 +50,35 @@
     <!--그룹 이름 조회-->
     <select id="selectGroupName">
         <![CDATA[
-        SELECT group_name FROM studygroup WHERE member_id = #{member_id};
+        SELECT group_name, group_no FROM studygroup WHERE member_id = #{member_id};
         ]]>
     </select>
 
     <!--그룹 이름으로 조회-->
-    <select id="selectGroupByName">
+    <select id="selectGroupByName" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT gm.member_level, m.member_name, m.member_phone
+        SELECT gm.member_level, m.member_name, m.member_phone, m.member_no, sg.group_no, g.game_level
         FROM groupmember AS gm
         JOIN member AS m ON gm.member_no = m.member_no
         JOIN studygroup AS sg ON gm.group_no = sg.group_no
-        WHERE sg.group_name LIKE #{group_name}
-        AND sg.member_id = #{member_id}
-        AND gm.approve_state = '승인';
+        JOIN game AS g ON g.game_no = sg.game_no
+        WHERE sg.member_id = #{member_id}
+        AND gm.approve_state = '승인'
+        AND sg.group_enddate > now()
         ]]>
+        <if test="group_name != null and group_name != ''">
+            <![CDATA[
+            AND sg.group_name LIKE #{group_name}
+            ]]>
+        </if>
     </select>
 
     <!--숙제 전송-->
     <insert id="sendTask" parameterType="TaskSendDTO">
         <![CDATA[
-        INSERT INTO tasksend (task_no, group_no, member_no, task_senddate, member_id)
-        VALUES (#{task_no}, #{group_no}, #{member_no}, now(), #{member_id}) IN
+        INSERT INTO tasksend (task_no, member_no, group_no, task_senddate, member_id)
+        VALUES (#{task_no},  #{member_no}, #{group_no}, now(), #{member_id})
         ]]>
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
     </insert>
 
     <!--전송한 숙제 조회-->

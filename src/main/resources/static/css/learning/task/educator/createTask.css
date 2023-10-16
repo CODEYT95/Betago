@@ -147,7 +147,7 @@ th, td {
     white-space: nowrap;
 }
 
-.t_no, .list_no{
+.t_no, .list_no, .list_groupNo{
     position: relative;
     width: 3%;
 }
@@ -185,6 +185,21 @@ th, td {
 .t_detail, .detailBtn-wrap{
     position: relative;
     width: 5%;
+}
+
+.t_member, .list_member {
+    position: relative;
+    width: 11%;
+}
+
+.t_phone, .list_phone {
+    position: relative;
+    width: 20%;
+}
+
+.t_level, .list_level {
+    position: relative;
+    width: 17%;
 }
 
 .detailBtn {
@@ -248,6 +263,10 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     align-items: center;
     width: 35px;
     height: 30px;
+}
+
+.table-container {
+    display: flex;
 }
 
 #pagination{
