@@ -12,10 +12,10 @@ import java.util.List;
 public interface GroupDAO {
 
     //그룹 등록 가능한 게임콘텐츠 Cnt
-    int groupAddListCnt(String game_title);
+    int groupAddListCnt(@Param("member_id") String memeber_id, @Param("game_title") String game_title);
 
     //게임 콘텐츠 title 조회
-    List<GroupDTO> selectGameTitle();
+    List<GroupDTO> selectGameTitle(String member_id);
 
     //그룹 등록 가능한 게임콘텐츠 조회(무한스크롤)
     List<GroupDTO> groupAddList(GroupDTO groupDTO);
@@ -47,6 +47,9 @@ public interface GroupDAO {
     //그룹 학생 가입승인 정보
     GroupDTO selectGroupInfo(int group_no);
 
+    //그룹 학생 목록 업데이트
+    int updateGroupMembber(@Param("state") String state, @Param("list") List<Integer> updateList);
+
     //////////////////학습자////////////////////
 
     //학습 그룹 가입 신청 목록
@@ -68,5 +71,17 @@ public interface GroupDAO {
     int insertGroupJoin(GroupDTO groupDTO);
 
     //학생 그룹 현재인원 Update
-    int updateGroupJoin(int group_no);
+    int updateGroupJoin(@Param("num")int num, @Param("group_no") int group_no);
+
+    //가입신청 내역 목록
+    List<GroupDTO> myjoinList(GroupDTO groupDTO);
+
+    //가입신청 내역 목록 갯수
+    int myjoinListCount(GroupDTO groupDTO);
+
+    //가입신청 내역 그룹명 목록
+    List<GroupDTO> myjoinListTitle(int member_no);
+
+    //가입신청 교육자 타이틀 목록
+    List<GroupDTO> myjoinListEducator(int member_no);
 }

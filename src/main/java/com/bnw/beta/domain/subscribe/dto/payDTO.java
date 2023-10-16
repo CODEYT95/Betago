@@ -27,4 +27,9 @@ public class payDTO {
     private String filegame_name;
     private String filegame_path;
     private Date filegame_date;
+
+    //매출
+    private String day;
+    private int total_sell;
+    private int total_sales;
 }
