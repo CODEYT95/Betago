@@ -49,9 +49,9 @@
 
                     <form id="pageSizeForm" action="/notice/list" method="get">
                         <select class="form-control form-control-sm" name="size" id="listSize" onchange="changePageSize()">
-                            <option value="10" th:selected="${noticePage.noticeList.size() == 10}">10개</option>
-                            <option value="15" th:selected="${noticePage.noticeList.size() == 15}">15개</option>
-                            <option value="20" th:selected="${noticePage.noticeList.size() == 20}">20개</option>
+                            <option value="10" th:selected="${noticePage.getAllNoticeList().size() == 7}">10개</option>
+                            <option value="15" th:selected="${noticePage.getAllNoticeList().size() == 12}">15개</option>
+                            <option value="20" th:selected="${noticePage.getAllNoticeList().size() == 17}">20개</option>
                         </select>
                     </form>
             </div>
@@ -72,7 +72,7 @@
                     </thead>
                     <tbody id="list">
 
-                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type != '일반'}" th:each="notice : ${topNoticeList}" >
+                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type != '일반'} " th:each="notice : ${topNoticeList}" >
                         <td>
                             <span class="no" th:text="${notice.notice_no}" ></span>
                         </td>

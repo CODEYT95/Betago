@@ -101,7 +101,7 @@
         <![CDATA[
         SELECT count(*) as listCnt
         FROM notice
-        WHERE true
+        WHERE notice_category = '공지'
          ]]>
         <if test='searchType.equals("notice_title")'>
             AND notice_title LIKE CONCAT('%', #{keyword}, '%')
