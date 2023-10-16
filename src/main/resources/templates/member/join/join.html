@@ -41,10 +41,9 @@
                 <span class="id_already">이미 사용중인 아이디입니다.</span>
                 <br/>
 
-                <span class="spanName">비밀번호</span><input type="password" id="pw" class="pwInput" th:field="*{member_pw}" placeholder="비밀번호를 입력하세요."><br/>
-
-                <span class="spanName">비밀번호 확인</span><input type="password" id="repw" class="pwReInput" th:field="*{member_repw}" onchange = "checkPwd()" placeholder="비밀번호를 확인해주세요."><br/>
-                <span class="pwCheck">입력하신 비밀번호와 일치하지 않습니다.</span><br/>
+                <span class="spanName">비밀번호</span>
+                <input type="password" id="pw" class="pwInput" th:field="*{member_pw}" placeholder="비밀번호를 입력하세요."><br/>
+                <div class="err04" th:if="${#fields.hasErrors('member_pw')}" th:errors="*{member_pw}"></div>
 
                 <div class="birth">
                 <input type="hidden" name="member_birth" id="member_birth" th:field="*{member_birth}">
@@ -63,6 +62,9 @@
                 <div id="emailField">
                     <span class="emailName">이메일</span>
                     <input type="text" class="emainInput" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
+                    <div class="err06" th:if="${#fields.hasErrors('member_email')}">
+                        <span th:errors="*{member_email}"></span>
+                    </div>
                 </div>
 
                 <label>

@@ -20,13 +20,17 @@
                         <div id="leftHeader">
                             <form id="searchForm" th:action="@{/edupost/list}" method="get" name="searchForm">
                                 <select name="searchType" class="selectField" title="검색 유형 선택">
+                                    <option value="" th:classappend="${(searchType == '') ? 'selected' : ''}">선택</option>
                                     <option value="edupost_title" th:classappend="${(searchType == 'edupost_title') ? 'selected' : ''}">제목</option>
                                     <option value="edupost_content" th:classappend="${(searchType == 'edupost_content') ? 'selected' : ''}">내용</option>
-                                    <option value="title_content" th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용</option>
+                                    <option value="title_content" th:classappend="${(searchType == 'edupost_title' || searchType == 'edupost_content') ? 'selected' : ''}">제목+내용</option>
                                 </select>
-                            <!--    <select name="searchType">
-                                    <option value="edupost_category" th:>자료구분</option>
-                                </select>-->
+
+                                <select name="searchType2" class="selectField" title="검색 유형 선택">
+                                    <option selected-value="none">선택</option>
+                                  <option value="edupost_category" th:classappend="${(searchType == 'edupost_category') ? 'selected' : ''}">분류</option>
+                                </select>
+
                                 <input type="text" name="keyword" class="textField"/>
                                 <input type="submit" value=" 검 색 " class="btn2"/>
                             </form>
@@ -101,10 +105,14 @@
 
             </div>
         </div>
-    <script th:src="@{/js/admin/edupost/function.js}"></script>
-    <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
     </div>
 </div>
+    <script th:src="@{/js/admin/edupost/function.js}"></script>
+    <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
+
+<script type="text/javascript">
+
+</script>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

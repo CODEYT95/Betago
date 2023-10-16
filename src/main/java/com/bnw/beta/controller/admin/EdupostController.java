@@ -50,20 +50,53 @@ public class EdupostController {
     //학습자료 목록
     @GetMapping("/list")
     public String postList(@RequestParam(value = "page", defaultValue = "1") int page,
-                           @RequestParam(value = "size", defaultValue = "2") int size,
-                           @RequestParam(value = "searchType", defaultValue = "all") String searchType,
+                           @RequestParam(value = "size", defaultValue = "4") int size,
+                           @RequestParam(value = "searchType", defaultValue = "") String searchType,
+                           @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
                            @RequestParam(value = "keyword", defaultValue = "") String keyword,
                            Model model) throws Exception {
 
-        EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, keyword);
+        EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, searchType2, keyword);
 
         model.addAttribute("currentPage", edupostList.getCurrentPage());
         model.addAttribute("listCount", edupostList.getListCount());
         model.addAttribute("edupostPageDTO", edupostList);
         model.addAttribute("searchType", searchType);
+        model.addAttribute("searchType2", searchType2);
         model.addAttribute("keyword", keyword);
             return "admin/edupost/eduboardlist";
     }
+
+  /*  @GetMapping("/list")
+    public String postList(@RequestParam(value = "page", defaultValue = "1") int page,
+                           @RequestParam(value = "size", defaultValue = "4") int size,
+                           @RequestParam(value = "searchType", defaultValue = "") String searchType,
+                           @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
+                           @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                           Model model) throws Exception {
+
+        EdupostPageDTO edupostList;
+
+        if (searchType.equals("all") && searchType2.equals("all")) {
+            // 모든 검색 유형을 고려하지 않는 경우
+            edupostList = edupostService.edulist(page, size, keyword);
+        } else if (!searchType.equals("") && !searchType2.equals("")) {
+            // 두 가지 검색 유형을 모두 고려하는 경우
+            edupostList = edupostService.edulistTwo(page, size, searchType, searchType2, keyword);
+        } else {
+            // 하나의 검색 유형만 고려하는 경우
+            edupostList = edupostService.edulist(page, size, searchType.equals("") ? searchType2 : searchType2 , keyword);
+        }
+
+        model.addAttribute("currentPage", edupostList.getCurrentPage());
+        model.addAttribute("listCount", edupostList.getListCount());
+        model.addAttribute("edupostPageDTO", edupostList );
+        model.addAttribute("searchType ", searchType );
+        model.addAttribute("searchType2 ", searchType2 );
+        model.addAttribute("keyword" , keyword );
+
+        return "admin/edupost/eduboardlist ";
+    }*/
     //학습자료 세부내용
     @GetMapping("/detail/{edupost_no}")
     public String postView(@PathVariable("edupost_no") final Long edupost_no, Model model) {
