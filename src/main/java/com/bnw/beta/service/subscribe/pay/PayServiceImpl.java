@@ -32,9 +32,9 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-        public int insertIntoPay(payDTO payDTO) {
-            return payDAO.insertIntoPay(payDTO);
-        }
+    public int insertIntoPay(payDTO payDTO) {
+        return payDAO.insertIntoPay(payDTO);
+    }
 
     @Override
     public int insertIntoCart(int game_no, String member_id) {
