@@ -200,22 +200,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const tag = event.target.closest('.tag');
         if (tag) {
-            var deletedGamePriceInput = tag.querySelector('input[hidden]');
-            var deletedGamePrice = parseFloat(deletedGamePriceInput.value);
+            const deletedGamePriceInput = tag.querySelector('.price');
+            const deletedGamePrice = parseFloat(deletedGamePriceInput.value);
 
-            const gameNo = tag.querySelector('.delete-btn').getAttribute('data-game-no');
+            const gameFileName = tag.getAttribute('data-game-name');
 
-            const index = gameNos.indexOf(gameNo);
-            if (index > -1) {
-                gameNos.splice(index, 1);
-            }
+            const gameNo = tag.getAttribute('data-game-no');
+
+          console.log(gameNo);
 
             tag.remove();
 
+            if (gameNo) {
+                         const gameImage = document.querySelector(`.image-container .image[data-game-no='${gameNo}']`);
+                         if (gameImage) {
+                             gameImage.parentElement.remove();
+                         }
+                     }
             totalPrice -= deletedGamePrice;
-
-           updateTotalPrice();
-           updateUrl();
+            updateTotalPrice();
         }
     }
      //태그 삭제시 url 업데이트 해주는 함수

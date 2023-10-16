@@ -1,6 +1,6 @@
 package com.bnw.beta.controller.subscribe;
 
-import com.bnw.beta.domain.subscribe.dto.CartDTO;
+
 import com.bnw.beta.domain.subscribe.dto.payDTO;
 import com.bnw.beta.service.subscribe.pay.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +42,6 @@ public class PayController {
             System.out.println(payDTO);
             payService.insertIntoPay(payDTO);
         }
-        return "redirect:/game/list";
+        return "redirect:/list";
     }
 }

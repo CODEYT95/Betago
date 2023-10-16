@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,9 +22,10 @@ public class SubContentsController {
     @GetMapping("/list")
     public String mycontentsList(@RequestParam(name = "startDate",defaultValue = "2020-08-25") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
                                  @RequestParam(name = "endDate",defaultValue = "2030-08-25") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
-                                 Model model, String member_id) {
+                                 Model model,  Principal principal) {
 
-        member_id = "educator1";
+        String member_id = principal.getName();
+
         subContentsDTO subContentsDTO = new subContentsDTO();
         subContentsDTO.setMember_id(member_id);
         subContentsDTO.setStartDate(startDate);
@@ -35,7 +37,6 @@ public class SubContentsController {
         List<subContentsDTO> contentsList = subContentsService.selectContents(subContentsDTO);
         System.out.println(contentsList);
         model.addAttribute("contentsList", contentsList);
-
         return "subscribe/subcontents";
     }
 

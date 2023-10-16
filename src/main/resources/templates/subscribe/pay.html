@@ -24,14 +24,14 @@
             <div class="content-row">
                 <div class="image-container">
                     <div th:each="game : ${cartlist}" class="poster">
-                        <img class="image" th:src="${game.filegame_name} ? @{|/image/game/${game.filegame_name}|} : @{/image/캡처.png}" th:alt="${game.filegame_name}">
+                        <img class="image" th:attr="data-game-no=${game.game_no}" th:src="${game.filegame_name} ? @{|/image/game/${game.filegame_name}|} : @{/image/캡처.png}" th:alt="${game.filegame_name}">
                     </div>
                     <div class="img-button">
-                    <button onclick="prevImage()"></button>
-                    <button onclick="nextImage()"i class="fa-solid fa-circle-chevron-right fa-sm"></i></button>
+                    <button onclick="prevImage()" i class="fa-solid fa-circle-chevron-right fa-rotate-180 fa-2xl"></i>></button>
+                    <button onclick="nextImage()"i class="fa-solid fa-circle-chevron-right fa-2xl"></i></button>
                     </div>
                 </div>
-            <form th:action="@{/pay/payment}" method="POST" class="pay-list" onsubmit="return validateForm()" th:target="@{결제완료페이지}">
+            <form th:action="@{/pay/payment}" method="POST" class="pay-list" onsubmit="return validateForm()">
                 <div class="pay-box">
                     <div class="pay-titlebox">
                         <div class="pay-title">결제방법 선택</div>
@@ -43,12 +43,12 @@
                         <div class="pay-ordercontent">
                             <div class="tag-container">
                                 <div class="tag-container">
-                                    <div th:each="game : ${cartlist}" class="tag">
-                                        <input class="price" hidden="hidden" th:value="${game.game_sell}">
+                                    <div th:each="game : ${cartlist}" class="tag" data-game-name="${game.filegame_name}" th:attr="data-game-no=${game.game_no}">
+                                        <input class="price" hidden="hidden" th:value="${game.game_sell}"  th:attr="data-game-no=${game.game_no}">
                                         <input hidden="hidden" name="game_date[]" th:value="${game.game_date}">
                                         <input hidden="hidden" name="game_no[]" th:value="${game.game_no}">
                                         <div th:text="${game.game_title}" th:attr="data-game-price=${game.game_sell}"></div>
-                                        <a class="delete-btn" th:attr="data-game-no=${game.game_no}">x</a>
+                                        <a class="delete-btn" th:attr="data-game-no=${game.game_no}" onclick="deleteTag(event)">x</a>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,6 @@
                             <button type="submit" id="submitbutton" class="submit-button">결제하기</button>
                         </div>
                     </div>
-                    </form>
                 </div>
             </form>
         </div>
