@@ -21,6 +21,15 @@ public interface TaskDAO {
     List<TaskDTO> sendTaskList(@Param("member_id") String member_id, @Param("page") int page, @Param("size") int size);
     int sendTaskListCount(String member_id);
 
+    //숙제 조회하기
+    List<String> selectTaskTitle(String member_id);
+    List<TaskDTO> selectTaskByTitle(String task_title, String member_id, @Param("page") int page, @Param("size") int size);
+    int taskLisitCount(String member_id);
+
+    //숙제 전송하기
+    int sendTask(TaskSendDTO taskSendDTO);
+
+
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
     List<TaskDTO> selectTaskById(int member_no);
@@ -36,7 +45,7 @@ public interface TaskDAO {
     TaskSubmitDTO modifyTask(TaskSubmitDTO taskSubmitDTO);
     int ModifySubmitTask(TaskSubmitDTO taskSubmitDTO);
 
-    //숙제 전송
+    //숙제 제출
     int submitTask(List<Integer> tasksend_no);
 
     //제출 숙제 조회

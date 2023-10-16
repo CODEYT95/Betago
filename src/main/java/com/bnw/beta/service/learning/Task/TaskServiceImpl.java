@@ -61,6 +61,29 @@ public class TaskServiceImpl implements TaskService{
         return taskDAO.createTask(taskDTO);
     }
 
+    //숙제 조회
+    @Override
+    public List<String> selectTaskTitle(String member_id) {
+        return taskDAO.selectTaskTitle(member_id);
+    }
+    @Override
+    public TaskPageDTO selectTaskByTitle(String task_title, String member_id, int pageNum, int size) {
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTask_title(task_title);
+        taskDTO.setMember_id(member_id);
+
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+        int offset = (pageNum - 1) * size;
+        List<TaskDTO> taskList =  taskDAO.selectTaskByTitle(task_title, member_id, offset, size);
+        int listCount = taskDAO.taskLisitCount(member_id);
+        TaskPageDTO taskPageDTO = new TaskPageDTO(listCount, pageNum, size, taskList);
+        taskPageDTO.setListCount(listCount);
+
+        return taskPageDTO;
+    }
+
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
     @Override

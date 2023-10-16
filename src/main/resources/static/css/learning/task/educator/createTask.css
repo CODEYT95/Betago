@@ -162,9 +162,19 @@ th, td {
     width: 9%;
 }
 
+.t_content {
+    position: relative;
+    width: 25%;
+}
+
 .t_limit, .list_limit{
     position: relative;
     width: 8%;
+}
+
+.t_deadline {
+    position: relative;
+    width: 13%;
 }
 
 .t_send, .list_send{
