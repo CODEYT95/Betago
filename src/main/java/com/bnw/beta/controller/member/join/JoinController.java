@@ -5,6 +5,8 @@ import com.bnw.beta.config.vaildation.member.JoinForm;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,20 +53,30 @@ public class JoinController {
     @PostMapping("/join")
     public String memberJoin(@Valid JoinForm joinForm, BindingResult bindingResult, HttpSession session,
                              @RequestParam("member_birth") String birth,Model model) {
-
-
-        //생년월일 session에 담기
-        JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");
-        String[] retrievedAgreedTerms = (String[]) session.getAttribute("agreedTerms");
-        if (agreeDate != null && retrievedAgreedTerms != null) {
-            joinForm.setMember_birth(birth);
-            memberService.memberJoin(agreeDate, joinForm, retrievedAgreedTerms);
-            session.invalidate();
-            return "redirect:/login";
+        if (bindingResult.hasErrors()) {
+            return "/member/join/join";
         }
-        
-       return " ";
-    }
+        try {
+            JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");
+            String[] retrievedAgreedTerms = (String[]) session.getAttribute("agreedTerms");
+            if (agreeDate != null && retrievedAgreedTerms != null) {
+                joinForm.setMember_birth(birth);
+                memberService.memberJoin(agreeDate, joinForm, retrievedAgreedTerms);
+                session.invalidate();
+                return "redirect:/login";
+            }
+        }catch (DataIntegrityViolationException e){
+            //생년월일 session에 담기
+                e.printStackTrace();
+                bindingResult.reject("signupFaild", "이미 등록된 회원이 있습니다.");
+                return "/member/join/join";
+            }catch (Exception e){
+                e.printStackTrace();
+                bindingResult.reject("signupFailed", e.getMessage());
+                return "/member/join/join";
+            }
+            return "redircet:/";
+        }
 
     //ID중복체크
     @PostMapping("/idCheck")

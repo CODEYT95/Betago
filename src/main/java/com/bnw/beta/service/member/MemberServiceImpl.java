@@ -2,6 +2,7 @@ package com.bnw.beta.service.member;
 
 import com.bnw.beta.config.security.SecurityConfig;
 import com.bnw.beta.config.vaildation.member.JoinForm;
+import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.member.dto.AgreeCheckDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,6 +98,24 @@ public class MemberServiceImpl implements MemberService {
         System.out.println(memberDAO.getMemberInfo(member_id).getMember_name());
 
         return memberDAO.getMemberInfo(member_id);}
+
+    /*회원 목록보기*/
+    @Override
+    public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword) {
+        if(pageNum <= 0) {
+            pageNum = 1;
+        }
+        System.out.println("size :" + size);
+        int offset = (pageNum-1) * size;
+        List<MemberDTO> memberlist = memberDAO.memberlist(offset, size, searchType, keyword);
+        System.out.println("size2 :" + size);
+        int listCount = memberDAO.count(searchType, keyword);
+
+        MemberPageDTO memberPageDTO = new MemberPageDTO(listCount, pageNum, size, memberlist);
+        memberPageDTO.setListCount(listCount);
+
+        return memberPageDTO;
+    }
 
 
     //////////멤버 ROLE 불러오기/////////// 김현민

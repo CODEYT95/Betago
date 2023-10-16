@@ -1,6 +1,6 @@
 package com.bnw.beta.domain.common.paging;
 
-import com.bnw.beta.domain.admin.dto.EdupostDTO;
+import com.bnw.beta.domain.member.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +8,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class EdupostPageDTO {
+public class MemberPageDTO {
     private int total;
-    private List<EdupostDTO> edupostList;
+    private List<MemberDTO> memberList;
     private int currentPage;
     private int totalPages;
     private int startPage;
@@ -18,13 +18,12 @@ public class EdupostPageDTO {
     private int startIndex;
     private int listCount;
     private String searchType;
-    private String searchType2;
     private String keyword = "";
 
-    public EdupostPageDTO(int total, int currentPage, int size, List<EdupostDTO> edupostList){
+    public MemberPageDTO(int total, int currentPage, int size, List<MemberDTO> memberList){
         this.total=total;
         this.currentPage=currentPage;
-        this.edupostList=edupostList;
+        this.memberList=memberList;
         if(total==0) {
             totalPages=0;
             startPage=0;

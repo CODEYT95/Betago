@@ -1,10 +1,12 @@
 package com.bnw.beta.controller.member.login;
 
+import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -72,6 +74,23 @@ public class MemberController {
     @GetMapping("/admin")
     public @ResponseBody String admin() {
         return "admin";
+    }
+
+    /*회원 목록조회*/
+    @GetMapping("/member/list")
+    public String memberlist(@RequestParam(value = "page", defaultValue = "1") int page,
+                             @RequestParam(value = "size", defaultValue = "3") int size,
+                             @RequestParam(value = "searchType", defaultValue = "all") String searchType,
+                             @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
+
+        MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, keyword);
+
+        model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
+        model.addAttribute("listCount", memberPageDTO.getListCount());
+        model.addAttribute("memberPageDTO", memberPageDTO);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
+        return "admin/edupost/memberlist";
     }
 /*
     유진님 회원가입부분 폼

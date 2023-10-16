@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.member.dao.MemberDAO">
+<sql id="search">
+    <if test="keyword != null and keyword != ''">
+        <choose>
+            <when test="searchType != null and searchType != ''">
+                <choose>
+                    <when test="'role'.equals(searchType)">
+                        AND role LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="member_name'.equals(searchType)">
+                        AND member_name LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="'member_id'.equals(searchType)">
+                        AND member_id LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
 
+                </choose>
+            </when>
+            <otherwise>
+                AND
+                (
+                role LIKE CONCAT('%', #{keyword}, '%')
+                OR member_name LIKE CONCAT('%', #{keyword}, '%')
+                OR member_id LIKE CONCAT('%', #{keyword}, '%')
+                )
+            </otherwise>
+        </choose>
+    </if>
+</sql> 
+    
     <!--약관동의-->
     <insert id="memberAgree" parameterType="MemberDTO">
         <![CDATA[
@@ -64,8 +92,21 @@
 
 
     <!--회원목록 조회 관리자용-->
- <!--   <select id="memberlist" parameterType="MemberDTO">
-        select member_no, member_id,
+    <select id="memberlist" parameterType="map" resultType="MemberDTO">
+        select member_no, role, member_id, member_name, member_phone, member_email, license, join_date
         from member
-    </select>-->
+        <where>
+            <include refid="search"></include>
+        </where>
+        LIMIT #{page}, #{size};
+
+    </select>
+    <!--회원목록 카운트-->
+    <select id="count" parameterType="int">
+        select count(*)
+        from member
+        <where>
+            <include refid="search"></include>
+        </where>
+    </select>
 </mapper>
