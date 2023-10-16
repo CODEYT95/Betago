@@ -102,6 +102,15 @@
                 // 데이터를 사용하여 HTML을 업데이트
                 var memberList = $(".member-list");
 
+                var firstListItem = response[0];
+                var game_title = firstListItem.game_title;
+                var group_cnt = firstListItem.group_cnt;
+                var group_nowcnt = firstListItem.group_cnt-firstListItem.group_nowcnt;
+
+                $(".groupinfo span:nth-child(1)").text("게임 콘텐츠: " + game_title);
+                $(".groupinfo span:nth-child(2)").text("그룹 제한 인원: " + group_cnt+"명");
+                $(".groupinfo span:nth-child(3)").text("그룹 가능 인원: " + group_nowcnt+"명");
+
                 $.each(response, function(index, groupItem) {
                     var li = $("<li>");
                     li.append("<span style='width: 10%;'>" + (index + 1) + "</span>");
@@ -118,6 +127,62 @@
                 // AJAX 요청이 실패할 때 처리할 코드
                 console.error("AJAX 요청 실패:", error);
             }
+        });
+    });
+
+    $(document).ready(function() {
+        var groupNo; // 클릭 이벤트 핸들러 외부에 변수 선언
+
+        $(".option-text").click(function() {
+            groupNo = $(this).attr("data-no"); // 클릭된 요소의 data-no 값을 할당
+            console.log(groupNo);
+        });
+
+        $(".search-btn1").click(function() {
+            var selectedOption = $(".sBtn-text1").text();
+            console.log(groupNo); // groupNo 값 확인
+
+            $.ajax({
+                type: "GET",
+                url: "/educator/group/listDetail",
+                data: {
+                    group_no: groupNo, // 클릭된 옵션의 group_no 값을 전달
+                    group_name: selectedOption
+                },
+                dataType: "json",
+                success: function(response) {
+                    console.log("AJAX 요청 성공:", response);
+
+                    // 데이터를 사용하여 HTML을 업데이트
+                    var memberList = $(".member-list");
+                    memberList.empty(); // 기존 목록 초기화
+
+                    var firstListItem = response[0];
+                    var game_title = firstListItem.game_title;
+                    var group_cnt = firstListItem.group_cnt;
+                    var group_nowcnt = firstListItem.group_cnt-firstListItem.group_nowcnt;
+
+                    $(".groupinfo span:nth-child(1)").text("게임 콘텐츠: " + game_title);
+                    $(".groupinfo span:nth-child(2)").text("그룹 제한 인원: " + group_cnt+"명");
+                    $(".groupinfo span:nth-child(3)").text("그룹 가능 인원: " + group_nowcnt+"명");
+
+                    $.each(response, function(index, groupItem) {
+                        var li = $("<li>");
+                        li.append("<span style='width: 10%;'>" + (index + 1) + "</span>");
+                        li.append("<span style='width: 15%;'>" + groupItem.member_name + "</span>");
+                        li.append("<span style='width: 20%;'>" + groupItem.member_phone + "</span>");
+                        li.append("<span style='width: 40%;'>" + groupItem.member_email + "</span>");
+                        li.append("<span style='width: 15%;'>" + groupItem.join_date + "</span>");
+
+                        memberList.append(li);
+                    });
+
+                    $("#modal").css("display", "block");
+                },
+                error: function(error) {
+                    console.error("AJAX 요청 실패:", error);
+                }
+            });
         });
     });
 });
