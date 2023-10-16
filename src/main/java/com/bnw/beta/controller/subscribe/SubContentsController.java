@@ -23,7 +23,7 @@ public class SubContentsController {
                                  @RequestParam(name = "endDate",defaultValue = "2030-08-25") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
                                  Model model, String member_id) {
 
-        member_id = "dumy";
+        member_id = "educator1";
         subContentsDTO subContentsDTO = new subContentsDTO();
         subContentsDTO.setMember_id(member_id);
         subContentsDTO.setStartDate(startDate);
@@ -33,11 +33,9 @@ public class SubContentsController {
             model.addAttribute("endDate",endDate);
         }
         List<subContentsDTO> contentsList = subContentsService.selectContents(subContentsDTO);
-
-
-
         System.out.println(contentsList);
         model.addAttribute("contentsList", contentsList);
+
         return "subscribe/subcontents";
     }
 

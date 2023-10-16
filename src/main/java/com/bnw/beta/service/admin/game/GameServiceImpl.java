@@ -3,6 +3,7 @@ package com.bnw.beta.service.admin.game;
 import com.bnw.beta.domain.admin.dao.GameDAO;
 import com.bnw.beta.domain.admin.dto.GameDTO;
 import com.bnw.beta.domain.admin.dto.GameFileDTO;
+import com.bnw.beta.domain.subscribe.dto.payDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
