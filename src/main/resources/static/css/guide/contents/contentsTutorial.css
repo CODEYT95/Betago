@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.imgbox .image-slider img {
+    width:160px;
+    height:140px;
+}
+.first-contents {
+    display: flex;
+}
+.imgbox{
+    margin-left: 0;
+}
+.contents-title{
+    margin-left: 0;
+}
+.second-contents {
+    display: flex;
+}
+.third-contents {
+    display: flex;
+}
+.fourth-contents {
+    display: flex;
+}

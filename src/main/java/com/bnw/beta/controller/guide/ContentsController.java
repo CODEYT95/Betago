@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ContentsController {
 
     @GetMapping("/contentsGame")
-    public String contentsIntro() {
+    public String contentsGameIntro() {
         return "guide/contents/contentsGame";
     }
+
+    @GetMapping("/contentsTutorial")
+    public String contentsTutorialIntro() {return "guide/contents/contentsTutorial"; }
+
 }
+
+
