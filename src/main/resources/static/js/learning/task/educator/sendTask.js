@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+
+
     // 초기 페이지 로딩 시 모달 열기 버튼에 클릭 이벤트 리스너 연결
     ModalListeners();
 
@@ -60,12 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // 그룹 조회 버튼 클릭 시
     $("#selectGroupBtn").click(function (e) {
         e.preventDefault(); // 기본 이벤트 방지
-        var group_name = $("#selectGroupTitle").val();
+        var selectedOption = $("#selectGroupTitle option:selected");
+        var group_no = selectedOption.attr("data-groupNo");
+        var group_name = selectedOption.attr("data-groupName");
 
         $.ajax({
             type: "GET",
             url: "/educator/sendTask",
-            data: { group_name: group_name },
+            data: { group_name: group_name, group_no: group_no },
             dataType: "html",
             success: function (response) {
                 // 왼쪽 테이블의 HTML 가져오기
@@ -105,7 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     $("#taskTableBody").html(tbodyHtml);
 
-                    // 모달 열기 버튼에 클릭 이벤트 리스너 다시 연결
                     ModalListeners();
                 },
                 error: function () {
@@ -114,8 +117,4 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
-    function updateGroupNo(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        selectElement.value = selectedOption.getAttribute('th:value');
-    }
 });

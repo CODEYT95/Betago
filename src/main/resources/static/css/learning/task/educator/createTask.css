@@ -231,6 +231,10 @@ table {
     box-shadow: 6px 7px 10px 1px #b9b9b947;
 }
 
+#memberTableBodyLeft {
+    background: #e4e9ec;
+}
+
 tr:nth-child(even) {background-color: #e4e9ec;}
 
 .table-head tr {
@@ -344,4 +348,30 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     border-radius: 5px;
     background: #f9ecbe;
     cursor: pointer;
+}
+
+/* 커스텀 체크박스 스타일 */
+#custom-checkbox {
+  display: none; /* 기본 체크박스 숨기기 */
+}
+
+#custom-checkbox + label {
+  position: relative;
+  padding-left: 25px; /* 체크박스 왼쪽 여백 조정 */
+  cursor: pointer;
+}
+
+#custom-checkbox + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px; /* 체크박스 크기 조정 */
+  height: 20px;
+  border: 2px solid #000; /* 체크박스 테두리 스타일 */
+}
+
+#custom-checkbox:checked + label:before {
+  background-color: #000; /* 체크된 경우 배경색 변경 */
+  border-color: #000; /* 체크된 경우 테두리색 변경 */
 }

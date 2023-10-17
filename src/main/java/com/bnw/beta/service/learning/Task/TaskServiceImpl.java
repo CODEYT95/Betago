@@ -78,14 +78,18 @@ public class TaskServiceImpl implements TaskService{
 
     //그룹 조회
     @Override
-    public List<String> selectGroupName(String member_id) {
+    public List<GroupDTO>selectGroupName(String member_id) {
         return taskDAO.selectGroupName(member_id);
     }
     @Override
-    public List<GroupDTO> selectGroupByName(String group_name, String member_id) {
+    public List<GroupDTO> selectGroupByName(String group_name, String member_id, Integer group_no) {
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setGroup_name(group_name);
         groupDTO.setMember_id(member_id);
+        if(group_no != null){
+            groupDTO.setGroup_no(group_no);
+        }
+
 
         return taskDAO.selectGroupByName(groupDTO);
     }
@@ -95,20 +99,15 @@ public class TaskServiceImpl implements TaskService{
     public String sendTask(List<Integer> task_no,  List<Integer> member_no,  Integer group_no, String member_id) {
         TaskSendDTO taskSendDTO = new TaskSendDTO();
 
-        for (int i = 0; i < task_no.size(); i++) {
-            Integer taskNo = task_no.get(i);
-            Integer memberNo = member_no.get(i);
-            String memberId = member_id;
-            Integer groupNo = group_no;
-
-            taskSendDTO.setTask_no(taskNo);
-            taskSendDTO.setMember_no(memberNo);
-            taskSendDTO.setMember_id(memberId);
-            taskSendDTO.setGroup_no(groupNo);
-            taskDAO.sendTask(taskSendDTO);
-            System.out.println(taskNo+"mno"+memberNo+"id"+memberId);
+        for (Integer taskNo : task_no) {
+            for (Integer memberNo : member_no) {
+                taskSendDTO.setTask_no(taskNo);
+                taskSendDTO.setMember_no(memberNo);
+                taskSendDTO.setMember_id(member_id);
+                taskSendDTO.setGroup_no(group_no);
+                taskDAO.sendTask(taskSendDTO);
+            }
         }
-
         return "success";
     }
 

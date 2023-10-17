@@ -41,14 +41,8 @@
         ]]>
     </select>
 
-    <select id="taskListCount" parameterType="String" resultType="Integer">
-        <![CDATA[
-        SELECT COUNT(*) FROM task WHERE member_id = #{member_id};
-        ]]>
-    </select>
-
     <!--그룹 이름 조회-->
-    <select id="selectGroupName">
+    <select id="selectGroupName" parameterType="String" resultType="GroupDTO">
         <![CDATA[
         SELECT group_name, group_no FROM studygroup WHERE member_id = #{member_id};
         ]]>
@@ -70,6 +64,9 @@
             <![CDATA[
             AND sg.group_name LIKE #{group_name}
             ]]>
+        </if>
+        <if test="group_no != null and group_no != ''">
+            AND sg.group_no = #{group_no}
         </if>
     </select>
 

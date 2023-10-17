@@ -27,7 +27,7 @@ public interface TaskDAO {
     List<TaskDTO> selectTaskByTitle(TaskDTO taskDTO);
 
     //그룹 조회하기
-    List<String> selectGroupName(String member_id);
+    List<GroupDTO> selectGroupName(String member_id);
     List<GroupDTO> selectGroupByName(GroupDTO groupDTO);
 
     //숙제 전송하기

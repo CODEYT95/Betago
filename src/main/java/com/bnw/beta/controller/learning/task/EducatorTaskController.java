@@ -58,15 +58,17 @@ public class EducatorTaskController {
 
     //숙제 제목으로 조회하기
     @GetMapping("/sendTask")
-    public String selectTaskDetailByTitle(Authentication authentication, Model model, @RequestParam(defaultValue = "") String task_title,
-                                                                    @RequestParam(defaultValue = "") String group_name){
+    public String selectTaskDetailByTitle(@RequestParam(defaultValue = "") String task_title,
+                                                                    @RequestParam(defaultValue = "") String group_name,
+                                                                    @RequestParam(defaultValue = "") Integer group_no, Authentication authentication, Model model){
 
         String member_id = authentication.getName();
         List<String> taskTitle = taskService.selectTaskTitle(member_id);
         List<TaskDTO> taskDetail = taskService.selectTaskByTitle(task_title, member_id);
-        List<String> groupName = taskService.selectGroupName(member_id);
-        List<GroupDTO> groupDetail = taskService.selectGroupByName(group_name, member_id);
+        List<GroupDTO> groupName = taskService.selectGroupName(member_id);
+        List<GroupDTO> groupDetail = taskService.selectGroupByName(group_name, member_id, group_no);
 
+        model.addAttribute("check",group_name);
         model.addAttribute("taskTitle", taskTitle);
         model.addAttribute("taskDetail", taskDetail);
         model.addAttribute("groupName", groupName);
@@ -78,8 +80,6 @@ public class EducatorTaskController {
     public String sendTask(@RequestParam("task_no[]") List<Integer> task_no,
                                             @RequestParam("member_no[]") List<Integer> member_no,
                                             @RequestParam ("group_no") Integer group_no, Authentication authentication){
-
-        System.out.println(group_no);
 
         String member_id = authentication.getName();
         String result = taskService.sendTask(task_no, member_no, group_no, member_id);
