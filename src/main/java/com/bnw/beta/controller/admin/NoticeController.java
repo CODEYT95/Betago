@@ -23,7 +23,7 @@ public class NoticeController {
     //리스트 목록 + 페이징 + 검색
     @GetMapping("/notice/list")
     public String noticeList(@RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "size", defaultValue = "7") int size,
+                             @RequestParam(value = "size", defaultValue = "10") int size,
                              @RequestParam(value = "searchType", defaultValue = "all") String searchType,
                              @RequestParam(value = "keyword", defaultValue = "") String keyword,
                              Model model) {
@@ -39,6 +39,7 @@ public class NoticeController {
         model.addAttribute("allNoticeList", noticePage.getAllNoticeList());
 
         model.addAttribute("currentPage", page);
+        model.addAttribute("size", size);
         model.addAttribute("noticePage", noticePage);
         model.addAttribute("topNoticeList", topNoticeList);
         model.addAttribute("searchType", searchType);

@@ -48,7 +48,7 @@ th {
 thead {
     font-weight: bold;
     color: #fff;
-    background: #73685d;
+    background: #0078FF;
 }
 
 td, th {
@@ -61,9 +61,7 @@ td {
     background: #fff;
 }
 
-a {
-    color: #73685d;
-}
+
 
 @media all and (max-width: 768px) {
 
@@ -100,7 +98,7 @@ a {
     }
 
     th {
-        border-bottom: 1px solid #a39485;
+        border-bottom: 1px solid #0078FF;
     }
 
     td {
