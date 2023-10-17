@@ -30,7 +30,7 @@ public interface MemberService {
         //////////멤버 정보 불러오기///////////
         MemberDTO getMemberInfo(String member_id);
         /*회원 목록보기*/
-        public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword);
+        //public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword);
 
         //////////멤버 role 불러오기/////////// 김현민
         public String getRoleById(String member_id);
