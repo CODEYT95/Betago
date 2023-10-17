@@ -29,6 +29,7 @@ public class StudentGroupController {
 
         int limit = 1;
 
+        model.addAttribute("joinList", 1);
         model.addAttribute("groupTitle", group_name);
         model.addAttribute("educatorTitle", educator_name);
         model.addAttribute("title", groupService.selectGroupTitle());
@@ -86,6 +87,7 @@ public class StudentGroupController {
 
         int limit = 1;
 
+        model.addAttribute("myJoinList", 1);
         model.addAttribute("groupTitle", group_name);
         model.addAttribute("educatorTitle", educator_name);
         model.addAttribute("title", groupService.myjoinListTitle(member_no));

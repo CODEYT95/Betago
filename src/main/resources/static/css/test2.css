@@ -9,6 +9,33 @@
 
 .keyword-container{
     display: flex;
+    margin: 0;
+    flex-direction: column;
+}
+
+.keyword-container > div{
+    display: flex;
+}
+
+.info-container{
+    width: 100%;
+}
+
+.info-container > div{
+    display: flex;
+    gap: 41px;
+    margin: 0;
+}
+
+.day-radio{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info-container > div > h3{
+    margin: 0;
 }
 
 .edit-delete{
@@ -116,7 +143,7 @@
     }
 }
 
-.search-btn,.search-btn1,.modify-btn,.delete-btn{
+.search-btn,.search-btn1,.modify-btn,.graph-btn{
     height: 40px;
     background: #fff;
     padding: 20px;
@@ -322,13 +349,15 @@ svg {
 
 .list-header{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     height: 50px;
     border-bottom: 5px solid #ECEFFA;
     padding-bottom: 15px;
     font-weight: bold;
+    width: 100%;
     font-size: 16px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .list-header > div{
@@ -406,19 +435,19 @@ svg {
 }
 
 .groupname-area, .li-groupname{
-    width: 26%;
+    width: 10%;
 }
 
 .gametitle-area, .li-gametitle{
-    width: 26%;
+    width: 17%;
 }
 
 .groupTO-area, .li-groupTO{
-    width: 7%;
+    width: 14%;
 }
 
 .date-area, .li-date{
-    width: 15%;
+    width: 30%;
 }
 
 .studentCnt-area, .li-studentCnt{
