@@ -30,13 +30,23 @@ public interface MemberService {
         //////////멤버 정보 불러오기///////////
         MemberDTO getMemberInfo(String member_id);
         /*회원 목록보기*/
-        public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword);
+        //public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword);
 
         //////////멤버 role 불러오기/////////// 김현민
         public String getRoleById(String member_id);
 
         //////////로그인된 사용자불러오기/////////// 김현민
         MemberDTO loginByUsername(String username);
+
+        //////// 회원 아이디 찾기//////////////김현민
+        MemberDTO findID(String name, String email);
+
+        //////// 회원 비번 찾기//////////////김현민
+       /* MemberDTO findPw(String id, String email);*/
+
+        //////// 임시 비번 바꿔//////////////김현민
+        void updatePassword(String member_id, String encryptedPassword);
+
 
 
 

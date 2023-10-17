@@ -24,6 +24,7 @@ public class MemberDTO implements UserDetails {
     private String role;
     private String license;
     private LocalDateTime join_date;
+    private String pay_count;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

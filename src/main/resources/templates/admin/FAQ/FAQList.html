@@ -12,67 +12,125 @@
 <div class="content">
     <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
     <div class="content-wrap">
+        <section class="section section-faq">
+            <div class="container mx-auto">
+                <h1>자주 묻는 질문</h1>
+                <h4>궁금하신 내용이 FAQ에 없으면 Q&A로 문의주세요!</h4><br/>
 
-        <table>
-            <thead>
-            <tr>
-                <th>NO</th>
-                <th>분류</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>등록일시</th>
-                <th>조회수</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:if="${faq.notice_category == 'FAQ'}" th:each="faq:${faqList}">
-                <td>
-                    <span th:text="${faq.notice_no}"></span>
-                </td>
-                <td>
-                    <span  th:text="${faq.notice_category}"></span>
-                </td>
-                <td class="faq_block js-faq_block">
-                    <div class="faq_header">
-                    <span th:text="${faq.notice_title}"></span>
+                <form id="searchForm" method="get" th:action="@{/FAQ/list}" autocomplete="off">
+                <!--검색-->
+                <label>
+                    <select class="search-box" name="searchType">
+                        <option value="notice_title"
+                                th:classappend="${(searchType == 'notice_title') ? 'selected' : ''}">제목
+                        </option>
+                        <option value="notice_content"
+                                th:classappend="${(searchType == 'notice_content') ? 'selected' : ''}">내용
+                        </option>
+                        <option value="title_content"
+                                th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용
+                        </option>
+                    </select>
+                    <input class="search-text" type="text" placeholder="키워드를 입력해 주세요." name="keyword"/>
+                    <button type="submit" class="bt_search"><i class="fas fa-search"></i><span
+                            class="skip_info">검색</span>
+                    </button>
+                </label>
+                </form>
+                </label>
+
+                <div th:if="${faq.notice_category == 'FAQ'}" th:each="faq : ${faqPage.getFaqList()}">
+                    <input type="hidden" name="notice_no" th:value="${faq.notice_no}">
+                    <input type="hidden" name="notice_category" th:value="${faq.notice_category}">
+
+                    <div class="faq-box">
+                        <ul>
+                            <li>
+                                <div class="faq-box__question">
+                                    <span>Q. <span th:text="${faq.notice_title}"></span></span>
+                                </div>
+                                <div class="faq-box__answer">
+                                    <span>A. <span th:text="${faq.notice_content}"></span></span>
+                                </div>
+                            </li>
+                            <div class="btn">
+                            <a class="button" th:href="@{'/admin/FAQ/edit/' + ${faq.getNotice_no}}">
+                                <button type="button" class="btn_sub" sec:authorize="hasRole('ROLE_ADMIN')">수정</button>
+                            </a>
+                            <a th:href="@{'/admin/FAQ/delete/' + ${faq.getNotice_no}}">
+                                <button type="button" class="btn_sub" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
+                            </a>
+                            </div>
+                        </ul>
                     </div>
-                    <div class="faq_body">
-                        <span th:text="${faq.notice_content}"></span>
+                </div>
+
+                <!--페이징-->
+                <div class="pagination">
+                    <div class="paging">
+                        <div class="text-center clearfix">
+                            <div class="pagingNum">
+                                <ul class="pagination-container" id="pagination">
+                                    <li th:if="${faqPage.startPage > 5}" class="page-item">
+                                        <a class="page-link" th:with="prevPage=${faqPage.startPage - 1}" th:href="@{/FAQ/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword})}">Prev</a>
+                                    </li>
+                                    <li class="page-link" th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(faqPage.startPage, faqPage.endPage)}" >
+                                        <a  th:href="@{/FAQ/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword})}" th:classappend="${currentPage == pageNum} ? 'active-page' : ''">
+                                            <span class="page" th:text="${pageNum}"></span></a>
+                                    </li>
+                                    <li th:if="${faqPage.endPage < faqPage.totalPages}" class="page-item">
+                                        <a class="page-link" th:with="nextPage=${faqPage.startPage + 5}" th:href="@{/FAQ/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword})}">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <td>
-                    <span th:text="${faq.member_id}"></span>
-                </td>
+                </div>
 
-                <td>
-                    <span th:text="${faq.notice_regdate}"></span>
-                </td>
-                <td>
-                    <span th:text="${faq.view_cnt}"></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                <!--이미지-->
+                <div class="img">
+                    <a href="/question/list">
+                    <img id="QnA" src="/image/Q&A.png" style="float: left;">
+                    </a>
+                    <img id="info" src="/image/info.png" style="float: left;" usemap="#image-map">
+                    <map name="image-map">
+                        <!-- 아이디 찾기 영역 -->
+                        <area shape="rect" coords="15,80,80,110" th:href="@{/findId}" alt="아이디 찾기">
 
+                        <!-- 비밀번호 찾기 영역 -->
+                        <area shape="rect" coords="80,80,190,110"  th:href="@{/findPw}" alt="비밀번호 찾기">
+                    </map>
+                </div>
+            </div>
+        </section>
     </div>
-    <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+
 </div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 <script>
-    document.querySelectorAll('.faq_block .faq_header').forEach(function(header) {
-        header.addEventListener('click', function() {
-            var faqBlock = this.closest('.faq_block');
-            var faqBody = faqBlock.querySelector('.faq_body');
+    function FaqBox__init() {
+        $('.faq-box > ul > li').click(function() {
+            let $this = $(this);
 
-            if (faqBlock.classList.contains('open')) {
-                faqBlock.classList.remove('open');
-                faqBody.style.maxHeight = '0';
-            } else {
-                faqBlock.classList.add('open');
-                faqBody.style.maxHeight = faqBody.scrollHeight + 'px';
+            $this.siblings('.hover').find(' > .faq-box__answer').stop().slideUp(300);
+            $this.siblings('.hover').removeClass('hover');
+
+            if ( $this.hasClass('hover') ) {
+                $this.find(' > .faq-box__answer').stop().slideUp(300);
+                $this.removeClass('hover');
+            }
+            else {
+                $this.find(' > .faq-box__answer').stop().slideDown(300);
+                $this.addClass('hover');
             }
         });
-    });
+
+        $('.faq-box__answer').click(function() {
+            return false;
+        });
+    }
+FaqBox__init();
 </script>
 
 </html>

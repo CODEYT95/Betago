@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
         modalContent.querySelector("#modal-task-content").textContent = taskContent;
         modalContent.querySelector("#modal-task-chapter").textContent = taskProgress;
         modalContent.querySelector("#modal-task-deadline").textContent = taskDeadline;
-        modalContent.querySelector("#modal-task-dea").textContent = taskSendDate;
+        modalContent.querySelector("#modal-task-senddate").textContent = taskSendDate;
 
         // 모달 및 배경 표시
         modal.style.display = "block";

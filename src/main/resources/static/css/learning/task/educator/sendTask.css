@@ -1,0 +1,286 @@
+@charset "UTF-8";
+.content-wrap {
+    height: auto;
+    margin-left: 253px;
+    padding: 0 50px;
+}
+
+.task-wrap {
+    width: auto;
+}
+
+.table-title {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+th, td {
+    text-align: center;
+    padding: 2px;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.t_no, .list_no, .list_groupNo{
+    position: relative;
+    width: 3%;
+}
+
+.t_name, .list_name{
+    position: relative;
+    width: 20%;
+}
+
+.t_progress, .list_progress{
+    position: relative;
+    width: 9%;
+}
+
+.t_content {
+    position: relative;
+    width: 25%;
+}
+
+.t_deadline {
+    position: relative;
+    width: 13%;
+}
+
+.t_detail, .detailBtn-wrap{
+    position: relative;
+    width: 5%;
+}
+
+.t_member, .list_member {
+    position: relative;
+    width: 11%;
+}
+
+.t_phone, .list_phone {
+    position: relative;
+    width: 15%;
+}
+
+.t_level, .list_level {
+    position: relative;
+    width: 8%;
+}
+
+.detailBtn {
+    border: none;
+    border-radius: 5px;
+    font-size: 22px;
+    color: #222;
+    cursor: pointer;
+}
+
+.tr-list td{
+    border-radius: 0px;
+}
+
+thead {
+    background: #b2d3ff;
+    line-height: 40px;
+}
+
+table {
+    table-layout: fixed;
+    width: 95%;
+    margin-bottom: 30px;
+    padding: 18px;
+    overflow-y: scroll;
+    margin-top: 10px;
+    border: 1px solid #D9E0E3;
+    border-radius: 10px;
+    box-shadow: 6px 7px 10px 1px #b9b9b947;
+}
+
+#table-title {
+    margin-top: 20px;
+}
+
+#memberTableBodyLeft {
+    background: #e4e9ec;
+}
+
+tr:nth-child(even) {background-color: #e4e9ec;}
+
+.table-head tr {
+    align-items: center;
+    justify-content: space-around;
+}
+
+.tbody-container {
+    line-height: 35px;
+    padding: 3px;
+    margin: 3px;
+    border-bottom: 1px solid #ccc;
+}
+
+.tbody-container tr{
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.table-container {
+    display: flex;
+}
+
+.modal-bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 86%);
+    z-index: 1000;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    z-index: 1001;
+    width: 500px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.modal-wrap {
+    margin: 10px 10px 0 10px;
+}
+
+.modal-content-title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-content-label {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0 2px 0;
+}
+
+.modalBtn {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.conceal {
+    width: 50px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background: #f9ecbe;
+    cursor: pointer;
+}
+
+.checkbox-wrap {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-wrap input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark:after {
+    content: "\f0c8";
+    font-family: "FontAwesome";
+    position: relative;
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 25px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+
+.checkbox-wrap input:checked ~ .checkmark:after {
+    display: block;
+    content: "\f14a";
+    font-family: "FontAwesome";
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-wrap {
+    color: #40bfc1;
+}
+
+.checkbox-wrap input:checked ~ .checkmark:after {
+    color: #456CD9;
+}
+
+.checkmark{
+    display: flex;
+    justify-content: center;
+}
+
+.selectTaskBtn {
+    margin: 0 30px 0 0;
+    width: 70px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+}
+
+.selectMemberBtn, .selectAllBtn, .sendTaskBtn {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+}
+
+#selectTaskTitle, #selectGroupTitle {
+    margin: 0 10px 0 25px;
+    height: 35px;
+    width: 180px;
+    outline: none;
+    border-radius: 5px;
+}
+
+.select-box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button-wrap {
+    margin: 0 15px 0 0;
+}
+
+.selectTaskBtn:hover, .selectMemberBtn:hover,
+.selectAllBtn:hover, .sendTaskBtn:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.detailBtn:hover {
+    color: #000;
+    background: #b2d3ff;
+}

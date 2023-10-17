@@ -7,6 +7,7 @@ import com.bnw.beta.domain.guide.dto.AnswerDTO;
 import com.bnw.beta.domain.guide.dto.FileQuestionDTO;
 import com.bnw.beta.domain.guide.dto.QuestionDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.service.guide.answer.AnswerService;
 import com.bnw.beta.service.guide.question.QuestionService;
 import com.bnw.beta.service.guide.question.QuestionServiceImpl;
 import com.bnw.beta.service.member.MemberService;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +82,7 @@ public class QuestionController {
     private QuestionDAO questionDAO;
 
     private final QuestionService questionService;
+    private final AnswerService answerService;
 
     private final MemberService memberService;
 
@@ -92,6 +95,11 @@ public class QuestionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
         model.addAttribute("isAdmin", isAdmin);
+        AnswerDTO answerDTO= answerService.getAnswer(qna_no);   //답변 넘버 불러올까? 추가함 지워도 되는지 확인
+        model.addAttribute("answerDTO", answerDTO); //답변 넘버 불러올까? 추가함 지워도 되는지 확인
+
+        String loginId = (principal != null) ? principal.getName() : "Anonymous";
+        //로그인유저 널값
 
         QuestionDTO questionDTO = questionService.selectQuestion(qna_no);
         List<QuestionDTO> question = questionService.getQuestionInfo(qna_no);
@@ -104,6 +112,7 @@ public class QuestionController {
             if (fileQuestion != null) {
                 model.addAttribute("fileQuestion", fileQuestion);
             }
+            model.addAttribute("login_id", loginId); //로그인유저 널값
             model.addAttribute("login_id", principal.getName());
             model.addAttribute("qna_id", questionDTO.getMember_id());
             model.addAttribute("question", question);
@@ -130,13 +139,30 @@ public class QuestionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
         model.addAttribute("isAdmin", isAdmin);
+        AnswerDTO answerDTO= answerService.getAnswer(qna_no);   //답변 넘버 불러올까? 추가함 지워도 되는지 확인
+        model.addAttribute("answerDTO", answerDTO); //답변 넘버 불러올까? 추가함 지워도 되는지 확인
         QuestionDTO questionDTO = questionService.selectQuestion(qna_no);
+
+        if (principal != null) {
+            String loginId = principal.getName();
+            model.addAttribute("login_id", loginId);
+        } else {
+            // 만약 principal 객체가 null이면, 로그인하지 않은 사용자로 간주하고 적절한 처리를 수행할 수 있습니다.
+            // 예를 들어, 로그인 페이지로 리다이렉트하거나 에러 메시지를 표시할 수 있습니다.
+            return "redirect:/login"; // 로그인 페이지로 리다이렉트하는 예시입니다.
+        }
+
+        String loginId = (principal != null) ? principal.getName() : "Anonymous";
+
         List<QuestionDTO> question = questionService.getQuestionInfo(qna_no);
         /*QuestionDTO question2 = questionService.getQuestion(qna_no);*/
         FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(qna_no);
         if (fileQuestion != null) {
             model.addAttribute("fileQuestion", fileQuestion);
         }
+
+        model.addAttribute("login_id", loginId);
+
         model.addAttribute("login_id", principal.getName());
         model.addAttribute("qna_id", questionDTO.getMember_id());
         model.addAttribute("question", question);
@@ -159,7 +185,7 @@ public class QuestionController {
     /*질문글 수정폼 보여주기 get*/
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{qna_no}")
-    public String questionModify(QuestionForm questionForm,
+    public String questionModify(QuestionForm questionForm, AnswerForm answerForm,
                                  @PathVariable("qna_no") Integer qna_no,Principal principal){
         //1 파라미터 받기
         //2 비즈니스로직수행
@@ -237,10 +263,26 @@ public class QuestionController {
 
     /*질문글 리스트 조회*/
     @GetMapping("/list")
-    public String questionList(Model model, @RequestParam(value="page",defaultValue="1") int page){
-        List<QuestionDTO> questions= this.questionService.getQuestions(page-1);
-        model.addAttribute("questions",questions);
+     public String questionList(Model model, @RequestParam(value="page",defaultValue="1") int page){
+         /*List<QuestionDTO> questions= this.questionService.getQuestions(page-1);
+        model.addAttribute("questions",questions);*/
+        List<QuestionDTO> questionsWithAnswers = this.questionService.getQuestionsWithAnswerCount(page - 1);
+        model.addAttribute("questions", questionsWithAnswers);
         return "guide/question/question_list";//  templates폴더하위  question_list.html문서
     }
+
+    @GetMapping("/mypost")
+    public String getMyQuestions(Model model, Principal principal) {
+        // 현재 사용자의 이름 가져오기
+        String username = principal.getName();
+
+        // 현재 사용자가 작성한 게시물 검색 (서비스 계층에서 처리)
+        List<QuestionDTO> question = questionService.findQuestionsByUserId(username);
+
+        // 모델에 게시물 추가 및 뷰 반환
+        model.addAttribute("questions", question);
+        return "guide/question/question_list";//
+    }
+
 
 }

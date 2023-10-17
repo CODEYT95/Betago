@@ -13,8 +13,9 @@ import java.util.List;
 public class NoticePage {
 
     private int total;
-    private List<NoticeDTO> noticeList;
+    private List<NoticeDTO> noticeList; //일반글
     private List<NoticeDTO> topNoticeList; // 상단 노출 게시글 목록
+    private List<NoticeDTO> allNoticeList; //전체글
     private int currentPage;
     private int totalPages;
     private int startPage;
@@ -37,10 +38,8 @@ public class NoticePage {
             endPage=0;
         }else {
 
-            totalPages=total/size;
-            if(total%size>0) {
-                totalPages++;
-            }
+            totalPages = (int) Math.ceil((double) total / size);
+
 
             int modVal = currentPage%5;
             startPage=currentPage/5*5+1;

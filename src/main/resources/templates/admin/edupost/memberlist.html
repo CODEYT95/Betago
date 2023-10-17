@@ -41,9 +41,10 @@
                         <th class="type">성명</th>
                         <th class="eduname">아이디</th>
                         <th class="user">연락처</th>
-                        <th class="user">이메일</th>
-                        <th class="user">자격</th>
+                        <th class="email">이메일</th>
+                        <th class="buyer">자격</th>
                         <th class="createdate">가입일자</th>
+<!--                        <th class="read">확인</th>-->
                     </tr>
                     </thead>
                     <tbody id="list">
@@ -57,15 +58,21 @@
                             <td id="no" th:text="${index.index + memberPageDTO.startIndex + 1}"></td>
                             <td id="role" th:text="${list.role}">구분</td>
                             <td id="membername" th:text="${list.member_name}">성명</td>
-                            <td id="writer" th:text="${list.member_id}">작성자</td>
+<!--                            <td id="member_id" th:text="${list.member_id}">아이디-->
+                            <td>
+                                <a class="member-link" th:href="@{|/detail/${list.member_id}|}" data-member-id="${list.member_id}">
+                                    <span class="" th:text="${list.member_id}"></span>
+                                </a>
+                            </td>
                             <td id="phone" th:text="${list.member_phone}">연락처</td>
                             <td id="e_mail" th:text="${list.member_email}">이메일</td>
                             <td id="license" th:text="${list.license}">자격</td>
-                            <td id="joindate" th:text="${list.join_date}">자격</td>
+                            <td id="joindate" th:text="${list.join_date}">가입일자</td>
+                  <!--          <td>
+                                <input type="button" value="상세보기" th:onclick="|location.href='@{/detail/${list.member_id}}'|" />
+                            </td>-->
                         </tr>
                     </th:block>
-
-
                     </tbody>
                 </table>
                 <div class="pagination">
@@ -88,6 +95,9 @@
                     </div>
                 </div>
 
+
+                </div>
+
             </div>
         </div>
         <script th:src="@{/js/admin/edupost/function.js}"></script>
@@ -95,5 +105,7 @@
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+<script th:inline="javascript">
+</script>
 </body>
 </html>

@@ -19,6 +19,7 @@
     font-size: 16px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
     box-radius : 5px;
+    border-radius : 5px;
 }
 
 .type{
@@ -75,6 +76,7 @@
     text-align: left;
     padding-left: 10px;
     padding-top: 10px;
+    border-radius : 5px;
 }
 .opt {
     margin-top: 15px;
@@ -96,27 +98,34 @@
     bottom: 29px;
 }
 .btn_sub {
-    width: 100px;
-    height: 36px;
-    color: white;
-    background: black;
-    cursor: pointer;
-}
-.btn_update {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
     border: none;
-    color: white;
-    background: black;
-    width: 100px;
-    height: 36px;
+    background: #ccc;
     cursor: pointer;
+
+}
+
+.btn_update {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+
 }
 .btn_del {
     border: none;
     color: white;
-    background: darkred;
     width: 100px;
     height: 36px;
     cursor: pointer;
+}
+
+.btn_sub:hover {
+    background-color: #EBF5FF;
 }
 
 .form-container{
@@ -132,6 +141,7 @@ input{
     height: 30px;
     width: 200px;
     text-align: center;
+    border-radius : 5px;
 }
 
 .submit-button{
@@ -179,11 +189,25 @@ th, td {
     font-size: 16px;
     text-align: center;
     display: inline-block;
-    margin-left: 102px;
-    margin-bottom: 25px;
+    margin-left: 38px;
+    margin-bottom: 38px;
     background-color: white;
+    cursor: pointer;
 }
 
 #here {
     padding: 50px;
+}
+
+
+.content1{
+    display: inline-flex;
+    margin-left: 102px;
+    margin-bottom: 25px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: space-evenly;
+    align-items: baseline;
+
 }

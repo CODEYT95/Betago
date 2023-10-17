@@ -147,7 +147,7 @@ th, td {
     white-space: nowrap;
 }
 
-.t_no, .list_no{
+.t_no, .list_no {
     position: relative;
     width: 3%;
 }
@@ -182,7 +182,7 @@ th, td {
     width: 8%;
 }
 
-.t_detail, .detailBtn-wrap{
+.detailBtn-wrap{
     position: relative;
     width: 5%;
 }
@@ -234,12 +234,14 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     margin: 3px;
     border-bottom: 1px solid #ccc;
 }
+
 .tbody-container tr{
     width: 100%;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 }
+
 .main-table li{
     display: flex;
     line-height: 18px;
@@ -248,6 +250,10 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     align-items: center;
     width: 35px;
     height: 30px;
+}
+
+.table-container {
+    display: flex;
 }
 
 #pagination{

@@ -7,7 +7,7 @@
         <!-- 검색 키워드가 있을 때 -->
              <if test="keyword != null and keyword != ''">
                 <choose>
-                    <when test="searchType != null and searchType != '' || searchType2 != null and searchType2 != ''">
+                    <when test="searchType != null and searchType != ''">
                         <choose>
                             <when test="'edupost_title'.equals(searchType)">
                                 AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
@@ -15,8 +15,8 @@
                             <when test="'edupost_content'.equals(searchType)">
                                 AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
                             </when>
-                            <when test="'member_id'.equals(searchType)">
-                                AND member_id LIKE CONCAT('%', #{keyword}, '%')
+                            <when test="'title_content'.equals(searchType)">
+                                AND edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%')
                             </when>
                             <when test="'edupost_category'.equals(searchType)">
                                 AND edupost_category LIKE CONCAT('%', #{keyword}, '%')
@@ -24,9 +24,7 @@
 
                         </choose>
                     </when>
-                        <when test="'edupost_category'.equals(searchType2)">
-                            AND edupost_category LIKE CONCAT('%', #{keyword}, '%')
-                        </when>
+
                     <otherwise>
                         AND
                         (
@@ -85,7 +83,7 @@
     </insert>
     <!--교육자료 목록보기-->
     <select id="edulist" parameterType="map" resultType="EdupostDTO">
-        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id
+        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id, edupost_content
         from edupost
         <where>
             <include refid="search"></include>

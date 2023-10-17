@@ -89,6 +89,28 @@
         WHERE qna_no = #{qna_no}
     </update>
 
+    <select id="findQuestionsByMemberId" resultType="QuestionDTO">
+        SELECT * FROM question
+        WHERE member_id = #{username}
+    </select>
+
+
+    <!--질문리스트와 답글갯수 표시-->
+    <select id="getQuestionsWithAnswerCount" resultType="QuestionDTO">
+        SELECT
+        question.*,
+        COUNT(ans_no) AS answerCount   <!-- 답변 수; 답변이 없는 경우 0 -->
+        FROM
+        question
+        LEFT JOIN
+        answer ON answer.qna_no = question.qna_no
+        GROUP BY
+        question.qna_no
+        ORDER BY
+        question.qna_no DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
 
 
     <!--<select id="findUserByUsername" resultType="MemberDTO" parameterType="String">

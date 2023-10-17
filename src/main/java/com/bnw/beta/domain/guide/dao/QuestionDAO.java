@@ -5,6 +5,7 @@ import com.bnw.beta.domain.guide.dto.QuestionDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
@@ -33,6 +34,8 @@ public interface QuestionDAO {
 
     MemberDTO findUserByUsername(String username);
 
+    List<QuestionDTO> findQuestionsByMemberId(String username);
+
     String getPwByQnaNo(Integer id);
 
     void updateQuestion(QuestionDTO question);
@@ -40,4 +43,5 @@ public interface QuestionDAO {
     void deleteQuestionY(int qna_no);
 
 
+    List<QuestionDTO> getQuestionsWithAnswerCount(@Param("limit") int limit, @Param("offset") int offset);
 }

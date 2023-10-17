@@ -68,11 +68,20 @@
     </select>
 
     <!--///////////member_no & member_name 불러오기 -->
-    <select id="getMemberInfo" parameterType="String">
+    <!--<select id="getMemberInfo" parameterType="String">
         <![CDATA[
         SELECT *
         FROM member
         WHERE member_id = #{member_id};
+        ]]>
+    </select>-->
+    <select id="getMemberInfo" parameterType="String">
+     <![CDATA[
+        SELECT m.*, COUNT(p.pay_no) AS pay_count
+        FROM member m
+                 LEFT JOIN pay p ON m.member_id = p.member_id
+        WHERE m.member_id = #{member_id}
+        GROUP BY m.member_id;
         ]]>
     </select>
 
@@ -89,6 +98,33 @@
     <select id="loginByUsername" parameterType="String">
         SELECT * FROM member WHERE member_id = #{username}
     </select>
+
+    <!--회원 아이디 찾기-->
+    <select id="findIDbyUserName" resultType="MemberDTO" >
+        SELECT *
+        FROM member
+        WHERE member_name = #{name} AND member_email = #{email}
+    </select>
+
+    <select id="findByUserIdAndEmail" resultType="MemberDTO" >
+        SELECT *
+        FROM member
+        WHERE member_id = #{id} AND member_email = #{email}
+    </select>
+
+    <update id="updatePassword" parameterType="map">
+        UPDATE member
+        SET member_pw = #{newPassword}
+        WHERE member_id = #{id}
+    </update>
+
+
+    <!--회원 비번 찾기-->
+  <!--  <select id="findPwbyUserId" resultType="MemberDTO" >
+        SELECT *
+        FROM member
+        WHERE member_id = #{id} AND member_email = #{email}
+    </select>-->
 
 
     <!--회원목록 조회 관리자용-->
