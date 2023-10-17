@@ -90,7 +90,7 @@
                         </td>
 
                         <td>
-                            <span class="writer" th:text="${notice.notice_regdate}"></span>
+                            <span class="writer" th:text="${#temporals.format(notice.notice_regdate, 'yyyy-MM-dd HH:mm')}"></span>
                         </td>
                         <td>
                             <span th:text="${notice.view_cnt}"></span>
@@ -103,7 +103,7 @@
                         </td>
                     </tr>
 
-                    <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice:${noticePage.allNoticeList}">
+                    <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice:${noticePage.allNoticeList}" class="tableColor">
                         <td>
                             <span class="no" th:text="${notice.notice_no}"></span>
                         </td>
@@ -120,7 +120,7 @@
                         </td>
 
                         <td>
-                            <span class="writer" th:text="${notice.notice_regdate}"></span>
+                            <span class="writer" th:text="${#temporals.format(notice.notice_regdate, 'yyyy-MM-dd HH:mm')}"></span>
                         </td>
                         <td>
                             <span th:text="${notice.view_cnt}"></span>

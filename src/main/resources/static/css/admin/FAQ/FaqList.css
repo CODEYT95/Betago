@@ -6,6 +6,8 @@
     padding:10px;
     margin-top: 2px;
     border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px #d2d2d2;
+    margin-bottom: 5px;
 }
 
 .faq-box__question {
@@ -88,7 +90,7 @@ area[alt="비밀번호 찾기"] {
 }
 
 .search-box{
-    padding: 8px;
+    padding: 7px;
     text-align: center;
 
 }
@@ -99,10 +101,12 @@ area[alt="비밀번호 찾기"] {
     text-align: center;
 }
 .bt_search{
-    padding: 5.6px;
-    width: 60px;
-    background-color: #0078FF;
-    border-color: #0078FF;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
 }
 
 .btn{
@@ -110,7 +114,11 @@ area[alt="비밀번호 찾기"] {
 }
 
 .btn_sub{
-    background-color: #fdd99f;
-    border-color: #fdd99f;
-    padding: 2px;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+
 }

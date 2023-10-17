@@ -46,9 +46,9 @@ th {
 }
 
 thead {
-    font-weight: bold;
-    color: #fff;
-    background: #0078FF;
+    background: #b2d3ff;
+    line-height: 40px;
+
 }
 
 td, th {
@@ -61,6 +61,9 @@ td {
     background: #fff;
 }
 
+.tableColor{
+    background-color:#EBF5FF;
+}
 
 
 @media all and (max-width: 768px) {
@@ -133,11 +136,17 @@ td {
 }
 
 .btnWrite{
-    padding: 5px;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+
 }
 
 .search-box{
-    padding: 5px;
+    padding: 7px;
     text-align: center;
 }
 
@@ -147,8 +156,17 @@ td {
     text-align: center;
 }
 .bt_search{
-    padding: 7px;
-    width: 60px;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+}
+
+.bt_search:hover{
+    background-color: #007bff;
+    color: #fff;
 }
 
 .form-control{
@@ -159,4 +177,9 @@ td {
 
 #pageSizeForm{
     margin: 0;
+}
+
+.btnWrite:hover{
+    background-color: #007bff;
+    color: #fff;
 }

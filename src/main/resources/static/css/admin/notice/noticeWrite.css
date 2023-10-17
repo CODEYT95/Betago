@@ -108,24 +108,22 @@ input[type="checkbox"] {
     bottom: 29px;
 }
 .btn_sub {
-    width: 100px;
-    height: 36px;
-    color: black;
-    background: #fdd99f;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
     cursor: pointer;
-    border-color: #fdd99f;
-    border-radius:10px;
+
 }
 .btn_submit {
     text-align: center;
 }
 .btn_update {
     color: black;
-    background: #fdd99f;
     width: 100px;
     height: 36px;
     cursor: pointer;
-    border-color: #fdd99f;
     border-radius:10px;
 }
 
