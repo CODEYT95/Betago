@@ -38,5 +38,4 @@ public interface NoticeService {
 
     //조회수증가
     void viewCnt(NoticeDTO noticeDTO);
-
 }

@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface FAQService {
     List<NoticeDTO> faqList();
+
 }

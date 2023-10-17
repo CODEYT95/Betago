@@ -1,47 +1,100 @@
 document.addEventListener("DOMContentLoaded", function() {
-    let position = 0;
-    const slidesToShow = 3;
-    const slidesToScroll = 3;
-    const containerWidth = document.querySelector(".slider").offsetWidth;
-    const gap = parseInt(getComputedStyle(document.querySelector(".slide-track")).gap);
-    const slideWidth = (containerWidth - gap * (slidesToShow - 1)) / slidesToShow;
-    let totalSlides = document.querySelectorAll(".second-box .slide").length;
+    // For game-box
+    let gamePosition = 0;
+    const gameSlidesToShow = 4;
+    const gameSlidesToScroll = 4;
+    const gameContainerWidth = document.querySelector(".slider").offsetWidth;
+    const gameGap = parseInt(getComputedStyle(document.querySelector(".slide-track")).gap);
+    const gameSlideWidth = (gameContainerWidth - gameGap * (gameSlidesToShow - 1)) / gameSlidesToShow;
+    let gameTotalSlides = document.querySelectorAll(".game-box .slide").length;
 
-    // 이미지 최대 6개로 제한
-    totalSlides = Math.min(totalSlides, 6);
+    gameTotalSlides = Math.min(gameTotalSlides, 8);
 
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
+    const gamePrevBtn = document.getElementById("prevBtn");
+    const gameNextBtn = document.getElementById("nextBtn");
 
-    function setPosition() {
-        document.querySelector(".slide-track").style.transform = `translateX(${position}px)`;
-        checkButtonState();
+    function setGamePosition() {
+        document.querySelector(".game-box .slide-track").style.transform = `translateX(${gamePosition}px)`;
+        checkGameButtonState();
     }
 
-    function checkButtonState() {
-        prevBtn.disabled = position >= 0;
-        nextBtn.disabled = -position >= (slideWidth + gap) * (totalSlides - slidesToShow);
+    function checkGameButtonState() {
+        gamePrevBtn.disabled = gamePosition >= 0;
+        gameNextBtn.disabled = -gamePosition >= (gameSlideWidth + gameGap) * (gameTotalSlides - gameSlidesToShow);
     }
 
-    window.previousSlide = function() {
-        if (prevBtn.disabled) return;
-
-        position += (slideWidth + gap) * slidesToScroll;
-        if (position > 0) {
-            position = 0;
+ window.previousGameSlide = function() {
+        if (gamePrevBtn.disabled) return;
+        gamePosition += (gameSlideWidth + gameGap) * gameSlidesToScroll;
+        if (gamePosition > 0) {
+            gamePosition = 0;
         }
-        setPosition();
+        setGamePosition();
     }
 
-    window.nextSlide = function() {
-        if (nextBtn.disabled) return;
-
-        position -= (slideWidth + gap) * slidesToScroll;
-        if (-position > (slideWidth + gap) * (totalSlides - slidesToShow)) {
-            position = -((slideWidth + gap) * (totalSlides - slidesToShow));
+    window.nextGameSlide = function() {
+            if (gameNextBtn.disabled) return;
+            gamePosition -= (gameSlideWidth + gameGap) * gameSlidesToScroll;
+            if (-gamePosition > (gameSlideWidth + gameGap) * (gameTotalSlides - gameSlidesToShow)) {
+                gamePosition = -((gameSlideWidth + gameGap) * (gameTotalSlides - gameSlidesToShow));
+            }
+            setGamePosition();
         }
-        setPosition();
+
+    setGamePosition();
+
+   // For video-box
+   let videoPosition = 0;
+    const videoSlidesToShow = 4;
+    const videoSlidesToScroll = 4;
+    const videoContainerWidth = document.querySelector(".v-slider").offsetWidth;
+    const videoGap = parseInt(getComputedStyle(document.querySelector(".v-slide-track")).gap);
+    const videoSlideWidth = (videoContainerWidth - videoGap * (videoSlidesToShow - 1)) / videoSlidesToShow;
+    let videoTotalSlides = document.querySelectorAll(".video-box iframe").length;
+
+    videoTotalSlides = Math.min(videoTotalSlides, 8);
+
+    const videoPrevBtn = document.getElementById("v-prevBtn");
+    const videoNextBtn = document.getElementById("v-nextBtn");
+
+    function setVideoPosition() {
+        document.querySelector(".video-box .v-slide-track").style.transform = `translateX(${videoPosition}px)`;
+        checkVideoButtonState();
     }
 
-    setPosition();
+    function checkVideoButtonState() {
+        videoPrevBtn.disabled = videoPosition >= 0;
+        videoNextBtn.disabled = -videoPosition >= (videoSlideWidth + videoGap) * (videoTotalSlides - videoSlidesToShow); // 수정된 조건문
+    }
+
+    window.v_previousVideoSlide = function() {
+        if (videoPrevBtn.disabled) return;
+        videoPosition += (videoSlideWidth + videoGap) * videoSlidesToScroll;
+        if (videoPosition > 0) {
+            videoPosition = 0;
+        }
+        setVideoPosition();
+    }
+
+    window.v_nextVideoSlide = function() {
+        if (videoNextBtn.disabled) return;
+        videoPosition -= (videoSlideWidth + videoGap) * videoSlidesToScroll;
+        if (-videoPosition > (videoSlideWidth + videoGap) * (videoTotalSlides - videoSlidesToShow)) {
+            videoPosition = -((videoSlideWidth + videoGap) * (videoTotalSlides - videoSlidesToShow));
+        }
+        setVideoPosition();
+    }
+    setVideoPosition();
+
+     // For automatic image-slider
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll(".image-slider .slider-image");
+        const totalSlides = slides.length;
+
+        setInterval(function() {
+            slides[currentSlideIndex].style.display = 'none'; // 현재 이미지 숨김
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides; // 다음 이미지 인덱스 계산
+            slides[currentSlideIndex].style.display = 'block'; // 다음 이미지 표시
+        }, 3000); // 3초마다 이미지 변경
+
 });

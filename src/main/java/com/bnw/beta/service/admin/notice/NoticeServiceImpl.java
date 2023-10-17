@@ -162,5 +162,4 @@ public class NoticeServiceImpl implements NoticeService {
     public void viewCnt(NoticeDTO noticeDTO) {
         noticeDAO.viewCnt(noticeDTO);
     }
-
 }

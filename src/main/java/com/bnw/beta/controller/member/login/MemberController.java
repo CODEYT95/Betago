@@ -1,8 +1,10 @@
 package com.bnw.beta.controller.member.login;
 
+import com.bnw.beta.domain.admin.dao.FaqDAO;
 import com.bnw.beta.domain.admin.dto.GameDTO;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
+import com.bnw.beta.service.admin.FAQ.FAQService;
 import com.bnw.beta.service.admin.game.GameService;
 import com.bnw.beta.service.admin.notice.NoticeService;
 import com.bnw.beta.service.member.MemberService;
@@ -21,14 +23,15 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
     private final NoticeService noticeService;
-    private final GameService gameService;  // 게임 서비스를 추가합니다.
-
+    private final GameService gameService;
+    private FAQService faqService;
 
     @Autowired
-    public MemberController(MemberService memberService, NoticeService noticeService, GameService gameService) {
+    public MemberController(MemberService memberService, NoticeService noticeService, GameService gameService, FAQService faqService) {
         this.memberService = memberService;
         this.noticeService = noticeService;
         this.gameService = gameService;
+        this.faqService = faqService;
     }
 
     //시큐리티 통해서 로그인폼 보여주기
@@ -65,6 +68,10 @@ public class MemberController {
 
         List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
         model.addAttribute("topNoticeList", topNoticeList);
+
+        List<NoticeDTO> faqList = faqService.faqList();
+        model.addAttribute("faqList", faqList);
+
 
         if(principal != null){
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());

@@ -68,7 +68,7 @@
     <select id="noticeList"  parameterType="NoticeDTO">
         SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type
         FROM notice
-        WHERE notice_isshow = 'Y' AND type = '일반' AND DATEDIFF(notice_reservation, NOW()) > 0;
+        WHERE notice_isshow = 'Y' AND type = '일반' AND DATEDIFF(notice_reservation, NOW()) > 0
         <if test='searchType.equals("notice_title")'>
             AND notice_title LIKE CONCAT('%', #{keyword}, '%')
         </if>

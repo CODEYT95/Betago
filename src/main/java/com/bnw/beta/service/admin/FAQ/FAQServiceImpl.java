@@ -19,4 +19,5 @@ public class FAQServiceImpl implements FAQService{
     public List<NoticeDTO> faqList(){
         return faqDAO.faqList();
     }
+
 }

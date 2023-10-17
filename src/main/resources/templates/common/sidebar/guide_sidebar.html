@@ -11,7 +11,11 @@
                 <a href="#">이용 가이드</a>
             </div>
             <div class="item">
-                <a href="#"> 컨텐츠 소개</a>
+                <a class="sub-btn-active" style="color: #FFFFFF;">컨텐츠 소개<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu" style="display: none;">
+                    <a href="#" class="sub-item">추가1</a>
+                    <a href="#" class="sub-item">추가2</a>
+                </div>
             </div>
             <div class="item">
                 <a th:href="@{/notice/list}">공지 사항</a>

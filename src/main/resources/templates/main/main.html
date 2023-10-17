@@ -11,43 +11,80 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
-    <div class="content-wrap">
+    <div class="maincontent-wrap">
         <div class="main-content">
             <div class="first-box">
                 <div class="imgbox">
                     <div class="image-slider">
-                        <img th:src="@{/image/main.PNG}" alt="Image 1">
+                        <img class="slider-image" th:src="@{/image/main.png}" alt="Image 1">
+                        <img class="slider-image" th:src="@{/image/main2.png}" alt="Image 2">
                     </div>
                 </div>
-                <div class="loginbox">
-                    <button type="button" onclick="location.href='/login'">로그인</button>
-                    <button type="button" onclick="location.href='/member/agree'">회원가입</button>
+                    <div class="loginbox">
+                        <button type="button" class="btn" onclick="location.href='/login'"><span>로그인</span></button>
+                        <button type="button" class="btn" onclick="location.href='/member/agree'"><span>회원가입</span></button>
+                    </div>
+                </div>
+            <div class="video-box">
+                <div class="video-title">재밌게 배우는 바둑📹</div>
+                <div class="v-slider-container">
+                    <button id="v-prevBtn" onclick="v_previousVideoSlide()">
+                        <i class="fa-solid fa-angle-right fa-rotate-180 fa-xl"></i>
+                    </button>
+                    <div class="v-slider">
+                        <div class="v-slide-track">
+                            <iframe src="https://www.youtube.com/embed/-ezZ1Aavv-I" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/wkLTG_3ihGc?si=jDnSRUxVA271pmc4" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/8iWYSpecAuw?si=4_SHrCvJjS7W7awz" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/76J0dzkj0wA?si=fl-Odx0xaSyExWjP" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/wQs1M9LbEbk?si=Lr1VH5msbyIDLB1D" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <button id="v-nextBtn" onclick="v_nextVideoSlide()">
+                        <i class="fa-solid fa-angle-right fa-xl"></i>
+                    </button>
                 </div>
             </div>
-            <div class="video-box">
-                <video>
-                    <source src="path/to/your/video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <div class="second-box">
+            <div class="game-box">
+                <div class="game-title">이런 수업은 어떤가요?🖥️</div>
                 <div class="slider-container">
-                    <button id="prevBtn" onclick="previousSlide()" i class="fa-solid fa-circle-chevron-right fa-rotate-180 fa-2xl"></i></button>
+                    <button id="prevBtn" onclick="previousGameSlide()">
+                        <i class="fa-solid fa-angle-right fa-rotate-180 fa-xl"></i>
+                    </button>
                     <div class="slider">
                         <div class="slide-track">
                             <div th:each="game : ${gameList}" class="slide">
+                                <a th:href="@{/game/list}">
                                 <img class="image" th:src="${game.filegame_name} ? @{|/image/game/${game.filegame_name}|} : @{/image/캡처.png}" th:alt="${game.filegame_name}">
                                 <span class="img-title" th:text="${game.game_title}"></span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <button id="nextBtn" onclick="nextSlide()" i class="fa-solid fa-circle-chevron-right fa-2xl"></i></button>
+                    <button id="nextBtn" onclick="nextGameSlide()">
+                        <i class="fa-solid fa-angle-right fa-xl"></i>
+                    </button>
                 </div>
             </div>
-            <div class="third-box">
-                <div class="notice-list">
-                    <div th:each="topNotice : ${topNoticeList}">
-                        <span th:text="${topNotice.notice_title}"></span>
+            <div class="notice-faq">
+                <div class="notice-box">
+                    <div class="notice-title">공지사항
+                        <a th:href="@{/notice/list}" class="more-link">더보기<i class="fa-solid fa-plus fa-sm"></i></a>
+                    </div>
+                    <div class="notice-list">
+                        <div th:each="topNotice : ${topNoticeList}">
+                            <span th:text="${topNotice.notice_title}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-box">
+                    <div class="faq-title">FAQ
+                        <a th:href="@{FAQ/list}" class="more-link">더보기<i class="fa-solid fa-plus fa-sm"></i></a>
+                    </div>
+                    <div class="faq-list">
+                        <div th:each="faq : ${faqList}">
+                            <span th:text="${faq.notice_title}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
