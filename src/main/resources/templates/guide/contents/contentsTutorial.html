@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="main-content">
+            <div class="first-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/game/바둑영토.png" alt="바둑영토">
+                        <img src="../image/guide/game/바둑영토2.jpg" alt="바둑영토2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+
+                <div class="contents-title">
+                    <span> 게임명: 영토 스테이지 </span><br>
+                    <span>바둑은 바둑판 위에 집을 많이 만들어 영토를 넓히는 것이 목적인 영토 확장 게임입니다.
+                        영토를 점점 넓힐수록 이길 확률이 높아집니다. 우리의 삶도 마찬가지로 자신만의 영토를 확장하기 위해 노력하는 자세가 필요합니다.
+                    자신의 가능성과 잠재력을 발휘하기 위해 노력하는 삶의 자세를 영토 스테이지 게임에서 배울 수 있습니다.</span>
+                </div>
+            </div>
+            <div class="second-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/game/바둑사활.png" alt="바둑사활">
+                        <img src="../image/guide/game/바둑사활2.png" alt="바둑사활2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+
+                <div class="contents-title">
+                    <span>게임명: 사활 스테이지 </span><br>
+                    <span>바둑에서 사활은 초급자부터 고수까지 반드시 거쳐가야 하는 필수 항목입니다. 입문자에게는 기초를 닦는 토대를 마련할 수 있고,
+                    중급자부터는 수읽기 훈련을 통한 기력 향상의 기폭제 역할을 합니다. 삶을 살아가면서 가장 중요한 것이 무엇일까요?
+                    바로 건강관리입니다. 아무리 좋은 것을 가졌다 해도 건강 없이는 무용지물이기 때문입니다. 바둑에서도 바둑돌의 건강관리,
+                    즉 생명관리가 매우 중요합니다. 바둑은 집을 많이 차지하려는 것이 목적이지만, 바둑돌이 목숨을 다하면 아무 소용이 없기 때문입니다.
+                    우리의 삶을 건강하게 유지할 수 있는 현명한 방법을 사활 스테이지 게임을 통해 배우실 수 있습니다. </span>
+                </div>
+            </div>
+
+            <div class="third-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/game/인공지능대국.png" alt="인공지능대국">
+                        <img src="../image/guide/game/인공지능대국2.png" alt="인공지능대국2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+
+                <div class="contents-title">
+                    <span>게임명: 인공지능 대국 </span><br>
+                    <span>알파고가 등장한 지 7년이 넘게 지나면서 인공지능은 바둑을 좋아하는 사람들에게 완전히 친숙한 존재입니다.
+                    무료 인공지능 통합설치팩을 설치하는 것만으로 최신 인공지능 바둑 프로그램을 쉽게 접할 수 있습니다.
+                    인공지능을 상대로 바둑훈련을 하고 자신이 대국한 기보의 옳고 그름을 인공지능에게 물어보면서 인공지능과의 대국을 통해 좀 더 분석적으로 바둑을 공부해볼 수 있습니다.
+                    </span>
+                </div>
+            </div>
+
+            <div class="fourth-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/game/바둑도전.jpg" alt="바둑도전">
+                        <img src="../image/guide/game/바둑도전2.jpg" alt="바둑도전2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span>게임명: 도전의 탑 </span><br>
+                    <span>
+                     우리가 불안해하는 이유가 무엇일까요? 그건 바로 모르는게 많기 때문입니다. '아는만큼 보인다'라는 말이 있듯이
+                     많이 아는 사람은 더 높은 곳을 보기 때문에 실수가 줄고 그만큼 강합니다. 따라서 최선의 수읽기는 열심히 공부하여
+                     지식과 실력을 쌓는 것입니다. 도전의 탑 게임에서는 이름처럼 한 층씩 올라가며 실력을 쌓아나가 더 높을 곳을 목표로
+                     할 수 있도록 각 층마다 1번 씩 피드백을 제공하고 있습니다. 도전의 탑을 통해 자신만의 최선의 수를 찾아나가시기 바랍니다.
+                    </span>
+                </div>
+            </div>
+
+
+            <div class="fifth-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/game/바둑퀘스트.png" alt="바둑퀘스트">
+                        <img src="../image/guide/game/바둑퀘스트2.jpg" alt="바둑퀘스트2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span>게임명: 일일퀘스트 </span><br>
+                    <span>
+                      매일 배운 내용을 일일퀘스트를 통해 점검해볼 수 있습니다. O/X 문제로 되어 있으며 하루에 도전가능한 횟수는 5번,
+                      총 2번의 피드백을 제공 받으실 수 있습니다. 현실에서도 승부의 세계에서 복기는 기본입니다.
+                      일일퀘스트를 통해 배운 내용을 복기하는 법을 배우며 잘한점과 잘못한점을 정확히 짚고 넘어갈 수 있는 습관을 기를 수 있습니다.
+                    </span>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

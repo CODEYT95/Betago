@@ -11,7 +11,13 @@
                 <a href="#">이용 가이드</a>
             </div>
             <div class="item">
-                <a href="#"> 컨텐츠 소개</a>
+                <div class="item">
+                <a class="sub-btn">컨텐츠 소개<i class="fas fa-angle-right dropdown"></i></a>
+                <div class="sub-menu">
+                    <a th:href="@{/contents/contentsGame}" class="sub-item">바둑 게임(앱)</a>
+                    <a href="#">튜토리얼</a>
+                    <a href="#">바둑 영상</a>
+                </div>
             </div>
             <div class="item">
                 <a th:href="@{/notice/list}">공지 사항</a>
@@ -23,6 +29,7 @@
                 <a th:href="@{/question/list}">Q&A</a>
             </div>
         </div>
+    </div>
     </div>
 </th:block>
 </html>
