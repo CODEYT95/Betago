@@ -27,6 +27,8 @@ public class NoticeController {
                              @RequestParam(value = "searchType", defaultValue = "all") String searchType,
                              @RequestParam(value = "keyword", defaultValue = "") String keyword,
                              Model model) {
+
+        System.out.println(size);
         //상단고정 게시물
         List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
         System.out.println("공지목록 컨트롤러"+topNoticeList);
@@ -37,7 +39,7 @@ public class NoticeController {
 
         // 모든 게시물 목록을 모델에 추가
         model.addAttribute("allNoticeList", noticePage.getAllNoticeList());
-
+        model.addAttribute("listSize", size);
         model.addAttribute("currentPage", page);
         model.addAttribute("size", size);
         model.addAttribute("noticePage", noticePage);

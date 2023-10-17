@@ -48,7 +48,7 @@
                 </div>
 
                     <form id="pageSizeForm" action="/notice/list" method="get">
-                        <select class="form-control form-control-sm" name="size" id="listSize" onchange="changePageSize()">
+                        <select class="form-control form-control-sm" name="size" id="listSize" th:value="${listSize}" onchange="changePageSize()">
                             <option value="10" th:selected="${noticePage.getAllNoticeList().size() == 10}">10개</option>
                             <option value="15" th:selected="${noticePage.getAllNoticeList().size() == 15}">15개</option>
                             <option value="20" th:selected="${noticePage.getAllNoticeList().size() == 20}">20개</option>
@@ -135,16 +135,16 @@
                             <div class="pagingNum">
                     <ul class="pagination-container" style="display: inline;">
                         <li th:if="${noticePage.startPage > 5}" class="page-item">
-                            <a class="page-link" th:with="prevPage=${noticePage.startPage - 1}" th:href="@{/notice/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword})}">Prev</a>
+                            <a class="page-link" th:with="prevPage=${noticePage.startPage - 1}" th:href="@{/notice/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}">Prev</a>
                         </li>
                         <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(noticePage.startPage, noticePage.endPage-1)}" class="page-item">
-                            <a th:href="@{/notice/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword})}" th:classappend="${currentPage == pageNum} ? 'active-page' : ''">
+                            <a th:href="@{/notice/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}" th:classappend="${currentPage == pageNum} ? 'active-page' : ''">
                                 <span th:text="${pageNum}"></span>
                             </a>
                         </li>
 
                         <li th:if="${noticePage.endPage < noticePage.totalPages}" class="page-item">
-                            <a class="page-link" th:with="nextPage=${noticePage.startPage + 5}" th:href="@{/notice/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword})}">Next</a>
+                            <a class="page-link" th:with="nextPage=${noticePage.startPage + 5}" th:href="@{/notice/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword} , size=${listSize})}">Next</a>
                         </li>
                     </ul>
                 </div>
