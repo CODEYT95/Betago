@@ -79,7 +79,6 @@ public class PayController {
     }
 
     @PostMapping("/test2")
-    @ResponseBody
     public List<payDTO> post1(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
                        Model model) {
 

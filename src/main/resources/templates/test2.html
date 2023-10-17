@@ -82,17 +82,16 @@
     });
     $(".detail-search").click(function() {
     // data-day-no 속성에서 값을 가져옵니다.
-    var pay_date = $(this).find('i').attr('data-day-no');
+    var pay_date_string = $(this).find('i').attr('data-day-no');
 
-    console.log(pay_date);
+    console.log(pay_date_string);
 
         $.ajax({
             type: "POST",
             url: "/pay/test2",
             data: {
-                pay_date: pay_date
+                pay_date: pay_date_string
             },
-            dataType: "json", // 이 부분을 JSON으로 설정
             success: function(response) {
                 console.log("AJAX 요청 성공:", response);
 
