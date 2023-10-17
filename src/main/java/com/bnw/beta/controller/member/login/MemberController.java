@@ -149,15 +149,6 @@ public class MemberController {
     public @ResponseBody String admin() {
         return "admin";
     }
-/*
-    유진님 회원가입부분 폼
-    @GetMapping("/join")
-    public String join(**User user) {
-    user.setRole("ROLE_USER");
-    String rawPassword=user.getPassword();
-    String encPassword=passwordEncoder.encode(rawPassword);
-    userRepository.save(user);
-    return "redirect:/loginForm";
-    }*/
+
 
 }

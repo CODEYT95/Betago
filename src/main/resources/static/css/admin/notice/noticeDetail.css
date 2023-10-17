@@ -58,41 +58,44 @@ pre {
     bottom: 29px;
 }
 .btn_sub {
-    width: 130px;
-    height: 50px;
-    color: black;
-    background: #f9ecbe;
-    border-style: none;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
     cursor: pointer;
-    border-radius: 10px;
+
 }
 .btn_submit {
     text-align: center;
 }
 .btn_update {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
     border: none;
-    color: white;
-    background: #f9ecbe;
-    width: 100px;
-    height: 36px;
+    background: #ccc;
     cursor: pointer;
+
 }
 .btn_del {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
     border: none;
-    color: white;
-    background: darkred;
-    width: 100px;
-    height: 36px;
+    background: #ccc;
     cursor: pointer;
+
 }
 
 .btn_sub:hover {
-    background-color: #fdd99f;
+    background-color: #007bff;
+    color: #fff;
 }
 
 
 table.table th {
-    background-color: #f9ecbe;
+    background-color: #CDECFA;
     color: black;
     text-align: center;
 }

@@ -66,16 +66,17 @@
                 </div>
 
                 <!--페이징-->
-                <div id="pagination">
+                <div class="pagination">
                     <div class="paging">
                         <div class="text-center clearfix">
                             <div class="pagingNum">
-                                <ul class="pagination-container" style="display: inline;">
+                                <ul class="pagination-container" id="pagination">
                                     <li th:if="${faqPage.startPage > 5}" class="page-item">
                                         <a class="page-link" th:with="prevPage=${faqPage.startPage - 1}" th:href="@{/FAQ/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword})}">Prev</a>
                                     </li>
-                                    <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(faqPage.startPage, faqPage.endPage)}" class="page-item">
-                                        <a th:href="@{/FAQ/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword})}" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                    <li class="page-link" th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(faqPage.startPage, faqPage.endPage)}" >
+                                        <a  th:href="@{/FAQ/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword})}" th:classappend="${currentPage == pageNum} ? 'active-page' : ''">
+                                            <span class="page" th:text="${pageNum}"></span></a>
                                     </li>
                                     <li th:if="${faqPage.endPage < faqPage.totalPages}" class="page-item">
                                         <a class="page-link" th:with="nextPage=${faqPage.startPage + 5}" th:href="@{/FAQ/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword})}">Next</a>
