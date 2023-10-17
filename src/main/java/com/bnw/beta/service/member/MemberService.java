@@ -48,6 +48,11 @@ public interface MemberService {
         void updatePassword(String member_id, String encryptedPassword);
 
 
+    void changeUserPassword(String email, String newPassword);
+
+    boolean checkPassword(String email, String currentPassword);
+
+
 
 
 

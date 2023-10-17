@@ -14,7 +14,17 @@
             <i id="main_sideBtn" class='bx bx-menu'></i>
             <section class="header_top">
                 <span class="top_info">Betago를 보다 편리하고 안전하게 이용하세요.</span>
-                <a href="/login" class="loginBtn">로그인/회원가입</a>
+                <!--<a href="/login" class="loginBtn">로그인/회원가입</a>-->
+
+                <div th:if="${username != null}">
+                    <span th:text="${username}">username</span> 님 환영합니다!
+                </div>
+
+                <!-- 로그인하지 않은 사용자에게 보이는 부분 -->
+                <div th:if="${username == null}">
+                    <a href="/login" class="loginBtn">로그인/회원가입</a>
+                </div>
+
                 <!--임시로그아웃 김현민-->
                 <form id="logoutForm" method="post" action="/logout" style="display: none;"></form>
                 <button onclick="document.getElementById('logoutForm').submit();" class="logoutBtn">로그아웃</button>
@@ -33,7 +43,7 @@
                         <a class="aa" href="#">이용안내</a>
                         <i class='bx bxs-chevron-up useInfo-arrow arrow'></i>
                         <ul class="useInfo-sub-menu sub-menu">
-                            <li><a href="#">사이트 소개</a></li>
+                            <li><a href="/hellow">사이트 소개</a></li>
                             <li><a href="#">이용 가이드</a></li>
                             <li class="more">
                                 <a href="#">컨텐츠소개</a>

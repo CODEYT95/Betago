@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>사이트 제목</title>
+
+    <style>
+        .image-text-container {
+    position: relative;
+    text-align: left;
+    color: white; /* 이 부분은 텍스트 색상이 이미지와 잘 어울리도록 적절히 조정하세요. */
+}
+
+.baduk-image {
+    width: 100%; /* 또는 원하는 너비로 설정 */
+    height: auto; /* 이미지의 원래 비율을 유지 */
+}
+
+.centered-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 50%; /* 텍스트 영역의 너비를 이미지의 50%로 제한합니다. */
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0); /* 배경의 투명도를 조정하여 텍스트의 가독성을 높입니다. */
+    color: black;
+    font-weight: bold;
+    padding: 20px;
+    box-sizing: border-box; /* padding이 전체 너비에 포함되도록 합니다. */
+    text-align: left; /* 텍스트를 왼쪽 정렬합니다. */
+}
+    </style>
+
+    <!--공통으로 쓰이는 CSS 및  -->
+
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+
+
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/question_sidebar :: question_sidebarFragment}"></div>
+    <div class="content-wrap">
+<!---->
+
+
+        <!-- 바둑 소개 본문 시작 -->
+        <div class="intro-container">
+            <h2>베타고 소개글</h2>
+            <p>바둑은 두 플레이어가 번갈아 가며 검은색과 흰색의 돌을 판 위에 놓아 서로의 영토를 두루다니며 경쟁하는 전략 보드 게임입니다.</p>
+
+
+            <div class="image-text-container">
+                <img src="/image/hello22.png" alt="김현아선수" class="hellow2">
+                <p class="centered-text">
+                    ㅡㅡㅡ바둑선수 추천사ㅡㅡㅡ
+                    안녕하세요 22년 제5회 바둑춘향 김현아입니다. 의외로 생각되시겠지만 바둑은 여성들 사이에서 인기가 높습니다.
+                    섬세함과 상상력, 그리고 예술적 감각이 결합된 바둑은 여성 플레이어들에게 더 많은 아름다움과 창의성을 나타낼 수 있게 해줍니다.
+                    4000년간 이어져 온 바둑은 성별, 세대를 넘어 교훈을 주는 삶의 저울이자 거울과도 같습니다. 자, 그럼 베타고와 함께 차근차근 배워 볼까요?
+                </p>
+            </div>
+
+       <!--     <p style="font-size: 20px;">안녕하세요 22년 제5회 바둑춘향 김현아입니다. 의외로 생각되시겠지만
+                바둑은 여성들 사이에서 인기가 높습니다.
+                섬세함과 상상력, 그리고 예술적 감각이 결합된 활동으로 여성 플레이어들이 게임에 더 많은 아름다움과 창의성을 더할 수 있게 해줍니다.
+                절제되고 침착하며 예리한 바둑은 세대를 넘어 교훈을 주는 삶의 저울이며 거울과도 같습니다. 4000년의 역사를 가지고 있는 바둑, 베타고와 함께 같이 차근차근 배워 볼까요?</p>
+            <img src="/image/hello22.png" alt="김현아선수" class="hellow2">-->
+
+            </div>
+        <!-- 바둑 소개 본문 끝 -->
+
+<!---->
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

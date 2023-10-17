@@ -19,10 +19,26 @@
                         <img th:src="@{/image/main.PNG}" alt="Image 1">
                     </div>
                 </div>
-                <div class="loginbox">
+                <!--<div class="loginbox">
+                    <button type="button" onclick="location.href='/login'">로그인</button>
+                    <button type="button" onclick="location.href='/member/agree'">회원가입</button>
+                </div>-->
+
+                <div th:if="${username != null}" class="loginbox">
+                    <!-- 로그인한 사용자를 위한 내용 -->
+                    <button style="cursor: default; background-color: #007BFF;" disabled>
+                        <span th:text="${username}">Username</span> 님, <br> 환영합니다!
+                    </button>
+                    <form id="logoutForm" method="post" action="/logout" style="display: none;"></form>
+                    <button type="submit" form="logoutForm" class="user-logout">로그아웃</button>
+                </div>
+
+                <!-- 비로그인 사용자를 위한 상자: 사용자가 로그인하지 않은 경우에만 이 부분이 표시됩니다. -->
+                <div class="loginbox" th:if="${username == null}">
                     <button type="button" onclick="location.href='/login'">로그인</button>
                     <button type="button" onclick="location.href='/member/agree'">회원가입</button>
                 </div>
+
             </div>
             <div class="video-box">
                 <video>

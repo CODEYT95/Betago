@@ -9,8 +9,10 @@ import com.bnw.beta.domain.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -148,6 +150,31 @@ public class MemberServiceImpl implements MemberService {
     public void updatePassword(String member_id, String rawPassword) {
         String encryptedPassword = passwordEncoder.encode(rawPassword);
         memberDAO.updatePassword(member_id, encryptedPassword);
+    }
+
+    /*임시비밀번호 받은 회원비밀번호 변경구현*/
+    @Override
+    @Transactional
+    public void changeUserPassword(String email, String newPassword) {
+
+        // 비밀번호를 암호화합니다.
+        String encryptedPassword = passwordEncoder.encode(newPassword);
+
+        memberDAO.updateSetPassword(email, encryptedPassword);
+
+    }
+
+    public boolean checkPassword(String email, String currentPassword) {
+        String passwordHashFromDB = memberDAO.findPasswordByEmail(email);
+        System.out.println("email"+email);
+        boolean isMatch = passwordEncoder.matches(currentPassword, passwordHashFromDB);
+        if (!isMatch) {
+            // 비밀번호가 일치하지 않을 경우, 콘솔에 메시지 출력
+            System.out.println("비밀번호 확인 실패: 입력한 비밀번호가 등록된 비밀번호와 일치하지 않습니다.");
+        }
+
+        // DB에서 가져온 비밀번호와 사용자가 입력한 비밀번호가 같은지 단순 비교
+        return passwordEncoder.matches(currentPassword, passwordHashFromDB);
     }
 
 

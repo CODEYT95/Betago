@@ -126,6 +126,12 @@
         WHERE member_id = #{id} AND member_email = #{email}
     </select>-->
 
+        <select id="findPasswordByEmail" resultType="string" parameterType="string">
+            SELECT member_pw
+            FROM member
+            WHERE member_email = #{email}
+        </select>
+
 
     <!--회원목록 조회 관리자용-->
     <select id="memberlist" parameterType="map" resultType="MemberDTO">
