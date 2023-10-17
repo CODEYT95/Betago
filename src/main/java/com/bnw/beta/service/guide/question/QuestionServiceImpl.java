@@ -7,6 +7,8 @@ import com.bnw.beta.domain.guide.dto.QuestionDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,6 +77,10 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDAO.getQuestionInfo(id);
     };
 
+    public List<QuestionDTO> findQuestionsByUserId(String username){
+        return questionDAO.findQuestionsByMemberId(username);
+    }
+
     public void modify(QuestionDTO question, String subject, String content, String pw, MultipartFile file) {
         question.setQna_title(subject);
         question.setQna_content(content);
@@ -138,6 +144,12 @@ public class QuestionServiceImpl implements QuestionService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to store the file.", e);
         }
+    }
+
+    public List<QuestionDTO> getQuestionsWithAnswerCount(int page) {
+        int limit = 10; // 페이지 당 표시할 항목 수
+        int offset = limit * page;
+        return questionDAO.getQuestionsWithAnswerCount(limit, offset);
     }
 
    /* public QuestionDTO getQuestion(Integer id) {

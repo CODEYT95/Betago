@@ -7,6 +7,8 @@ import com.bnw.beta.domain.member.dto.AgreeCheckDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +18,9 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberDAO memberDAO;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     // 회원가입(본인 인증 후 나머지 정보 입력)
@@ -109,7 +114,21 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.loginByUsername(username);
 
     }
+    //////// 회원 아이디 찾기//////////////김현민
+    public MemberDTO findID(String name, String email){
+        return memberDAO.findIDbyUserName(name, email);
+    }
 
+    //////// 회원 비번 찾기//////////////김현민
+ /*   public MemberDTO findPw(String id, String email){
+        return memberDAO.findPwbyUserId(id, email);
+    }
+*/
+    ///////////////임시비번 바꾸기//////////김현민
+    public void updatePassword(String member_id, String rawPassword) {
+        String encryptedPassword = passwordEncoder.encode(rawPassword);
+        memberDAO.updatePassword(member_id, encryptedPassword);
+    }
 
 
 

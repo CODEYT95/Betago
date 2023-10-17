@@ -1,6 +1,8 @@
 package com.bnw.beta.service.member;
 
+import com.bnw.beta.config.vaildation.member.PasswordUtils;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ public class MailSendServiceImpl{
 
     private final JavaMailSender javaMailSender;
     private static final String senderEmail= "uu940903@gmail.com";
+    private static final String senderEmail2= "elekdrnddl@gmail.com";
     private static int number;
 
     //인증번호 생성
@@ -49,5 +52,22 @@ public class MailSendServiceImpl{
 
         return number;
     }
+    
+    /////임시비밀번호 발송////김현민
+    public void sendTemporaryPassword(String email, String tempPassword) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            // 메시지 내용 채우기
+            message.setFrom(senderEmail2);
+            message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email)); // '받는 사람' 이메일 설정
+            message.setSubject("임시 비밀번호 발송 안내"); // 이메일 제목 설정
+            message.setText("귀하의 임시 비밀번호는 다음과 같습니다: " + tempPassword, "utf-8", "html"); // 이메일 본문 설정
 
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("임시 비번 전송 실패", e);
+        }
+
+
+    }
 }

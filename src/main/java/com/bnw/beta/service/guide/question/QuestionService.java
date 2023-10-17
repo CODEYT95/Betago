@@ -32,5 +32,8 @@ public interface QuestionService {
     boolean isPasswordCorrect(Integer id, String inputPw);
 
 
+    List<QuestionDTO> findQuestionsByUserId(String username);
 
+    /*페이징+답변갯수 표시*/
+    List<QuestionDTO> getQuestionsWithAnswerCount(int page);
 }
