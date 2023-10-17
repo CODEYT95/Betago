@@ -1,6 +1,10 @@
 package com.bnw.beta.controller.member.login;
 
+import com.bnw.beta.domain.admin.dto.GameDTO;
+import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
+import com.bnw.beta.service.admin.game.GameService;
+import com.bnw.beta.service.admin.notice.NoticeService;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +14,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 
 @Controller
 public class MemberController {
     private final MemberService memberService;
+    private final NoticeService noticeService;
+    private final GameService gameService;  // 게임 서비스를 추가합니다.
+
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, NoticeService noticeService, GameService gameService) {
         this.memberService = memberService;
+        this.noticeService = noticeService;
+        this.gameService = gameService;
     }
 
     //시큐리티 통해서 로그인폼 보여주기
@@ -42,8 +52,19 @@ public class MemberController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @GetMapping({"","/"})
-    public String index(Principal principal, HttpSession session) {
+    public String index(Principal principal, HttpSession session, Model model) {
+
+        NoticeDTO noticeDTO = new NoticeDTO();
+
+
+        List<GameDTO> gameList = gameService.selectAll();
+        gameList = gameList.subList(0, Math.min(gameList.size(), 6));
+        model.addAttribute("gameList", gameList);
+
+        List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
+        model.addAttribute("topNoticeList", topNoticeList);
 
         if(principal != null){
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());

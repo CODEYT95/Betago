@@ -17,8 +17,6 @@
                 <div class="imgbox">
                     <div class="image-slider">
                         <img th:src="@{/image/main.PNG}" alt="Image 1">
-                        <img src="path/to/your/image2.jpg" alt="Image 2">
-                        <!-- 추가 이미지를 넣을 수 있습니다 -->
                     </div>
                 </div>
                 <div class="loginbox">
@@ -48,8 +46,9 @@
             </div>
             <div class="third-box">
                 <div class="notice-list">
-                    <li>공지사항 1</li>
-                    <li>공지사항 2</li>
+                    <div th:each="topNotice : ${topNoticeList}">
+                        <span th:text="${topNotice.notice_title}"></span>
+                    </div>
                 </div>
             </div>
         </div>
