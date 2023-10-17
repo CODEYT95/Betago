@@ -5,14 +5,32 @@
     <title>findPw</title>
 </head>
 <body>
-<form action="/findId" method="post">
-    <label for="name">이름:</label>
-    <input type="text" id="name" name="name" required>
+<!--<form action="/findPw" method="post">
+    <label for="id">아이디:</label>
+    <input type="text" id="id" name="id" required>
     <br>
     <label for="email">이메일:</label>
     <input type="email" id="email" name="email" required>
     <br>
     <button type="submit">비밀번호 찾기</button>
 </form>
+
+
+<div id="result" class="result">
+    &lt;!&ndash; Thymeleaf 조건문을 사용하여 검색 결과를 표시 &ndash;&gt;
+    <span th:if="${memberDTO != null}" th:text="'찾은 비밀번호: ' + ${memberDTO.member_pw}">비밀번호가 여기에 표시됩니다.</span>
+    <span th:if="${findPwFail}" th:text="'일치하는 정보가 없습니다.'">오류 메시지가 여기에 표시됩니다.</span>
+</div>-->
+
+<form action="/findPw2" method="post">
+    <label for="id">아이디:</label>
+    <input type="text" id="id" name="id" required>
+    <br>
+    <label for="email">이메일:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <button type="submit">임시 비밀번호 받기</button>
+</form>
+
 </body>
 </html>

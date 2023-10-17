@@ -1,6 +1,7 @@
 package com.bnw.beta.domain.guide.dto;
 
 import lombok.Data;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,6 +16,10 @@ public class QuestionDTO {
     private String qna_pw;
     private String member_id;
     private LocalDateTime qna_regdate;
+
+    private int answerCount;
+    private PageRequest pageable;
+
 
     private List<FileQuestionDTO> questionfiles;
     /*주석하지말아주세요*/

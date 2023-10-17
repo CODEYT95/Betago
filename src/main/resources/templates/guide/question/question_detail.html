@@ -90,13 +90,16 @@
 
             <!--댓글-->
             <div id="comments-section">
-
                 <!--댓글목록-->
                 <div class="card my-3" th:each="question : ${question}">
                     <!-- 예시: 각 댓글에 대한 반복문, th:each를 사용해서 서버로부터 받은 댓글 목록을 반복해서 표시 -->
                     <div class="card-body" >
-                        <div class="card-text" style="white-space:pre-line;" th:text="${question.ans_content}">
+                        <div class="card-text" style="white-space:pre-line;" th:text="${question.ans_content}"></div>
 
+                        <div th:if="${question.ans_content != null and question.ans_content != ''}" class="admin-actions" sec:authorize="hasRole('ADMIN')">
+                                <button type="button" th:onclick="|window.location.href='/answer/modify/' + ${question.ans_no}|">수정</button> <!--원래는 answerDTO였는데 question 모델로 받아지네?-->
+                                <button class="delete-button" th:onclick="|deleteAnswer(${question.ans_no})|">삭제</button>
+                            </div>
                         </div>
                         <!-- <div class="badge bg-light text-dark p-2 text-start">
                              <div class="my-2">
@@ -106,14 +109,14 @@
                          </div>-->
                     </div>
 
-                            <!-- 관리자용 수정/삭제 버튼 -->
-                            <div class="admin-actions" sec:authorize="hasRole('ADMIN')">
-                                <button class="edit-button">수정</button>
-                                <button class="delete-button">삭제</button>
-                            </div>
+                    <!-- 관리자용 수정/삭제 버튼 -->
+
+
+                   <!-- <a class="btn btn-sm btn-outline-secondary"
+                       sec:authorize="!hasRole('ADMIN')"
+                       th:href="@{|/answer/modify/${answerDTO.ans_no}|}"
+                       th:text="수정"></a>-->
                 </div>
-
-
 
                 <!--댓글작성-->
                 <form method="post" id="answerForm" th:action="@{|/answer/add/${questionDTO.qna_no}|}" th:object="${answerForm}">
@@ -132,6 +135,15 @@
 
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 
+
+<script type="text/javascript">
+    function deleteAnswer(ans_no) {
+        if (confirm('답변을 삭제하시겠습니까?')) { // 사용자에게 삭제 여부 재확인
+            // 서버로 답변 삭제 요청 전송
+            window.location.href = '/answer/delete/' + ans_no;
+        }
+    }
+</script>
 
 <script layout:fragment="script">
     //삭제버튼 클릭시

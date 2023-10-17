@@ -38,6 +38,16 @@ public interface MemberService {
         //////////로그인된 사용자불러오기/////////// 김현민
         MemberDTO loginByUsername(String username);
 
+        //////// 회원 아이디 찾기//////////////김현민
+        MemberDTO findID(String name, String email);
+
+        //////// 회원 비번 찾기//////////////김현민
+       /* MemberDTO findPw(String id, String email);*/
+
+        //////// 임시 비번 바꿔//////////////김현민
+        void updatePassword(String member_id, String encryptedPassword);
+
+
 
 
 
