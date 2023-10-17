@@ -4,18 +4,22 @@
 <mapper namespace="com.bnw.beta.domain.learning.dao.GroupDAO">
 
     <!-- 그룹등록 가능한 게임콘텐츠 Cnt -->
-    <select id="groupAddListCnt" parameterType="String" resultType="int">
+    <select id="groupAddListCnt" resultType="int">
         <![CDATA[
-        SELECT COUNT(*) FROM (
-            SELECT g.*, SUM(s.group_nowcnt) AS group_nowcnt
+        SELECT COUNT(*) AS count
+        FROM (
+            SELECT g.game_total, SUM(s.group_nowcnt) AS group_nowcnt
             FROM game g
             LEFT JOIN studygroup s ON g.game_no = s.game_no
+            LEFT JOIN pay p ON g.game_no = p.game_no
+            JOIN member m ON p.member_id = m.member_id
+            WHERE p.member_id = #{member_id}
         ]]>
         <if test="game_title != null and game_title != ''">
-            WHERE g.game_title = #{game_title}
+            AND g.game_title = #{game_title}
         </if>
         <![CDATA[
-        GROUP BY g.game_no
+        GROUP BY g.game_no, m.member_name
         HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
         ) AS subquery;
         ]]>
@@ -24,23 +28,30 @@
     <!-- 게임 콘텐츠 title 조회 그룹인원 초과된건 조회안되게 학원가서 수정 -->
     <select id="selectGameTitle" resultType="GroupDTO">
         <![CDATA[
-        SELECT DISTINCT game_title
-        FROM game;
+        SELECT DISTINCT g.game_title
+        FROM game g
+        JOIN pay p ON g.game_no = p.game_no
+        WHERE p.member_id = #{member_id}
         ]]>
     </select>
 
     <!-- 그룹등록 가능한 게임콘텐츠 조회(무한 스크롤) -->
     <select id="groupAddList" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT g.*, SUM(s.group_nowcnt) AS group_nowcnt
+        SELECT g.game_no, g.game_title, g.game_level, g.game_total,
+        m.member_name, SUM(s.group_nowcnt) AS group_nowcnt,
+        MAX(p.pay_date) AS pay_date, MAX(p.pay_enddate) AS pay_enddate
         FROM game g
         LEFT JOIN studygroup s ON g.game_no = s.game_no
+        LEFT JOIN pay p ON g.game_no = p.game_no
+        JOIN member m ON p.member_id = m.member_id
+        WHERE p.member_id = #{member_id}
         ]]>
         <if test="game_title != null and game_title != ''">
-            WHERE g.game_title = #{game_title}
+            AND g.game_title = #{game_title}
         </if>
         <![CDATA[
-        GROUP BY g.game_no
+        GROUP BY g.game_no, m.member_name
         HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
         ORDER BY g.game_no DESC
         LIMIT #{LIMIT} OFFSET #{OFFSET};
@@ -50,17 +61,18 @@
     <!-- 그룹 등록을 위한 게임 콘텐츠 정보 불러오기 -->
     <select id="gameGroupInfo" parameterType="Integer" resultType="GroupDTO">
         <![CDATA[
-        SELECT g.game_no, g.game_title, g.game_total, IFNULL(SUM(sg.group_cnt), 0) AS group_nowcnt
+        SELECT g.game_no, g.game_title, g.game_total, IFNULL(SUM(sg.group_cnt), 0) AS group_cnt
         FROM game g
         LEFT JOIN studygroup sg ON g.game_no = sg.game_no
-        WHERE g.game_no = #{game_no};
+        LEFT JOIN pay p ON g.game_no = p.game_no
+        WHERE g.game_no = #{game_no}
         ]]>
     </select>
 
     <!-- 학습 그룹 등록(상세) -->
     <insert id="insertGroup" parameterType="GroupDTO">
-        INSERT INTO studygroup (game_no, group_name, member_id, group_cnt, group_startdate, group_enddate)
-        VALUES (#{game_no}, #{group_name}, #{member_id}, #{group_cnt}, #{group_startdate}, #{group_enddate});
+        INSERT INTO studygroup (game_no, group_name, group_intro, member_id, group_cnt, group_startdate, group_enddate)
+        VALUES (#{game_no}, #{group_name}, #{group_intro}, #{member_id}, #{group_cnt}, #{group_startdate}, #{group_enddate});
     </insert>
 
     <!-- 학습 그룹 조회 목록 불러오기 -->
@@ -84,6 +96,7 @@
         SELECT group_name, group_no
         FROM studygroup
         WHERE member_id = #{member_id}
+        AND group_enddate >= CURDATE()
         ]]>
     </select>
 
@@ -125,7 +138,7 @@
     <select id="selectGroupApprove" parameterType="map" resultType="GroupDTO">
         <![CDATA[
         SELECT sg.group_name, sg.group_cnt, sg.group_nowcnt,
-               gm.group_no, gm.member_no, gm.approve_date,
+               gm.gm_no, gm.group_no, gm.member_no, gm.approve_date,
                m.member_name, m.member_phone
         FROM studygroup AS sg
         JOIN groupmember AS gm ON sg.group_no = gm.group_no
@@ -178,6 +191,15 @@
             ]]>
         </if>
     </select>
+
+    <update id="updateGroupMembber">
+        UPDATE groupmember
+        SET approve_state = #{state}
+        WHERE gm_no IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 
     <!--///////////////////학습자/////////////////// -->
 
@@ -233,7 +255,7 @@
     <!-- 교육자명 불러오기 -->
     <select id="selectEducatorName" resultType="GroupDTO">
         <![CDATA[
-        SELECT DISTINCT m.member_name
+        SELECT DISTINCT m.member_name, m.member_no
         FROM studygroup AS sg
         JOIN member AS m ON m.member_id = sg.member_id
         WHERE sg.group_nowcnt < sg.group_cnt;
@@ -261,12 +283,77 @@
     </insert>
 
     <!-- 학생 그룹 현재인원 Update -->
-    <update id="updateGroupJoin" parameterType="Integer">
+    <update id="updateGroupJoin">
         <![CDATA[
         UPDATE studygroup
-        SET group_nowcnt = group_nowcnt + 1
+        SET group_nowcnt = group_nowcnt + #{num}
         WHERE group_no = #{group_no};
         ]]>
     </update>
 
+    <!-- 가입신청 내역 목록 -->
+    <select id="myjoinList" resultType="GroupDTO">
+        <![CDATA[
+        SELECT gm.member_no, g.game_title,
+               sg.group_no, sg.group_name, sg.group_startdate, sg.group_enddate,
+               m.member_name
+        FROM groupmember AS gm
+        JOIN studygroup AS sg ON gm.group_no = sg.group_no
+        JOIN game AS g ON g.game_no = sg.game_no
+        JOIN member AS m ON m.member_id = sg.member_id
+        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no}
+         ]]>
+            <if test="group_name != null and group_name != ''">
+                AND sg.group_name = #{group_name}
+            </if>
+            <if test="member_name != null and member_name != ''">
+                AND m.member_name = #{member_name}
+            </if>
+        <![CDATA[
+        ORDER BY gm.approve_date DESC
+        LIMIT #{LIMIT} OFFSET #{OFFSET};
+        ]]>
+    </select>
+
+    <!-- 가입신청 내역 목록 갯수 -->
+    <select id="myjoinListCount" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM groupmember AS gm
+        JOIN studygroup AS sg ON gm.group_no = sg.group_no
+        JOIN game AS g ON g.game_no = sg.game_no
+        JOIN member AS m ON m.member_id = sg.member_id
+        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no};
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            AND sg.group_name = #{group_name}
+        </if>
+        <if test="member_name != null and member_name != ''">
+            AND m.member_name = #{member_name}
+        </if>
+    </select>
+
+    <!-- 가입내역 그룹명 목록 -->
+    <select id="myjoinListTitle" resultType="GroupDTO">
+        <![CDATA[
+        SELECT DISTINCT sg.group_name
+        FROM groupmember AS gm
+        JOIN studygroup AS sg ON gm.group_no = sg.group_no
+        JOIN game AS g ON g.game_no = sg.game_no
+        JOIN member AS m ON m.member_id = sg.member_id
+        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no};
+        ]]>
+    </select>
+
+    <!-- 가입내역 교육자 목록 -->
+    <select id="myjoinListEducator" resultType="GroupDTO">
+        <![CDATA[
+        SELECT DISTINCT m.member_name
+        FROM groupmember AS gm
+        JOIN studygroup AS sg ON gm.group_no = sg.group_no
+        JOIN game AS g ON g.game_no = sg.game_no
+        JOIN member AS m ON m.member_id = sg.member_id
+        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no};
+        ]]>
+    </select>
 </mapper>

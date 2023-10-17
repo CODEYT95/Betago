@@ -14,8 +14,10 @@ public class GroupDTO {
     private Date game_enddate;
 
     //그룹
+    private  int gm_no;
     private int group_no;
     private String group_name;
+    private String group_intro;
     private Date group_startdate;
     private Date group_enddate;
     private int group_cnt;
@@ -29,6 +31,10 @@ public class GroupDTO {
     private String member_email;
     private Date approve_date;
     private int member_count;
+
+    //결제
+    private Date pay_date;
+    private Date pay_enddate;
 
     //
     private int LIMIT;

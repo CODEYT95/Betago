@@ -10,19 +10,19 @@ import java.util.List;
 public interface GroupService {
 
     //그룹 등록 가능한 게임콘텐츠 Cnt
-    int groupAddListCnt(String game_title);
+    int groupAddListCnt(String memeber_id, String game_title);
 
     //게임 콘텐츠 title 조회
-    List<GroupDTO> selectGameTitle();
+    List<GroupDTO> selectGameTitle(String member_id);
 
     //그룹 등록 가능한 게임콘텐츠 조회(무한스크롤)
-    List<GroupDTO> groupAddList(String game_title, int limit, int offset);
+    List<GroupDTO> groupAddList(String member_id, String game_title, int limit, int offset);
 
     //그룹 등록을 위한 게임 콘텐츠 정보 불러오기
     List<GroupDTO> gameGroupInfo(int game_no);
 
     //학습 그룹 등록(상세)
-    int insertGroup(int game_no, String id, String groupName, int count, Date sdate, Date edate);
+    int insertGroup(GroupDTO groupDTO, String id, Date sdate, Date edate);
 
     //학습 그룹 조회 목록 불러오기
     List<GroupDTO> groupListSelect(String member_id, String group_name);
@@ -41,6 +41,9 @@ public interface GroupService {
 
     //그룹 학생 가입승인 정보
     GroupDTO selectGroupInfo(int group_no);
+
+    //그룹 학생 목록 업데이트
+    String updateGroupMembber(List<Integer> approveList, List<Integer> rejectList, int group_no);
 
     //////////////////학습자////////////////////
 
@@ -62,6 +65,16 @@ public interface GroupService {
     //학생 그룹 가입신청 Insert
     int insertGroupJoin(int member_no, int group_no, int game_no);
 
-    //학생 그룹 현재인원 Update
-    int updateGroupJoin(int group_no);
+    //가입신청 내역 목록
+    List<GroupDTO> myjoinList(int member_no, String group_name, String educator_name, int limit, int offset);
+
+    //가입신청 내역 목록 갯수
+    int myjoinListCount(int member_no, String group_name, String educator_name);
+
+    //가입신청 내역 그룹명 목록
+    List<GroupDTO> myjoinListTitle(int member_no);
+
+    //가입신청 교육자 타이틀 목록
+    List<GroupDTO> myjoinListEducator(int member_no);
+
 }
