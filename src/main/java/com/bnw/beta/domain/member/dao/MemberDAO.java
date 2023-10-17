@@ -44,9 +44,9 @@ public interface MemberDAO {
 
     MemberDTO findIDbyUserName(@Param("name") String name, @Param("email") String email);
 
-   /* MemberDTO findPwbyUserId(@Param("id") String id, @Param("email") String email);
-    */
-   public void updatePassword(@Param("id") String member_id, @Param("newPassword") String rawPassword);
+    /* MemberDTO findPwbyUserId(@Param("id") String id, @Param("email") String email);
+     */
+    public void updatePassword(@Param("id") String member_id, @Param("newPassword") String rawPassword);
     MemberDTO findByUserIdAndEmail(@Param("id")String member_id,@Param("email") String email);
 
 }
