@@ -66,7 +66,7 @@
                             <li><a th:href="@{/student/submitTaskList}">숙제 제출 목록</a></li>
                         </ul>
                     </li>
-                    <li class="first_li">
+                    <li class="first_li" >
                         <a th:href="@{/educator/group/addList}">교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
                         <ul id="service" class="educator-sub-menu sub-menu">
                             <li><a th:href="@{/educator/group/addList}">학습그룹 등록</a></li>
@@ -77,15 +77,16 @@
                             <li><a th:href="@{/educator/evalTask}">숙제 학습진도 조회</a></li>
                         </ul>
                     </li>
-                    <li class="first_li">
+                    <li class="first_li" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="#">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
                             <li><a th:href="@{/game/insert}">게임컨텐츠 등록</a></li>
-                            <li><a th:href="@{/edupost/insert}">교육자료 등록</a></li>
-                            <li><a href="#">게시물 등록</a></li>
-                            <li><a href="#">매출조회</a></li>
+                            <li><a th:href="@{/edupost/insert}">학습자료 등록</a></li>
+                            <li><a href="#">학습자료 조회</a></li>
+                            <li><a href="/admin/notice/write">공지 등록</a></li>
+                            <li><a href="#">Q&A</a></li>
                             <li><a th:href="@{/member/list}">회원조회</a></li>
-                            <li><a href="#">숙제 학습진도 조회</a></li>
+                            <li><a href="#">매출 조회</a></li>
                         </ul>
                     </li>
                 </ul>
