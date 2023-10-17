@@ -29,16 +29,17 @@ public class NoticeController {
                              Model model) {
         //상단고정 게시물
         List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
-        System.out.println("Ddd"+topNoticeList);
+        System.out.println("공지목록 컨트롤러"+topNoticeList);
 
         NoticePage noticePage = noticeService.noticeList(page, size, searchType, keyword);
-
-
         noticePage.setKeyword(keyword);
         noticePage.setSearchType(searchType);
-        noticePage.setTopNoticeList(topNoticeList);
+
+        // 모든 게시물 목록을 모델에 추가
+        model.addAttribute("allNoticeList", noticePage.getAllNoticeList());
 
         model.addAttribute("currentPage", page);
+        model.addAttribute("size", size);
         model.addAttribute("noticePage", noticePage);
         model.addAttribute("topNoticeList", topNoticeList);
         model.addAttribute("searchType", searchType);
@@ -56,9 +57,9 @@ public class NoticeController {
     //공지게시판 글작성 처리
     @PostMapping("/admin/notice/write")
     public String noticeWrite(@ModelAttribute NoticeDTO noticeDTO,
-                              @RequestParam("file") MultipartFile[][] file,
+                              @RequestParam("file") MultipartFile[] file,
                               @RequestParam(name = "type", defaultValue = "일반") String type,
-                              @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")Date timeWrite,
+                              @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")Date timeWrite,
                               Model model, Principal principal) throws IOException {
         noticeDTO.setMember_id(principal.getName());
         System.out.println(noticeDTO);
@@ -87,6 +88,8 @@ public class NoticeController {
     @GetMapping("/admin/edit/{notice_no}")
     public String edit(@PathVariable("notice_no") Long notice_no, Model model) {
         NoticeDTO noticeDTO = noticeService.detail(notice_no);
+
+
         model.addAttribute("notice_no", notice_no);
         model.addAttribute("noticeDTO", noticeDTO);
         System.out.println("수정컨트롤 파일" + noticeDTO);
@@ -97,8 +100,8 @@ public class NoticeController {
     @PostMapping("/admin/notice/update")
     public String update(@RequestParam("notice_no") Long notice_no,
                          @ModelAttribute NoticeDTO noticeDTO,
-                         @RequestParam("file") MultipartFile[] file) throws IOException {
-        System.out.println("컨트롤러 디티오" + noticeDTO);
+                         @RequestParam("file") MultipartFile[] file,Principal principal) throws IOException {
+        noticeDTO.setMember_id(principal.getName());
         noticeService.update(notice_no, noticeDTO, file);
         return "redirect:/notice/list";
     }
