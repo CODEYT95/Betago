@@ -3,11 +3,16 @@
 <mapper namespace="com.bnw.beta.domain.admin.dao.NoticeDAO">
     <!--게시글 등록-->
     <insert id="insert" parameterType="NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
-        <![CDATA[
-        INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt,type)
-        VALUES (#{notice_title}, #{notice_content}, #{notice_category}, now(), "Y", #{member_id}, 0,#{type});
+    <![CDATA[
+        INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt, type, notice_reservation)
+        VALUES (#{notice_title}, #{notice_content}, #{notice_category}, CURRENT_TIMESTAMP, "Y", #{member_id}, 0, #{type},
+                CASE
+                    WHEN #{notice_reservation} IS NOT NULL AND #{notice_reservation} != 'null' THEN #{notice_reservation}
+                    ELSE NULL
+                    END);
         ]]>
-    </insert>
+</insert>
+
 
     <!-- 공지글 파일 등록 & 수정 -->
     <insert id="fileUpload" parameterType="NoticeFileDTO">
@@ -61,9 +66,16 @@
 
     <!--게시글 목록 조회-->
     <select id="noticeList"  parameterType="NoticeDTO">
-        SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type
+        <![CDATA[
+        SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type, notice_reservation
         FROM notice
-        WHERE notice_isshow = 'Y'
+        WHERE notice_isshow = 'Y' AND notice_category != 'FAQ' AND (notice_reservation < now() OR notice_reservation is null)
+          AND notice_no NOT IN (
+        SELECT notice_no
+        FROM notice
+        WHERE notice_isshow = 'Y' AND (type = 'upView' OR type = 'upView,allView') AND (notice_reservation < now() OR notice_reservation IS NULL)
+          )
+        ]]>
         <if test='searchType.equals("notice_title")'>
             AND notice_title LIKE CONCAT('%', #{keyword}, '%')
         </if>
@@ -73,8 +85,20 @@
         <if test='searchType.equals("title_content")'>
             AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
         </if>
-        ORDER BY type = 'upView' DESC, notice_regdate DESC
+        <![CDATA[
+        ORDER BY notice_regdate DESC
         LIMIT #{page}, #{size};
+        ]]>
+    </select>
+
+    <!--공지게시판 상단고정 게시물-->
+    <select id="noticeTop" parameterType="NoticeDTO">
+        <![CDATA[
+        SELECT * FROM notice
+        WHERE notice_isshow = 'Y' AND (type = 'upView' OR type ='upView,allView') AND (notice_reservation < now() OR notice_reservation IS NULL)
+        ORDER BY notice_regdate DESC
+        LIMIT 0, 3;
+        ]]>
     </select>
 
     <!-- 전체 글의 개수를 읽어 오는 SQL문 -->
@@ -82,7 +106,7 @@
         <![CDATA[
         SELECT count(*) as listCnt
         FROM notice
-        WHERE true
+        WHERE notice_category = '공지'
          ]]>
         <if test='searchType.equals("notice_title")'>
             AND notice_title LIKE CONCAT('%', #{keyword}, '%')
@@ -93,19 +117,12 @@
         <if test='searchType.equals("title_content")'>
             AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
         </if>
-
     </select>
+
+    <!--조회수증가-->
+    <update id="viewCnt" parameterType="NoticeDTO">
+        UPDATE notice set view_cnt  = view_cnt + 1
+        WHERE notice_no = #{notice_no}
+    </update>
 </mapper>
 
-<!--<choose>
-            <when test='searchType=="T"'>
-                AND notice_title LIKE concat('%', #{keyword}, '%')
-            </when>
-            <when test='searchType=="C"'>
-                AND notice_content LIKE concat('%', #{keyword}, '%')
-            </when>
-            <otherwise>
-                AND (notice_title LIKE concat('%', #{keyword}, '%')
-                OR notice_content LIKE concat('%', #{keyword}, '%'))
-            </otherwise>
-        </choose> -->

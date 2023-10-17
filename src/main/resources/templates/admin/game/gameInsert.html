@@ -1,93 +1,128 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>사이트 제목</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <script type="text/javascript" th:src="@{/js/admin/game/gameInsert.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameContents.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameInsert.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-</head>
-<style>
+    <style>
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
 
-</style>
+        .form-row .form-group {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .form-row .form-group:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
     <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="container">
-            <form name="gameContent" th:action="@{/game/gameInsert}" method="post" onsubmit="return validateForm()">
-                <div class="form-group">
-                    <label for="game_title">게임콘텐츠명</label>
-                    <input type="text" name="game_title" id="game_title">
-                </div>
-                <div class="form-group">
-                    <label for="game_level">학습난이도</label>
-                    <select name="game_level" id="game_level">
-                        <option value="초급">초급</option>
-                        <option value="중급">중급</option>
-                        <option value="고급">고급</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="game_date">구독기간</label>
-                    <select name="game_date" id="game_date">
-                        <option value="" disabled selected>기간을 선택해주세요.</option>
-                        <option value="1">1개월</option>
-                        <option value="2">2개월</option>
-                        <option value="3">3개월</option>
-                        <option value="4">4개월</option>
-                        <option value="5">5개월</option>
-                        <option value="6">6개월</option>
-                        <option value="7">7개월</option>
-                        <option value="8">8개월</option>
-                        <option value="9">9개월</option>
-                        <option value="10">10개월</option>
-                        <option value="11">11개월</option>
-                        <option value="12">12개월</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="game_total">구독 가능인원</label>
-                    <select name="game_total" id="game_total">
-                        <option value="" disabled selected>인원을 선택해주세요</option>
-                        <option value="10">10명</option>
-                        <option value="20">20명</option>
-                        <option value="30">30명</option>
-                        <option value="40">40명</option>
-                        <option value="50">50명</option>
-                        <option value="60">60명</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="game_price">정가</label>
-                    <input type="text" name="game_price" id="game_price">
-                </div>
-                <div class="form-group">
-                    <label for="game_discount">할인율</label>
-                    <div class="input-group">
-                        <input type="number" name="game_discount" id="game_discount" min="0" max="100" step="1" value="0" readonly>%
+            <form name="gameContent" class="gamecontent" th:action="@{/game/gameInsert}" method="post"
+                  onsubmit="return validateForm()" enctype="multipart/form-data">
+                <div class="game-form">
+                    <div class="img-group">
+                        <img th:src="@{/image/game3.PNG}" class="img-game" alt="게임 이미지">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="game_sell">판매가</label>
-                    <input type="text" name="game_sell" id="game_sell" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="game_content">패키지 내용</label>
-                    <textarea name="game_content" id="game_content" placeholder="내용을 입력해주세요"  maxlength="100"></textarea>
-                    <span id="charCount">0 / 100</span>
-                </div>
 
-                    <div class="thumbnail">
-                        <label for="thumbnail" class="thumbnail-title">썸네일</label>
-                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="thumbnail">
-                        <div class="filebox">
-                            <label for="file">이미지업로드</label>
-                            <input type="file" id="file">
+                    <div class="form-group">
+                        <label for="game_title">게임콘텐츠명</label>
+                        <input type="text" name="game_title" id="game_title">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="game_level">학습난이도</label>
+                            <select name="game_level" id="game_level">
+                                <option value="초급">초급</option>
+                                <option value="중급">중급</option>
+                                <option value="고급">고급</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game_date">구독기간</label>
+                            <select name="game_date" id="game_date">
+                                <option value="" disabled selected>기간을 선택해주세요.</option>
+                                <option value="1">1개월</option>
+                                <option value="2">2개월</option>
+                                <option value="3">3개월</option>
+                                <option value="4">4개월</option>
+                                <option value="5">5개월</option>
+                                <option value="6">6개월</option>
+                                <option value="7">7개월</option>
+                                <option value="8">8개월</option>
+                                <option value="9">9개월</option>
+                                <option value="10">10개월</option>
+                                <option value="11">11개월</option>
+                                <option value="12">12개월</option>
+                            </select>
                         </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="game_total">구독 가능인원</label>
+                            <select name="game_total" id="game_total">
+                                <option value="" disabled selected>인원을 선택해주세요</option>
+                                <option value="10">10명</option>
+                                <option value="20">20명</option>
+                                <option value="30">30명</option>
+                                <option value="40">40명</option>
+                                <option value="50">50명</option>
+                                <option value="60">60명</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game_price">정가</label>
+                            <input type="text" name="game_price" id="game_price">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="game_discount">할인율</label>
+                            <div class="input-group">
+                                <input type="number" name="game_discount" id="game_discount" min="0" max="100" step="1"
+                                       value="0" readonly>%
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game_sell">판매가</label>
+                            <input type="text" name="game_sell" id="game_sell" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="game_content">패키지 내용</label>
+                        <textarea name="game_content" id="game_content" placeholder="내용을 입력해주세요"
+                                  maxlength="100"></textarea>
+                        <span id="charCount">0 / 100</span>
+                    </div>
+                </div>
+
+                <div class="thumbnail">
+                    <label for="thumbnail" class="thumbnail-title">썸네일</label>
+                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="thumbnail">
+                    <div class="filebox">
+                        <label for="file">이미지업로드</label>
+                        <input type="file" id="file" name="imageFile" accept=".jpg, .jpeg, .png, .gif">
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <input type="submit" value="등록하기">

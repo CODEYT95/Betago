@@ -46,7 +46,7 @@
                                     <div class="card-details"></div>
                                     <div class="details">
                                         <h5>게임 콘텐츠 : <span th:text="${groupAddList.game_title}"></span></h5>
-                                        <h5>학습 구독 기간 : <span th:text="${groupAddList.game_startdate}"></span> ~ <span th:text="${groupAddList.game_enddate}"></span></h5>
+                                        <h5>학습 구독 기간 : <span th:text="${groupAddList.pay_date}"></span> ~ <span th:text="${groupAddList.pay_enddate}"></span></h5>
                                         <h5>학습 가능 인원 : <span th:attr="data-game-total=${groupAddList.game_total}" th:text="${groupAddList.game_total}+명"></span></h5>
                                         <h5>그룹 지정된 인원 : <span th:attr="data-group-cnt=${groupAddList.group_nowcnt}" th:text="${groupAddList.group_nowcnt}+명"></span></h5>
                                     </div>

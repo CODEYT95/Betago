@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="notice_sidebarFragment">
+    <div class="side-bar active">
+        <div class="menu">
+            <div class="item">
+                <a th:href="@{/game/insert}">게임콘텐츠 등록</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/edupost/insert}" class="sub-btn">학습자료 등록</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/edupost/list}">학습자료 조회</a>
+            </div>
+            <div class="item">
+                <a class="sub-btn">공지 등록</a>
+            </div>
+            <div class="item">
+                <a href="#">Q&A 올리기</a>
+            </div>
+            <div class="item">
+                <a href="#">매출 조회</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

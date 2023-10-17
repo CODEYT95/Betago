@@ -2,17 +2,77 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bnw.beta.domain.admin.dao.EdupostDAO">
-    <!-- 게시글 검색
+<!--     게시글 검색-->
     <sql id="search">
-        <if test='searchType.equals("edupost_title")'>
-            AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
-        </if>
-        <if test='searchType.equals("edupost_content")'>
-            AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
-        </if>
-        <if test='searchType.equals("title_content")'>
-            AND (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
-        </if>
+        <!-- 검색 키워드가 있을 때 -->
+             <if test="keyword != null and keyword != ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                AND edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'edupost_category'.equals(searchType)">
+                                AND edupost_category LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+
+                        </choose>
+                    </when>
+
+                    <otherwise>
+                        AND
+                        (
+                        edupost_title LIKE CONCAT('%', #{keyword}, '%')
+                        OR edupost_content LIKE CONCAT('%', #{keyword}, '%')
+                        OR member_id LIKE CONCAT('%', #{keyword}, '%')
+                        OR edupost_category LIKE CONCAT('%', #{keyword}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+    </sql>
+ <!--   <sql id="search">
+        <choose>
+            &lt;!&ndash; 선택+선택 &ndash;&gt;
+            <when test="searchType != null and searchType != '' || searchType2 != null and searchType2 != ''">
+                SELECT * FROM edupost;
+            </when>
+
+            &lt;!&ndash; 제목+선택+선택 &ndash;&gt;
+            <when test="'edupost_title'.equals(searchType)">
+                SELECT * FROM edupost WHERE edupost_title LIKE CONCAT('%', #{keyword}, '%');
+            </when>
+
+            &lt;!&ndash; 내용+선택+선택 &ndash;&gt;
+            <when test="'edupost_content'.equals(searchType)">
+                SELECT * FROM edupost WHERE edupost_content LIKE CONCAT('%', #{keyword}, '%');
+            </when>
+
+            &lt;!&ndash; 제목,내용+선택+선택 &ndash;&gt;
+            <when test="'edupost_title'.equals(searchType) || 'edupost_category'.equals(searchType2)">
+                SELECT * FROM edupost WHERE edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_category LIKE CONCAT('%', #{keyword}, '%');
+            </when>
+
+   &lt;!&ndash;         &lt;!&ndash; 선택+카테고리+선택 &ndash;&gt;
+            <when test="(조건1 or 카테고리 != null) AND 조건2">
+                SELECT * FROM 테이블명 WHERE 카테고리 = #{카테고리};
+            </when>&ndash;&gt;
+
+            &lt;!&ndash; 제목 + 카테고리 + 선택 &ndash;&gt;
+            <otherwise>
+                SELECT * FROM edupost WHERE
+                (edupost_title LIKE CONCAT('%', #{keyword}, '%')
+                OR edupost_content LIKE CONCAT('%', #{keyword}, '%')
+                OR member_id LIKE CONCAT('%', #{keyword}, '%')
+                OR edupost_category LIKE CONCAT('%', #{keyword}, '%'))
+            </otherwise>
+        </choose>
     </sql>-->
 
     <insert id="eduinsert" useGeneratedKeys="true" keyProperty="edupost_no" parameterType="EdupostDTO">
@@ -21,20 +81,12 @@
             values (#{edupost_title},#{edupost_category},#{edupost_type}, NOW(), #{edupost_fileadd}, #{edupost_service}, #{member_id},#{edupost_content})
         ]]>
     </insert>
-
-    <select id="edulist" parameterType="EdupostDTO">
-        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id
+    <!--교육자료 목록보기-->
+    <select id="edulist" parameterType="map" resultType="EdupostDTO">
+        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id, edupost_content
         from edupost
         <where>
-        <if test='searchType.equals("edupost_title")'>
-            AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
-        </if>
-        <if test='searchType.equals("edupost_content")'>
-            AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
-        </if>
-        <if test='searchType.equals("title_content")'>
-            AND (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
-        </if>
+            <include refid="search"></include>
         </where>
         order by edupost_date DESC
         LIMIT #{page}, #{size};
@@ -44,15 +96,7 @@
         select count(*)
         from edupost
         <where>
-        <if test='searchType.equals("edupost_title")'>
-            AND edupost_title LIKE CONCAT('%', #{keyword}, '%')
-        </if>
-        <if test='searchType.equals("edupost_content")'>
-            AND edupost_content LIKE CONCAT('%', #{keyword}, '%')
-        </if>
-        <if test='searchType.equals("title_content")'>
-            AND (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
-        </if>
+            <include refid="search"></include>
         </where>
     </select>
 

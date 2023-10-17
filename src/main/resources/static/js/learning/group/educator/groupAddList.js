@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <div class="card-details"></div>
                                                 <div class="details">
                                                     <h5>게임 콘텐츠 : <span>${item.game_title}</span></h5>
-                                                    <h5>학습 구독 기간 : <span>${item.game_startdate}</span> ~ <span>${item.game_enddate}</span></h5>
+                                                    <h5>학습 구독 기간 : <span>${item.pay_date}</span> ~ <span>${item.pay_enddate}</span></h5>
                                                     <h5>학습 가능 인원 : <span data-game-total=${item.game_total}>${item.game_total}명</span></h5>
                                                     <h5>그룹 지정된 인원 : <span data-group-cnt=${item.group_nowcnt}>${item.group_nowcnt}명</span></h5>
                                                 </div>
@@ -96,16 +96,29 @@ document.addEventListener("DOMContentLoaded", function() {
     var detailBtn = document.querySelector(".detail-btn");
 
     detailBtn.addEventListener("click", function() {
-
         var selectedCheckbox = document.querySelector(".checkbox-input:checked");
 
         if (selectedCheckbox) {
-
             var selectedGameNo = selectedCheckbox.getAttribute("data-game-no");
-            var url = "/educator/group/add?game_no=" + selectedGameNo;
-            location.href = url;
+
+            var form = document.createElement("form");
+
+            form.action = "/educator/group/add";
+            form.method = "GET";
+
+            var gameNoInput = document.createElement("input");
+            gameNoInput.type = "hidden";
+            gameNoInput.name = "game_no";
+            gameNoInput.value = selectedGameNo;
+
+            form.appendChild(gameNoInput);
+
+             document.body.appendChild(form);
+
+             form.submit();
+
         } else {
-            alert("게임을 선택해주세요.");
+             alert("게임을 선택해주세요.");
         }
     });
     //게임 콘텐츠 목록 리스트

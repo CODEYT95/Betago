@@ -26,6 +26,9 @@ public class SecurityConfig {
                 .requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                 .requestMatchers("/educator/**").hasAnyAuthority("ROLE_TEACHER")
                 .requestMatchers("/student/**").hasAnyAuthority("ROLE_USER")
+                .requestMatchers("/pay/**").hasAnyAuthority("ROLE_TEACHER")
+                .requestMatchers("/pay/**").hasAnyAuthority("ROLE_USER")
+
                 .requestMatchers("/**").permitAll()
                 .and()
                 .csrf().ignoringRequestMatchers(new AntPathRequestMatcher("/**"))

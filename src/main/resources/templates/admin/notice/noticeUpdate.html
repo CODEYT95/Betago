@@ -17,7 +17,6 @@
             <div class="notice_cont">
                 <div class="notice_write_box">
                     <h2 class="head">공지 수정창</h2>
-
                     <div class="opt">
                         <laber for="notice_title" style="font-size: 16px; margin-right: 9px;">제목</laber>
                         <input type="text" class="texarea1" id="notice_title" name="notice_title" th:value="${noticeDTO.notice_title}"/>
@@ -25,12 +24,12 @@
 
                     <div class="opt">
                         <laber for="member_id" style="font-size: 16px; margin-right: 9px;">작성자</laber>
-                        <input type="text" style="margin-left: 42px;" class="texarea1" id="member_id" name="notice_title" th:value="${noticeDTO.member_id}"  readonly/>
+                        <input type="text" style="margin-left: 42px;" class="texarea1" id="member_id" name="member_id" th:value="${noticeDTO.member_id}"  readonly/>
                     </div>
 
                     <div class="opt">
                         <laber for="notice_regdate" style="font-size: 16px; margin-right: 9px;">작성일</laber>
-                        <input type="text" style="margin-left: 42px;" class="texarea1" id="notice_regdate" name="notice_title" th:value="${noticeDTO.notice_regdate}" readonly/>
+                        <input type="text" style="margin-left: 42px;" class="texarea1" id="notice_regdate" name="notice_regdate" th:value="${noticeDTO.notice_regdate}" readonly/>
                     </div>
 
                     <div class="opt">
@@ -49,20 +48,24 @@
                     </div>
 
                     <div class="file_input">
-                        <label class="fileselect" style="font-size: 16px;"> 파일 등록
-                            <input type="file" class="fileup" multiple="multiple" name="file"><br/>
-                        </label>
+                        <label id="custom-button" for="custom-upload" style="display: none"> 파일 등록 </label>
+                        <input type="file" class="fileup" id="custom-upload" name="file" multiple="multiple" style="display: none"><br/>
                     </div>
 
                     <div id="ex9">
-                        <div class="drop-area" id="dropArea">
-                            <p id="here">여기에 파일을 드래그 앤 드롭하세요.</p>
-                            <input class="btn_file" multiple="multiple" type="file" name="file" id="fileInput">
-                        </div>
+                        <label> 파일 등록
+                            <div class="drop-area" id="dropArea">
+                                <p id="here">여기에 파일을 드래그 앤 드롭하거나 클릭하세요.</p>
+                            </div>
+                        </label>
                     </div>
 
-                    <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}" style="margin-left: 103px; margin-bottom: 32px;">
-                        <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300" alt="image">
+                    <div class="content1">
+                        <div th:each="noticefile: ${noticeDTO.getNoticeFiles()}" style="margin-right: 10px;">
+                            <div class="image-container">
+                                <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="100" height="100" alt="image">
+                            </div>
+                        </div>
                     </div>
 
 
@@ -87,3 +90,64 @@
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var dropArea = document.getElementById('dropArea');
+        var fileInput = document.getElementById('custom-upload');
+        // 드래그 앤 드롭 영역을 클릭하면 파일 선택 창이 열리도록 설정
+        dropArea.addEventListener('click', function () {
+            fileInput.click(); // input 요소를 클릭합니다.
+        });
+
+        dropArea.addEventListener('dragenter', function (e) {
+            e.preventDefault();
+            dropArea.classList.add('active');
+        });
+
+        dropArea.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            dropArea.classList.add('highlight');
+        });
+
+        dropArea.addEventListener('dragleave', function () {
+            dropArea.classList.remove('active');
+            dropArea.classList.remove('highlight');
+        });
+
+        //드래그앤드롭으로 업로들할때
+        dropArea.addEventListener('drop', function (e) {
+            e.preventDefault();
+            dropArea.classList.remove('active');
+            dropArea.classList.remove('highlight');
+
+            var files = e.dataTransfer.files;
+            fileInput.files = files;
+
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+            fileName(files);
+        });
+        //클릭으로 업로드할때
+        fileInput.addEventListener('change', function () {
+            var files = fileInput.files;
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+            fileName(files);
+        });
+
+    //업로드된 파일 이름을 출력
+    function fileName(files) {
+        var fileName = [];
+        for (var i = 0; i < files.length; i++) {
+            fileName.push(files[i].name);
+        }
+        document.getElementById('here').textContent = fileName.join(',');
+    }
+
+
+</script>

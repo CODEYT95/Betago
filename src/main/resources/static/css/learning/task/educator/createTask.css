@@ -147,7 +147,7 @@ th, td {
     white-space: nowrap;
 }
 
-.t_no, .list_no{
+.t_no, .list_no, .list_groupNo{
     position: relative;
     width: 3%;
 }
@@ -162,9 +162,19 @@ th, td {
     width: 9%;
 }
 
+.t_content {
+    position: relative;
+    width: 25%;
+}
+
 .t_limit, .list_limit{
     position: relative;
     width: 8%;
+}
+
+.t_deadline {
+    position: relative;
+    width: 13%;
 }
 
 .t_send, .list_send{
@@ -175,6 +185,21 @@ th, td {
 .t_detail, .detailBtn-wrap{
     position: relative;
     width: 5%;
+}
+
+.t_member, .list_member {
+    position: relative;
+    width: 11%;
+}
+
+.t_phone, .list_phone {
+    position: relative;
+    width: 20%;
+}
+
+.t_level, .list_level {
+    position: relative;
+    width: 17%;
 }
 
 .detailBtn {
@@ -204,6 +229,10 @@ table {
     border: 1px solid #D9E0E3;
     border-radius: 10px;
     box-shadow: 6px 7px 10px 1px #b9b9b947;
+}
+
+#memberTableBodyLeft {
+    background: #e4e9ec;
 }
 
 tr:nth-child(even) {background-color: #e4e9ec;}
@@ -238,6 +267,10 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     align-items: center;
     width: 35px;
     height: 30px;
+}
+
+.table-container {
+    display: flex;
 }
 
 #pagination{
@@ -315,4 +348,30 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     border-radius: 5px;
     background: #f9ecbe;
     cursor: pointer;
+}
+
+/* 커스텀 체크박스 스타일 */
+#custom-checkbox {
+  display: none; /* 기본 체크박스 숨기기 */
+}
+
+#custom-checkbox + label {
+  position: relative;
+  padding-left: 25px; /* 체크박스 왼쪽 여백 조정 */
+  cursor: pointer;
+}
+
+#custom-checkbox + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px; /* 체크박스 크기 조정 */
+  height: 20px;
+  border: 2px solid #000; /* 체크박스 테두리 스타일 */
+}
+
+#custom-checkbox:checked + label:before {
+  background-color: #000; /* 체크된 경우 배경색 변경 */
+  border-color: #000; /* 체크된 경우 테두리색 변경 */
 }

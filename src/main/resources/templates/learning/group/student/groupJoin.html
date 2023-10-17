@@ -41,7 +41,7 @@
                                 <span class="option-text-educator">전체</span>
                             </li>
                             <li class="option" th:each="educator : ${educator}">
-                                <span class="option-text-educator" th:text="${educator.member_name}"></span>
+                                <span class="option-text-educator" th:attr="data-m-no=${educator.member_no}" th:text="${educator.member_name}"></span>
                             </li>
                         </ul>
                     </div>
@@ -54,7 +54,7 @@
             <div class="content-container">
                 <ul class="list-box">
                     <li class="" th:each="joinList : ${groupJoinList}" th:attr="data-game-no=${joinList.game_no}">
-                        <input hidden="hidden" class="attr" th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
+                        <input hidden="hidden" class="attr" th:attr="data-group-name=${joinList.group_name},data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no}"/>
@@ -80,10 +80,35 @@
             </div>
         </div>
     </div>
-    <div class="modal-checkerror" id="checkErrorModal">
+    <div class="modal-1" id="joinConfirmModal">
         <div class="modal-content">
-            <h3>그룹은 한 개만 선택해주세요.</h3>
-            <button class="modal-btn" onclick="closeModal()">확인</button>
+            <h3>정말로 가입 신청 하시겠습니까?</h3>
+            <div class="modal-buttons">
+                <button class="modal-btn-confirm" >확인</button>
+                <button class="modal-btn-cancel" onclick="closeModal('joinConfirmModal')">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모달2: 잔여 T/O 확인 -->
+    <div class="modal-2" id="noRemainingModal">
+        <div class="modal-content">
+            <div>
+            <h3>잔여T/O가 남아 있지 않습니다.</h3>
+            <h3>다시 시도 해주세요.</h3>
+            </div>
+            <button class="modal-btn-confirm" onclick="closeModal('noRemainingModal')">확인</button>
+        </div>
+    </div>
+
+    <!-- 모달3: 가입 신청 완료 -->
+    <div class="modal-3" id="joinCompleteModal">
+        <div class="modal-content">
+            <div>
+            <h3><span class="modalGroupName"></span>에</h3>
+            <h3>가입신청이 완료 되었습니다.</h3>
+            </div>
+            <button class="modal-btn-confirm" onclick="closeModal('joinCompleteModal')">확인</button>
         </div>
     </div>
     <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

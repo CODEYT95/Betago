@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ리스트</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/notice/notice_sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/FAQ/FaqUpdate.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <form th:action="@{/admin/FAQ/update}" method="post">
+        <section class="section section-faq">
+            <div class="container mx-auto">
+                <h1>FAQ</h1>
+                <h4>궁금하신 내용이 FAQ에 없으면 Q&A로 문의주세요!</h4><br/>
+                <input type="hidden" name="notice_no" th:value="${notice_no}">
+                    <div class="faq-box">
+                        <ul>
+                            <li>
+                                <div class="faq-box__question">
+                                    <span>Q. <input name="notice_title" th:value="${faq.notice_title}"></span>
+                                </div>
+                                <div class="faq-box__answer">
+                                    <span>A. <input name="notice_content" th:value="${faq.notice_content}"></span>
+                                </div>
+                            </li>
+
+                            <div class="btn">
+                                <button type="submit" class="btn_sub">완료</button>
+
+                                <a th:href="@{'/FAQ/list'}">
+                                    <button type="button" class="btn_sub">취소</button>
+                                </a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+        </section>
+        </form>
+    </div>
+</div>
+
+<script>
+    function FaqBox__init() {
+        $('.faq-box > ul > li').click(function() {
+            let $this = $(this);
+
+            $this.siblings('.hover').find(' > .faq-box__answer').stop().slideUp(300);
+            $this.siblings('.hover').removeClass('hover');
+
+            if ( $this.hasClass('hover') ) {
+                $this.find(' > .faq-box__answer').stop().slideUp(300);
+                $this.removeClass('hover');
+            }
+            else {
+                $this.find(' > .faq-box__answer').stop().slideDown(300);
+                $this.addClass('hover');
+            }
+        });
+
+        $('.faq-box__answer').click(function() {
+            return false;
+        });
+    }
+    FaqBox__init();
+</script>

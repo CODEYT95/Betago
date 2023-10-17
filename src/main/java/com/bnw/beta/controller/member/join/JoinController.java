@@ -24,7 +24,7 @@ public class JoinController {
 
     //약관동의 및 본인 인증처리
     @PostMapping("/agree")
-    public String member(@Valid JoinForm joinForm, BindingResult bindingResult, Model model,
+    public String member(@Valid JoinForm joinForm, Model model,
                          @RequestParam("next") String next, @RequestParam("check_3") String check3,
                          @RequestParam("check_4") String check4, @RequestParam("check_5") String check5, HttpSession session) {
 
@@ -49,9 +49,8 @@ public class JoinController {
 
     //회원가입 처리
     @PostMapping("/join")
-    public String memberJoin(@Valid JoinForm joinForm, BindingResult bindingResult, HttpSession session,
+    public String memberJoin(@Valid JoinForm joinForm, HttpSession session,
                              @RequestParam("member_birth") String birth,Model model) {
-
 
         //생년월일 session에 담기
         JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");
@@ -97,7 +96,7 @@ public class JoinController {
     @GetMapping("/check/{checkId}")
     public String openPopup(@PathVariable String checkId) {
         System.out.println(checkId);
-        return "member/join/" + checkId;
+        return "/member/join/" + checkId;
     }
 
 }

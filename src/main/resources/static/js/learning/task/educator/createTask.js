@@ -113,6 +113,4 @@ document.addEventListener("DOMContentLoaded", function() {
       modal.style.display = "none";
       modalBg.style.display = "none";
     });
-
-
 }

@@ -16,9 +16,14 @@ display: inline-table;
 
 .imgbox{
     border: 1px solid red;
-    height: 170px;
+    height: 100%;
     width: 790px;
     margin: 10px;
+}
+.image-slider{
+    display: flex;
+    WIDTH: 788PX;
+    height: 186px;
 }
 
 .loginbox{
@@ -42,12 +47,84 @@ display: inline-table;
     background-color: #0056b3;
 }
 
-.second-box {
+.video-box{
     border: 1px solid blue;
-    height: 190px;
+    height: 260px;
     width: 100%;
     display: flex;
 }
+
+.second-box {
+    border: 1px solid blue;
+    height: 270px;
+    width: 100%;
+    display: flex;
+}
+
+.fa-solid, .fas {
+    font-weight: bold;
+    border: none;
+    margin:2px;
+    }
+
+.second-box .image {
+    width: 90%;
+    height: 160px;
+}
+ .img-title {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    }
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #f6eac2;
+
+}
+
+
+.slider {
+    overflow: hidden;
+    width: calc((3 * 260px) + (2 * 20px)); /* (3 * .slide width) + (2 * gap) */
+    height: 100%;
+    display: flex;
+
+}
+
+.slide-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    gap: 20px;
+    height: 262px;
+}
+
+.slide {
+border-radius: 10px;
+    height: 100%;
+    width: 254px;
+    flex: 0 0 auto;
+    position: relative;
+    display: inline-grid;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    background: #c6dbda;
+    margin: 3px;
+}
+.imge{
+display: block;
+        width: 100%;
+}
+
+
 .third-box {
     border: 1px solid blue;
     height: 190px;

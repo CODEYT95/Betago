@@ -1,0 +1,34 @@
+.faq-box {
+    border:2px solid #fdd99f;
+    background-color:#fff;
+    color:inherit;
+    padding:10px;
+    margin-top: 2px;
+    border-radius: 10px;
+}
+
+.faq-box__question {
+    cursor:pointer;
+}
+
+.faq-box__question::after {
+    content:"▼";
+    float:right;
+}
+
+.faq-box > ul > li {
+    padding:10px;
+}
+
+.faq-box > ul > li.hover > .faq-box__question::after {
+    content:"▲";
+}
+
+.faq-box__answer {
+    display:none;
+    background-color:#fdd99f;
+    border-radius:10px;
+    padding:10px;
+    margin-top: 10px;
+}
+

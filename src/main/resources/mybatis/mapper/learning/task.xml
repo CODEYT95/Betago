@@ -12,12 +12,76 @@
         ]]>
     </insert>
 
+    <!--숙제 제목으로 조회-->
+    <select id="selectTaskTitle" parameterType="String" resultType="String">
+        <![CDATA[
+        SELECT DISTINCT task_title , task_regdate
+        FROM task
+        WHERE member_id = #{member_id}
+        AND task_deadline > now()
+        ORDER BY task_regdate DESC;
+        ]]>
+    </select>
+
+    <select id="selectTaskByTitle" parameterType="TaskDTO" resultType="TaskDTO">
+        <![CDATA[
+        SELECT * FROM task
+        WHERE
+        ]]>
+          <if test="task_title != null and task_title != ''">
+            task_title = #{task_title}
+          </if>
+          <if test="task_title == null or task_title == ''">
+            1=1
+          </if>
+        <![CDATA[
+        AND member_id = #{member_id}
+        AND task_deadline > now()
+        ORDER BY task_regdate DESC;
+        ]]>
+    </select>
+
+    <!--그룹 이름 조회-->
+    <select id="selectGroupName" parameterType="String" resultType="GroupDTO">
+        <![CDATA[
+        SELECT group_name, group_no FROM studygroup WHERE member_id = #{member_id};
+        ]]>
+    </select>
+
+    <!--그룹 이름으로 조회-->
+    <select id="selectGroupByName" parameterType="GroupDTO" resultType="GroupDTO">
+        <![CDATA[
+        SELECT gm.member_level, m.member_name, m.member_phone, m.member_no, sg.group_no, g.game_level
+        FROM groupmember AS gm
+        JOIN member AS m ON gm.member_no = m.member_no
+        JOIN studygroup AS sg ON gm.group_no = sg.group_no
+        JOIN game AS g ON g.game_no = sg.game_no
+        WHERE sg.member_id = #{member_id}
+        AND gm.approve_state = '승인'
+        AND sg.group_enddate > now()
+        ]]>
+        <if test="group_name != null and group_name != ''">
+            <![CDATA[
+            AND sg.group_name LIKE #{group_name}
+            ]]>
+        </if>
+        <if test="group_no != null and group_no != ''">
+            AND sg.group_no = #{group_no}
+        </if>
+    </select>
+
     <!--숙제 전송-->
+    <insert id="sendTask" parameterType="TaskSendDTO">
+        <![CDATA[
+        INSERT INTO tasksend (task_no, member_no, group_no, task_senddate, member_id)
+        VALUES (#{task_no},  #{member_no}, #{group_no}, now(), #{member_id})
+        ]]>
+    </insert>
 
     <!--전송한 숙제 조회-->
     <select id="sendTaskList" parameterType="map" resultType="TaskDTO">
         <![CDATA[
-        SELECT t.task_no, s.task_senddate, MAX(t.task_title) AS task_title,
+        SELECT t.task_no, s.tasksend_no, s.task_senddate, MAX(t.task_title) AS task_title,
                                                                     MAX(t.task_content) AS task_content, MAX(t.task_chapter) AS task_chapter,
                                                                     MAX(t.task_regdate) AS task_regdate, MAX(t.task_deadline) AS task_deadline,
                                                                     MAX(t.member_id) AS member_id, MAX(s.tasksend_no) AS tasksend_no
@@ -44,19 +108,47 @@
         ]]>
     </select>
 
-    <!--숙제 평가-->
-    <update id="evaluationTask" parameterType="String">
+    <!--전송 숙제 조회-->
+    <select id="selectSendTask">
         <![CDATA[
-        UPDATE tasksend SET task_state = '평가완료'
-        WHERE tasksend_no = #{tasksend_no};
+        SELECT ts.tasksend_no, ts.member_id, ts.task_senddate, t.task_title, t.task_content, t.task_chapter,t.task_deadline
+        FROM tasksend AS ts
+        JOIN task AS t ON ts.task_no = t.task_no
+        WHERE ts.member_id = #{member_id};
+        ]]>
+    </select>
+
+    <!--제출된 숙제 조회-->
+    <select id="evalTaskList" parameterType="String" resultType="TaskSubmitDTO">
+        <![CDATA[
+        SELECT sub.tasksubmit_no, sub.tasksubmit_chapter, sub.tasksubmit_content, sub.tasksubmit_add, sub.tasksubmit_regdate, m.member_name, ts.member_id
+        FROM tasksubmit AS sub
+        JOIN member AS m ON sub.member_id = m.member_id
+        JOIN tasksend AS ts ON sub.tasksend_no = ts.tasksend_no
+        JOIN task AS t ON sub.task_no = t.task_no
+        WHERE ts.member_id = '#{member_id}'
+        AND sub.tasksubmit_no = #{tasksubmit_no}
+        AND ts.task_state = '제출완료'
+        AND t.task_deadline < now();
+        ]]>
+    </select>
+
+    <!--숙제 평가-->
+    <update id="insertEvaluation" parameterType="TaskDTO">
+        <![CDATA[
+        UPDATE tasksend AS ts
+        INNER JOIN tasksubmit AS sub ON ts.tasksend_no = tsub.tasksend_no
+        SET ts.task_state = '평가완료', sub.tasksubmit_eval = #{tasksubmit_eval}, sub.tasksubmit_comment = #{tasksubmit_comment}
+        WHERE ts.tasksend_no = #{tasksend_no};
         ]]>
     </update>
 
-    <update id="insertEvaluation" parameterType="TaskDTO">
+    <!--학생 레벨 업데이트-->
+    <update id="updateMemberLevel">
         <![CDATA[
-        UPDATE tasksubmit
-        SET tasksubmit_eval = #{tasksubmit_eval}, tasksubmit_comment = #{tasksubmit_comment}
-        WHERE tasksubmit_no = #{tasksubmit_no};
+        UPDATE groupmember
+        SET member_level = #{member_level}
+        WHERE group_no = #{group_no} AND member_no = #{member_no}
         ]]>
     </update>
 
@@ -80,8 +172,8 @@
         ]]>
     </select>
 
-   <!-- 숙제 번호로 정보 조회 -->
-   <select id="selectTaskByNo" parameterType="TaskSendDTO" resultType="TaskSendDTO">
+    <!-- 숙제 번호로 정보 조회 -->
+    <select id="selectTaskByNo" parameterType="TaskSendDTO" resultType="TaskSendDTO">
         <![CDATA[
         SELECT ts.tasksend_no, t.task_no, t.task_title, t.task_content, t.task_chapter, t.task_deadline, ts.task_state, m.member_name, g.game_title
         FROM tasksend AS ts

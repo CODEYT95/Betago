@@ -73,4 +73,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();  // 폼 제출을 중지합니다.
             }
         });
+
+
+        //진호
+        function displayFileName(input) {
+            var uploadName = document.querySelector('.upload-name');
+            if (input.files.length > 0) {
+            // 파일이 선택되었을 때 파일명을 입력란에 표시
+                uploadName.value = input.files[0].name;
+            } else {
+             // 파일 선택이 해제되었을 때 입력란 초기화
+                uploadName.value = '';
+            }
+        }
+
     });
+
+

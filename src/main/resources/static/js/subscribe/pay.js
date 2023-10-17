@@ -1,60 +1,73 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Variables
-    var checkboxes = document.querySelectorAll('.checkbox');
-    var submitButton = document.getElementById("submitbutton");
-    var totalPrice = 0;
-    var gameNos = [];
+let currentImageIndex = 0;
 
-    // Functions
-    function handleCheckboxChange(checkbox) {
-        checkboxes.forEach(function(currentCheckbox) {
-            if (currentCheckbox !== checkbox) {
-                currentCheckbox.checked = false;
-            }
-        });
+function prevImage() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length === 0) return;
+
+    // 현재 이미지를 숨김
+    posters[currentImageIndex].style.opacity = '0';
+
+    // 이전 이미지의 인덱스를 계산
+    currentImageIndex = (currentImageIndex - 1 + posters.length) % posters.length;
+
+    // 이전 이미지를 표시
+    posters[currentImageIndex].style.opacity = '1';
+}
+
+function nextImage() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length === 0) return;
+
+    // 현재 이미지를 숨김
+    posters[currentImageIndex].style.opacity = '0';
+
+    // 다음 이미지의 인덱스를 계산
+    currentImageIndex = (currentImageIndex + 1) % posters.length;
+
+    // 다음 이미지를 표시
+    posters[currentImageIndex].style.opacity = '1';
+}
+
+// 페이지 로딩 시 첫 번째 이미지만 표시하고 나머지는 숨김
+document.addEventListener('DOMContentLoaded', function() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length > 0) {
+        posters[0].style.opacity = '1';
+    }
+});
+function handleNavClick(paymentMethod, clickedElement) {
+    // 선택한 결제 방법을 표시하는 요소를 가져옵니다.
+    const paymentDisplay = document.getElementById('selectedPaymentMethod');
+    const payType = document.getElementById('pay_type');
+    payType.value = paymentMethod;
+    paymentDisplay.textContent = paymentMethod;
+
+    // 모든 navbar의 a 태그들에 대하여 반복
+    var navItems = document.querySelectorAll('.navbar a');
+
+    for (var i = 0; i < navItems.length; i++) {
+        // 선택된 항목에 'selected' 클래스를 추가하고 나머지 항목에서는 삭제
+        if (navItems[i] === clickedElement) {
+            navItems[i].classList.add('selected');
+        } else {
+            navItems[i].classList.remove('selected');
+        }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function handleCheckboxChange(checkbox) {
-    // 모든 체크박스 가져오기
-    var checkboxes = document.querySelectorAll('.checkbox');
-
-    // 선택된 체크박스가 아니면 나머지 체크박스 해제
-    checkboxes.forEach(function (currentCheckbox) {
-        if (currentCheckbox !== checkbox) {
-            currentCheckbox.checked = false;
-        }
-    });
- }
+    // 여기에 다른 로직 (예: 이미지 변경)을 추가할 수 있습니다.
+}
 function updateTotalPrice() {
     // 선택된 게임의 인덱스 가져오기
     var selectedGameIndex = document.querySelector('.mypaylist').selectedIndex;
 
     // 해당 인덱스의 게임 정보 가져오기
     var selectedGame = document.querySelectorAll('.mypaylist option')[selectedGameIndex];
-    var selectedGamePrice = selectedGame.dataset.price;
+   var selectedGamePrice = selectedGame.dataset.price;
 
     // 결과를 화면에 출력
     var totalPriceInput = document.querySelector('.order-total');
     totalPriceInput.value = selectedGamePrice;
+    console.log(totalPriceInput);
 }
 
 //발리데이션
@@ -66,23 +79,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var checkboxes = document.getElementsByName("pay_type");
     var isChecked = false;
 
-    // 최소 한 개의 checkbox가 선택되었는지 확인
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            isChecked = true;
-            break;
-        }
-    }
-
-    // 최소 한 개의 checkbox가 선택되지 않은 경우
-    if (!isChecked) {
-        alert("결제수단을 선택해주세요");
-        return false;
-    }
-
-    // 추가로 필요한 로직을 여기에 추가할 수 있어
-    // 예를 들어, 서버로 데이터 전송 등
-
     // 유효성 검사 함수 호출
     if (!validateForm()) {
         // 유효성 검사에서 실패한 경우 추가로 실행할 로직을 여기에 추가할 수 있어
@@ -93,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 여기에 추가로 실행할 로직을 추가할 수 있어
 
     return true;
+});
 });
 
 function validateForm() {
@@ -120,29 +117,11 @@ function validateForm() {
 
     // 입금자명 유효성 검사
     if (!validatePayDepositor(payDepositor)) {
-        document.getElementById("pay-name-error").innerHTML = "다시 입력해주세요. (한글 또는 영어 2글자 이상)";
+        document.getElementById("pay-name-error").innerHTML = "다시 입력해주세요. (한글 2글자 이상)";
         isDepositorValid = false;
     } else {
         document.getElementById("pay-name-error").innerHTML = "";
         isDepositorValid = true;
-    }
-
-    // 결제수단 유효성 검사
-    var checkboxes = document.getElementsByName("pay_type");
-    var isChecked = false;
-
-    // 최소 한 개의 checkbox가 선택되었는지 확인
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            isChecked = true;
-            break;
-        }
-    }
-
-    // 최소 한 개의 checkbox가 선택되지 않은 경우
-    if (!isChecked) {
-        alert("결제수단을 선택해주세요");
-        return false;
     }
 
     return isNameValid && isPhoneValid && isDepositorValid;
@@ -150,21 +129,22 @@ function validateForm() {
 
 // 구매자명, 입금자명 유효성 검사 함수
 function validateName(name) {
-    return /^[가-힣a-zA-Z]+$/.test(name) && name.length >= 2;
+    return /^[가-힣]{2,}$/.test(name) && !/^[ㄱ-ㅎㅏ-ㅣ]+$/.test(name);
 }
+
 
 function validatePayDepositor(depositor) {
-    return /^[가-힣a-zA-Z]{2,}$/.test(depositor);
+    return /^[가-힣a]{2,}$/.test(depositor);
 }
 
-function validatePhone(phone) {
-    if (!/^(010)\d{8}$/.test(phone)) {
+function validatePhone(콜) {
+    if (!/^(010)\d{8}$/.test(콜)) {
         return false;
     }
 
-    return /^\d+$/.test(phone);
+    return /^\d+$/.test(콜);
 }
-}); // 이 부분에 주석을 닫아주어야 합니다.
+
 
 function handleCheckboxChange(checkbox) {
     if (checkbox.checked) {
@@ -197,10 +177,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-////////////////////////////////////////////////////////////////////////
+
 document.addEventListener('DOMContentLoaded', function() {
-    var totalPrice = 0;
-    var gameNos = [];
+    let totalPrice = 0;
+    let gameNos = [];
 
     //delete-btn 클릭 시 가격 업데이트 및 태그 삭제
     document.querySelectorAll('.delete-btn').forEach(function(button) {
@@ -214,43 +194,56 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateTotalPrice();
 
-    //태그 삭제 하고 url에 넣을 game_no배열 업데이트하는 함수
-    function deleteTag(event) {
-        event.preventDefault();
+    // 태그 및 이미지 삭제
+function deleteTag(event) {
+    event.preventDefault();
 
-        const tag = event.target.closest('.tag');
-        if (tag) {
-            var deletedGamePriceInput = tag.querySelector('input[hidden]');
-            var deletedGamePrice = parseFloat(deletedGamePriceInput.value);
+    const tag = event.target.closest('.tag');
+    if (tag) {
+        // 가격 삭제 로직
+        const deletedGamePriceInput = tag.querySelector('.price');
+        const deletedGamePrice = parseFloat(deletedGamePriceInput.value);
 
-            const gameNo = tag.querySelector('.delete-btn').getAttribute('data-game-no');
+        // 게임의 파일 이름을 추출
+        const gameFileName = tag.getAttribute('data-game-name');
 
-            const index = gameNos.indexOf(gameNo);
-            if (index > -1) {
-                gameNos.splice(index, 1);
-            }
+        const gameNo = tag.getAttribute('data-game-no');
 
-            tag.remove();
+        console.log(gameNo);
+        // 태그 삭제
+        tag.remove();
 
-            totalPrice -= deletedGamePrice;
+        // 해당하는 이미지 삭제 로직
+         if (gameNo) {
+                    // data-game-no 값을 사용하여 해당하는 이미지를 찾습니다.
+                    const gameImage = document.querySelector(`.image-container .image[data-game-no='${gameNo}']`);
+                    if (gameImage) {
+                        gameImage.parentElement.remove(); // 이미지의 부모인 'poster' 클래스를 포함한 div도 함께 삭제
+                    }
+                }
 
-           updateTotalPrice();
-           updateUrl();
-        }
+        // 가격 갱신 로직
+        totalPrice -= deletedGamePrice;
+        updateTotalPrice();
     }
+}
      //태그 삭제시 url 업데이트 해주는 함수
      function updateUrl() {
-         let newUrl = 'http://localhost:8800/cartList?game_no=' + gameNos.join(',');
-         window.history.replaceState({}, null, newUrl);
+         let newUrl = 'http://localhost:8800/pay/cartList?game_nos=' + gameNos.join(',');
+         window.history.pushState({}, null, newUrl);
      }
      //가격 업데이트 해주는 함수
      function updateTotalPrice() {
          var productListSpan = document.querySelector('span[name=productName].mypaylist');
          productListSpan.textContent = Math.round(totalPrice) + "원";
      }
+     function submitPayment() {
+         alert('결제가 완료되었습니다.');
+         document.querySelector('.pay-list').submit();
+     }
 
-     backButton.addEventListener('click', function () {
-         // 이전 페이지로 돌아감
-         window.history.back();
-     });
+     //뒤로가기 클릭 시 게임 콘텐츠 목록 페이지로 바로 이동
+     window.onpopstate = function(event) {
+         window.location.href = "http://localhost:8800/game/list";
+     };
 });

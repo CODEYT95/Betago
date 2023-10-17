@@ -9,63 +9,52 @@
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <form enctype="multipart/form-data" method="post">
-    <div class="content">
+    <div class="row">
         <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
-        <div class="content-wrap">
-            <div class="edupost_cont">
-                <div class="edupost_write_box">
-                    <h2 class="head">공지 상세페이지</h2>
-                    <div class="opt">
-                        <laber for="notice_title" style="font-size: 16px; margin-right: 9px;">제목</laber>
-                        <input type="text" class="texarea1" id="notice_title" th:value="${noticeDTO.notice_title}"/>
-                    </div>
-
-                    <div class="opt">
-                        <laber for="member_id" style="font-size: 16px; margin-right: 9px;">작성자</laber>
-                        <input type="text" style="margin-left: 42px;" class="texarea1" id="member_id"
-                               name="notice_title" th:value="${noticeDTO.member_id}" readonly/>
-                    </div>
-
-                    <div class="opt">
-                        <laber for="notice_regdate" style="font-size: 16px; margin-right: 9px;">작성일</laber>
-                        <input type="text" style="margin-left: 42px;" class="texarea1" id="notice_regdate"
-                               name="notice_title" th:value="${noticeDTO.notice_regdate}" readonly/>
-                    </div>
-
-                    <div class="opt">
-                        <label for="notice_category" style="font-size: 16px;">공지 구분</label>
-                        <input id="notice_category" name="notice_category" class="notice_category"
-                                th:value="${noticeDTO.notice_category}">
-                        </input>
-                    </div>
-
-                    <div class="opt">
-                        <label for="notice_content"
-                               style="position: relative; font-size: 16px; bottom: 19rem">내용</label>
-                        <textarea class="texarea2" style="margin-left: 66px;" id="notice_content" name="notice_content"
-                                  th:text="${noticeDTO.notice_content}"></textarea>
-                        <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}"
-                             style="margin-left: 103px; margin-bottom: 32px;">
-                            <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300"
-                                 alt="image">
-                        </div>
-                    </div>
-
-                    <div class="btn">
-                    <a th:href="@{'/admin/edit/' + ${noticeDTO.getNotice_no}}">
-                        <button type="button" class="btn_sub">수정</button>
-                    </a>
-
-                    <a th:href="@{'/admin/notice/delete/' + ${noticeDTO.getNotice_no}}">
-                        <button type="button" class="btn_sub">삭제</button>
-                    </a>
-
-                    <a th:href="@{'/notice/list'}">
-                        <button type="button" class="btn_sub">목록</button>
-                    </a>
-                    </div>
+        <div class="table1">
+            <table class="table">
+                <tr class="tab">
+                    <th class="col-2">글번호</th>
+                    <td class="col-4" th:text="${noticeDTO.notice_no}"></td>
+                    <th class="col-2">작성일</th>
+                    <td class="col-4" th:text="${#temporals.format(noticeDTO.notice_regdate, 'yyyy-MM-dd HH:mm')}"></td>
+                </tr>
+                <tr class="tab">
+                    <th class="col-2">작성자</th>
+                    <td class="col-4" th:text="${noticeDTO.member_id}"></td>
+                    <th class="col-2">조회수</th>
+                    <td class="col-4" th:text="${noticeDTO.view_cnt}"></td>
+                </tr>
+                <tr class="tab">
+                    <th class="col-1">제목</th>
+                    <td class="col-11" th:text="${noticeDTO.notice_title}" colspan="4"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="content">
+            <div class="content-container" >
+                <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}" style="text-align: center;">
+                    <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300" alt="image">
+                </div>
+                <div colspan="4" class="text" style="text-align: center;">
+                    <pre style="white-space: pre-wrap; border: none; background-color: white;" th:text="${noticeDTO.notice_content}"></pre>
                 </div>
             </div>
+        </div>
+
+
+        <div class="btn">
+            <a th:href="@{'/admin/edit/' + ${noticeDTO.getNotice_no}}">
+                <button type="button" class="btn_sub">수정</button>
+            </a>
+
+            <a th:href="@{'/admin/notice/delete/' + ${noticeDTO.getNotice_no}}">
+                <button type="button" class="btn_sub">삭제</button>
+            </a>
+
+            <a th:href="@{'/notice/list'}">
+                <button type="button" class="btn_sub">목록</button>
+            </a>
         </div>
     </div>
 </form>

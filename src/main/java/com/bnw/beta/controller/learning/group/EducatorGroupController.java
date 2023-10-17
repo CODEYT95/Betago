@@ -4,7 +4,7 @@ import com.bnw.beta.domain.common.paging.GroupPageDTO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
 import com.bnw.beta.service.member.MemberService;
-import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,14 +29,15 @@ public class EducatorGroupController {
     //그룹 등록 가능한 게임 콘텐츠 목록 GET
     @GetMapping("/addList")
     public String groupAddList(@RequestParam(name = "offset", defaultValue = "0") int offset,
-                               @RequestParam(name = "title", defaultValue = "전체")String game_title, Model model){
+                               @RequestParam(name = "title", defaultValue = "전체")String game_title,
+                               Principal principal, Model model){
 
         int limit = 6;
 
         model.addAttribute("title", game_title);
-        model.addAttribute("groupAddList", groupService.groupAddList(game_title, limit, offset));
-        model.addAttribute("gameTitle", groupService.selectGameTitle());
-        model.addAttribute("totalCnt" , groupService.groupAddListCnt(game_title));
+        model.addAttribute("groupAddList", groupService.groupAddList(principal.getName(), game_title, limit, offset));
+        model.addAttribute("gameTitle", groupService.selectGameTitle(principal.getName()));
+        model.addAttribute("totalCnt" , groupService.groupAddListCnt(principal.getName(), game_title));
         return "/learning/group/educator/groupAddList";
     }
 
@@ -44,11 +45,12 @@ public class EducatorGroupController {
     @PostMapping("/addList")
     @ResponseBody
     public List<GroupDTO> groupAddList(@RequestParam(name = "offset", defaultValue = "0") int offset,
-                                       @RequestParam(name = "title", defaultValue = "") String game_title) {
+                                       @RequestParam(name = "title", defaultValue = "",required = false) String game_title,
+                                       Principal principal) {
 
         int limit = 6;
 
-        return groupService.groupAddList(game_title, limit, offset);
+        return groupService.groupAddList(principal.getName(), game_title, limit, offset);
     }
 
     //그룹 등록
@@ -61,15 +63,11 @@ public class EducatorGroupController {
 
     //그룹 등록 내용 Insert
     @PostMapping("/addInsert")
-    public String addGroupInsert(Principal principal,
-                                 @RequestParam("game_no") int game_no,
-                                 @RequestParam("groupName") String groupName,
-                                 @RequestParam("count") int count,
+    public String addGroupInsert(Principal principal, GroupDTO groupDTO,
                                  @RequestParam("sdate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date sdate,
                                  @RequestParam("edate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date edate){
 
-
-        int result = groupService.insertGroup(game_no, principal.getName(), groupName, count, sdate, edate);
+        int result = groupService.insertGroup(groupDTO, principal.getName(),sdate, edate);
         return "redirect:/educator/group/addList";
     }
 
@@ -91,7 +89,6 @@ public class EducatorGroupController {
     public List<GroupDTO> selectGroupDetail(@RequestParam(name = "group_no") int group_no,
                                             @RequestParam(name = "group_name",defaultValue = "") String group_name){
 
-
         return groupService.selectGroupDetail(group_no,group_name);
     }
 
@@ -108,16 +105,34 @@ public class EducatorGroupController {
     @GetMapping("approveList")
     public String approveStudent(@RequestParam(value = "page", defaultValue = "1") int page,
                                  @RequestParam(value = "size", defaultValue = "10") int size,
-                                 @RequestParam(value = "group_name", defaultValue = "바둑 기사 모여라3") String group_name,
-                                 Model model, HttpSession session){
-        int member_no = (int) session.getAttribute("member_no");
+                                 @RequestParam(value = "group_no", required = false) Integer group_no,
+                                 Model model, Principal principal){
 
-        GroupPageDTO groupPageDTO = groupService.selectGroupApprove(member_no, group_name, page,size);
+        GroupPageDTO groupPageDTO = groupService.selectGroupApprove(principal.getName(), group_no, page,size);
         model.addAttribute("currentPage", groupPageDTO.getCurrentPage());
         model.addAttribute("listCount", groupPageDTO.getListCount());
-        model.addAttribute("groupPageDTO", groupPageDTO);
+        model.addAttribute("GroupPageDTO", groupPageDTO);
+        model.addAttribute("group_name", groupService.selectGroupName(principal.getName()));
+        model.addAttribute("check",group_no);
+        if(group_no != null){
+            model.addAttribute("groupInfo",groupService.selectGroupInfo(group_no));
+            System.out.println("여기들어옴"+groupService.selectGroupInfo(group_no));
+        }
+        return "/learning/group/educator/joinApprove";
+    }
 
-        return "/learning/group/educator/joinApprove/";
+    //그룹 학생 목록 업데이트
+    @PostMapping("approveUpdate")
+    @ResponseBody
+    public String updateGroupMembber(@RequestParam(value = "approve[]", required = false) List<Integer> approveList,
+                                     @RequestParam(value = "reject[]", required = false) List<Integer> rejectList,
+                                     @RequestParam(value = "group_no", required = false) int group_no){
+
+        System.out.println(approveList);
+        System.out.println(rejectList);
+        System.out.println(group_no);
+
+        return groupService.updateGroupMembber(approveList, rejectList, group_no);
     }
 }
 

@@ -16,22 +16,21 @@
             <div id="bbsList_title">
                 <h2 class="head">회원목록</h2>
             </div>
-<!--            <div id="bbsList_header">
+            <div id="bbsList_header">
                 <div id="leftHeader">
-                    <form id="searchForm" th:action="@{/edupost/list}" method="get" name="searchForm">
+                    <form id="searchForm" th:action="@{/member/list}" method="get" name="searchForm">
                         <select name="searchType" class="selectField" title="검색 유형 선택">
-                            <option name="edupost_title" value="edupost_title" th:classappend="${(searchType == 'edupost_title') ? 'selected' : ''}">제목</option>
-                            <option value="edupost_content" th:classappend="${(searchType == 'edupost_content') ? 'selected' : ''}">내용</option>
-                            <option value="title_content" th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용</option>
+                            <option value="role" th:classappend="${(searchType == 'role') ? 'selected' : ''}">전체(구분)</option>
+                            <option value="license" th:classappend="${(searchType == 'license') ? 'selected' : ''}">자격</option>
                         </select>
-                        &lt;!&ndash;    <select name="searchType">
+                        <!--    <select name="searchType">
                                 <option value="edupost_category" th:>자료구분</option>
-                            </select>&ndash;&gt;
+                            </select>-->
                         <input type="text" name="keyword" class="textField"/>
                         <input type="submit" value=" 검 색 " class="btn2"/>
                     </form>
                 </div>
-            </div>-->
+            </div>
 
             <div id="bbsList_list">
                 <table>
@@ -42,64 +41,62 @@
                         <th class="type">성명</th>
                         <th class="eduname">아이디</th>
                         <th class="user">연락처</th>
-                        <th class="user">이메일</th>
-                        <th class="user">자격</th>
+                        <th class="email">이메일</th>
+                        <th class="buyer">자격</th>
                         <th class="createdate">가입일자</th>
+<!--                        <th class="read">확인</th>-->
                     </tr>
                     </thead>
-                 <!--   <tbody id="list">
-                    <th:block th:if="${#lists.isEmpty(MemherDTO.edupostList)}">
+                    <tbody id="list">
+                    <th:block th:if="${#lists.isEmpty(memberPageDTO.memberList)}">
                         <tr>
                             <td colspan="6">등록된 학습자료가 없습니다.</td>
                         </tr>
                     </th:block>
-                    <th:block th:if="${not #lists.isEmpty(edupostPageDTO.edupostList)}">
-                        <tr class="tr-list"  th:each="list, index : ${edupostPageDTO.edupostList}">
-                            <td class="no" th:text="${index.index + edupostPageDTO.startIndex + 1}"></td>
-                            <td class="category" th:text="${list.edupost_category}">자료구분</td>
-                            <td class="type" th:text="${list.edupost_type}">자료유형</td>
+                    <th:block th:if="${not #lists.isEmpty(memberPageDTO.memberList)}">
+                        <tr class="tr-list"  th:each="list, index : ${memberPageDTO.memberList}">
+                            <td id="no" th:text="${index.index + memberPageDTO.startIndex + 1}"></td>
+                            <td id="role" th:text="${list.role}">구분</td>
+                            <td id="membername" th:text="${list.member_name}">성명</td>
+<!--                            <td id="member_id" th:text="${list.member_id}">아이디-->
                             <td>
-                                <a th:href="@{|/edupost/detail/${list.edupost_no}|}">
-                                    <span class="" th:text="${list.edupost_title}"></span>
+                                <a class="member-link" th:href="@{|/detail/${list.member_id}|}" data-member-id="${list.member_id}">
+                                    <span class="" th:text="${list.member_id}"></span>
                                 </a>
                             </td>
-                            <td class="writer" th:text="${list.member_id}">작성자</td>
-                            <td class="writer" th:text="${list.edupost_date}">등록일시</td>
+                            <td id="phone" th:text="${list.member_phone}">연락처</td>
+                            <td id="e_mail" th:text="${list.member_email}">이메일</td>
+                            <td id="license" th:text="${list.license}">자격</td>
+                            <td id="joindate" th:text="${list.join_date}">가입일자</td>
+                  <!--          <td>
+                                <input type="button" value="상세보기" th:onclick="|location.href='@{/detail/${list.member_id}}'|" />
+                            </td>-->
                         </tr>
-                    </th:block>-->
-
-                    <!-- <tr th:if="${#lists.size(dataCount)}>0" th:each="dataCount:${dataCount}">
-
-                         <td colspan="5" id="footer">
-                             <a th:utext="${pageIndexList}"></a>
-                         </td>
-                     </tr>
-
-                     <tr th:if="${#lists.size(dataCount)}<0" th:each="dataCount:${dataCount}">
-                         <td colspan="5">등록된 게시물이 없습니다.</td>
-                     </tr>-->
-
+                    </th:block>
                     </tbody>
                 </table>
-         <!--       <div class="pagination">
+                <div class="pagination">
                     <div class="paging">
                         <div class="text-center clearfix">
                             <div class="pagingNum">
                                 <ul class="pagination-container" id="pagination">
-                                    <li th:if="${edupostPageDTO.startPage > 5}" class="page-item">
-                                        <a class="page-link" th:with="prevPage=${edupostPageDTO.startPage - 1}" th:href="@{/edupost/list(page=${prevPage}, size=${edupostPageDTO.getEdupostList().size()}, searchType=${searchType}, keyword=${keyword})}"><</a>
+                                    <li th:if="${memberPageDTO.startPage > 5}" class="page-item">
+                                        <a class="page-link" th:with="prevPage=${memberPageDTO.startPage - 1}" th:href="@{/member/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword})}"><</a>
                                     </li>
-                                    <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(edupostPageDTO.startPage, edupostPageDTO.endPage)}" class="page-item">
-                                        <a th:href="@{/edupost/list(page=${pageNum}, size=${edupostPageDTO.getEdupostList().size()}, searchType=${searchType}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                    <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(memberPageDTO.startPage, memberPageDTO.endPage)}" class="page-item">
+                                        <a th:href="@{/member/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
                                     </li>
-                                    <li th:if="${edupostPageDTO.endPage < edupostPageDTO.totalPages}" class="page-item">
-                                        <a class="page-link" th:with="nextPage=${edupostPageDTO.startPage + 5}" th:href="@{/edupost/list(page=${nextPage}, size=${edupostPageDTO.getEdupostList().size()}, searchType=${searchType}, keyword=${keyword})}">></a>
+                                    <li th:if="${memberPageDTO.endPage < memberPageDTO.totalPages}" class="page-item">
+                                        <a class="page-link" th:with="nextPage=${memberPageDTO.startPage + 5}" th:href="@{/member/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword})}">></a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div>-->
+                </div>
+
+
+                </div>
 
             </div>
         </div>
@@ -108,5 +105,7 @@
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+<script th:inline="javascript">
+</script>
 </body>
 </html>
