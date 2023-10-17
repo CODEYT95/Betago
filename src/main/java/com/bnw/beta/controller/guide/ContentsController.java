@@ -16,6 +16,8 @@ public class ContentsController {
     @GetMapping("/contentsTutorial")
     public String contentsTutorialIntro() {return "guide/contents/contentsTutorial"; }
 
+    @GetMapping("/contentsVideo")
+    public String contentsVideoIntro() {return "guide/contents/contentsVideo"; }
 }
 
 
