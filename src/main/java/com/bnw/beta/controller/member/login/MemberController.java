@@ -1,6 +1,7 @@
 package com.bnw.beta.controller.member.login;
 
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
+import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,13 +85,25 @@ public class MemberController {
                              @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
 
         MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, keyword);
-
         model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
         model.addAttribute("listCount", memberPageDTO.getListCount());
         model.addAttribute("memberPageDTO", memberPageDTO);
         model.addAttribute("searchType", searchType);
         model.addAttribute("keyword", keyword);
         return "admin/edupost/memberlist";
+    }
+    /*회원 상세조회(관리자)*/
+    @GetMapping("/detail/{member_id}")
+    public String memberView(@PathVariable("member_id") String member_id, Model model) {
+            MemberDTO member = memberService.getMemberInfo(member_id);
+        if (member_id != null) {
+            model.addAttribute("detail", member);
+            return "admin/edupost/memberdetail";
+        } else {
+            return "member";
+            // 멤버 정보가 없는 경우에 대한 처리 로직 추가
+            // 예: 에러 페이지로 리다이렉트 또는 에러 메시지 표시 등
+        }
     }
 /*
     유진님 회원가입부분 폼
