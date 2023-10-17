@@ -74,6 +74,53 @@
             dateRange.style.display = '';
             startDateSingle.style.display = 'none';
         }
+
+        $(".close-modal").click(function() {
+        // 모달 엘리먼트를 숨기는 처리
+        $(".member-list").empty();
+        $("#modal").css("display", "none");
+    });
+    $(".detail-search").click(function() {
+    // data-day-no 속성에서 값을 가져옵니다.
+    var pay_date = $(this).find('i').attr('data-day-no');
+
+    console.log(pay_date);
+
+        $.ajax({
+            type: "POST",
+            url: "/pay/test2",
+            data: {
+                pay_date: pay_date
+            },
+            dataType: "json", // 이 부분을 JSON으로 설정
+            success: function(response) {
+                console.log("AJAX 요청 성공:", response);
+
+                // 데이터를 사용하여 HTML을 업데이트
+                var memberList = $(".member-list");
+
+                $(".groupinfo span:nth-child(1)").text("게임 콘텐츠: " + game_title);
+                $(".groupinfo span:nth-child(2)").text("그룹 제한 인원: " + group_cnt+"명");
+                $(".groupinfo span:nth-child(3)").text("그룹 가능 인원: " + group_nowcnt+"명");
+
+                $.each(response, function(index, groupItem) {
+                    var li = $("<li>");
+                    li.append("<span style='width: 10%;'>" + (index + 1) + "</span>");
+                    li.append("<span style='width: 15%;'>" + groupItem.member_name + "</span>");
+                    li.append("<span style='width: 20%;'>" + groupItem.member_phone + "</span>");
+                    li.append("<span style='width: 40%;'>" + groupItem.member_email + "</span>");
+                    li.append("<span style='width: 15%;'>" + groupItem.join_date + "</span>");
+
+                    memberList.append(li);
+                });
+                $("#modal").css("display", "block");
+            },
+            error: function(error) {
+                // AJAX 요청이 실패할 때 처리할 코드
+                console.error("AJAX 요청 실패:", error);
+            }
+        });
+    });
     });
 </script>
 <body>
@@ -146,7 +193,7 @@
                                 <span th:text="${dayList.total_sell}"></span>
                             </div>
                             <div class="li-detail">
-                                <button class="detail-search"><i class="ri-search-eye-line" data-tasksend_no=""></i></button>
+                                <button class="detail-search"><i class="ri-search-eye-line" th:attr="data-day-no=${dayList.day}"></i></button>
                             </div>
                         </li>
                     </ul>

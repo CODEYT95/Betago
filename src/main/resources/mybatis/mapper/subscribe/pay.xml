@@ -26,6 +26,7 @@
     </foreach>
 </select>
 
+    <!-- 매출 그래프 일 단위 -->
 <select id="selectDaySales">
     <![CDATA[
     SELECT DATE_FORMAT(p.pay_date, '%Y-%m-%d') AS day,
@@ -38,7 +39,7 @@
     ORDER BY day ASC;
     ]]>
 </select>
-
+    <!-- 매출 그래프 월 단위 -->
 <select id="selectMonthSales">
     <![CDATA[
     SELECT DATE_FORMAT(p.pay_date, '%Y-%m') AS day,
@@ -50,6 +51,52 @@
     GROUP BY DATE_FORMAT(p.pay_date, '%Y-%m')
     ORDER BY day ASC;
     ]]>
+</select>
+
+<!-- 매출 상세 일/월 단위 -->
+<select id="selectSalesDetail" resultType="payDTO">
+    <choose>
+        <when test="enddate == " >
+        <![CDATA[
+        SELECT
+        DATE_FORMAT(p.pay_date, '%Y-%m-%d') AS day,
+        p.member_id,
+        m.member_name,
+        g.game_title,
+        g.game_sell
+        FROM
+        pay AS p
+        JOIN
+        member AS m ON p.member_id = m.member_id
+        JOIN
+        game AS g ON p.game_no = g.game_no
+        WHERE
+        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{startDate} AND #{startDate}
+        ORDER BY
+        p.pay_date ASC;
+        ]]>
+        </when>
+        <when test="enddate != " >
+        <![CDATA[
+        SELECT
+        DATE_FORMAT(p.pay_date, '%Y-%m') AS day,
+        p.member_id,
+        m.member_name,
+        g.game_title,
+        g.game_sell
+        FROM
+        pay AS p
+        JOIN
+        member AS m ON p.member_id = m.member_id
+        JOIN
+        game AS g ON p.game_no = g.game_no
+        WHERE
+        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{startDate} AND #{startDate}
+        ORDER BY
+        p.pay_date ASC;
+        ]]>
+        </when>
+    </choose>
 </select>
 
 </mapper>

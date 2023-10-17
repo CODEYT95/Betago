@@ -72,8 +72,19 @@ public class PayController {
             model.addAttribute("dayList", payService.selectDaySales(pay_date));
             System.out.println(payService.selectDaySales(pay_date));
         } else if(pay_enddate != null) {
+
             model.addAttribute("dayList", payService.selectMonthSales(pay_date,pay_enddate));
         }
         return "test2";
+    }
+
+    @PostMapping("/test2")
+    @ResponseBody
+    public List<payDTO> post1(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
+                       Model model) {
+
+        System.out.println(pay_date);
+
+        return payService.selectSalesDetail(pay_date);
     }
 }
