@@ -2,12 +2,14 @@ package com.bnw.beta.service.admin.notice;
 
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
+import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +27,7 @@ public interface NoticeService {
     List<NoticeDTO> getTopNoticeList();
 
     //공지게시판 글등록
-    void insert(NoticeDTO noticeDTO, MultipartFile[] file, String type, Date timeWrite) throws IOException, ParseException;
+    void insert(NoticeDTO noticeDTO, MultipartFile[] file, String type, Date timeWrite, HttpSession session) throws IOException, ParseException;
 
     //공지게시판 상세조회
     NoticeDTO detail(Long notice_no) ;

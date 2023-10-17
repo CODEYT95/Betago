@@ -3,6 +3,7 @@ package com.bnw.beta.controller.admin;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
 import com.bnw.beta.service.admin.notice.NoticeServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -62,12 +63,15 @@ public class NoticeController {
                               @RequestParam("file") MultipartFile[] file,
                               @RequestParam(name = "type", defaultValue = "일반") String type,
                               @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")Date timeWrite,
-                              Model model, Principal principal) throws IOException {
-        noticeDTO.setMember_id(principal.getName());
+                              Model model,HttpSession session) throws IOException {
+        String memberName = (String) session.getAttribute("member_name");
+        noticeDTO.setMember_name(memberName);
+
+
         System.out.println(noticeDTO);
         try {
             System.out.println(noticeDTO);
-            noticeService.insert(noticeDTO, file, type, timeWrite);
+            noticeService.insert(noticeDTO, file, type, timeWrite, session);
             return "redirect:/notice/list";
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,8 +106,9 @@ public class NoticeController {
     @PostMapping("/admin/notice/update")
     public String update(@RequestParam("notice_no") Long notice_no,
                          @ModelAttribute NoticeDTO noticeDTO,
-                         @RequestParam("file") MultipartFile[] file,Principal principal) throws IOException {
-        noticeDTO.setMember_id(principal.getName());
+                         @RequestParam("file") MultipartFile[] file,HttpSession session) throws IOException {
+        String memberName = (String) session.getAttribute("member_name");
+        noticeDTO.setMember_name(memberName);
         noticeService.update(notice_no, noticeDTO, file);
         return "redirect:/notice/list";
     }
