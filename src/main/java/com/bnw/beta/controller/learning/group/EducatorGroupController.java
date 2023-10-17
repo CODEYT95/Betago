@@ -31,9 +31,9 @@ public class EducatorGroupController {
     public String groupAddList(@RequestParam(name = "offset", defaultValue = "0") int offset,
                                @RequestParam(name = "title", defaultValue = "전체")String game_title,
                                Principal principal, Model model){
-
         int limit = 6;
 
+        model.addAttribute("addList",1);
         model.addAttribute("title", game_title);
         model.addAttribute("groupAddList", groupService.groupAddList(principal.getName(), game_title, limit, offset));
         model.addAttribute("gameTitle", groupService.selectGameTitle(principal.getName()));
@@ -77,6 +77,7 @@ public class EducatorGroupController {
 
         String member_id = principal.getName();
 
+        model.addAttribute("list",1);
         model.addAttribute("group_name", group_name);
         model.addAttribute("groupName", groupService.selectGroupName(member_id));
         model.addAttribute("groupList", groupService.groupListSelect(member_id, group_name));
@@ -88,7 +89,8 @@ public class EducatorGroupController {
     @ResponseBody
     public List<GroupDTO> selectGroupDetail(@RequestParam(name = "group_no") int group_no,
                                             @RequestParam(name = "group_name",defaultValue = "") String group_name){
-
+        System.out.println(group_no+""+group_name);
+        System.out.println(groupService.selectGroupDetail(group_no,group_name));
         return groupService.selectGroupDetail(group_no,group_name);
     }
 
@@ -104,7 +106,7 @@ public class EducatorGroupController {
     //그룹 학습자 가입 승인
     @GetMapping("approveList")
     public String approveStudent(@RequestParam(value = "page", defaultValue = "1") int page,
-                                 @RequestParam(value = "size", defaultValue = "10") int size,
+                                 @RequestParam(value = "size", defaultValue = "1") int size,
                                  @RequestParam(value = "group_no", required = false) Integer group_no,
                                  Model model, Principal principal){
 
@@ -118,6 +120,7 @@ public class EducatorGroupController {
             model.addAttribute("groupInfo",groupService.selectGroupInfo(group_no));
             System.out.println("여기들어옴"+groupService.selectGroupInfo(group_no));
         }
+        model.addAttribute("approveList",1);
         return "/learning/group/educator/joinApprove";
     }
 
@@ -135,4 +138,3 @@ public class EducatorGroupController {
         return groupService.updateGroupMembber(approveList, rejectList, group_no);
     }
 }
-

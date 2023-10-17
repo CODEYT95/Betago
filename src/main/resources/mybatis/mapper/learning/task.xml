@@ -12,6 +12,23 @@
         ]]>
     </insert>
 
+    <!--생성한 숙제 조회-->
+    <select id="createTaskList" parameterType="map" resultType="TaskDTO">
+        <![CDATA[
+        SELECT * FROM task WHERE member_id = #{member_id}
+        ORDER BY task_regdate DESC
+        LIMIT #{page}, #{size};
+        ]]>
+    </select>
+
+    <!--생성한 숙제 갯수 조회-->
+    <select id="sendTaskListCount" parameterType="String" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM task WHERE member_id = #{member_id};
+        ]]>
+    </select>
+
     <!--숙제 제목으로 조회-->
     <select id="selectTaskTitle" parameterType="String" resultType="String">
         <![CDATA[
@@ -23,7 +40,8 @@
         ]]>
     </select>
 
-    <select id="selectTaskByTitle" parameterType="TaskDTO" resultType="TaskDTO">
+    <!--생성한 숙제 조회-->
+    <select id="selectTaskByTitle" parameterType="map" resultType="TaskDTO">
         <![CDATA[
         SELECT * FROM task
         WHERE
@@ -37,7 +55,26 @@
         <![CDATA[
         AND member_id = #{member_id}
         AND task_deadline > now()
-        ORDER BY task_regdate DESC;
+        ORDER BY task_regdate DESC
+        LIMIT #{page}, #{size};
+        ]]>
+    </select>
+
+    <!--생성한 숙제 갯수 조회-->
+    <select id="countTasksByTitle" parameterType="TaskDTO" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*) FROM task
+        WHERE
+        ]]>
+            <if test="task_title != null and task_title != ''">
+                task_title = #{task_title}
+            </if>
+            <if test="task_title == null or task_title == ''">
+                1=1
+            </if>
+        <![CDATA[
+        AND member_id = #{member_id}
+        AND task_deadline > now();
         ]]>
     </select>
 
@@ -77,36 +114,6 @@
         VALUES (#{task_no},  #{member_no}, #{group_no}, now(), #{member_id})
         ]]>
     </insert>
-
-    <!--전송한 숙제 조회-->
-    <select id="sendTaskList" parameterType="map" resultType="TaskDTO">
-        <![CDATA[
-        SELECT t.task_no, s.tasksend_no, s.task_senddate, MAX(t.task_title) AS task_title,
-                                                                    MAX(t.task_content) AS task_content, MAX(t.task_chapter) AS task_chapter,
-                                                                    MAX(t.task_regdate) AS task_regdate, MAX(t.task_deadline) AS task_deadline,
-                                                                    MAX(t.member_id) AS member_id, MAX(s.tasksend_no) AS tasksend_no
-        FROM TASK t
-        JOIN tasksend s ON t.task_no = s.task_no
-        WHERE t.member_id = #{member_id}
-        GROUP BY t.task_no, s.task_senddate
-        ORDER BY MAX(t.task_regdate) DESC
-        LIMIT #{page}, #{size};
-        ]]>
-    </select>
-
-    <!--전송한 숙제 갯수 조회-->
-    <select id="sendTaskListCount" parameterType="String" resultType="Integer">
-        <![CDATA[
-        SELECT COUNT(*) AS record_count
-        FROM (
-            SELECT t.task_no, s.task_senddate
-            FROM TASK t
-            JOIN tasksend s ON t.task_no = s.task_no
-            WHERE t.member_id = #{member_id}
-            GROUP BY t.task_no, s.task_senddate
-        ) AS subquery;
-        ]]>
-    </select>
 
     <!--전송 숙제 조회-->
     <select id="selectSendTask">

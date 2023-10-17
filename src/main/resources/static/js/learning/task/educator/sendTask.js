@@ -40,9 +40,62 @@ document.addEventListener("DOMContentLoaded", function () {
             modal.style.display = "none";
             modalBg.style.display = "none";
         });
+
+        document.getElementById("sendTaskBtn").addEventListener("click", function (e) {
+            e.preventDefault(); // 기본 이벤트 방지
+
+            // 필요한 조건 검사
+            const selectedTask = document.querySelector(".list_no input[type='checkbox']:checked");
+            const selectedOption = document.querySelector("#selectGroupTitle option:checked");
+            const selectedCheckboxes = document.querySelectorAll(".list_groupNo input[type='checkbox']:checked");
+            const taskNoMsg = document.querySelector(".taskNoMsg");
+            const groupNameMsg = document.querySelector(".groupNameMsg");
+            const memberNoMsg = document.querySelector(".memberNoMsg");
+
+            // 초기화
+            taskNoMsg.textContent = "";
+            groupNameMsg.textContent = "";
+            memberNoMsg.textContent = "";
+
+            if (!selectedTask) {
+                taskNoMsg.textContent = "숙제를 선택해주세요.";
+            }
+            if (!selectedOption || !selectedOption.value) {
+                groupNameMsg.textContent = "그룹을 조회해주세요.";
+            }
+            if (selectedCheckboxes.length === 0) {
+                memberNoMsg.textContent = "수강생을 선택해주세요.";
+            }
+
+            if (!selectedTask || !selectedOption || !selectedOption.value || selectedCheckboxes.length === 0) {
+                return;
+            }
+
+            // 모달2 열기
+            const modal2 = document.querySelector("#myModal2");
+            const modalBg = document.querySelector(".modal-bg");
+
+            modal2.style.display = "block";
+            modalBg.style.display = "block";
+        });
+
+        // 모달2 닫기 버튼 클릭 시
+        document.getElementById("exitBtn").addEventListener("click", function () {
+            const modal2 = document.querySelector("#myModal2");
+            const modalBg = document.querySelector(".modal-bg");
+
+            modal2.style.display = "none";
+            modalBg.style.display = "none";
+        });
+
+        modalBg.addEventListener("click", function () {
+            const modal2 = document.querySelector("#myModal2");
+            const modalBg = document.querySelector(".modal-bg");
+
+            modal2.style.display = "none";
+            modalBg.style.display = "none";
+        });
     }
-
-
 
     // 초기 페이지 로딩 시 모달 열기 버튼에 클릭 이벤트 리스너 연결
     ModalListeners();
@@ -62,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 그룹 조회 버튼 클릭 시
     $("#selectGroupBtn").click(function (e) {
         e.preventDefault(); // 기본 이벤트 방지
-        var selectedOption = $("#selectGroupTitle option:selected");
+        var selectedOption = $("#selectGroupTitle option:checked");
         var group_no = selectedOption.attr("data-groupNo");
         var group_name = selectedOption.attr("data-groupName");
 
@@ -105,15 +158,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: { task_title: task_title },
                 dataType: "html",
                 success: function (response) {
-                    var tbodyHtml = $(response).find("#taskTableBody").html();
+                    console.log(response);
+                     var tbodyHtml = $(response).find("#taskTableBody").html();
+                        $("#taskTableBody").html(tbodyHtml);
 
-                    $("#taskTableBody").html(tbodyHtml);
+                    var pageHtml = $(response).find("#pagination").html();
+                        $("#pagination").html(pageHtml);
 
                     ModalListeners();
                 },
-                error: function () {
-                    alert("작업을 가져오는 중 오류가 발생했습니다.");
-                }
             });
         });
     });

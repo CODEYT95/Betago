@@ -15,11 +15,11 @@ public interface TaskService {
     int createTask(String member_id, String task_title, String task_content, String task_chapter, String task_deadline);
 
     //전송한 숙제 조회
-    TaskPageDTO sendTaskList(@Param("member_id") String member_id, @Param("page") int page, @Param("size") int size);
+    TaskPageDTO createTaskList(String member_id, int page,  int size);
 
     //숙제 조회하기
     List<String> selectTaskTitle(String member_id);
-    List<TaskDTO> selectTaskByTitle(String task_title, String member_id);
+    TaskPageDTO selectTaskByTitle(String task_title, String member_id,  int page,  int size);
 
     //그룹 조회하기
     List<GroupDTO> selectGroupName(String member_id);

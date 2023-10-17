@@ -27,7 +27,8 @@ public class EducatorTaskController {
                                                         Authentication authentication, Model model) {
 
         String member_id = authentication.getName();
-        TaskPageDTO taskPageDTO = taskService.sendTaskList(member_id, page, size);
+        TaskPageDTO taskPageDTO = taskService.createTaskList(member_id, page, size);
+        model.addAttribute("createTask", 1);
         model.addAttribute("currentPage", taskPageDTO.getCurrentPage());
         model.addAttribute("listCount", taskPageDTO.getListCount());
         model.addAttribute("taskPageDTO", taskPageDTO);
@@ -41,7 +42,6 @@ public class EducatorTaskController {
                                             @RequestParam String task_chapter, @RequestParam String year,
                                             @RequestParam String month, @RequestParam String day, Model model,
                                             Authentication authentication) {
-
         String member_id = authentication.getName();
         String task_deadline = year + "-" + month + "-" + day;
 
@@ -60,21 +60,35 @@ public class EducatorTaskController {
     @GetMapping("/sendTask")
     public String selectTaskDetailByTitle(@RequestParam(defaultValue = "") String task_title,
                                                                     @RequestParam(defaultValue = "") String group_name,
-                                                                    @RequestParam(defaultValue = "") Integer group_no, Authentication authentication, Model model){
-
+                                                                    @RequestParam(defaultValue = "") Integer group_no,
+                                                                    @RequestParam(value = "page", defaultValue = "1") int page,
+                                                                    @RequestParam(value = "size", defaultValue = "1") int size,
+                                                                    Authentication authentication, Model model){
+        System.out.println(task_title);
+        if(task_title.equals("전체")){
+            task_title="";
+        }else {
+            model.addAttribute("task_title", task_title);
+        }
         String member_id = authentication.getName();
         List<String> taskTitle = taskService.selectTaskTitle(member_id);
-        List<TaskDTO> taskDetail = taskService.selectTaskByTitle(task_title, member_id);
+        TaskPageDTO taskPageDTO = taskService.selectTaskByTitle(task_title, member_id,page,size);
         List<GroupDTO> groupName = taskService.selectGroupName(member_id);
         List<GroupDTO> groupDetail = taskService.selectGroupByName(group_name, member_id, group_no);
 
+        model.addAttribute("sendTask",1);
         model.addAttribute("check",group_name);
         model.addAttribute("taskTitle", taskTitle);
-        model.addAttribute("taskDetail", taskDetail);
         model.addAttribute("groupName", groupName);
         model.addAttribute("groupDetail", groupDetail);
+        model.addAttribute("taskPageDTO", taskPageDTO);
+        model.addAttribute("currentPage", taskPageDTO.getCurrentPage());
+        model.addAttribute("listCount", taskPageDTO.getListCount());
+        model.addAttribute("taskPageDTO", taskPageDTO);
+
         return "learning/task/educator/sendTask";
     }
+
 
     @PostMapping("/sendToMember")
     public String sendTask(@RequestParam("task_no[]") List<Integer> task_no,

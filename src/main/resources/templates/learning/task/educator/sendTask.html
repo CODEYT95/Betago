@@ -29,6 +29,7 @@
                 <div class="task-wrap">
                     <div class="task-detail" >
                         <div class="table-wrap">
+                            <span class="taskNoMsg" style="color: red;  margin-left: 25px;"></span>
                             <table class="list-table">
                                 <thead class="table-head">
                                 <tr>
@@ -41,13 +42,13 @@
                                 </tr>
                                 </thead>
                                 <tbody class="tbody-container" id="taskTableBody">
-                                <th:block th:if="${#lists.isEmpty(taskDetail)}">
+                                <th:block th:if="${#lists.isEmpty(taskPageDTO.taskList)}">
                                     <tr>
                                         <td colspan="4">생성한 숙제가 없습니다.</td>
                                     </tr>
                                 </th:block>
-                                <th:block th:if="${not #lists.isEmpty(taskDetail)}">
-                                    <tr class="tr-list"  th:each="list : ${taskDetail}">
+                                <th:block th:if="${not #lists.isEmpty(taskPageDTO.taskList)}">
+                                    <tr class="tr-list"  th:each="list : ${taskPageDTO.taskList}">
                                         <td class="list_no">
                                             <label class="checkbox-wrap">
                                                 <input type="checkbox" th:value="${list.task_no}" name="task_no[]">
@@ -67,6 +68,25 @@
                                 </th:block>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="pagination">
+                            <div class="paging">
+                                <div class="text-center clearfix">
+                                    <div class="pagingNum">
+                                        <ul class="pagination-container" id="pagination">
+                                            <li th:if="${taskPageDTO.startPage > 5}" class="page-item">
+                                                <a class="page-link" th:with="prevPage=${taskPageDTO.startPage - 1}" th:href="@{/educator/sendTask(page=${prevPage},task_title=${task_title})}">Prev</a>
+                                            </li>
+                                            <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(taskPageDTO.startPage, taskPageDTO.endPage)}" class="page-item">
+                                                <a th:href="@{/educator/sendTask(page=${pageNum},task_title=${task_title})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                            </li>
+                                            <li th:if="${taskPageDTO.endPage < taskPageDTO.totalPages}" class="page-item">
+                                                <a class="page-link" th:with="nextPage=${taskPageDTO.startPage + 5}" th:href="@{/educator/sendTask(page=${nextPage},task_title=${task_title})}">Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,7 +108,11 @@
                             <input type="button" class="sendTaskBtn"  value="전송하기" id="sendTaskBtn">
                         </div>
                     </div>
+                    <div class="errorMsg">
+                        <span class="groupNameMsg" style="color: red;  margin: 10px 15px;"></span>
+                    </div>
                     <div class="member_wrap">
+                        <span class="memberNoMsg" style="color: red; margin: 25px;"></span>
                         <div class="table-container">
                             <div class="table-left">
                                 <table class="list-table">
@@ -154,9 +178,8 @@
                     </div>
                 </div>
                 <!--모달2-->
-                <div class="modal-bg"></div>
                 <div id="myModal2" class="modal2" style="display:none;">
-                    <div class="modal-wrap">
+                    <div class="modal-wrap2">
                         <div class="modal-task-title">
                             <div class="modal-content-title">
                                 <span>숙제가 전송되었습니다!</span>
@@ -164,7 +187,7 @@
                         </div>
                         <div class="modalBtn">
                             <button type="submit" class="submit" id="sendTask">확인</button>
-                            <input type="button" class="submit" id="exitBtn">
+                            <input type="button" class="conceal" id="exitBtn" value="닫기">
                         </div>
                     </div>
                 </div>

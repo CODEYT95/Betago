@@ -157,8 +157,27 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     border-radius: 5px;
 }
 
+.modal2 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    z-index: 1001;
+    width: 280px;
+    height: 190px;
+    border-radius: 5px;
+}
+
 .modal-wrap {
     margin: 10px 10px 0 10px;
+}
+
+.modal-wrap2 {
+    display: grid;
+    position: relative;
+    top: 60px;
+    height: 125px;
 }
 
 .modal-content-title {
@@ -179,11 +198,11 @@ tr:nth-child(even) {background-color: #e4e9ec;}
 }
 
 .conceal {
-    width: 50px;
-    height: 30px;
+    width: 70px;
+    height: 35px;
     border: none;
     border-radius: 5px;
-    background: #f9ecbe;
+    background: #ccc;
     cursor: pointer;
 }
 
@@ -274,6 +293,15 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     margin: 0 15px 0 0;
 }
 
+.submit {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+}
+
 .selectTaskBtn:hover, .selectMemberBtn:hover,
 .selectAllBtn:hover, .sendTaskBtn:hover {
     background-color: #007bff;
@@ -283,4 +311,51 @@ tr:nth-child(even) {background-color: #e4e9ec;}
 .detailBtn:hover {
     color: #000;
     background: #b2d3ff;
+}
+
+.errorMsg {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+#pagination{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+
+.pagination-container a {
+    float: left;
+    text-decoration: none;
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius : 5px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.active-page {
+    background: #b2d3ff;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.pagination-container li {
+    margin: 0;
+    width: 35px;
+    display: flex;
+    height: 30px;
+    align-items: center;
 }
