@@ -1,25 +1,169 @@
-.faq_block {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    transition: max-height 0.3s ease-out;
-    min-width: 480px;
+@charset "UTF-8";
+.faq-box {
+    border:2px solid #0078FF;
+    background-color:#fff;
+    color:inherit;
+    padding:10px;
+    margin-top: 2px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px #d2d2d2;
+    margin-bottom: 5px;
 }
 
-.faq_block+.faq_block {
+.faq-box__question {
+    cursor:pointer;
+}
+
+.faq-box__question::after {
+    content:"▼";
+    float:right;
+}
+
+.faq-box > ul > li {
+    padding:10px;
+}
+
+.faq-box > ul > li.hover > .faq-box__question::after {
+    content:"▲";
+}
+
+.faq-box__answer {
+    display:none;
+    background-color:#EBF5FF	;
+    border-radius:10px;
+    padding:10px;
     margin-top: 10px;
 }
 
-.faq_header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
+.img{
+    margin-top: 10px;
+}
+
+#QnA{
+    height: 127px;
+    width: 300px;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-left: 180px;
+}
+#info{
+    height: 123px;
+    width: 300px;
+    margin-top: 11px;
+}
+area[alt="아이디 찾기"] {
     cursor: pointer;
 }
-.faq_body {
-    max-height: 0;
-    overflow: hidden;
-    background-color: #eee;
-    transition: max-height 0.3s ease-in-out;
-    padding: 0 10px;
+
+area[alt="비밀번호 찾기"] {
+    cursor: pointer;
+}
+
+.paging {
+    margin-top: 15px;
+    display: flex;
+}
+#pagination{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.pagination-container li{
+    display: flex;
+    float: left;
+    margin-right: 5px;
+    padding: 8px 13px;
+    text-decoration: none;
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius : 8px;
+    width: 36px;
+}
+
+#searchForm{
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.search-box{
+    padding: 7px;
+    text-align: center;
+
+}
+
+.search-text{
+    padding: 7px;
+    width: 220px;
+    text-align: center;
+}
+.bt_search{
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+}
+
+.btn{
+    text-align: right;
+}
+
+.btn_sub{
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+}
+
+/*페이지네이션 스타일*/
+#pagination{
+    display: flex;
+    margin: 15px 0 0 15px;
+    gap: 5px;
+    justify-content: center;
+}
+
+.pagination-container a {
+    float: left;
+    display: flex;
+    text-decoration: none;
+    width: 35px;
+    height: 100%;
+    align-items: center;
+}
+
+.pagination-container li {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 35px;
+    height: 30px;
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius : 5px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.active-page {
+    background: #b2d3ff;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
 }

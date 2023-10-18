@@ -64,8 +64,17 @@ public class PayServiceImpl implements PayService {
         String startDate = dateFormat.format(pay_date);
         String endDate = dateFormat.format(pay_enddate);
 
-        System.out.println(startDate+"ee"+endDate);
 
         return payDAO.selectMonthSales(startDate,endDate);
+    }
+
+    //매출 상세 조회
+    public List<payDTO> selectSalesDetail(Date pay_date){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        String startDate = dateFormat.format(pay_date);
+
+
+        return payDAO.selectSalesDetail(startDate);
     }
 }

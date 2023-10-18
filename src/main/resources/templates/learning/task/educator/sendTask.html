@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>둑며들다|숙제 배포</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/educator/createTask.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/educator/sendTask.css}">
     <script type="text/javascript" th:src="@{/js/learning/task/educator/sendTask.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
@@ -13,6 +13,9 @@
     <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
     <div class="content-wrap">
         <div class="table-title-wrap">
+            <div class="table-title-wrap">
+                <h2 class="table-title">숙제 목록👀</h2>
+            </div>
             <div class="select-box">
                 <select id="selectTaskTitle" name="task_title">
                     <option value="" name="task_title">전체</option>
@@ -27,7 +30,6 @@
                     <div class="task-detail" >
                         <div class="table-wrap">
                             <table class="list-table">
-                                <caption class="table-title">숙제 목록👀</caption>
                                 <thead class="table-head">
                                 <tr>
                                     <th class="t_no"> </th>
@@ -47,7 +49,10 @@
                                 <th:block th:if="${not #lists.isEmpty(taskDetail)}">
                                     <tr class="tr-list"  th:each="list : ${taskDetail}">
                                         <td class="list_no">
-                                            <input type="checkbox" th:value="${list.task_no}" name="task_no[]">
+                                            <label class="checkbox-wrap">
+                                                <input type="checkbox" th:value="${list.task_no}" name="task_no[]">
+                                                <span class="checkmark" th:value="${list.task_no}" ></span>
+                                            </label>
                                         </td>
                                         <td class="list_name" th:text="${list.task_title}"></td>
                                         <td class="list_content" th:text="${list.task_content}"></td>
@@ -67,6 +72,9 @@
                 </div>
                 <hr class="divider">
                 <div class="table-title-wrap">
+                    <h2 class="table-title" id="table-title">수강생 목록👩‍👩‍👧</h2>
+                </div>
+                <div class="table-wrap">
                     <div class="select-box">
                         <select id="selectGroupTitle" name="group_no">
                             <option value="" name="group_name">선택</option>
@@ -75,13 +83,10 @@
                             </th:block>
                         </select>
                         <div class="button-wrap">
-                            <input type="button" class="selectTaskBtn" value="조회하기" id="selectGroupBtn">
-                            <input type="button" class="selectTaskBtn" value="전체선택" id="selectAllBtn">
-                            <input type="button" class="selectTaskBtn"  value="전송하기" id="sendTaskBtn">
+                            <input type="button" class="selectMemberBtn" value="조회하기" id="selectGroupBtn">
+                            <input type="button" class="selectAllBtn" value="전체선택" id="selectAllBtn">
+                            <input type="button" class="sendTaskBtn"  value="전송하기" id="sendTaskBtn">
                         </div>
-                    </div>
-                    <div class="table-title-wrap">
-                        <h2 class="table-title">수강생 목록👩‍👩‍👧</h2>
                     </div>
                     <div class="member_wrap">
                         <div class="table-container">
@@ -100,7 +105,10 @@
                                     <tr class="tr-list" th:each="list, iterStat : ${groupDetail}">
                                             <th:block th:if="${iterStat.index % 2 == 0}">
                                                 <td class="list_groupNo">
-                                                    <input class="checkbox" type="checkbox" th:value="${list.member_no}" name="member_no[]">
+                                                    <label class="checkbox-wrap">
+                                                        <input class="checkbox" type="checkbox" th:value="${list.member_no}" name="member_no[]">
+                                                        <span class="checkmark" th:value="${list.member_no}" ></span>
+                                                    </label>
                                                 </td>
                                                 <td class="list_member" th:text="${list.member_name}"></td>
                                                 <td class="list_phone" th:text="${list.member_phone}"></td>
@@ -127,7 +135,12 @@
                                         <tr class="tr-list" th:each="list, iterStat : ${groupDetail}">
                                             <!-- 홀수 번째 행만 오른쪽 테이블에 나타나도록 필터링 -->
                                             <th:block th:if="${iterStat.index % 2 != 0}">
-                                                <td class="list_groupNo"><input type="checkbox" class="student-checkbox" th:value="${list.member_no}" name="member_no[]"></td>
+                                                <td class="list_groupNo">
+                                                    <label class="checkbox-wrap">
+                                                        <input class="checkbox" type="checkbox" th:value="${list.member_no}" name="member_no[]">
+                                                        <span class="checkmark" th:value="${list.member_no}" ></span>
+                                                    </label>
+                                                </td>
                                                 <td class="list_name" th:text="${list.member_name}"></td>
                                                 <td class="list_phone" th:text="${list.member_phone}"></td>
                                                 <td class="list_level" th:text="${list.member_level}"></td>

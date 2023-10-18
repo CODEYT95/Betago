@@ -1,104 +1,56 @@
-.btn_file{
-    display: none;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
 }
 
-@charset "UTF-8";
-input[type="checkbox"] {
-    width: 20px; /* 원하는 너비 설정 */
-    height: 20px; /* 원하는 높이 설정 */
-}
-.opt2 {
-    margin-left: 107px;
-    margin-top: 15px;
-    display: block;
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
 }
 
-.head {
-    font-size: 18px;
-    font-weight: bold;
-    color: #454545;
-    margin-bottom: 30px;
-    line-height: 35px;
-}
-.notice_category {
-    height: 29px;
-    border: 1px solid #d1d1d1;
-    text-align: center;
-    width: 20%;
-    margin-left: 31px;
-    font-size: 16px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
+.table {
+    border-collapse: collapse;
+    background-color: white;
+    width: 1000px;
+    margin-top: 250px;
+    height: 150px;
 }
 
-.type{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #ccc;
-    border: 1px solid #888;
-}
-
-.view{
-    font-size: 16px;
-}
-.edupost_type {
-    height: 29px;
-    border: 1px solid #d1d1d1;
-    text-align: center;
-    width: 20%;
-    margin-left: 31px;
-    font-size: 16px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
-}
-.edupost_service {
-    height: 29px;
-    border: 1px solid #d1d1d1;
-    text-align: center;
-    width: 20%;
-    margin-left: 16px;
-    font-size: 16px;
-}
-.texarea1 {
-    border: 1px solid #d1d1d1;
-    width: 80%;
-    margin-left: 58px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
-    font-size: 16px;
+.table th, .table td {
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 8px;
     text-align: left;
-    padding-left: 10px;
-
-}
-.texarea2 {
-    border: 1px solid #d1d1d1;
-    height: 300px;
-    width: 80%;
-    margin-left: 67px;
-    margin-bottom: 20px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
-    font-size: 16px;
-    text-align: left;
-    padding-left: 10px;
-    padding-top: 10px;
-}
-.opt {
-    margin-top: 15px;
 }
 
-.fileselect {
-    position: relative;
-    right: -4px;
+.content{
+    background-color: white;
+    width: 1000px;
+    margin-top:20px;
+    position: initial;
+    text-align: center;
+    white-space: pre-wrap;
+    border: none;
+    max-height: 600px;
+    overflow: auto;
 }
-.fileup {
-    position: relative;
-    right: -35px;
-    width: 234px;
-    font-size: 12px;
+
+
+pre {
+    background-color: white;
+    border: none;
+    padding: 10px;
+    white-space: pre-wrap;
+}
+
+/*버튼*/
+.btn{
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 120px;
 }
 .bt_1 {
     position: relative;
@@ -106,97 +58,49 @@ input[type="checkbox"] {
     bottom: 29px;
 }
 .btn_sub {
-    width: 100px;
-    height: 36px;
-    color: white;
-    background: black;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
     cursor: pointer;
+
 }
 .btn_submit {
     text-align: center;
 }
 .btn_update {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
     border: none;
-    color: white;
-    background: black;
-    width: 100px;
-    height: 36px;
+    background: #ccc;
     cursor: pointer;
+
 }
 .btn_del {
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
     border: none;
-    color: white;
-    background: darkred;
-    width: 100px;
-    height: 36px;
+    background: #ccc;
     cursor: pointer;
+
 }
 
-.form-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    width: 100%;
-    margin-top:10px;
+.btn_sub:hover {
+    background-color: #007bff;
+    color: #fff;
 }
 
-input{
-    height: 30px;
-    width: 200px;
+
+table.table th {
+    background-color: #CDECFA;
+    color: black;
     text-align: center;
 }
 
-.submit-button{
-    width: 150px;
-    height: 32px;
-}
-
-.contain {
-    display: flex;
-    justify-content: center;
-    float: left;
-}
-td {
-    text-align: right;
-    padding-right: 10px;
-    vertical-align: middle;
-}
-th, td {
-    padding-left: 15px;
-}
-
-.cont {
-    display: flex;
-    flex-direction: column;
-}
-
-.btn_box {
-    position: relative;
-    right: -372px;
-    bottom: -30px;
+.text{
     text-align: center;
 }
 
-.btn{
-    text-align: center;
-}
-
-.drop-area {
-    width: 500px;
-    height: 150px;
-    border: 1px solid #d1d1d1;
-    padding: 10px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    border-radius : 5px;
-    font-size: 16px;
-    text-align: center;
-    display: inline-block;
-    margin-left: 106px;
-    margin-bottom: 38px;
-    background-color: white;
-}
-
-#here {
-    padding: 50px;
-}

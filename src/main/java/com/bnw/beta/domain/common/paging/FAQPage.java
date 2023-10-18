@@ -10,12 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class NoticePage {
+public class FAQPage {
 
     private int total;
-    private List<NoticeDTO> noticeList; //일반글
-    private List<NoticeDTO> topNoticeList; // 상단 노출 게시글 목록
-    private List<NoticeDTO> allNoticeList; //전체글
+    private List<NoticeDTO> faqList; //일반글
     private int currentPage;
     private int totalPages;
     private int startPage;
@@ -25,11 +23,10 @@ public class NoticePage {
     private String searchType;
     private String keyword = "";
 
-    public NoticePage(int total, int currentPage, int size, List<NoticeDTO> noticeList,List<NoticeDTO> topNoticeList, String searchType, String keyword){
+    public FAQPage(int total, int currentPage, int size, List<NoticeDTO> faqList, String searchType, String keyword){
         this.total=total;
         this.currentPage=currentPage;
-        this.noticeList=noticeList;
-        this.topNoticeList=topNoticeList;
+        this.faqList=faqList;
         this.searchType = searchType;
         this.keyword = keyword;
         if(total==0) {

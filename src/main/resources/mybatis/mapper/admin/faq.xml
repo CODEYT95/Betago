@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.admin.dao.FaqDAO">
+
     <select id="faqList" parameterType="NoticeDTO">
         <![CDATA[
         SELECT * FROM notice
-        WHERE notice_category = 'FAQ'
-        ORDER BY type = 'upView' DESC, notice_regdate DESC
+        WHERE notice_category = 'FAQ' AND notice_isshow = 'Y'
+        ]]>
+        <if test='searchType.equals("notice_title")'>
+            AND notice_title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("notice_content")'>
+            AND notice_content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("title_content")'>
+            AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        <![CDATA[
+        ORDER BY notice_regdate DESC
+        LIMIT #{page}, #{size};
         ]]>
     </select>
+
+
+    <!-- 전체 글의 개수를 읽어 오는 SQL문 -->
+    <select id="listCnt" resultType="int">
+        <![CDATA[
+        SELECT count(*) as listCnt
+        FROM notice
+        WHERE notice_category = 'FAQ'
+         ]]>
+        <if test='searchType.equals("notice_title")'>
+            AND notice_title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("notice_content")'>
+            AND notice_content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test='searchType.equals("title_content")'>
+            AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </select>
+
+    <!--게시글 수정-->
+    <update id="update" parameterType="NoticeDTO">
+       <![CDATA[
+        UPDATE notice
+        SET notice_title   = #{notice_title},
+            notice_content = #{notice_content}
+        WHERE notice_no = #{notice_no}
+        ]]>
+    </update>
+
+    <!--게시글 삭제-->
+    <delete id="delete" parameterType="long">
+        <![CDATA[
+        UPDATE notice
+        SET notice_isshow = 'N'
+        WHERE notice_no = #{notice_no}
+        ]]>
+    </delete>
 </mapper>

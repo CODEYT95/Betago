@@ -4,7 +4,6 @@ import com.bnw.beta.domain.member.dto.AgreeCheckDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -45,4 +44,12 @@ public interface MemberDAO {
 
     /////////로그인 된 아이디 가져오기/////////////김현민
     MemberDTO loginByUsername(String username);
+
+    MemberDTO findIDbyUserName(@Param("name") String name, @Param("email") String email);
+
+    /* MemberDTO findPwbyUserId(@Param("id") String id, @Param("email") String email);
+     */
+    public void updatePassword(@Param("id") String member_id, @Param("newPassword") String rawPassword);
+    MemberDTO findByUserIdAndEmail(@Param("id")String member_id,@Param("email") String email);
+
 }

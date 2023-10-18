@@ -7,4 +7,32 @@
     VALUES (#{qna_no}, #{ans_content}, #{ans_regdate}, #{member_id});
 </insert>
 
+    <select id="getAnswerById" resultType="AnswerDTO">
+        SELECT * FROM answer WHERE ans_no = #{ans_no}
+    </select>
+
+    <select id="selectAnswerById" resultType="AnswerDTO">
+        SELECT * FROM answer WHERE ans_no = #{ans_no}
+    </select>
+
+    <!-- 댓글 삭제부분 -->
+    <select id="findAnswerById" resultType="AnswerDTO">
+        SELECT * FROM answer WHERE ans_no = #{ans_no}
+    </select>
+
+    <delete id="deleteAnswerById">
+        DELETE FROM answer WHERE ans_no = #{ans_no}
+    </delete>
+
+
+    <!-- 댓글 수정 -->
+    <update id="modifyAnswer" parameterType="AnswerDTO">
+        UPDATE answer
+        SET
+        ans_content = #{ans_content},
+        ans_regdate = #{ans_regdate}
+        WHERE ans_no = #{ans_no}
+    </update>
+
+
 </mapper>

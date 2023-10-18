@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -173,21 +174,25 @@
                 $('#mail').hide();
                 $('#selectphone').show();
                 $('.emailCheck').hide();
+                $('#mail').val("");
             }
             // 이메일 선택시
             else if ($("input[name='contact']:checked").val() == 'email') {
                 $('#selectphone').hide();
                 $('#mail').show();
                 $('.phoneCheck').hide();
+                $('#selectphone').val("");
             }
         });
     });
+
+    //인증보냈다는 alter창 커스텀
     $("#sendEmailButton").click(function () {
         const Toast = Swal.mixin({
             toast: true,
             position: 'center-center',
             showConfirmButton: false,
-            timer: 4000,
+            timer: 2000,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -288,6 +293,13 @@
     const emailInput = document.getElementById("mail");
     emailInput.addEventListener("input", function () {
         const email = emailInput.value;
+        $('.emailCheck').css("display", "none");
+        // 입력란이 비어 있다면, 전송 버튼을 다시 활성화.
+        if (email.trim() === "") {
+            enableSendButton();
+            return;
+        }
+
         // 입력이 멈추면 0.5초 후 이벤트 발생
         clearTimeout(emailTimeoutId);
         emailTimeoutId = setTimeout(function () {
@@ -316,6 +328,15 @@
     const phoneInput = document.getElementById("selectphone");
     phoneInput.addEventListener("input", function () {
         const phone = phoneInput.value;
+
+        $('.phoneCheck').css("display", "none");
+
+        // 입력란이 비어 있다면, 전송 버튼을 다시 활성화합니다.
+        if (phone.trim() === "") {
+            enableSendButton();
+            return;
+        }
+
         // 입력이 멈추면 0.5초 후 이벤트 발생
         clearTimeout(phoneTimeoutId);
         phoneTimeoutId = setTimeout(function () {
@@ -347,8 +368,4 @@
     function enableSendButton() {
         $("#sendEmailButton").prop("disabled", false);
     }
-
-
-
-
 </script>

@@ -35,8 +35,12 @@
                 <td th:text="${question.qna_no}"></td>
                 <td><a th:href="@{/question/detail/{id}(id=${question.qna_no})}"
                        th:text="${question.qna_title}"></a></td>
-                <!--<td th:text="${question.qna_content}"></td>-->
-                <!--<td th:text="${question.qna_isshow}"></td>-->
+
+                <td>
+                    <span th:if="${question.answerCount > 0}" th:text="${question.answerCount}"></span>
+                </td>
+
+
                 <td th:text="${question.member_id}"></td>
                 <td th:text="${question.qna_regdate}"></td>
 
@@ -45,6 +49,7 @@
             </tbody>
         </table>
         <a th:href="@{/question/add}" class="btn btn-primary">질문등록하기</a>
+        <a th:href="@{/question/mypost}" class="btn btn-secondary">내 질문 보기</a>
 
     </div>
 </div>

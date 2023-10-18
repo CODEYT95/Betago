@@ -5,17 +5,22 @@
     <title>findId</title>
 </head>
 <body>
-<form action="@{/joinForm}" method="post">
+<form action="/findId" method="post">
     <label for="name">이름:</label>
     <input type="text" id="name" name="name" required>
     <br>
     <label for="email">이메일:</label>
     <input type="email" id="email" name="email" required>
     <br>
-    <button type="submit">비밀번호 찾기</button>
+    <button type="submit">아이디 찾기</button>
 </form>
 
+<div id="result" class="result">
+    <!-- Thymeleaf 조건문을 사용하여 검색 결과를 표시 -->
+    <span th:if="${memberDTO != null}" th:text="'찾은 아이디: ' + ${memberDTO.member_id}">찾은 아이디가 여기에 표시됩니다.</span>
+    <span th:if="${findIdFail}" th:text="'일치하는 정보가 없습니다.'">오류 메시지가 여기에 표시됩니다.</span>
 </div>
+
 
 
 </body>

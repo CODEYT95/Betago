@@ -13,25 +13,14 @@ public class NoticeDTO {
     private String notice_title;
     private String notice_content;
     private String notice_category;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime notice_regdate;
     private Date notice_reservation = null; //예약글 시간
     private String notice_isshow;
-    private String member_id;
     int view_cnt;
+    private String member_name;
     private String type = " ";  //상단노출or전체공개or일반글
 
     private List<NoticeDTO> topNoticeList; //상단노출게시글리스트
     private List<NoticeFileDTO> noticeFiles;
 
-
-    /* getter 및 setter 추가
-    public List<NoticeFileDTO> getNoticeFiles() {
-        return noticeFiles;
-    }
-
-    public List<NoticeDTO> setNoticeFiles(List<NoticeFileDTO> noticeFiles) {
-        this.noticeFiles = noticeFiles;
-        return null;
-    } */
 }
