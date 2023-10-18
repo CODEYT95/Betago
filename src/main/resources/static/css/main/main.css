@@ -1,83 +1,268 @@
 @charset "UTF-8";
+@keyframes rainbowBlink {
+    0%, 100% { color: #FF0000; }  /* 빨강 */
+    14% { color: #FF7F00; }      /* 주황 */
+    71% { color: #0000FF; }      /* 파랑 */
+    85% { color: #8B00FF; }      /* 자주 */
+}
+
+
+.maincontent-wrap{
+    height: auto;
+    min-height: 66vh;
+    width: 80%;
+    padding: 20px 30px 20px 30px;
+}
 .main-content {
-display: inline-table;
-    border: 1px solid red;
+    display: grid;
     width: 100%;
     height: 100%;
+    gap: 50px;
 }
 
 .first-box {
-    border: 1px solid blue;
-    height: 190px;
+    height: 260px;
     width: 100%;
     display: flex;
     align-items: center;
 }
 
 .imgbox{
-    border: 1px solid red;
-    height: 100%;
-    width: 790px;
-    margin: 10px;
+    height: 260px;
+    width:780px;
 }
+
 .image-slider{
     display: flex;
-    WIDTH: 788PX;
-    height: 186px;
+    width: 780PX;
+    height: 100%;
+}
+
+.slider-image {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   border-radius: 30px;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 4px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    cursor:pointer;
+}
+
+.active-dot {
+    background-color: #717171;
+}
+#pauseBtn{
+border: none;
+display: inline-grid;
 }
 
 .loginbox{
-        border: 1px solid red;
-        display: grid;
-        width: 190px;
-        height: 120px;
+    display: grid;
+    width: 260px;
+    height: 210px;
+    border-radius: 10px;
+    gap: 20px;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    margin-left: -20px;
 }
+
 .loginbox button {
     margin: 5px;
     padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
+    background: #ccc;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
+}
+.loginbox button:hover {
+ background-color: #007bff;
+    color: #fff;
+}
+.button_container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30%;
 }
 
-.loginbox button:hover {
-    background-color: #0056b3;
+.description, .link {
+  font-family: 'Amatic SC', cursive;
+  text-align: center;
+}
+
+.description {
+  font-size: 35px;
+}
+
+.btn {
+  border: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #222;
+  padding: 17px 60px;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: #000;
+  font-size: 25px;
 }
 
 .video-box{
-    border: 1px solid blue;
-    height: 260px;
+    height: 380px;
     width: 100%;
-    display: flex;
+    display: grid;
 }
 
-.second-box {
-    border: 1px solid blue;
-    height: 270px;
-    width: 100%;
-    display: flex;
-}
-
-.fa-solid, .fas {
+.video-title{
+    font-size: 30px;
     font-weight: bold;
-    border: none;
-    margin:2px;
-    }
-
-.second-box .image {
-    width: 90%;
-    height: 160px;
+    display: flex;
+    margin: 0;
+    padding: 20px;
 }
- .img-title {
+
+.y-video{
+    border-radius: 10px;
+    height: 100%;
+    width: 254px;
+    flex: 0 0 auto;
+    position: relative;
+    display: inline-grid;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    background: #c6dbda;
+    margin: 3px;
+    border: none;
+}
+
+.v-slider-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.v-slider{
+    overflow: hidden;
+    width: 1100px;  /* 변경된 부분 */
+    height: 100%;
+    display: flex;
+}
+
+.v-slide-track{
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    gap: 20px;
+    height: 262px;
+}
+
+#v-prevBtn, #v-nextBtn {
+    border: none;
+    height: 35px;
+    background: none;
+    margin: 0;
+    font-size:30px;
+    font-weight:bold;
+    cursor: pointer;
+    color: #007BFF
+}
+
+.game-box {
+    height: 380px;
+    width: 100%;
+    display: grid;
+}
+
+.game-title {
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    margin: 0;
+    padding: 20px;
+}
+
+#prevBtn, #nextBtn {
+    border: none;
+    height: 35px;
+    background: none;
+    margin: 0;
+    font-size:30px;
+    font-weight:bold;
+    cursor: pointer;
+    color: #007BFF
+}
+
+.game-box .image {
+    width: 100%;
+    height: 220px;
+
+}
+
+.img-title {
     display: block;
     text-align: center;
     width: 100%;
     font-size: 16px;
     font-weight: bold;
-    }
+}
 
 .slider-container {
     display: flex;
@@ -85,17 +270,13 @@ display: inline-table;
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: #f6eac2;
-
 }
-
 
 .slider {
     overflow: hidden;
-    width: calc((3 * 260px) + (2 * 20px)); /* (3 * .slide width) + (2 * gap) */
+    width: 1100px;  /* 변경된 부분 */
     height: 100%;
     display: flex;
-
 }
 
 .slide-track {
@@ -107,7 +288,7 @@ display: inline-table;
 }
 
 .slide {
-border-radius: 10px;
+    border-radius: 10px;
     height: 100%;
     width: 254px;
     flex: 0 0 auto;
@@ -115,32 +296,108 @@ border-radius: 10px;
     display: inline-grid;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    background: #c6dbda;
     margin: 3px;
 }
-.imge{
-display: block;
-        width: 100%;
+
+.image{
+    display: block;
+    width: 100%;
 }
 
-
-.third-box {
-    border: 1px solid blue;
-    height: 190px;
-    width: 100%;
+.notice-faq {
     display: flex;
+    justify-content: space-between;
+    height: 320px;
+    margin-top: 20px;
+    border-radius: 8px;
+    width: 100%;
+    gap:50px;
+}
+
+.notice-box, .faq-box {
+    flex: 1;
+}
+
+.notice-box {
+    display: inline-table;
+    width: 100%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    border-radius:12px;
+}
+
+.notice-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 94%;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 12px;
+    padding: 10px 0;
+}
+
+.notice-list{
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    width:570px;
+}
+
+.notice-list span{
+    border-bottom: 1px dashed;
+    display: flex;
+    margin: 20px;
+    animation: rainbowBlink 5s infinite;
+}
+
+.faq-box{
+    display: inline-table;
+    width: 100%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    border-radius:12px;
+}
+
+.faq-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 94%;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 12px;
+    padding: 10px 0;
+}
+
+.faq-list{
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    width:570px;
+}
+
+.faq-list span{
+    border-bottom: 1px dashed;
+    display: flex;
+    margin: 20px;
+}
+
+.more-link {
+    color: #007BFF;
+    margin: 0;
+    font-size:16px;
+}
+.image-slider img:first-child {
+    display: block;
 }
 
 .image-slider img {
     width: 100%;
     height: auto;
-    display: none; /* 초기에는 모든 이미지를 숨김 */
+    display: none;
 }
 
-.image-slider img:first-child {
-    display: block; /* 첫 번째 이미지만 보여줌 */
-}
 
 .login-form {
     margin-top: 20px;

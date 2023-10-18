@@ -34,7 +34,8 @@
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.pay_no}" name="selectedGameNos" th:value="${content.pay_no}" />
                                 <span class="checkbox-title">
                                         <div class="card">
-                                            <div class="poster"><img th:src="@{/image/testBADUK2.png}">
+                                            <div class="poster">
+                                                <img th:src="@{'/image/' + ${content.image_path}}">
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
                                                     <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>

@@ -22,13 +22,13 @@
         <div class="main-content">
 
             <div class="gameContent-search">
-                <form action="/game/searchByTitle" method="get" class="form-container" id="searchForm">
+                <form th:action="@{/game/searchByTitle}" method="get" class="form-container" id="searchForm">
                     <div class="searchReq">
-                        <select name="game_title" class="titlelist" id="gameTitleSelect">
-                            <option selected>게임 선택</option>
+                        <select name="game_title"  class="titlelist" id="gameTitleSelect">
+                            <option selected value = "">게임 선택</option>
                             <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
                         </select>
-                        <input type="submit" value="조회하기" id="searchButton" />
+                        <input type="submit" value="조회하기" id="searchButton"/>
                     </div>
                 </form>
                 <div class="subscribe">
@@ -43,21 +43,21 @@
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
                                 <span class="checkbox-tile">
                                 <div class="card">
-                                    <div class="poster"><img class="image" th:src="${content.filegame_name} ? @{|/image/game/${content.filegame_name}|} : @{/image/캡처.png}" th:alt="${content.filegame_name}"></div>
+                                    <div class="poster"><img class="image" th:src="${content.filegame_name} ? @{|/image/game/${content.filegame_name}|} : @{/image/noimage.png}" th:alt="${content.filegame_name}"></div>
                                     <div class="card-details"></div>
                                     <div class="details">
                                         <h5>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h5>
                                         <h5>구매금액 : <span th:text="${content.game_sell}"></span>원</h5>
-                                        <h5>구독기간</h5>
+                                        <h5>구독기간 : <span th:text="${content.game_date}"></span>개월</h5>
                                         <h5>그룹가능인원  : 50명</h5>
                                     </div>
                                     <div class="backDetails">
                                         <div class="detaillist">
                                             <h5>난이도 : <span th:text="${content.game_level}"></span></h5>
-                                            <h5>총인원 : <span th:text="${content.game_total}"></span></h5>
-                                            <h5>가격 : <span th:text="${content.game_price}"></span></h5>
-                                            <h5>할인 : <span th:text="${content.game_discount}"></span></h5>
-                                            <h5>판매가 : <span th:text="${content.game_sell}"></span></h5>
+                                            <h5>총인원 : <span th:text="${content.game_total}"></span>명</h5>
+                                            <h5>가격 : <span th:text="${content.game_price}"></span>원</h5>
+                                            <h5>할인 : <span th:text="${content.game_discount}"></span>%</h5>
+                                            <h5>판매가 : <span th:text="${content.game_sell}"></span>원</h5>
                                             <h6>상품상세설명 : <span th:text="${content.game_content}"></span></h6>
                                         </div>
                                     </div>
