@@ -40,6 +40,7 @@ public class NoticeController {
 
         // 모든 게시물 목록을 모델에 추가
         model.addAttribute("allNoticeList", noticePage.getAllNoticeList());
+        System.out.println(noticePage.getAllNoticeList());
         model.addAttribute("listSize", size);
         model.addAttribute("currentPage", page);
         model.addAttribute("size", size);

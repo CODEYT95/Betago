@@ -108,7 +108,7 @@ public class EducatorGroupController {
     //그룹 학습자 가입 승인
     @GetMapping("approveList")
     public String approveStudent(@RequestParam(value = "page", defaultValue = "1") int page,
-                                 @RequestParam(value = "size", defaultValue = "10") int size,
+                                 @RequestParam(value = "size", defaultValue = "1") int size,
                                  @RequestParam(value = "group_no", required = false) Integer group_no,
                                  Model model, Principal principal){
 
@@ -140,4 +140,3 @@ public class EducatorGroupController {
         return groupService.updateGroupMembber(approveList, rejectList, group_no);
     }
 }
-

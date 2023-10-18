@@ -116,7 +116,7 @@
 .details {
     position: relative;
     left: 0;
-    padding: 9.5px 7.5px 1.5px;
+    padding: 0.5px 7.5px 1.5px;
     background: #fff;
     backdrop-filter: blur(16px) saturate(120%);
     color: #000;
@@ -206,7 +206,8 @@ h1, h2, h3, h4{
 .checkbox-tile {
     display: flex;
     flex-direction: row;
-    width: 278px;
+    width: 286px;
+    height: 382px;
     border-radius: 11px;
     border: 3px solid #b5bfd9;
     background-color: #fff;
@@ -290,20 +291,3 @@ h1, h2, h3, h4{
     #myBtn:hover {
         background-color: #555; /* Add a dark-grey background on hover */
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

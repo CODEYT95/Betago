@@ -33,9 +33,6 @@
             <form name="gameContent" class="gamecontent" th:action="@{/game/gameInsert}" method="post"
                   onsubmit="return validateForm()" enctype="multipart/form-data">
                 <div class="game-form">
-                    <div class="img-group">
-                        <img th:src="@{/image/game3.PNG}" class="img-game" alt="게임 이미지">
-                    </div>
 
                     <div class="form-group">
                         <label for="game_title">게임콘텐츠명</label>
@@ -116,15 +113,15 @@
                 </div>
 
                 <div class="thumbnail">
-                    <label for="thumbnail" class="thumbnail-title">썸네일</label>
-                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="thumbnail">
+                    <div class="tn"> 썸네일 </div>
                     <div class="filebox">
-                        <label for="file">이미지업로드</label>
-                        <input type="file" id="file" name="imageFile" accept=".jpg, .jpeg, .png, .gif">
+                        <input class="upload-name" placeholder="이미지업로드" readonly>
+                        <label for="file" class="file-label">파일찾기</label>
+                        <input type="file" id="file" onchange="displayFilename(this)">
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group1">
                     <input type="submit" value="등록하기">
                 </div>
             </form>

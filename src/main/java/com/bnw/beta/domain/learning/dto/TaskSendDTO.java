@@ -12,9 +12,11 @@ public class TaskSendDTO {
     private int tasksend_no;
     private int group_no;
     private Integer member_no;
+    private String task_title;
     private String task_content;
     private String task_chapter;
     private Date task_deadline;
+    private Date task_senddate;
     private String task_state;
     private String member_id;
     private String member_name;

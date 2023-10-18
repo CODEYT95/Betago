@@ -107,7 +107,6 @@ public class StudentTaskController {
     @GetMapping("/viewEval/{tasksend_no}")
     public String selectSubmitTaskByNo(@PathVariable int tasksend_no, Model model, HttpSession session){
         TaskSubmitDTO taskEval = taskService.selectSubmitTaskByNo(tasksend_no, (Integer) session.getAttribute("member_no"));
-        System.out.println(taskEval);
         model.addAttribute("taskEval", taskEval);
         return "learning/task/student/SubmitTaskDetail";
     }

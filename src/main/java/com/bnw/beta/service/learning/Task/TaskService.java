@@ -15,11 +15,11 @@ public interface TaskService {
     int createTask(String member_id, String task_title, String task_content, String task_chapter, String task_deadline);
 
     //전송한 숙제 조회
-    TaskPageDTO sendTaskList(@Param("member_id") String member_id, @Param("page") int page, @Param("size") int size);
+    TaskPageDTO createTaskList(String member_id, int page,  int size);
 
     //숙제 조회하기
     List<String> selectTaskTitle(String member_id);
-    List<TaskDTO> selectTaskByTitle(String task_title, String member_id);
+    TaskPageDTO selectTaskByTitle(String task_title, String member_id,  int page,  int size);
 
     //그룹 조회하기
     List<GroupDTO> selectGroupName(String member_id);
@@ -28,6 +28,17 @@ public interface TaskService {
     //숙제 전송하기
     String sendTask(List<Integer> task_no,  List<Integer> member_no, Integer group_no, String member_id);
 
+    //전송한 숙제 조회하기
+    List<TaskSendDTO> selectSendTask(String member_id, String task_title);
+
+    //제출된 숙제 조회하기
+    List<TaskSubmitDTO> evalTaskList(String member_id, Integer task_no);
+
+    //제출된 숙제 상세조회
+    TaskSubmitDTO evalTaskDetail(Integer tasksubmit_no);
+
+    //숙제 평가하기
+    int insertEvaluation(String tasksubmit_comment,  String tasksubmit_eval, Integer group_no, Integer member_no, String member_level, Integer tasksend_no);
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
