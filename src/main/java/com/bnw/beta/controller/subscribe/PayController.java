@@ -1,6 +1,5 @@
 package com.bnw.beta.controller.subscribe;
 
-import com.bnw.beta.domain.subscribe.dto.CartDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
 import com.bnw.beta.service.subscribe.pay.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,22 +43,7 @@ public class PayController {
             System.out.println(payDTO);
             payService.insertIntoPay(payDTO);
         }
-        return "redirect:/game/list";
-    }
 
-    ///////////////매출////////////////
-    @GetMapping("/test")
-    public String get(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
-                      @RequestParam(value = "pay_enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_enddate,
-                      Model model) {
-
-        System.out.println(pay_date+"dd"+pay_enddate);
-        if (pay_date != null && pay_enddate == null) {
-            model.addAttribute("dayList", payService.selectDaySales(pay_date));
-            System.out.println(payService.selectDaySales(pay_date));
-        } else if(pay_enddate != null) {
-            model.addAttribute("dayList", payService.selectMonthSales(pay_date,pay_enddate));
-        }
-        return "test";
+        return "redirect:/list";
     }
 }

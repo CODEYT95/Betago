@@ -4,8 +4,10 @@ import com.bnw.beta.domain.admin.dto.GameDTO;
 import com.bnw.beta.domain.admin.dto.GameFileDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
 import com.bnw.beta.service.admin.game.GameService;
+import com.bnw.beta.service.subscribe.pay.PayService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,7 +26,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class GameController {
-
+    private final PayService payService;
     private final GameService gameService;
 
     //게임콘텐츠 등록
@@ -38,7 +41,6 @@ public class GameController {
         String member_id = "admin1";
         dto.setMember_id(member_id);
         int result = gameService.insertGame(dto);
-        System.out.println(result);
 
         if (!imageFile.isEmpty()) {
             String fileName = imageFile.getOriginalFilename();
@@ -83,23 +85,45 @@ public class GameController {
         }
         return "admin/game/gameList";
     }
-}
 
 
-    /*월간 (일일 단위 매출조회)
-    @GetMapping("/dailyList")
-    public String selectDailySales() {
-        return "admin/game/gameSales";
+    //////
+    @GetMapping("/salesGraph")
+    public String get(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
+                      @RequestParam(value = "pay_enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_enddate,
+                      Model model) {
+        if (pay_date != null && pay_enddate == null) {
+            model.addAttribute("comment", pay_date);
+            model.addAttribute("dayList", payService.selectDaySales(pay_date));
+        } else if (pay_enddate != null) {
+            model.addAttribute("comment", pay_date);
+            model.addAttribute("comment2", pay_enddate);
+            model.addAttribute("dayList", payService.selectMonthSales(pay_date, pay_enddate));
+        }
+        return "admin/sales/salesGraph";
     }
 
-    //년간 (월 단위 매출조회)
-    @GetMapping("/monthlyList")
-    public String selectMonthlySales() {
-        return "admin/game/gameSales";
+    @GetMapping("/salesList")
+    public String get2(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
+                       @RequestParam(value = "pay_enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_enddate,
+                       Model model) {
+
+        if (pay_date != null && pay_enddate == null) {
+            model.addAttribute("comment", pay_date);
+            model.addAttribute("dayList", payService.selectDaySales(pay_date));
+        } else if (pay_enddate != null) {
+            model.addAttribute("comment", pay_date);
+            model.addAttribute("comment2", pay_enddate);
+            model.addAttribute("dayList", payService.selectMonthSales(pay_date, pay_enddate));
+        }
+        return "admin/sales/salesList";
     }
 
-    //월별/일별 판매 건수, 판매금액 ajax로 가져오기
+    @PostMapping("/sales")
     @ResponseBody
-    @PostMapping("/getChartDataAjax")
-    public void getChartDataAjax() {
-     */
+    public List<payDTO> post1(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date pay_date,
+                              @RequestParam(value = "pay_date2", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date2,
+                              Model model) {
+        return payService.selectSalesDetail(pay_date, pay_date2);
+    }
+}
