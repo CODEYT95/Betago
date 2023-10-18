@@ -114,6 +114,7 @@ public class MemberServiceImpl implements MemberService {
         }
         int offset = (pageNum-1) * size;
         List<MemberDTO> memberlist = memberDAO.memberlist(offset, size, searchType, searchType2, searchType3, keyword);
+
         int listCount = memberDAO.count(searchType, searchType2, searchType3, keyword);
 
         MemberPageDTO memberPageDTO = new MemberPageDTO(listCount, pageNum, size, memberlist);

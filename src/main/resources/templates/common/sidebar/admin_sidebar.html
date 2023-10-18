@@ -5,22 +5,25 @@
     <div class="side-bar active">
         <div class="menu">
             <div class="item">
-                <a th:href="@{/game/insert}">게임콘텐츠 등록</a>
+                <a th:href="@{/game/insert}" sec:authorize="hasRole('ROLE_ADMIN')">게임콘텐츠 등록</a>
             </div>
             <div class="item">
-                <a th:href="@{/edupost/insert}" class="sub-btn">학습자료 등록</a>
+                <a th:href="@{/edupost/insert}" sec:authorize="hasRole('ROLE_ADMIN')" class="sub-btn">학습자료 등록</a>
             </div>
             <div class="item">
                 <a th:href="@{/edupost/list}">학습자료 조회</a>
             </div>
             <div class="item">
-                <a class="sub-btn">공지 등록</a>
+                <a class="sub-btn" sec:authorize="hasRole('ROLE_ADMIN')">공지 등록</a>
             </div>
             <div class="item">
                 <a th:href="@{/question/list}">Q&A</a>
             </div>
             <div class="item">
-                <a th:href="@{/game/dailySales}">매출 조회</a>
+                <a th:href="@{/game/dailySales}" sec:authorize="hasRole('ROLE_ADMIN')">매출 조회</a>
+            </div>
+            <div class="item">
+                <a th:href="@{/member/list}" sec:authorize="hasRole('ROLE_ADMIN')">회원 조회</a>
             </div>
         </div>
     </div>

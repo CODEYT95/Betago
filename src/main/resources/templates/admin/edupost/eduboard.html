@@ -55,8 +55,8 @@
                             <textarea class="texarea2" id="edupost_content" name="edupost_content"></textarea>
                         </div>
                         <input type="hidden" id="member_id" name="member_id" th:value="${member_id}">
-                        <div class="file_list">
-                            <div class="file_input">
+                        <div class="file_list" style="display: table-column-group;" >
+                            <div class="file_input" style="height: 50px;">
                                 <label class="fileselect" style="font-size: 16px;"> 파일 등록
                                     <input class="fileup" type="file" name="files" onchange="selectFile(this);" />
                                 </label>
@@ -106,9 +106,9 @@
     function addFile() {
         const fileDiv = document.createElement('div');
         fileDiv.innerHTML = `
-            <div class="file_input">
+            <div class="file_input" style="margin-left: 73px;">
                 <label class="fileselect">
-                    <input class="fileup" type="file" name="files" onchange="selectFile(this);" style="position: relative; left: 98px;}"/>
+                    <input class="fileup" type="file" name="files" onchange="selectFile(this);"/>
                 </label>
             </div>
             <button type="button" onclick="removeFile(this);" class="btns del_btn" style="position: relative; left: 340px; bottom: 32px;}"><span>삭제</span></button>

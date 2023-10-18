@@ -25,8 +25,6 @@ import java.security.Principal;
 @Controller
 public class MemberController {
     private final MemberService memberService;
-    private final NoticeService noticeService;
-    private final GameService gameService;  // 게임 서비스를 추가합니다.
 
 
     @Autowired

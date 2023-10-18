@@ -12,46 +12,48 @@
     <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
     <div class="content-wrap">
 <h2 class="head" th:text="${post.edupost_title}"></h2>
-    <div class="opt">
-        <label for="edupost_title" style="font-size: 16px; margin-right: 9px;">학습자료명</label>
-        <input type="text" class="texarea1" th:value="${post.edupost_title}" id="edupost_title" name="edupost_title" readonly/>
-    </div>
-    <div class="opt">
-        <label for="edupost_category" style="font-size: 16px;">자료구분</label>
-        <input class="edupost_category" id="edupost_category" th:value="${post.edupost_category}" name="edupost_category" readonly/>
-    </div>
-    <div class="opt">
-        <label for="edupost_type" style="font-size: 16px;">자료유형</label>
-        <input class="edupost_type" id="edupost_type" name="edupost_type" th:value="${post.edupost_type}" readonly/>
-    </div>
-    <div class="opt">
-        <label for="edupost_fileadd" style="font-size: 16px;">자료file주소</label>
-        <input class="texarea1" type="text" th:value="${post.edupost_fileadd}" id="edupost_fileadd" name="edupost_fileadd" readonly/>
-    </div>
-    <div class="opt">
-        <label for="edupost_service" style="font-size: 16px;">서비스구분</label>
-        <input class="edupost_service" id="edupost_service" th:value="${post.edupost_service}" name="edupost_service" readonly />
-    </div>
-    <div class="opt">
-        <label for="edupost_content" style="position: relative; font-size: 16px; bottom: 19rem">자료 내용</label>
-        <textarea class="texarea2" id="edupost_content" th:text="${post.edupost_content}" name="edupost_content" readonly></textarea>
-    </div>
-    <div class="contain">
-        <table class="tb tb_row">
-            <tbody>
-                <tr>
-                    <th scope="row">첨부파일</th>
-                    <td id="files" colspan="3">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-        <div class="btn_box">
-<!--         <a th:href="@{|/edupost/update/${edupost_no}|}" class="btn_update">수정하기</a>-->
-         <button type="button" onclick="updatepage()" class="btn_update">수정하기</button>
-         <button type="button" onclick="deleteFile();" class="btn_del"><span>삭제하기</span></button>
+        <div class="OOO">
+            <div class="opt">
+                <label for="edupost_title" style="font-size: 16px;">학습자료명</label>
+                <input type="text" class="texarea1" th:value="${post.edupost_title}" id="edupost_title" name="edupost_title" readonly/>
+            </div>
+            <div class="opt">
+                <label for="edupost_category" style="font-size: 16px;">자료구분</label>
+                <input class="edupost_category" id="edupost_category" th:value="${post.edupost_category}" name="edupost_category" readonly/>
+            </div>
+            <div class="opt">
+                <label for="edupost_type" style="font-size: 16px;">자료유형</label>
+                <input class="edupost_type" id="edupost_type" name="edupost_type" th:value="${post.edupost_type}" readonly/>
+            </div>
+            <div class="opt">
+                <label for="edupost_fileadd" style="font-size: 16px;">자료file주소</label>
+                <input class="texarea1" type="text" th:value="${post.edupost_fileadd}" id="edupost_fileadd" name="edupost_fileadd" readonly/>
+            </div>
+            <div class="opt">
+                <label for="edupost_service" style="font-size: 16px;">서비스구분</label>
+                <input class="edupost_service" id="edupost_service" th:value="${post.edupost_service}" name="edupost_service" readonly />
+            </div>
+            <div class="opt">
+                <label for="edupost_content" style="font-size: 16px;">자료 내용</label>
+                <textarea class="texarea2" id="edupost_content" th:text="${post.edupost_content}" name="edupost_content" readonly></textarea>
+            </div>
         </div>
+            <div class="contain">
+                <table class="tb tb_row">
+                    <tbody>
+                        <tr>
+                            <th scope="row">첨부파일</th>
+                            <td id="files" colspan="3">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                <div class="btn_box">
+        <!--         <a th:href="@{|/edupost/update/${edupost_no}|}" class="btn_update">수정하기</a>-->
+                 <button type="button" onclick="updatepage()" sec:authorize="hasRole('ROLE_ADMIN')" class="btn_update"><span>수정하기</span></button>
+                 <button type="button" onclick="deleteFile();" sec:authorize="hasRole('ROLE_ADMIN')" class="btn_del"><span>삭제하기</span></button>
+                </div>
 <script th:src="@{/js/admin/edupost/function.js}"></script>
 <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
     </div>
