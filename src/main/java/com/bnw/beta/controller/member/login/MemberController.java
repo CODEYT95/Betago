@@ -67,9 +67,15 @@ public class MemberController {
         model.addAttribute("gameList", gameList);
 
         List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
+        if (topNoticeList.size() > 5) {
+            topNoticeList = topNoticeList.subList(0, 5);
+        }
         model.addAttribute("topNoticeList", topNoticeList);
 
         List<NoticeDTO> faqList = faqService.faqList();
+        if (faqList.size() > 5) {
+            faqList = faqList.subList(0, 5);
+        }
         model.addAttribute("faqList", faqList);
 
 

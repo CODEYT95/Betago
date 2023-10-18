@@ -85,16 +85,25 @@ document.addEventListener("DOMContentLoaded", function() {
         setVideoPosition();
     }
     setVideoPosition();
-
-     // For automatic image-slider
-        let currentSlideIndex = 0;
-        const slides = document.querySelectorAll(".image-slider .slider-image");
-        const totalSlides = slides.length;
-
-        setInterval(function() {
-            slides[currentSlideIndex].style.display = 'none'; // 현재 이미지 숨김
-            currentSlideIndex = (currentSlideIndex + 1) % totalSlides; // 다음 이미지 인덱스 계산
-            slides[currentSlideIndex].style.display = 'block'; // 다음 이미지 표시
-        }, 3000); // 3초마다 이미지 변경
-
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.image-slider');
+    const slides = document.querySelectorAll('.slider-image');
+    let currentSlide = 0;
+
+    function slideTo(index) {
+        const slideWidth = slides[0].clientWidth; // 각 슬라이드의 너비를 가져옵니다.
+        slider.style.transform = `translateX(${-index * slideWidth}px)`; // 슬라이더 위치를 변경합니다.
+    }
+
+    function repeat() {
+        setInterval(function() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            slideTo(currentSlide);
+        }, 3000);
+    }
+
+    repeat();
+});
+
