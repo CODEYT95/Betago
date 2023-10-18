@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>회원목록</title>
@@ -20,8 +20,24 @@
                 <div id="leftHeader">
                     <form id="searchForm" th:action="@{/member/list}" method="get" name="searchForm">
                         <select name="searchType" class="selectField" title="검색 유형 선택">
-                            <option value="role" th:classappend="${(searchType == 'role') ? 'selected' : ''}">전체(구분)</option>
-                            <option value="license" th:classappend="${(searchType == 'license') ? 'selected' : ''}">자격</option>
+                            <option value="" th:classappend="${(searchType == '') ? 'selected' : ''}" >조건검색</option>
+                            <option value="member_id" th:classappend="${(searchType == 'member_id') ? 'selected' : ''}">아이디</option>
+                            <option value="member_phone" th:classappend="${(searchType == 'member_phone') ? 'selected' : ''}">연락처</option>
+                            <option value="member_name" th:classappend="${(searchType == 'member_name') ? 'selected' : ''}">이름</option>
+                        </select>
+
+                        <select name="searchType2" class="selectField" title="검색 유형 선택">
+                            <option value="" th:classappend="${(searchType == 'role') ? 'selected' : ''}">전체(구분)</option>
+                            <option value="ROLE_TEACHER">교육자</option>
+                            <option value="ROLE_USER">학습자</option>
+                            <option value="">일반인</option>
+                            <option value="ROLE_ADMIN">운영자</option>
+                        </select>
+
+                        <select name="searchType3" class="selectField" title="검색 유형 선택">
+                            <option value="" th:classappend="${(searchType == 'license') ? 'selected' : ''}">전체(자격)</option>
+                            <option value="무료">무료</option>
+                            <option value="유료">유료</option>
                         </select>
                         <!--    <select name="searchType">
                                 <option value="edupost_category" th:>자료구분</option>

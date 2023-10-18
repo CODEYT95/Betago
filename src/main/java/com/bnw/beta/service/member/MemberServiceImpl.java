@@ -101,20 +101,25 @@ public class MemberServiceImpl implements MemberService {
 
     /*회원 목록보기*/
     @Override
-    public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword) {
+    public MemberPageDTO memberlist(int pageNum, int size, String searchType, String searchType2, String searchType3, String keyword) {
+        System.out.println("s1 : "+searchType +"s2 : " + searchType2 + "s3 : " + searchType3);
+        System.out.println("key : "+ keyword);
         if(pageNum <= 0) {
             pageNum = 1;
         }
-        System.out.println("size :" + size);
         int offset = (pageNum-1) * size;
-        List<MemberDTO> memberlist = memberDAO.memberlist(offset, size, searchType, keyword);
-        System.out.println("size2 :" + size);
-        int listCount = memberDAO.count(searchType, keyword);
+        List<MemberDTO> memberlist = memberDAO.memberlist(offset, size, searchType, searchType2, searchType3, keyword);
+        int listCount = memberDAO.count(searchType, searchType2, searchType3, keyword);
 
         MemberPageDTO memberPageDTO = new MemberPageDTO(listCount, pageNum, size, memberlist);
         memberPageDTO.setListCount(listCount);
 
         return memberPageDTO;
+    }
+
+    @Override
+    public int count(String searchType,String searchType2, String searchType3, String keyword) {
+        return memberDAO.count(searchType, searchType2, searchType3, keyword);
     }
 
 

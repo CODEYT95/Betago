@@ -101,14 +101,18 @@ public class MemberController {
     @GetMapping("/member/list")
     public String memberlist(@RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "size", defaultValue = "3") int size,
-                             @RequestParam(value = "searchType", defaultValue = "all") String searchType,
+                             @RequestParam(value = "searchType", defaultValue = "") String searchType,
+                             @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
+                             @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
                              @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
 
-        MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, keyword);
+        MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, searchType2, searchType3, keyword);
         model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
         model.addAttribute("listCount", memberPageDTO.getListCount());
         model.addAttribute("memberPageDTO", memberPageDTO);
         model.addAttribute("searchType", searchType);
+        model.addAttribute("searchType2", searchType2);
+        model.addAttribute("searchType3", searchType3);
         model.addAttribute("keyword", keyword);
         return "admin/edupost/memberlist";
     }

@@ -35,9 +35,9 @@ public interface MemberDAO {
     MemberDTO getMemberInfo(String member_id);
 
     /*회원목록조회 관리자용*/
-    List<MemberDTO> memberlist(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("keyword") String keyword);
+    List<MemberDTO> memberlist(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, @Param("keyword") String keyword);
 
-    int count(@Param("searchType") String searchType, @Param("keyword") String keyword);
+    int count(@Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, @Param("keyword") String keyword);
     List<MemberDTO> memberlist();
 
     /////////멤버 롤 가져오기/////////////김현민

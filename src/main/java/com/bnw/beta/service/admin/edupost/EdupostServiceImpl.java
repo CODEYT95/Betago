@@ -22,13 +22,14 @@ public class EdupostServiceImpl implements EdupostService {
     }
     //학습자료 목록보기
     @Override
-    public EdupostPageDTO edulist(int pageNum, int size, String searchType, String searchType2, String keyword) throws Exception {
+    public EdupostPageDTO edulist(int pageNum, int size, String searchType, String searchType2, String searchType3, String keyword) {
+
         if(pageNum <= 0) {
             pageNum = 1;
         }
         int offset = (pageNum-1) * size;
-        List<EdupostDTO> edupostList = edupostDao.edulist(offset, size, searchType, searchType2, keyword);
-        int listCount = edupostDao.count(searchType, keyword);
+        List<EdupostDTO> edupostList = edupostDao.edulist(offset, size, searchType, searchType2, searchType3, keyword);
+        int listCount = edupostDao.count(searchType,searchType2,searchType3, keyword);
 
         EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, pageNum, size, edupostList);
         edupostPageDTO.setListCount(listCount);
@@ -36,39 +37,10 @@ public class EdupostServiceImpl implements EdupostService {
         return edupostPageDTO;
     }
 
-/*        @Override
-    public EdupostPageDTO edulist(int pageNum, int size, String keyword) {
-        if(pageNum <= 0) {
-            pageNum = 1;
-        }
-        int offset = (pageNum-1) * size;
-        List<EdupostDTO> edupostList = edupostDao.edulist(offset, size, keyword);
-        int listCount = edupostDao.count2(keyword);
-
-        EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, pageNum, size, edupostList);
-        edupostPageDTO.setListCount(listCount);
-
-        return edupostPageDTO;
-    }*/
-
-  /*      @Override
-    public EdupostPageDTO edulistTwo(int pageNum, int size, String searchType, String searchType2, String keyword){
-        if(pageNum <= 0) {
-            pageNum = 1;
-        }
-        int offset = (pageNum-1) * size;
-        List<EdupostDTO> edupostList = edupostDao.edulistTwo(offset, size, searchType, searchType2, keyword);
-        int listCount = edupostDao.count(searchType, keyword);
-
-        EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, pageNum, size, edupostList);
-        edupostPageDTO.setListCount(listCount);
-
-        return edupostPageDTO;
-    }*/
 
     @Override
-    public int count(String searchType, String keyword) {
-        return edupostDao.count(searchType, keyword);
+    public int count(String searchType,String searchType2, String searchType3, String keyword) {
+        return edupostDao.count(searchType, searchType2, searchType3, keyword);
     }
     //학습자료 상세정보
     @Override

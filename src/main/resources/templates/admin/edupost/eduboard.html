@@ -6,9 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/edupost/eduboard.css}">
     <link rel="stylesheet" th:href="@{/css/admin/edupost/button.css}" />
     <link rel="stylesheet" th:href="@{/css/admin/edupost/content.css}" />
-
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeWrite.css}">
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
@@ -17,78 +15,76 @@
     <div class="content-wrap">
         <div class="edupost_cont">
             <div class="edupost_write_box">
-        <h2 class="head">학습자료 등록창</h2>
-        <form id="saveForm" th:action="@{/edupost/insert}" method="post" autocomplete="off" enctype="multipart/form-data">
-            <input type="hidden" id="edupost_no" name="edupost_no" th:value="${edupost_no}"/>
-            <input type="hidden" id="edupost_date" name="edupost_date" th:value="${edupost_date}"/>
-            <div class="opt">
-                <laber for="edupost_title" style="font-size: 16px; margin-right: 9px;">학습자료명</laber>
-                <input type="text" class="texarea1" id="edupost_title" name="edupost_title"/>
-            </div>
-            <div class="opt">
-                <label for="edupost_category" style="font-size: 16px;">자료 구분</label>
-                <select id="edupost_category" name="edupost_category" class="edupost_category">
-                    <option value="튜토리얼">튜토리얼</option>
-                    <option value="교육영상">교육영상</option>
-                </select>
-            </div>
-            <div class="opt">
-                <label for="edupost_type" style="font-size: 16px;">자료 유형</label>
-                <select id="edupost_type" name="edupost_type" class="edupost_type">
-                    <option value="묘수풀이">묘수풀이</option>
-                    <option value="사활">사활</option>
-                    <option value="영토">영토</option>
-                </select>
-            </div>
-            <div class="opt">
-                <label for="edupost_fileadd" style="font-size: 16px;">자료 file주소</label>
-                <input class="texarea1" type="text" id="edupost_fileadd" name="edupost_fileadd"/>
-            </div>
-            <div class="opt">
-                <label for="edupost_service" style="font-size: 16px;">서비스 구분</label>
-                <select id="edupost_service" name="edupost_service" class="edupost_service">
-                    <option value="유료">유료</option>
-                    <option value="무료">무료</option>
-                </select>
-            </div>
-            <div class="opt">
-                <label for="edupost_content" style="position: relative; font-size: 16px; bottom: 19rem">자료 내용</label>
-                <textarea class="texarea2" id="edupost_content" name="edupost_content"></textarea>
-            </div>
-<!--                <input type="hidden" id="member_id" name="member_id" th:value="${member_id}">-->
-                <input type="hidden" id="member_id" name="member_id" value="admin1">
-            <div class="file_list">
-                <div class="file_input">
-                    <label class="fileselect" style="font-size: 16px;"> 파일 등록
-                        <input class="fileup" type="file" name="files" onchange="selectFile(this);" />
-<!--                        <img id="previewImage" src="/image/filebutton.png"; style="height: auto; width: auto;">-->
-                    </label>
-                </div>
-                <div class="bt_1">
-                <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
-                <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
-                </div>
-            </div>
-            <div>
-            <button class="btn_sub" type="submit" name="submit">등록하기</button>
-            </div>
-            </div>
+                <h2 class="head">학습자료 등록창</h2>
+                <form id="saveForm" th:action="@{/edupost/admin/insert}" method="post" autocomplete="off" enctype="multipart/form-data">
+                    <input type="hidden" id="edupost_no" name="edupost_no" th:value="${edupost_no}"/>
+                    <input type="hidden" id="edupost_date" name="edupost_date" th:value="${edupost_date}"/>
+                    <div class="OOO">
+                        <div class="opt">
+                            <label for="edupost_title" style="font-size: 16px;">학습자료명</label>
+                            <input type="text" class="texarea1" id="edupost_title" name="edupost_title"/>
+                        </div>
+                        <div class="opt">
+                            <label for="edupost_fileadd" style="font-size: 16px;">자료 file주소</label>
+                            <input class="texarea1" type="text" id="edupost_fileadd" name="edupost_fileadd"/>
+                        </div>
+                        <div class="opt">
+                            <label for="edupost_category" style="font-size: 16px;">자료 구분</label>
+                            <select id="edupost_category" name="edupost_category" class="edupost_category">
+                                <option value="튜토리얼">튜토리얼</option>
+                                <option value="교육영상">교육영상</option>
+                            </select>
+                        </div>
+                        <div class="opt">
+                            <label for="edupost_type" style="font-size: 16px;">자료 유형</label>
+                            <select id="edupost_type" name="edupost_type" class="edupost_type">
+                                <option value="묘수풀이">묘수풀이</option>
+                                <option value="사활">사활</option>
+                                <option value="영토">영토</option>
+                            </select>
+                        </div>
+                        <div class="opt">
+                            <label for="edupost_service" style="font-size: 16px;">서비스 구분</label>
+                            <select id="edupost_service" name="edupost_service" class="edupost_service">
+                                <option value="유료">유료</option>
+                                <option value="무료">무료</option>
+                            </select>
+                        </div>
+                        <div class="opt">
+                            <label for="edupost_content" style="font-size: 16px;">자료 내용</label>
+                            <textarea class="texarea2" id="edupost_content" name="edupost_content"></textarea>
+                        </div>
+                        <input type="hidden" id="member_id" name="member_id" th:value="${member_id}">
+                        <div class="file_list">
+                            <div class="file_input">
+                                <label class="fileselect" style="font-size: 16px;"> 파일 등록
+                                    <input class="fileup" type="file" name="files" onchange="selectFile(this);" />
+                                </label>
+                                <div class="bt_1">
+                                    <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+                                    <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn_sub" type="submit" name="submit">등록하기</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-        </form>
 </body>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 <script>
     // 파일 선택
     function selectFile(element) {
-
         const file = element.files[0];
         const filename = element.closest('.file_input').firstElementChild;
 
         // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
-        if ( !file ) {
+        if (!file) {
             filename.value = '';
             return false;
         }
@@ -106,21 +102,19 @@
         filename.value = file.name;
     }
 
-
     // 파일 추가
     function addFile() {
         const fileDiv = document.createElement('div');
-        fileDiv.innerHTML =`
-                    <div class="file_input">
-                        <label class="fileselect">
-                            <input class="fileup" type="file" name="files" onchange="selectFile(this);" style="position: relative; left: 98px;}"/>
-                        </label>
-                    </div>
-                    <button type="button" onclick="removeFile(this);" class="btns del_btn"style="position: relative; left: 340px; bottom: 32px;}"><span>삭제</span></button>
-                `;
+        fileDiv.innerHTML = `
+            <div class="file_input">
+                <label class="fileselect">
+                    <input class="fileup" type="file" name="files" onchange="selectFile(this);" style="position: relative; left: 98px;}"/>
+                </label>
+            </div>
+            <button type="button" onclick="removeFile(this);" class="btns del_btn" style="position: relative; left: 340px; bottom: 32px;}"><span>삭제</span></button>
+        `;
         document.querySelector('.file_list').appendChild(fileDiv);
     }
-
 
     // 파일 삭제
     function removeFile(element) {
@@ -132,6 +126,5 @@
         }
         element.parentElement.remove();
     }
-
 </script>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,9 +32,9 @@ public class EdupostController {
     public String eduInsert() {
         return "admin/edupost/eduboard";
     }
-    @PostMapping("/insert")
-    public String eduInsertin(@ModelAttribute("dto") EdupostDTO dto) {
-        System.out.println(dto);
+    @PostMapping("/admin/insert")
+    public String eduInsertin(@ModelAttribute("dto") EdupostDTO dto, Principal principal) {
+        dto.setMember_id(principal.getName());
         try{
             Long edupost_no = edupostService.eduinsert(dto);
             System.out.println(edupost_no);
@@ -53,16 +54,20 @@ public class EdupostController {
                            @RequestParam(value = "size", defaultValue = "4") int size,
                            @RequestParam(value = "searchType", defaultValue = "") String searchType,
                            @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
+                           @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
                            @RequestParam(value = "keyword", defaultValue = "") String keyword,
-                           Model model) throws Exception {
+                           Model model) {
 
-        EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, searchType2, keyword);
+        System.out.println("s1"+searchType+"s2"+searchType2+"s3"+searchType3+"k"+keyword);
+
+        EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, searchType2, searchType3, keyword);
 
         model.addAttribute("currentPage", edupostList.getCurrentPage());
         model.addAttribute("listCount", edupostList.getListCount());
         model.addAttribute("edupostPageDTO", edupostList);
         model.addAttribute("searchType", searchType);
         model.addAttribute("searchType2", searchType2);
+        model.addAttribute("searchType3", searchType3);
         model.addAttribute("keyword", keyword);
             return "admin/edupost/eduboardlist";
     }
