@@ -15,7 +15,7 @@
 <div th:if="${message}" class="alert alert-success" role="alert">
     <p th:text="${message}"></p>
 </div>
-
+<input id="title" type="hidden" th:value="${title}">
 <div class="content">
     <div th:replace="~{common/sidebar/pay_sidebar :: pay_sidebarFragment}"></div>
     <div class="content-wrap" style="height: auto;">
@@ -23,12 +23,12 @@
 
             <div class="gameContent-search">
                 <form th:action="@{/game/searchByTitle}" method="get" class="form-container" id="searchForm">
-                    <div class="searchReq">
+                <div class="searchReq">
                         <select name="game_title"  class="titlelist" id="gameTitleSelect">
                             <option selected value = "">게임 선택</option>
-                            <option th:each="game : ${gameList}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
+                            <option th:each="game : ${gameTitle}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
                         </select>
-                        <input type="submit" value="조회하기" id="searchButton"/>
+                        <input type="submit" value="조회하기" id="searchButton" onsubmit="handleGameTitleChange(event)"/>
                     </div>
                 </form>
                 <div class="subscribe">
@@ -70,7 +70,9 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="content_footer">
+        <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCount}"></span>)<i class="ri-arrow-down-s-line"></i></button>
+    </div>
 </div>
 <button id="myBtn" title="Go to top">Top</button>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

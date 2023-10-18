@@ -44,6 +44,6 @@ public class PayController {
             payService.insertIntoPay(payDTO);
         }
 
-        return "redirect:/list";
+        return "redirect:/game/list";
     }
 }
