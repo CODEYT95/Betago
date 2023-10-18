@@ -128,7 +128,7 @@
             FROM tasksend AS ts
             JOIN task AS t ON ts.task_no = t.task_no
             JOIN studygroup AS sg ON ts.group_no = sg.group_no
-            WHERE ts.member_id = 'educator1' AND t.task_deadline > NOW()
+            WHERE ts.member_id = #{member_id} AND t.task_deadline > NOW()
         ]]>
         <if test="task_title != null and task_title != ''">
             AND t.task_title = #{task_title}
