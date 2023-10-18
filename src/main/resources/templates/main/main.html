@@ -18,6 +18,16 @@
                     <div class="image-slider">
                         <img class="slider-image" th:src="@{/image/main1.jpg}" alt="Image 1">
                         <img class="slider-image" th:src="@{/image/main2.jpg}" alt="Image 2">
+                        <img class="slider-image" th:src="@{/image/main3.jpg}" alt="Image 3">
+                    </div>
+                    <div class="pagination">
+                        <span class="dot" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                        <button id="pauseBtn">
+                            <i class="fa-solid fa-pause fa-lg"></i>
+                            <i class="fa-solid fa-play fa-lg" style="display:none;"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="loginbox">
@@ -73,7 +83,9 @@
                     </div>
                     <div class="notice-list">
                         <div th:each="topNotice : ${topNoticeList}">
-                            <span th:text="${topNotice.notice_title}"></span>
+                            <a th:href="@{/notice/detail/{notice_no}(notice_no=${topNotice.notice_no})}">
+                                <span th:text="${topNotice.notice_title}"></span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +95,10 @@
                     </div>
                     <div class="faq-list">
                         <div th:each="faq : ${faqList}">
-                            <span th:text="${faq.notice_title}"></span>
+                            <!-- FAQ도 동일한 상세 페이지로 이동 -->
+                            <a th:href="@{/notice/detail/{notice_no}(notice_no=${faq.notice_no})}">
+                                <span th:text="${faq.notice_title}"></span>
+                            </a>
                         </div>
                     </div>
                 </div>

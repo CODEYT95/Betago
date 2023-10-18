@@ -85,25 +85,68 @@ document.addEventListener("DOMContentLoaded", function() {
         setVideoPosition();
     }
     setVideoPosition();
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    const slider = document.querySelector('.image-slider');
-    const slides = document.querySelectorAll('.slider-image');
-    let currentSlide = 0;
+// For automatic image-slider
+    let slideIndex = 0;
+    let slideTimer;
+    const slides = document.querySelectorAll(".slider-image");
+    const dots = document.querySelectorAll(".dot");
 
-    function slideTo(index) {
-        const slideWidth = slides[0].clientWidth; // 각 슬라이드의 너비를 가져옵니다.
-        slider.style.transform = `translateX(${-index * slideWidth}px)`; // 슬라이더 위치를 변경합니다.
+    function showSlide(n) {
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active-dot", "");
+        }
+
+        slideIndex = n;
+        if (slideIndex >= slides.length) {
+            slideIndex = 0;
+        }
+        if (slideIndex < 0) {
+            slideIndex = slides.length - 1;
+        }
+        slides[slideIndex].style.display = "block";
+        dots[slideIndex].className += " active-dot";
     }
 
-    function repeat() {
-        setInterval(function() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            slideTo(currentSlide);
-        }, 3000);
+    function nextSlide() {
+        slideIndex++;
+        showSlide(slideIndex);
     }
 
-    repeat();
+    // 초기에 슬라이드를 시작
+    slideTimer = setTimeout(function autoSlide() {
+        nextSlide();
+        slideTimer = setTimeout(autoSlide, 2000);
+    }, 2000);
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener("click", function() {
+            clearTimeout(slideTimer); // dot 클릭시 슬라이드 타이머 중지
+            showSlide(index);
+        });
+    });
+
+    let isPaused = false;
+    document.getElementById("pauseBtn").addEventListener("click", function() {
+        const pauseIcon = this.querySelector(".fa-pause");
+        const playIcon = this.querySelector(".fa-play");
+        if (isPaused) {
+            nextSlide();
+            slideTimer = setTimeout(function autoSlide() {
+                nextSlide();
+                slideTimer = setTimeout(autoSlide, 2000);
+            }, 2000);
+            pauseIcon.style.display = "inline-block";
+            playIcon.style.display = "none";
+        } else {
+            clearTimeout(slideTimer);
+            pauseIcon.style.display = "none";
+            playIcon.style.display = "inline-block";
+        }
+        isPaused = !isPaused;
+    });
 });
 

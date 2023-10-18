@@ -34,11 +34,12 @@
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.pay_no}" name="selectedGameNos" th:value="${content.pay_no}" />
                                 <span class="checkbox-title">
                                         <div class="card">
-                                            <div class="poster"><img th:src="@{/image/testBADUK2.png}">
+                                            <div class="poster">
+                                                <img th:src="@{'/image/' + ${content.image_path}}">
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
                                                     <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
-                                                    <h3>구독기간 : <span class="status dateDiff" th:attr="data-startdate=${#dates.format(content.game_startdate, 'yyyy-MM-dd')}, data-enddate=${#dates.format(content.game_enddate, 'yyyy-MM-dd')}"></span></h3>
+                                                    <h3>구독기간 : <span class="status dateDiff" th:attr="data-startdate=${#dates.format(content.startDate, 'yyyy-MM-dd')}, data-enddate=${#dates.format(content.endDate, 'yyyy-MM-dd')}"></span></h3>
                                                     <h4>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h4>
                                                 </div>
                                                 <div class="details">

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 //나의 구독상품 조회
@@ -28,16 +29,18 @@ public class SubContentsController {
 
         subContentsDTO subContentsDTO = new subContentsDTO();
         subContentsDTO.setMember_id(member_id);
-        subContentsDTO.setStartDate(startDate);
+        Date pay_date = new Date();
+
+        subContentsDTO.setPay_date(pay_date);
         subContentsDTO.setEndDate(endDate);
         if (!startDate.equals(LocalDate.of(2020, 8, 25)) && !endDate.equals(LocalDate.of(2030, 8, 25))) {
-            model.addAttribute("startDate",startDate);
+            model.addAttribute("pay_date",pay_date);
             model.addAttribute("endDate",endDate);
         }
         List<subContentsDTO> contentsList = subContentsService.selectContents(subContentsDTO);
         System.out.println(contentsList);
         model.addAttribute("contentsList", contentsList);
-        return "/subscribe/subcontents";
+        return "subscribe/subContents";
     }
 
     @PostMapping("/deleteContents")

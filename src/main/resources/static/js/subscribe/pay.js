@@ -34,117 +34,102 @@ document.addEventListener('DOMContentLoaded', function() {
     if (posters.length > 0) {
         posters[0].style.opacity = '1';
     }
+
+ var submitButton = document.getElementById("submitbutton");
+    submitButton.addEventListener("click", function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // 폼 전송 이벤트를 중단
+            return false;
+        }
+        return true;
+    });
 });
+
 function handleNavClick(paymentMethod, clickedElement) {
-    // 선택한 결제 방법을 표시하는 요소를 가져옵니다.
     const paymentDisplay = document.getElementById('selectedPaymentMethod');
     const payType = document.getElementById('pay_type');
     payType.value = paymentMethod;
     paymentDisplay.textContent = paymentMethod;
 
-    // 모든 navbar의 a 태그들에 대하여 반복
     var navItems = document.querySelectorAll('.navbar a');
 
     for (var i = 0; i < navItems.length; i++) {
-        // 선택된 항목에 'selected' 클래스를 추가하고 나머지 항목에서는 삭제
         if (navItems[i] === clickedElement) {
             navItems[i].classList.add('selected');
         } else {
             navItems[i].classList.remove('selected');
         }
     }
-
-    // 여기에 다른 로직 (예: 이미지 변경)을 추가할 수 있습니다.
-}
-function updateTotalPrice() {
-    // 선택된 게임의 인덱스 가져오기
-    var selectedGameIndex = document.querySelector('.mypaylist').selectedIndex;
-
-    // 해당 인덱스의 게임 정보 가져오기
-    var selectedGame = document.querySelectorAll('.mypaylist option')[selectedGameIndex];
-   var selectedGamePrice = selectedGame.dataset.price;
-
-    // 결과를 화면에 출력
-    var totalPriceInput = document.querySelector('.order-total');
-    totalPriceInput.value = selectedGamePrice;
-    console.log(totalPriceInput);
 }
 
-//발리데이션
+function prevImage() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length === 0) return;
+    posters[currentImageIndex].style.opacity = '0';
+    currentImageIndex = (currentImageIndex - 1 + posters.length) % posters.length;
+    posters[currentImageIndex].style.opacity = '1';
+}
 
-document.addEventListener("DOMContentLoaded", function() {
-    // 이벤트 리스너 등록 및 기타 작업들
-    var submitButton = document.getElementById("submitbutton");
-    submitButton.addEventListener("click", function(event) {
-    var checkboxes = document.getElementsByName("pay_type");
-    var isChecked = false;
-
-    // 유효성 검사 함수 호출
-    if (!validateForm()) {
-        // 유효성 검사에서 실패한 경우 추가로 실행할 로직을 여기에 추가할 수 있어
-        return false;
-    }
-
-    // 성공적으로 모든 유효성 검사를 통과한 경우
-    // 여기에 추가로 실행할 로직을 추가할 수 있어
-
-    return true;
-});
-});
+function nextImage() {
+    const posters = document.querySelectorAll('.poster');
+    if (posters.length === 0) return;
+    posters[currentImageIndex].style.opacity = '0';
+    currentImageIndex = (currentImageIndex + 1) % posters.length;
+    posters[currentImageIndex].style.opacity = '1';
+}
 
 function validateForm() {
     var buyerName = document.getElementById("buyer-name").value;
     var buyerPhone = document.getElementById("buyer-phone").value;
     var payDepositor = document.getElementById("payname").value;
+    var payType = document.getElementById("pay_type").value;
+
+    // 결제 수단 선택 유효성 검사
+    if (!payType) {
+        alert("결제수단을 선택해 주세요.");
+        return false;
+    }
 
     // 구매자명 유효성 검사
     if (!validateName(buyerName)) {
         document.getElementById("buyer-name-error").innerHTML = "다시 입력해주세요. (올바른 이름을 입력하세요)";
-        isNameValid = false;
+        alert("구매자 이름을 올바르게 입력해주세요.");
+        return false;
     } else {
         document.getElementById("buyer-name-error").innerHTML = "";
-        isNameValid = true;
     }
 
     // 연락처 유효성 검사
     if (!validatePhone(buyerPhone)) {
         document.getElementById("buyer-phone-error").innerHTML = "다시 입력해주세요. (올바른 연락처를 입력하세요)";
-        isPhoneValid = false;
+        alert("구매자 연락처를 올바르게 입력해주세요.");
+        return false;
     } else {
         document.getElementById("buyer-phone-error").innerHTML = "";
-        isPhoneValid = true;
     }
 
     // 입금자명 유효성 검사
     if (!validatePayDepositor(payDepositor)) {
         document.getElementById("pay-name-error").innerHTML = "다시 입력해주세요. (한글 2글자 이상)";
-        isDepositorValid = false;
+        alert("입금자명을 올바르게 입력해주세요.");
+        return false;
     } else {
         document.getElementById("pay-name-error").innerHTML = "";
-        isDepositorValid = true;
     }
 
-    return isNameValid && isPhoneValid && isDepositorValid;
+    return true;
 }
-
-// 구매자명, 입금자명 유효성 검사 함수
 function validateName(name) {
     return /^[가-힣]{2,}$/.test(name) && !/^[ㄱ-ㅎㅏ-ㅣ]+$/.test(name);
 }
-
 
 function validatePayDepositor(depositor) {
     return /^[가-힣a]{2,}$/.test(depositor);
 }
 
 function validatePhone(콜) {
-    if (!/^(010)\d{8}$/.test(콜)) {
-        return false;
-    }
-
-    return /^\d+$/.test(콜);
+    return /^(010)\d{8}$/.test(콜) && /^\d+$/.test(콜);
 }
-
 
 function handleCheckboxChange(checkbox) {
     if (checkbox.checked) {
