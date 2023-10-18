@@ -46,44 +46,4 @@ public class PayController {
 
         return "redirect:/list";
     }
-
-    ///////////////매출////////////////
-    @GetMapping("/test")
-    public String get(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
-                      @RequestParam(value = "pay_enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_enddate,
-                      Model model) {
-
-        System.out.println(pay_date+"dd"+pay_enddate);
-        if (pay_date != null && pay_enddate == null) {
-            model.addAttribute("dayList", payService.selectDaySales(pay_date));
-            System.out.println(payService.selectDaySales(pay_date));
-        } else if(pay_enddate != null) {
-            model.addAttribute("dayList", payService.selectMonthSales(pay_date,pay_enddate));
-        }
-        return "test";
-    }
-
-    @GetMapping("/test2")
-    public String get2(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
-                      @RequestParam(value = "pay_enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_enddate,
-                      Model model) {
-
-        if (pay_date != null && pay_enddate == null) {
-            model.addAttribute("dayList", payService.selectDaySales(pay_date));
-            System.out.println(payService.selectDaySales(pay_date));
-        } else if(pay_enddate != null) {
-
-            model.addAttribute("dayList", payService.selectMonthSales(pay_date,pay_enddate));
-        }
-        return "test2";
-    }
-
-    @PostMapping("/test2")
-    public List<payDTO> post1(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
-                       Model model) {
-
-        System.out.println(pay_date);
-
-        return payService.selectSalesDetail(pay_date);
-    }
 }

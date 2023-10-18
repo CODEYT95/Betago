@@ -2,6 +2,7 @@ package com.bnw.beta.domain.admin.dao;
 
 import com.bnw.beta.domain.admin.dto.GameDTO;
 import com.bnw.beta.domain.admin.dto.GameFileDTO;
+import com.bnw.beta.domain.subscribe.dto.payDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

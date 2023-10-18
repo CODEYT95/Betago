@@ -66,7 +66,7 @@
                             <li><a th:href="@{/student/submitTaskList}">숙제 제출 목록</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" >
+                    <li class="first_li">
                         <a th:href="@{/educator/group/addList}">교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
                         <ul id="service" class="educator-sub-menu sub-menu">
                             <li><a th:href="@{/educator/group/addList}">학습그룹 등록</a></li>
@@ -86,7 +86,7 @@
                             <li><a href="/admin/notice/write" sec:authorize="hasRole('ROLE_ADMIN')">공지 등록</a></li>
                             <li><a href="#">Q&A</a></li>
                             <li><a th:href="@{/member/list}" sec:authorize="hasRole('ROLE_ADMIN')">회원조회</a></li>
-                            <li><a href="#" sec:authorize="hasRole('ROLE_ADMIN')">매출 조회</a></li>
+                            <li><a href="@{/game/salesList}" sec:authorize="hasRole('ROLE_ADMIN')">매출 조회</a></li>
                         </ul>
                     </li>
                 </ul>
