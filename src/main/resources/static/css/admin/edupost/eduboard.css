@@ -6,12 +6,39 @@
     margin-bottom: 30px;
     line-height: 35px;
 }
+.OOO {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.OOO > div{
+    display: flex;
+    margin: 0;
+    margin-bottom: 15px;
+}
+.OOO > div > label{
+    margin: 0;
+    width: 12%;
+}
+
+.OOO > div >  input{
+    margin: 0;
+    width: 50%;
+}
+
+.OOO > div >  select{
+    margin: 0;
+    width: 20%;
+}
+
+.file_input{
+    margin: 0;
+}
 .edupost_category {
     height: 29px;
     border: 1px solid #d1d1d1;
     text-align: center;
     width: 20%;
-    margin-left: 31px;
     font-size: 16px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
     box-radius : 5px;
@@ -21,7 +48,7 @@
     border: 1px solid #d1d1d1;
     text-align: center;
     width: 20%;
-    margin-left: 31px;
+    margin-left: 77px;
     font-size: 16px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
     box-radius : 5px;
@@ -31,13 +58,10 @@
     border: 1px solid #d1d1d1;
     text-align: center;
     width: 20%;
-    margin-left: 16px;
     font-size: 16px;
 }
 .texarea1 {
     border: 1px solid #d1d1d1;
-    width: 80%;
-    margin-left: 10px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
     box-radius : 5px;
     font-size: 16px;
@@ -49,18 +73,17 @@
     border: 1px solid #d1d1d1;
     height: 300px;
     width: 80%;
-    margin-left: 31px;
+    margin: 0;
     margin-bottom: 20px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius: 5px;
     font-size: 16px;
     text-align: left;
     padding-left: 10px;
     padding-top: 10px;
+    resize: none;
 }
-.opt {
-    margin-top: 15px;
-}
+
 
 .fileselect {
     position: relative;

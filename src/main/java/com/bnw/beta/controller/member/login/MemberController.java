@@ -150,5 +150,36 @@ public class MemberController {
         return "admin";
     }
 
+    /*회원 목록조회*/
+    @GetMapping("/member/list")
+    public String memberlist(@RequestParam(value = "page", defaultValue = "1") int page,
+                             @RequestParam(value = "size", defaultValue = "3") int size,
+                             @RequestParam(value = "searchType", defaultValue = "") String searchType,
+                             @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
+                             @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
+                             @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
 
+        MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, searchType2, searchType3, keyword);
+        model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
+        model.addAttribute("listCount", memberPageDTO.getListCount());
+        model.addAttribute("memberPageDTO", memberPageDTO);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("searchType2", searchType2);
+        model.addAttribute("searchType3", searchType3);
+        model.addAttribute("keyword", keyword);
+        return "admin/edupost/memberlist";
+    }
+    /*회원 상세조회(관리자)*/
+    @GetMapping("/detail/{member_id}")
+    public String memberView(@PathVariable("member_id") String member_id, Model model) {
+            MemberDTO member = memberService.getMemberInfo(member_id);
+        if (member_id != null) {
+            model.addAttribute("detail", member);
+            return "admin/edupost/memberdetail";
+        } else {
+            return "member";
+            // 멤버 정보가 없는 경우에 대한 처리 로직 추가
+            // 예: 에러 페이지로 리다이렉트 또는 에러 메시지 표시 등
+        }
+    }
 }
