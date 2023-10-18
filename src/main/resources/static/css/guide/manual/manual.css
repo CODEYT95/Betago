@@ -3,14 +3,15 @@
 .imgbox .image-manual img {
     width: 200px;
     height: 200px;
-    margin: 30px;
+    margin: 10px;
 }
 .first-contents {
     display: flex;
-    border: 3px solid black;
     padding: 50px;
     align-items: center;
     font-size: 19px;
+    border-bottom: 1px dashed;
+    gap: 30px;
 }
 .contents-title{
     margin-left: 0;
@@ -19,51 +20,68 @@
 }
 .first-contents .title{
 font-size: 30px;
+font-weight: bold;
 }
 
 .imgbox{
     margin-left: 0;
+    box-shadow: 1px 1px 14px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 10px;
 }
 .contents-title{
     margin-left: 0;
 }
 .second-contents {
     display: flex;
-    border: 3px solid black;
     padding: 50px;
     align-items: center;
     font-size: 19px;
+    border-bottom: 1px dashed;
+    gap: 30px;
 }
 .second-contents .title{
 font-size: 30px;
+font-weight: bold;
 }
 .third-contents {
     display: flex;
-    border: 3px solid black;
     padding: 50px;
     align-items: center;
     font-size: 19px;
+    border-bottom: 1px dashed;
+    gap: 30px;
 }
 .third-contents .title{
 font-size: 30px;
+font-weight: bold;
 }
 .fourth-contents {
     display: flex;
-    border: 3px solid black;
     padding: 50px;
     align-items: center;
     font-size: 19px;
+    gap: 30px;
 }
 .fourth-contents .title{
 font-size: 30px;
+font-weight: bold;
 }
 .fifth-contents {
     display: flex;
-    border: 3px solid black;
     padding: 50px;
     align-items: center;
     font-size: 19px;
+    gap: 30px;
 }
 .fifth-contents .title{
 font-size: 30px;
+font-weight: bold;
+}
+.image-manual {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
 }
