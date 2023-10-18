@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-
     //체크박스 1개만 선택되게 하기
     $(document).ready(function() {
         $(document).on("change", ".checkbox-input", function() {
@@ -11,15 +10,20 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
-
-    //아작스로 추가 데이터 불러오기
+     //게임 콘텐츠 선택 후 조회
     $(document).ready(function() {
+        $(".search-btn").click(function() {
+            var title = $(".sBtn-text").text();
+            window.location.href = "/educator/group/addList?title=" + encodeURIComponent(title);
+        });
+    });
+    //아작스로 추가 데이터 불러오기
         var offset = 0;
 
         $("#moreBtn").click(function() {
             offset += 1;
-            var title = $(".title").value;
-
+            var title = $("#title").val();
+            console.log("dd"+title);
             $.ajax({
                 url: "/educator/group/addList",
                 type: "POST",
@@ -37,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                         <input type="checkbox" class="checkbox-input"  data-game-no=${item.game_no} />
                                         <span class="checkbox-tile">
                                             <div class="card">
-                                                <div class="poster"><img src="/image/testBADUK2.png"></div>
+                                                <div class="poster"><img src="/image/baduk.png"></div>
                                                 <div class="card-details"></div>
                                                 <div class="details">
                                                     <h5>게임 콘텐츠 : <span>${item.game_title}</span></h5>
@@ -61,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function() {
         $(".options .option .option-text").click(function() {
             $(this).toggleClass("selected");
         });
-    });
 
     //현재 체크박스 갯수 업데이트
     $(document).ready(function() {
@@ -83,15 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
             moreButton.style.display = 'block';
         }
     }
-
-    //게임 콘텐츠 선택 후 조회
-    $(document).ready(function() {
-        $(".search-btn").click(function() {
-            var title = $(".sBtn-text").text();
-
-            window.location.href = "/educator/group/addList?title=" + encodeURIComponent(title);
-        });
-    });
     //학습 그룹 상세 페이지로 이동
     var detailBtn = document.querySelector(".detail-btn");
 
@@ -99,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var selectedCheckbox = document.querySelector(".checkbox-input:checked");
 
         if (selectedCheckbox) {
-            var selectedGameNo = selectedCheckbox.getAttribute("data-game-no");
+            var selectedGameNo = selectedCheckbox.getAttribute("data-pay-no");
 
             var form = document.createElement("form");
 
@@ -108,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var gameNoInput = document.createElement("input");
             gameNoInput.type = "hidden";
-            gameNoInput.name = "game_no";
+            gameNoInput.name = "pay_no";
             gameNoInput.value = selectedGameNo;
 
             form.appendChild(gameNoInput);

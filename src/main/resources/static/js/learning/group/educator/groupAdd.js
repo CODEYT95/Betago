@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var startDateInput = document.querySelector(".startDate");
   var endDateInput = document.querySelector(".endDate");
   var submitButton = document.getElementById("submitButton");
+  var groupIntroTextarea = document.querySelector(".content");
 
   // 초기 필드 상태 확인 함수
   function checkFields() {
@@ -20,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       // 필드가 모두 채워져 있을 경우 버튼 활성화 및 스타일 변경
       submitButton.disabled = false;
-      submitButton.style.backgroundColor = "blue";
+      submitButton.style.backgroundColor = "#007bff";
+      submitButton.style.color = "white";
     }
   }
 
@@ -29,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
   groupPeopleSelect.addEventListener("change", checkFields);
   startDateInput.addEventListener("input", checkFields);
   endDateInput.addEventListener("input", checkFields);
+  groupIntroTextarea.addEventListener("input", checkFields);
 
   // 페이지 로드 시 초기 필드 확인 실행
   checkFields();
@@ -39,10 +42,11 @@ document.addEventListener("DOMContentLoaded", function() {
     var groupPeople = groupPeopleSelect.value.trim();
     var startDate = startDateInput.value;
     var endDate = endDateInput.value;
+    var content = groupIntroTextarea.value.trim();
 
-    if (groupName === "" || groupPeople === "" || startDate === "" || endDate === "") {
-      e.preventDefault(); // 기본 동작 중단
-      alert("기타 항목을 제외한 나머지 항목을 채워주세요");
+    if (groupName === "" || groupPeople === "" || startDate === "" || endDate === "" || content === "") {
+      alert("모든 항목을 채워 주세요");
+      e.preventDefault();
     }
   });
 
@@ -60,4 +64,16 @@ document.addEventListener("DOMContentLoaded", function() {
     option.value = i;
     select.appendChild(option);
   }
+  var gameStartInput = document.querySelector(".game_start");
+  var gameEndInput = document.querySelector(".game_end");
+
+  // 시작일과 종료일 값을 가져온 후, 해당 값으로 범위를 지정합니다.
+  var gameStartDate = gameStartInput.value;
+  var gameEndDate = gameEndInput.value;
+
+  document.querySelector(".startDate").min = gameStartDate;
+  document.querySelector(".startDate").max = gameEndDate;
+  document.querySelector(".endDate").min = gameStartDate;
+  document.querySelector(".endDate").max = gameEndDate;
+
 });

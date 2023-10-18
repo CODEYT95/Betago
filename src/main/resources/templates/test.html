@@ -10,7 +10,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // 데이터 요소 가져오기
+         // 데이터 요소 가져오기
         var dayValues = document.querySelectorAll('.data-value#dayValue');
         var totalSellValues = document.querySelectorAll('.data-value#totalSellValue');
         var totalSalesValues = document.querySelectorAll('.data-value#totalSalesValue');
@@ -25,7 +25,13 @@
             years.push(dayValues[i].value);
             sales.push(totalSellValues[i].value);
             transactions.push(totalSalesValues[i].value);
+            console.log(transactions);
         }
+
+        // 데이터를 역순으로 정렬
+        years.reverse();
+        sales.reverse();
+        transactions.reverse();
 
         // Google Charts 로드
         google.charts.load('current', { 'packages': ['bar'] });
@@ -42,7 +48,7 @@
 
             for (var i = 0; i < years.length; i++) {
                 var formattedSales = parseInt(sales[i]).toLocaleString(); // sales 값을 콤마가 있는 형태로 변환
-                data.addRow([years[i], formattedSales + '원', transactions[i] + '건']);
+                data.addRow([years[i], formattedSales, transactions[i]]);
 
                 totalSales += parseInt(sales[i]); // 매출액 누적 합산
                 totalTransactions += parseInt(transactions[i]); // 건수 누적 합산
@@ -52,30 +58,29 @@
             document.querySelector('.info-container h3:nth-child(2) span').textContent = totalTransactions.toLocaleString(); // 건수 총합 출력
 
             var options = {
-                chart: {
-                    title: '',
-                    subtitle: ''
-                },
-                series: {
-                    0: { axis: '건수', annotations: { stemColor: 'none' } }
-                },
-                vAxes: {
-                    0: {
-                        gridlines: {
-                            count: 0
-                        }
+            chart: {
+                title: '',
+            subtitle: ''
+            },
+            series: {
+                0: { axis: '건수', annotations: { stemColor: 'none' } }
+            },
+            vAxes: {
+                0: {
+                    gridlines: {
+                        count: 0
                     },
-                    1: {
-                        gridlines: {
-                            count: 1
-                        }
-                    }
+                    format: 'decimal' // 숫자 포맷 지정
                 }
-            };
+            },
+            hAxis: {
+                format: 'none' // 가로축 포맷 지정
+            }
+    };
 
-            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-            chart.draw(data, google.charts.Bar.convertOptions(options));
-        }
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
 
         // 검색 버튼 이벤트 리스너 추가
         var searchBtn = document.querySelector(".search-btn");
@@ -188,6 +193,16 @@
 .chart-btn:hover{
     background: #F4D96E;
 }
+.graph-container{
+height: 83%;
+    width: 103%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    background: white;
+    border-radius: 8px;
+}
 </style>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
@@ -225,7 +240,9 @@
             </div>
         <h3 style="margin-bottom: 10px;">현재 조회 기간 : <span th:text="${#dates.format(comment, 'yyyy-MM')} + (${comment2 != null ? '~' + #dates.format(comment2, 'yyyy-MM') : ''})"></span>
         </h3>
+        <div class="graph-container">
         <div id="columnchart_material" style="width: 100%; min-width: 25%; height: 500px;"></div>
+        </div>
         </div>
     </div>
 <input type="hidden" th:each="dayList : ${dayList}" th:value="${dayList.day}" id="dayValue" class="data-value">

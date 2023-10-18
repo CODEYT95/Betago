@@ -32,7 +32,6 @@ public class EducatorGroupController {
                                @RequestParam(name = "title", defaultValue = "전체")String game_title,
                                Principal principal, Model model){
         int limit = 6;
-
         model.addAttribute("addList",1);
         model.addAttribute("title", game_title);
         model.addAttribute("groupAddList", groupService.groupAddList(principal.getName(), game_title, limit, offset));
@@ -48,6 +47,8 @@ public class EducatorGroupController {
                                        @RequestParam(name = "title", defaultValue = "",required = false) String game_title,
                                        Principal principal) {
 
+        System.out.println("들어옴"+game_title);
+
         int limit = 6;
 
         return groupService.groupAddList(principal.getName(), game_title, limit, offset);
@@ -55,9 +56,10 @@ public class EducatorGroupController {
 
     //그룹 등록
     @GetMapping("/add")
-    public String addGroup(@RequestParam("game_no") int game_no, Principal principal, Model model){
+    public String addGroup(@RequestParam("pay_no") int pay_no, Principal principal, Model model){
         model.addAttribute("member_name",memberService.getMemberInfo(principal.getName()).getMember_name());
-        model.addAttribute("gameGroupInfo", groupService.gameGroupInfo(game_no));
+        model.addAttribute("gameGroupInfo", groupService.gameGroupInfo(pay_no));
+        System.out.println(groupService.gameGroupInfo(pay_no));
         return "/learning/group/educator/groupAdd";
     }
 

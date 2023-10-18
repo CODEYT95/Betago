@@ -31,8 +31,8 @@ $(document).ready(function() {
     educatorArrow.onclick = function() {
         navLinks.classList.toggle("show5");
     }
-    let adminArrow = document.querySelector(".admin-arrow");
-    adminArrow.onclick = function() {
-        navLinks.classList.toggle("show6");
-    }
+//    let adminArrow = document.querySelector(".admin-arrow");
+//    adminArrow.onclick = function() {
+//        navLinks.classList.toggle("show6");
+//    }
 });
