@@ -55,9 +55,12 @@ public class PayController {
 
         System.out.println(pay_date+"dd"+pay_enddate);
         if (pay_date != null && pay_enddate == null) {
+            model.addAttribute("comment", pay_date);
             model.addAttribute("dayList", payService.selectDaySales(pay_date));
             System.out.println(payService.selectDaySales(pay_date));
         } else if(pay_enddate != null) {
+            model.addAttribute("comment", pay_date);
+            model.addAttribute("comment2", pay_enddate);
             model.addAttribute("dayList", payService.selectMonthSales(pay_date,pay_enddate));
         }
         return "test";
@@ -69,21 +72,26 @@ public class PayController {
                       Model model) {
 
         if (pay_date != null && pay_enddate == null) {
+            model.addAttribute("comment", pay_date);
             model.addAttribute("dayList", payService.selectDaySales(pay_date));
             System.out.println(payService.selectDaySales(pay_date));
         } else if(pay_enddate != null) {
-
+            model.addAttribute("comment", pay_date);
+            model.addAttribute("comment2", pay_enddate);
             model.addAttribute("dayList", payService.selectMonthSales(pay_date,pay_enddate));
         }
         return "test2";
     }
 
     @PostMapping("/test2")
-    public List<payDTO> post1(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
-                       Model model) {
+    @ResponseBody
+    public List<payDTO> post1(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date pay_date,
+                              @RequestParam(value = "pay_date2", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date2,
+                              Model model) {
 
-        System.out.println(pay_date);
-
-        return payService.selectSalesDetail(pay_date);
+        System.out.println("ss"+pay_date);
+        System.out.println("dd"+pay_date2);
+        System.out.println(payService.selectSalesDetail(pay_date,pay_date2));
+        return payService.selectSalesDetail(pay_date,pay_date2);
     }
 }

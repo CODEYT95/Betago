@@ -69,12 +69,20 @@ public class PayServiceImpl implements PayService {
     }
 
     //매출 상세 조회
-    public List<payDTO> selectSalesDetail(Date pay_date){
+    public List<payDTO> selectSalesDetail(Date pay_date, Date pay_date2){
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-        String startDate = dateFormat.format(pay_date);
+        System.out.println("임플까지"+pay_date);
+        if(pay_date2 == null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String startDate = dateFormat.format(pay_date);
+            System.out.println("일단위"+startDate);
+            return payDAO.selectSalesDetailDay(startDate);
+        }else{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            String startDate = dateFormat.format(pay_date2);
+            System.out.println("월단위"+startDate);
+            return payDAO.selectSalesDetailMonth(startDate);
+        }
 
-
-        return payDAO.selectSalesDetail(startDate);
     }
 }

@@ -9,7 +9,7 @@
 </head>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    // 검색 버튼 이벤트 리스너 추가
+        // 검색 버튼 이벤트 리스너 추가
         var searchBtn = document.querySelector(".search-btn");
         searchBtn.addEventListener("click", function () {
             var intervalRadio = document.querySelector('input[name="interval"]:checked');
@@ -75,51 +75,93 @@
             startDateSingle.style.display = 'none';
         }
 
-        $(".close-modal").click(function() {
-        // 모달 엘리먼트를 숨기는 처리
-        $(".member-list").empty();
-        $("#modal").css("display", "none");
-    });
-    $(".detail-search").click(function() {
-    // data-day-no 속성에서 값을 가져옵니다.
-    var pay_date_string = $(this).find('i').attr('data-day-no');
+        // 통화 형식 함수
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(amount);
+        }
 
-    console.log(pay_date_string);
+        $(".detail-search").click(function () {
+            // data-day-no 속성에서 값을 가져옵니다.
+            var pay_date_string = $(this).find('i').attr('data-day-no');
 
-        $.ajax({
-            type: "POST",
-            url: "/pay/test2",
-            data: {
-                pay_date: pay_date_string
-            },
-            success: function(response) {
-                console.log("AJAX 요청 성공:", response);
+            if (pay_date_string.length === 7) {
+                pay_date2 = pay_date_string;
+                pay_date_string = null;
+            } else if (pay_date_string.length === 10) {
+                pay_date2 = null;
+            }
 
-                // 데이터를 사용하여 HTML을 업데이트
-                var memberList = $(".member-list");
+            console.log(pay_date_string);
 
-                $(".groupinfo span:nth-child(1)").text("게임 콘텐츠: " + game_title);
-                $(".groupinfo span:nth-child(2)").text("그룹 제한 인원: " + group_cnt+"명");
-                $(".groupinfo span:nth-child(3)").text("그룹 가능 인원: " + group_nowcnt+"명");
+            $.ajax({
+                type: "POST",
+                url: "/pay/test2",
+                data: {
+                    pay_date: pay_date_string,
+                    pay_date2: pay_date2,
+                },
+                success: function (response) {
+                    console.log("AJAX 요청 성공:", response);
 
-                $.each(response, function(index, groupItem) {
-                    var li = $("<li>");
-                    li.append("<span style='width: 10%;'>" + (index + 1) + "</span>");
-                    li.append("<span style='width: 15%;'>" + groupItem.member_name + "</span>");
-                    li.append("<span style='width: 20%;'>" + groupItem.member_phone + "</span>");
-                    li.append("<span style='width: 40%;'>" + groupItem.member_email + "</span>");
-                    li.append("<span style='width: 15%;'>" + groupItem.join_date + "</span>");
+                    // 데이터를 사용하여 HTML을 업데이트
+                    var memberList = $(".member-list");
 
-                    memberList.append(li);
-                });
-                $("#modal").css("display", "block");
-            },
-            error: function(error) {
-                // AJAX 요청이 실패할 때 처리할 코드
-                console.error("AJAX 요청 실패:", error);
+                    $.each(response, function (index, groupItem) {
+                        var li = $("<li>");
+                        li.append("<span style='width: 10%;'>" + (index + 1) + "</span>");
+                        li.append("<span style='width: 15%;'>" + groupItem.day + "</span>");
+                        li.append("<span style='width: 20%;'>" + groupItem.member_name + "</span>");
+                        li.append("<span style='width: 40%;'>" + groupItem.game_title + "</span>");
+
+                        // groupItem.game_sell 값을 통화 형식으로 포맷하여 추가
+                        li.append("<span style='width: 15%;'>" + formatCurrency(groupItem.game_sell) + "</span>");
+
+                        memberList.append(li);
+                    });
+
+                    $("#modal").css("display", "block");
+                },
+                error: function (error) {
+                    // AJAX 요청이 실패할 때 처리할 코드
+                    console.error("AJAX 요청 실패:", error);
+                }
+            });
+        });
+
+        $(".close-modal").click(function () {
+            // 모달 엘리먼트를 숨기는 처리
+            $(".member-list").empty();
+            $("#modal").css("display", "none");
+        });
+
+        var totalSellSum = 0;
+        var totalSalesSum = 0;
+
+        var dayListItems = document.querySelectorAll(".li-container");
+        dayListItems.forEach(function (dayListItem) {
+            var totalSellText = dayListItem.querySelector(".li-date span").textContent;
+            var totalSalesText = dayListItem.querySelector(".li-groupTO span").textContent;
+
+            // 콤마와 "원"을 제거한 후 숫자로 파싱
+            var totalSell = parseFloat(totalSellText.replace(/[^0-9.-]+/g, ""));
+            var totalSales = parseInt(totalSalesText.replace(/[^0-9]+/g, ""));
+
+            if (!isNaN(totalSell)) {
+                totalSellSum += totalSell;
+            }
+
+            if (!isNaN(totalSales)) {
+                totalSalesSum += totalSales;
             }
         });
-    });
+
+        // 총매출액과 건수 업데이트
+        var totalSellElement = document.querySelector(".totalsell");
+        var totalSalesElement = document.querySelector(".totalnum");
+
+        // 통화 형식 함수 사용하여 업데이트
+        totalSellElement.textContent = formatCurrency(totalSellSum) + "원";
+        totalSalesElement.textContent = totalSalesSum + "건";
     });
 </script>
 <body>
@@ -136,19 +178,23 @@
                         <span>~</span>
                         <input type="month" id="enddate">
                     </div>
-                    <input type="month" id="startdate_single">
+                    <input class="monthInput" type="month" id="startdate_single">
 
                 <div class="day-radio">
+                    <label>
                     <span>일단위</span>
-                    <input type="radio" name="interval" value="day" checked>
+                        <input type="radio" name="interval" value="day" checked>
+                    </label>
+                    <label>
                     <span>월단위</span>
-                    <input type="radio" name= "interval" value= "month">
+                        <input type="radio" name= "interval" value= "month">
+                    </label>
                 </div>
                 </div>
             <div class="info-container">
                 <div>
-                    <h3>총 매출액:<span></span>원</h3>
-                    <h3>건수:<span></span>개</h3>
+                    <h3>총 매출액: <span class="totalsell"></span></h3>
+                    <h3>건수: <span class="totalnum"></span></h3>
                 </div>
             </div>
             </div>
@@ -157,6 +203,7 @@
                 <button type="button" class="graph-btn" value="학습 그룹 상세 입력">그래프 보기</button>
             </div>
         </div>
+        <h3 style="margin-bottom: 10px;">현재 조회 기간 :  <span th:text="${#dates.format(comment, 'yyyy-MM')} + (${comment2 != null ? '~' + #dates.format(comment2, 'yyyy-MM') : ''})"></span></h3>
         <section class="main-content">
             <div class="container" >
                 <div class="list-wrap">
@@ -186,10 +233,10 @@
                                 <span th:text="${dayList.day}"></span>
                             </div>
                             <div class="li-groupTO">
-                                <span th:text="${dayList.total_sales}"></span>
+                                <span th:text="${dayList.total_sales}+건"></span>
                             </div>
                             <div class="li-date">
-                                <span th:text="${dayList.total_sell}"></span>
+                                <span th:text="${#numbers.formatDecimal(dayList.total_sell, 0, 'COMMA', 0, 'POINT')}+원"></span>
                             </div>
                             <div class="li-detail">
                                 <button class="detail-search"><i class="ri-search-eye-line" th:attr="data-day-no=${dayList.day}"></i></button>
@@ -202,27 +249,9 @@
         <div id="modal" class="modal">
             <div class="modal-wrap">
                 <div class="modal-header">
-                    <h2>학습 그룹</h2>
-                    <div class="select-menu-group">
-                        <div class="select-btn-group">
-                            <span class="sBtn-text1">전체</span>
-                            <i class="bx bx-chevron-down"></i>
-                        </div>
-                        <ul class="options">
-                            <li class="option" th:each="groupName : ${groupName}">
-                                <span class="option-text" th:text="${groupName.group_name}" th:attr="data-no=${groupName.group_no}"></span>
-                            </li>
-                        </ul>
-                        <button class="search-btn1">조회</button>
-                    </div>
                     <div class="modal-btn-container">
                         <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                </div>
-                <div class="groupinfo">
-                    <span></span>
-                    <span></span>
-                    <span></span>
                 </div>
                 <hr>
                 <div class="modal-content">

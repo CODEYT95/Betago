@@ -55,9 +55,7 @@
 </select>
 
 <!-- 매출 상세 일/월 단위 -->
-<select id="selectSalesDetail" resultType="payDTO">
-    <choose>
-        <when test="enddate == " >
+<select id="selectSalesDetailDay" resultType="payDTO">
         <![CDATA[
         SELECT
         DATE_FORMAT(p.pay_date, '%Y-%m-%d') AS day,
@@ -72,12 +70,12 @@
         JOIN
         game AS g ON p.game_no = g.game_no
         WHERE
-        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{startDate} AND #{startDate}
+        DATE_FORMAT(p.pay_date, '%Y-%m-%d') BETWEEN #{pay_Date} AND #{pay_Date}
         ORDER BY
         p.pay_date ASC;
         ]]>
-        </when>
-        <when test="enddate != " >
+</select>
+<select id="selectSalesDetailMonth" resultType="payDTO">
         <![CDATA[
         SELECT
         DATE_FORMAT(p.pay_date, '%Y-%m') AS day,
@@ -92,12 +90,10 @@
         JOIN
         game AS g ON p.game_no = g.game_no
         WHERE
-        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{startDate} AND #{startDate}
+        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{pay_Date} AND #{pay_Date}
         ORDER BY
         p.pay_date ASC;
         ]]>
-        </when>
-    </choose>
 </select>
 
 </mapper>

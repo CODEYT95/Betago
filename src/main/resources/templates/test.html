@@ -148,6 +148,45 @@
 <style>
 .date-container, .info-container{
     display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-left: 45px;
+    margin-bottom: 20px;
+}
+.info-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.date-container > div{
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+.info-container > div{
+    margin: 0;
+}
+.info{
+    display: flex;
+    gap: 20px;
+}
+.search-btn,.chart-btn{
+    height: 40px;
+    background: #fff;
+    padding: 20px;
+    font-size: 18px;
+    border: none;
+    font-weight: 400;
+    border-radius: 8px;
+    line-height: 0;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.search-btn:hover{
+    background: #F4D96E;
+}
+.chart-btn:hover{
+    background: #F4D96E;
 }
 </style>
 <body>
@@ -175,15 +214,17 @@
             </div>
             </div>
             <div class="info-container">
-                <div>
+                <div class="info">
                 <h3>총 매출액:<span></span>원</h3>
                 <h3>건수:<span></span>개</h3>
                 </div>
-                <div>
+                <div class="button">
                     <input type="button" class="search-btn" value="조회">
                     <input type="button" class="chart-btn" value="목록 보기">
                 </div>
             </div>
+        <h3 style="margin-bottom: 10px;">현재 조회 기간 : <span th:text="${#dates.format(comment, 'yyyy-MM')} + (${comment2 != null ? '~' + #dates.format(comment2, 'yyyy-MM') : ''})"></span>
+        </h3>
         <div id="columnchart_material" style="width: 100%; min-width: 25%; height: 500px;"></div>
         </div>
     </div>
