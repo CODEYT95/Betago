@@ -345,3 +345,7 @@ h1, h2, h3, h4{
 .modal-btn-cancel:hover{
     background: #ff1919;
 }
+
+.modalGroupName{
+    margin: 0;
+}

@@ -57,7 +57,7 @@
                         <input hidden="hidden" class="attr" th:attr="data-group-name=${joinList.group_name},data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no}"/>
+                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-group-name=${joinList.group_name}"/>
                                 <span class="checkbox-tile">
                                 <div class="card">
                                     <div class="poster"><img th:src="@{/image/noimage.png}"></div>
@@ -110,7 +110,7 @@
     <div class="modal-3" id="joinCompleteModal">
         <div class="modal-content">
             <div>
-            <h3><span class="modalGroupName"></span>에</h3>
+            <h3><span class="modalGroupName"></span>  에</h3>
             <h3>가입신청이 완료 되었습니다.</h3>
             </div>
             <button class="modal-btn-confirm" onclick="closeModal('joinCompleteModal')">확인</button>
