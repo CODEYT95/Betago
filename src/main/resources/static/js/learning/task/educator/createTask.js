@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const taskContent = button.parentElement.parentElement.querySelector(".list_content").textContent;
         const taskProgress = button.parentElement.parentElement.querySelector(".list_progress").textContent;
         const taskDeadline = button.parentElement.parentElement.querySelector(".list_limit").textContent;
-        const taskSendDate = button.parentElement.parentElement.querySelector(".list_send").textContent;
 
         // 모달 내용 업데이트
         const modalTitle = modal.querySelector("#modal-task-title");
@@ -93,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function() {
         modalContent.querySelector("#modal-task-content").textContent = taskContent;
         modalContent.querySelector("#modal-task-chapter").textContent = taskProgress;
         modalContent.querySelector("#modal-task-deadline").textContent = taskDeadline;
-        modalContent.querySelector("#modal-task-senddate").textContent = taskSendDate;
 
         // 모달 및 배경 표시
         modal.style.display = "block";

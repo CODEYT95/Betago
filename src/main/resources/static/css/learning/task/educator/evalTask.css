@@ -26,9 +26,9 @@ th, td {
     white-space: nowrap;
 }
 
-.t_no, .list_no, .list_groupNo{
+.t_no, .list_no {
     position: relative;
-    width: 3%;
+    width: 5%;
 }
 
 .t_name, .list_name{
@@ -38,22 +38,22 @@ th, td {
 
 .t_progress, .list_progress{
     position: relative;
-    width: 9%;
+    width: 10%;
 }
 
-.t_content {
+.t_content, .list_content {
     position: relative;
     width: 25%;
 }
 
-.t_deadline {
+.t_deadline, .list_deadline {
     position: relative;
-    width: 13%;
+    width: 16%;
 }
 
 .t_detail, .detailBtn-wrap{
     position: relative;
-    width: 5%;
+    width: 10%;
 }
 
 .t_member, .list_member {
@@ -61,26 +61,27 @@ th, td {
     width: 11%;
 }
 
-.t_phone, .list_phone {
+.t_eval, .list_eval {
     position: relative;
-    width: 15%;
-}
-
-.t_level, .list_level {
-    position: relative;
-    width: 8%;
+    width: 9%;
 }
 
 .detailBtn {
     border: none;
     border-radius: 5px;
     font-size: 22px;
-    color: #222;
     cursor: pointer;
+    background: none;
 }
 
-.tr-list td{
+.tr-list-task td{
     border-radius: 0px;
+}
+
+.tr-list-task:hover {
+    background: #ddd;
+    cursor: pointer;
+    user-select: none;
 }
 
 thead {
@@ -102,10 +103,6 @@ table {
 
 #table-title {
     margin-top: 20px;
-}
-
-#memberTableBodyLeft {
-    background: #e4e9ec;
 }
 
 tr:nth-child(even) {background-color: #e4e9ec;}
@@ -158,26 +155,75 @@ tr:nth-child(even) {background-color: #e4e9ec;}
 }
 
 .modal2 {
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
     z-index: 1001;
-    width: 280px;
-    height: 190px;
+    width: 500px;
+    height: auto;
     border-radius: 5px;
+}
+
+.modal-divider {
+    margin: 15px 0;
+}
+
+.modal-learning-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+}
+
+.comment {
+    display: flex;
+    margin: 0 15px 0 0;
+    align-items: center;
+}
+
+.comment-label {
+    margin: 0;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.modal-learning-content span {
+    margin: 0 15px;
+    font-size: 16px;
+}
+
+.task-submit-eval {
+    width: 70px;
+    margin: 0;
+    height: 35px;
+    outline: none;
+}
+
+.tasksubmit_comment {
+    margin: 0;
+    resize: none;
+    outline: none;
+    height: 35px;
+    cursor: auto;
+}
+
+textarea::-webkit-scrollbar {
+    width: 5px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: #979595;
+}
+
+textarea::-webkit-scrollbar-track {
+    background-color: #e1e1e1;
 }
 
 .modal-wrap {
     margin: 10px 10px 0 10px;
-}
-
-.modal-wrap2 {
-    display: grid;
-    position: relative;
-    top: 60px;
-    height: 125px;
 }
 
 .modal-content-title {
@@ -197,99 +243,9 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     margin-bottom: 10px;
 }
 
-.conceal {
-    width: 70px;
-    height: 35px;
-    border: none;
-    border-radius: 5px;
+.submit[disabled] {
     background: #ccc;
-    cursor: pointer;
-}
-
-.checkbox-wrap {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.checkbox-wrap input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.checkmark:after {
-    content: "\f0c8";
-    font-family: "FontAwesome";
-    position: relative;
-    color: rgba(0, 0, 0, 0.1);
-    font-size: 25px;
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    transition: 0.3s;
-}
-
-.checkbox-wrap input:checked ~ .checkmark:after {
-    display: block;
-    content: "\f14a";
-    font-family: "FontAwesome";
-    color: rgba(0, 0, 0, 0.2);
-}
-
-.checkbox-wrap {
-    color: #40bfc1;
-}
-
-.checkbox-wrap input:checked ~ .checkmark:after {
-    color: #456CD9;
-}
-
-.checkmark{
-    display: flex;
-    justify-content: center;
-}
-
-.selectTaskBtn {
-    margin: 0 30px 0 0;
-    width: 70px;
-    border-radius: 5px;
-    border: none;
-    background: #ccc;
-    cursor: pointer;
-}
-
-.selectMemberBtn, .selectAllBtn, .sendTaskBtn {
-    width: 70px;
-    height: 35px;
-    border-radius: 5px;
-    border: none;
-    background: #ccc;
-    cursor: pointer;
-}
-
-#selectTaskTitle, #selectGroupTitle {
-    margin: 0 10px 0 25px;
-    height: 35px;
-    width: 180px;
-    outline: none;
-    border-radius: 5px;
-}
-
-.select-box {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.button-wrap {
-    margin: 0 15px 0 0;
+    color: #fff;
 }
 
 .submit {
@@ -299,10 +255,49 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     border: none;
     background-color: #007bff;
     color: #fff;
+    cursor: pointer;
 }
 
-.selectTaskBtn:hover, .selectMemberBtn:hover,
-.selectAllBtn:hover, .sendTaskBtn:hover {
+.selectTaskBtn, .evalDetailBtn {
+    margin: 0 30px 0 0;
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+}
+
+#selectTaskTitle {
+    margin: 0 10px 0 25px;
+    height: 35px;
+    width: 180px;
+    outline: none;
+    border-radius: 5px;
+}
+
+.select-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 28px;
+}
+
+.guide {
+    margin: 0;
+    font-weight: bold;
+    color: #66aefc;
+}
+
+.title-wrap {
+    margin: 0;
+}
+
+.button-wrap {
+    margin: 0 15px 0 0;
+}
+
+.selectTaskBtn:hover {
     background-color: #007bff;
     color: #fff;
     transition: background-color 0.8s ease, color 0.2s ease;
@@ -314,49 +309,11 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     transition: background-color 0.8s ease, color 0.2s ease;
 }
 
-.errorMsg {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-}
-
-#pagination{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    gap: 5px;
-}
-
-.pagination-container a {
-    float: left;
-    text-decoration: none;
-}
-
-.pagination-container a:hover:not(.active) {
-    background-color: #ddd;
-    border-radius : 5px;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    height: 30px;
-    align-items: center;
-}
-
-.active-page {
-    background: #b2d3ff;
+.conceal {
+    width: 70px;
+    height: 35px;
+    border: none;
     border-radius: 5px;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    height: 30px;
-    align-items: center;
-}
-
-.pagination-container li {
-    margin: 0;
-    width: 35px;
-    display: flex;
-    height: 30px;
-    align-items: center;
+    background: #ccc;
+    cursor: pointer;
 }
