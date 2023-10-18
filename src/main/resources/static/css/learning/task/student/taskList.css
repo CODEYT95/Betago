@@ -178,7 +178,7 @@
 .writeBtn, .modifyBtn {
     border: none;
     width: 70px;
-    height: 30px;
+    height: 35px;
     border-radius: 5px;
     background-color: #ccc;
     cursor: pointer;
@@ -191,8 +191,8 @@
 
 .submitBtn {
     border: none;
-    width: 80px;
-    height: 40px;
+    width: 70px;
+    height: 35px;
     border-radius: 5px;
     background-color: #2260ff;
     color: #fff;
@@ -202,6 +202,7 @@
 .writeBtn:hover, .modifyBtn:hover {
     background-color: #2260ff;
     color: #fff;
+    transition: background-color 0.8s ease, color 0.2s ease;
 }
 
 .title-button {

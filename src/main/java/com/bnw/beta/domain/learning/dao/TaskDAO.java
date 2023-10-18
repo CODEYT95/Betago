@@ -35,10 +35,17 @@ public interface TaskDAO {
     int sendTask(TaskSendDTO taskSendDTO);
 
     //전송한 숙제 조회하기
-
+    List<TaskSendDTO> selectSendTask(TaskSendDTO taskSendDTO);
 
     //제출된 숙제 조회하기
+    List<TaskSubmitDTO> evalTaskList(TaskSubmitDTO taskSubmitDTO);
 
+    //제출된 숙제 상세조회
+    TaskSubmitDTO evalTaskDetail(Integer tasksubmit_no);
+
+    //숙제 평가하기
+    int insertEvaluation(TaskSubmitDTO taskSubmitDTO);
+    int updateMemberLevel(GroupDTO groupDTO);
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회

@@ -79,15 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
             modalBg.style.display = "block";
         });
 
-        // 모달2 닫기 버튼 클릭 시
-        document.getElementById("exitBtn").addEventListener("click", function () {
-            const modal2 = document.querySelector("#myModal2");
-            const modalBg = document.querySelector(".modal-bg");
-
-            modal2.style.display = "none";
-            modalBg.style.display = "none";
-        });
-
         modalBg.addEventListener("click", function () {
             const modal2 = document.querySelector("#myModal2");
             const modalBg = document.querySelector(".modal-bg");

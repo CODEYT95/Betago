@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (taskEval === '미흡') {
         evalSpan.style.color = 'red';
     } else if (taskEval === '보통') {
-        evalSpan.style.color = 'yellow';
+        evalSpan.style.color = '#ffaa00';
     } else if (taskEval === '우수') {
         evalSpan.style.color = 'green';
     }

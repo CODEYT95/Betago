@@ -3,7 +3,10 @@ package com.bnw.beta.controller.learning.task;
 import com.bnw.beta.domain.common.paging.TaskPageDTO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.domain.learning.dto.TaskDTO;
+import com.bnw.beta.domain.learning.dto.TaskSendDTO;
+import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
 import com.bnw.beta.service.learning.Task.TaskService;
+import io.lettuce.core.ScriptOutputType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.Authentication;
@@ -89,7 +92,7 @@ public class EducatorTaskController {
         return "learning/task/educator/sendTask";
     }
 
-
+    //숙제 전송
     @PostMapping("/sendToMember")
     public String sendTask(@RequestParam("task_no[]") List<Integer> task_no,
                                             @RequestParam("member_no[]") List<Integer> member_no,
@@ -104,10 +107,49 @@ public class EducatorTaskController {
         }
     }
 
-    //제출된 숙제 조회하기
+    //전송한 숙제 조회하기
     @GetMapping("/evalTask")
-    public String evalTask(){
+    public String selectSendTask(Authentication authentication, Model model, @RequestParam(defaultValue = "") String task_title){
+        String member_id = authentication.getName();
+        List<String> taskTitle = taskService.selectTaskTitle(member_id);
+        List<TaskSendDTO> taskList = taskService.selectSendTask(member_id, task_title);
+
+        model.addAttribute("evalTask",1);
+        model.addAttribute("taskTitle", taskTitle);
+        model.addAttribute("taskList", taskList);
+
         return "learning/task/educator/evalTask";
+    }
+
+    //제출된 숙제 조회
+    @PostMapping("/member")
+    @ResponseBody
+    public List<TaskSubmitDTO> evalTaskList(Authentication authentication, @RequestParam Integer task_no) {
+        String member_id = authentication.getName();
+        List<TaskSubmitDTO> evalList = taskService.evalTaskList(member_id, task_no);
+        return evalList;
+    }
+
+    //숙제 제출 상세 조회하기
+    @GetMapping("/evalDetail")
+    @ResponseBody
+    public TaskSubmitDTO evalDetail(@RequestParam Integer tasksubmit_no){
+        System.out.println(tasksubmit_no);
+        TaskSubmitDTO evalDetail = taskService.evalTaskDetail(tasksubmit_no);
+        return evalDetail;
+    }
+
+    @PostMapping("/eval")
+    public String insertEval(@RequestParam String tasksubmit_comment, @RequestParam String tasksubmit_eval,
+                                             @RequestParam Integer group_no, @RequestParam Integer member_no,
+                                             @RequestParam String member_level, @RequestParam Integer tasksend_no){
+
+        int result = taskService.insertEvaluation(tasksubmit_comment, tasksubmit_eval, group_no, member_no, member_level, tasksend_no);
+        System.out.println("check"+result);
+        if(result > 0){
+            return  "redirect:/educator/evalTask";
+        }
+        return "/error";
     }
 
 }

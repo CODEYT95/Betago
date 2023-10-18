@@ -44,7 +44,7 @@
                                 <tbody class="tbody-container" id="taskTableBody">
                                 <th:block th:if="${#lists.isEmpty(taskPageDTO.taskList)}">
                                     <tr>
-                                        <td colspan="4">생성한 숙제가 없습니다.</td>
+                                        <td colspan="6">생성한 숙제가 없습니다.</td>
                                     </tr>
                                 </th:block>
                                 <th:block th:if="${not #lists.isEmpty(taskPageDTO.taskList)}">
@@ -148,7 +148,7 @@
                                     <thead class="table-head">
                                     <tr>
                                         <th class="t_no"> </th>
-                                        <th class="t_name">학습자명</th>
+                                        <th class="t_member">학습자명</th>
                                         <th class="t_phone">전화번호</th>
                                         <th class="t_level">현재 레벨</th>
                                     </tr>
@@ -165,7 +165,7 @@
                                                         <span class="checkmark" th:value="${list.member_no}" ></span>
                                                     </label>
                                                 </td>
-                                                <td class="list_name" th:text="${list.member_name}"></td>
+                                                <td class="list_member" th:text="${list.member_name}"></td>
                                                 <td class="list_phone" th:text="${list.member_phone}"></td>
                                                 <td class="list_level" th:text="${list.member_level}"></td>
                                             </th:block>
@@ -177,7 +177,7 @@
                         </div>
                     </div>
                 </div>
-                <!--모달2-->
+                <!--숙제 전송 모달-->
                 <div id="myModal2" class="modal2" style="display:none;">
                     <div class="modal-wrap2">
                         <div class="modal-task-title">
@@ -187,7 +187,6 @@
                         </div>
                         <div class="modalBtn">
                             <button type="submit" class="submit" id="sendTask">확인</button>
-                            <input type="button" class="conceal" id="exitBtn" value="닫기">
                         </div>
                     </div>
                 </div>
@@ -195,7 +194,7 @@
         </div>
     </div>
 </div>
-<!--모달-->
+<!--상세보기 모달-->
 <div class="modal-bg"></div>
 <div id="myModal" class="modal" style="display:none;">
     <div class="modal-wrap">

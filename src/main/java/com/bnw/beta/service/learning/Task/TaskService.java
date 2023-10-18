@@ -28,6 +28,17 @@ public interface TaskService {
     //숙제 전송하기
     String sendTask(List<Integer> task_no,  List<Integer> member_no, Integer group_no, String member_id);
 
+    //전송한 숙제 조회하기
+    List<TaskSendDTO> selectSendTask(String member_id, String task_title);
+
+    //제출된 숙제 조회하기
+    List<TaskSubmitDTO> evalTaskList(String member_id, Integer task_no);
+
+    //제출된 숙제 상세조회
+    TaskSubmitDTO evalTaskDetail(Integer tasksubmit_no);
+
+    //숙제 평가하기
+    int insertEvaluation(String tasksubmit_comment,  String tasksubmit_eval, Integer group_no, Integer member_no, String member_level, Integer tasksend_no);
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회

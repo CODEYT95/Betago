@@ -100,8 +100,6 @@ public class TaskServiceImpl implements TaskService{
         if(group_no != null){
             groupDTO.setGroup_no(group_no);
         }
-
-
         return taskDAO.selectGroupByName(groupDTO);
     }
 
@@ -120,6 +118,57 @@ public class TaskServiceImpl implements TaskService{
             }
         }
         return "success";
+    }
+
+    //전송한 숙제 조회
+    @Override
+    public List<TaskSendDTO> selectSendTask(String member_id, String task_title) {
+        TaskSendDTO taskSendDTO = new TaskSendDTO();
+        taskSendDTO.setMember_id(member_id);
+        taskSendDTO.setTask_title(task_title);
+
+        return taskDAO.selectSendTask(taskSendDTO);
+    }
+
+    //제출된 숙제 조회하기
+    @Override
+    public List<TaskSubmitDTO> evalTaskList(String member_id, Integer task_no) {
+        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
+        taskSubmitDTO.setMember_id(member_id);
+        taskSubmitDTO.setTask_no(task_no);
+
+        return taskDAO.evalTaskList(taskSubmitDTO);
+    }
+
+    //제출된 숙제 상세 조회하기
+    @Override
+    public TaskSubmitDTO evalTaskDetail( Integer tasksubmiut_no) {
+        return taskDAO.evalTaskDetail(tasksubmiut_no);
+    }
+
+    //숙제 평가하기
+    @Override
+    public int insertEvaluation(String tasksubmit_comment,  String tasksubmit_eval,
+                                                    Integer group_no, Integer member_no, String member_level, Integer tasksend_no) {
+
+        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
+        taskSubmitDTO.setTasksend_no(tasksend_no);
+        taskSubmitDTO.setTasksubmit_comment(tasksubmit_comment);
+        taskSubmitDTO.setTasksubmit_eval(tasksubmit_eval);
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroup_no(group_no);
+        groupDTO.setMember_no(member_no);
+        groupDTO.setMember_level(member_level);
+
+        int insertResult = taskDAO.insertEvaluation(taskSubmitDTO);
+        if(insertResult > 0){
+            int updateResult = taskDAO.updateMemberLevel(groupDTO);
+            if(updateResult > 0){
+                return 1;
+            }
+        }
+        return 0;
     }
 
     /*학습자 부분--------------------------------------------------------*/
