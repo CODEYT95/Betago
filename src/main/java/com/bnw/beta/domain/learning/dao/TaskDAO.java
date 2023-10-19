@@ -49,7 +49,7 @@ public interface TaskDAO {
 
     /*학습자 부분--------------------------------------------------------*/
     //전송된 숙제 조회
-    List<TaskDTO> selectTaskById(int member_no);
+    List<TaskDTO> selectTaskById(Integer member_no);
 
     //숙제 번호로 정보 조회
     TaskSendDTO selectTaskByNo(TaskSendDTO taskSendDTO);
@@ -66,7 +66,10 @@ public interface TaskDAO {
     int submitTask(List<Integer> tasksend_no);
 
     //제출 숙제 조회
-    List<TaskSubmitDTO> selectSubmitTask(int member_no);
+    List<TaskSendDTO> selectSubmitTask(TaskSendDTO taskSendDTO);
+
+    //제출 숙제 갯수
+    int submitTaskCount(Integer member_no);
 
     //평가 완료된 숙제 조회
     TaskSubmitDTO selectSubmitTaskByNo(TaskSubmitDTO taskSubmitDTO);
