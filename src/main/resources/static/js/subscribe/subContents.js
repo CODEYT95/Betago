@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', function (events) {
 function fetchData() {
     var startDate = document.getElementById("startDate").value;
-    var endDate = document.getElementById("endDate").value;
+    var endDate = document.getElementById("end
+    Date").value;
 
     // startDate, endDate 중 하나라도 비어있을 경우에 알림 메시지 표시 및 폼 제출 방지
     if (!startDate || !endDate) {
@@ -85,6 +86,14 @@ function isAnyCheckboxChecked() {
     });
     // 초기 로드 시 한번 확인
     updatePaymentButtonState();
+
+    function topFunction() {
+            const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(topFunction);
+                window.scrollTo(0, currentScroll - (currentScroll / 10));
+            }
+        }
 
     //---------------modal창-------------------------
 
