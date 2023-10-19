@@ -118,18 +118,22 @@ display: inline-grid;
 }
 
 .login {
-    background-image: repeating-linear-gradient(0deg, transparent, transparent 20px, #a4a4a4 21px), repeating-linear-gradient(90deg, #fff9be, #fff9be 20px, #a4a4a4 21px);
     display: grid;
     align-items: center;
-    border: 1px solid #ccc;
     width: 210px;
-    height: 60px;
     border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .login-info {
     display: grid;
     align-items: center;
+}
+
+.member-name {
+    font-size: 20px;
+    color: #168fde;
 }
 
 .btn {
