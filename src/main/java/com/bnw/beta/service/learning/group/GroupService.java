@@ -19,7 +19,7 @@ public interface GroupService {
     List<GroupDTO> groupAddList(String member_id, String game_title, int limit, int offset);
 
     //그룹 등록을 위한 게임 콘텐츠 정보 불러오기
-    List<GroupDTO> gameGroupInfo(int game_no);
+    GroupDTO gameGroupInfo(int pay_no);
 
     //학습 그룹 등록(상세)
     int insertGroup(GroupDTO groupDTO, String id, Date sdate, Date edate);

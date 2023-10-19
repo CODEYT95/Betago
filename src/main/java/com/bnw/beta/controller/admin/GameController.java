@@ -2,6 +2,7 @@ package com.bnw.beta.controller.admin;
 
 import com.bnw.beta.domain.admin.dto.GameDTO;
 import com.bnw.beta.domain.admin.dto.GameFileDTO;
+import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
 import com.bnw.beta.service.admin.game.GameService;
 import com.bnw.beta.service.subscribe.pay.PayService;
@@ -65,25 +66,27 @@ public class GameController {
 
     //게임콘텐츠 조회
     @GetMapping("/list")
-    public String selectAll(Model model) {
-        List<GameDTO> gameList = gameService.selectAll();
-        model.addAttribute("gameList", gameList);
+    public String selectAll(@RequestParam(value = "game_title", defaultValue = "") String game_title,
+                            @RequestParam(value = "offset", defaultValue = "0") int offset,
+                            Model model) {
+
+        int limit = 6;
+
+        model.addAttribute("gameList", gameService.selectGameList(game_title, limit, offset));
+        model.addAttribute("gameTitle", gameService.selectGameTitle());
+        model.addAttribute("totalCount", gameService.countGameList(game_title));
+        model.addAttribute("title",game_title);
         return "admin/game/gameList";
     }
 
     // 게임콘텐츠 제목 검색
-    @GetMapping("/searchByTitle")
-    public String searchByTitle(@RequestParam("game_title") String game_title, Model model) {
-        if (game_title != null && !game_title.trim().isEmpty()) {
-            // 사용자가 게임 제목을 선택한 경우에만 필터링
-            List<GameDTO> filteredGames = gameService.searchByTitle(game_title);
-            model.addAttribute("gameList", filteredGames);
-        } else {
-            // 선택한 게임이 없는 경우 전체 목록을 유지
-            List<GameDTO> allGames = gameService.selectAll();
-            model.addAttribute("gameList", allGames);
-        }
-        return "admin/game/gameList";
+    @PostMapping("/list")
+    @ResponseBody
+    public List<GameDTO> gameListMore(@RequestParam(value = "game_title", defaultValue = "") String game_title,
+                                       @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                       Model model) {
+        int limit = 6;
+        return gameService.selectGameList(game_title, limit, offset);
     }
 
 

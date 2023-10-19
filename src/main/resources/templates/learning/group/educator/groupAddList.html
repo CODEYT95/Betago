@@ -12,17 +12,20 @@
     <div th:replace="~{common/fragments/header :: headerFragment}"></div>
     <div class="content">
         <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
+        <input id="title" type="hidden" th:value="${title}">
         <div class="content-wrap">
             <div class="content_header">
                 <div class="keyword-container">
                     <h2>게임 콘텐츠</h2>
                     <div class="select-menu-group">
                         <div class="select-btn-group">
-                            <span class="sBtn-text">전체</span>
-                            <input class="title" hidden="hidden" th:value="${title}">
+                            <span class="sBtn-text" th:text="${title}"></span>
                             <i class="bx bx-chevron-down"></i>
                         </div>
                         <ul class="options">
+                            <li class="option">
+                                <span class="option-text">전체</span>
+                            </li>
                             <li class="option" th:each="gameTitle : ${gameTitle}">
                                 <span class="option-text" th:text="${gameTitle.game_title}"></span>
                             </li>
@@ -36,13 +39,13 @@
             </div>
             <div class="content-container">
                 <ul class="list-box">
-                    <li class="" th:each="groupAddList : ${groupAddList}" th:attr="data-game-no=${groupAddList.game_no}">
+                    <li class="" th:each="groupAddList : ${groupAddList}" th:attr="data-pay-no=${groupAddList.pay_no}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${groupAddList.game_no}"/>
+                                <input type="checkbox" class="checkbox-input"  th:attr="data-pay-no=${groupAddList.pay_no}"/>
                                 <span class="checkbox-tile">
                                 <div class="card">
-                                    <div class="poster"><img th:src="@{/image/testBADUK2.png}"></div>
+                                    <div class="poster"><img th:src="@{/image/baduk.png}"></div>
                                     <div class="card-details"></div>
                                     <div class="details">
                                         <h5>게임 콘텐츠 : <span th:text="${groupAddList.game_title}"></span></h5>

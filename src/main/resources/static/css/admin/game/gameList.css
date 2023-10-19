@@ -138,7 +138,6 @@
     font-size: 20px;
 }
 .detaillist h6{
-
         display: grid;
         justify-content: space-between;
 }
@@ -178,7 +177,7 @@ h1, h2, h3, h4{
     white-space: nowrap;
     width: 1px;
 
-&:checked + .checkbox-tile {
+&:checked + .checkbox-title {
     border-color: #2260ff;
     box-shadow: 0 5px 10px rgba(#000, 0.1);
     color: #2260ff;
@@ -194,7 +193,7 @@ h1, h2, h3, h4{
     }
 }
 
-&:focus + .checkbox-tile {
+&:focus + .checkbox-tilte {
     box-shadow: 0 5px 10px rgba(#000, 0.1), 0 0 0 4px #b5c9fc;
     &:before {
     transform: scale(1);
@@ -203,7 +202,7 @@ h1, h2, h3, h4{
     }
 }
 
-.checkbox-tile {
+.checkbox-tilte {
     display: flex;
     flex-direction: row;
     width: 286px;
@@ -270,6 +269,21 @@ h1, h2, h3, h4{
 
 .list-box li{
     margin: 0;
+}
+.content_footer{
+    display: flex;
+    justify-content: center;
+}
+
+.content_footer button{
+    width: auto;
+    height: auto;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
 }
 
     #myBtn {
