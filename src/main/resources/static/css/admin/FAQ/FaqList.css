@@ -120,50 +120,5 @@ area[alt="비밀번호 찾기"] {
     border: none;
     background: #ccc;
     cursor: pointer;
-}
 
-/*페이지네이션 스타일*/
-#pagination{
-    display: flex;
-    margin: 15px 0 0 15px;
-    gap: 5px;
-    justify-content: center;
-}
-
-.pagination-container a {
-    float: left;
-    display: flex;
-    text-decoration: none;
-    width: 35px;
-    height: 100%;
-    align-items: center;
-}
-
-.pagination-container li {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    width: 35px;
-    height: 30px;
-}
-
-.pagination-container a:hover:not(.active) {
-    background-color: #ddd;
-    border-radius : 5px;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    height: 30px;
-    align-items: center;
-}
-
-.active-page {
-    background: #b2d3ff;
-    border-radius: 5px;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    height: 30px;
-    align-items: center;
 }

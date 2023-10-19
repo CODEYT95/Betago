@@ -190,7 +190,7 @@ public class TaskServiceImpl implements TaskService{
 
     //숙제 작성하기
     @Override
-    public int wirteTask(Integer tasksend_no, Integer task_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id) {
+    public int wirteTask(int tasksend_no, int task_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id) {
 
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
         taskSubmitDTO.setTasksend_no(tasksend_no);
@@ -208,7 +208,7 @@ public class TaskServiceImpl implements TaskService{
 
     //작성한 숙제 조회
     @Override
-    public TaskSubmitDTO modifyTask(Integer tasksend_no, Integer member_no) {
+    public TaskSubmitDTO modifyTask(int tasksend_no, int member_no) {
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
         taskSubmitDTO.setTasksend_no(tasksend_no);
         taskSubmitDTO.setMember_no(member_no);
@@ -218,7 +218,7 @@ public class TaskServiceImpl implements TaskService{
 
     //숙제 수정
     @Override
-    public int ModifySubmitTask(Integer tasksend_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add) {
+    public int ModifySubmitTask(int tasksend_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add) {
 
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
         taskSubmitDTO.setTasksend_no(tasksend_no);
@@ -236,23 +236,14 @@ public class TaskServiceImpl implements TaskService{
 
     //제출 숙제 조회
     @Override
-    public List<TaskSendDTO> selectSubmitTask(Integer member_no, int limit, int offset) {
-       TaskSendDTO taskSendDTO = new TaskSendDTO();
-       taskSendDTO.setMember_no(member_no);
-       taskSendDTO.setLIMIT(limit);
-       taskSendDTO.setOFFSET(limit*offset);
-        return taskDAO.selectSubmitTask(taskSendDTO);
-    }
-
-    //제출 숙제 갯수
-    @Override
-    public int submitTaskCount(Integer member_no) {
-        return taskDAO.submitTaskCount(member_no);
+    public List<TaskSubmitDTO> selectSubmitTask(Integer member_no) {
+        return taskDAO.selectSubmitTask(member_no);
     }
 
     //평가 완료된 숙제 조회
+
     @Override
-    public TaskSubmitDTO selectSubmitTaskByNo(Integer tasksend_no, Integer member_no) {
+    public TaskSubmitDTO selectSubmitTaskByNo(int tasksend_no, int member_no) {
 
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
         taskSubmitDTO.setTasksend_no(tasksend_no);

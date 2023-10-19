@@ -16,14 +16,6 @@ body {
 
 }
 
-.logoutBtn {
-    border: none;
-    background: none;
-    font-size: 13px;
-    font-weight: 700;
-    color: #666;
-}
-
 body, input, textarea, select, button, table, a {
   font-family: arial, sans-serif;
   font-size: 14px;
@@ -37,11 +29,6 @@ a {
   color: #666;
   text-decoration: none;
 }
-
-.mismatch {
-    color: #797979;
-}
-
 .header-image{
     width: 186px;
     position: absolute;
@@ -387,7 +374,6 @@ nav .header-navi .links li:hover .admin-sub-menu {
     color: #333;
     margin: 0;
   }
-
   .sub-logo{
     display: none;
   }

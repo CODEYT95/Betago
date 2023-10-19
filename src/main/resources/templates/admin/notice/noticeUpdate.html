@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>둑며들다|공지 수정</title>
+    <title>게시판 수정하기</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeUpdate.css}">
 </head>
@@ -24,7 +24,7 @@
 
                     <div class="opt">
                         <laber for="member_id" style="font-size: 16px; margin-right: 9px;">작성자</laber>
-                        <input type="text" style="margin-left: 42px;" class="texarea1" id="member_id" name="member_id" th:value="${noticeDTO.member_name}"  readonly/>
+                        <input type="text" style="margin-left: 42px;" class="texarea1" id="member_id" name="member_id" th:value="${noticeDTO.member_id}"  readonly/>
                     </div>
 
                     <div class="opt">

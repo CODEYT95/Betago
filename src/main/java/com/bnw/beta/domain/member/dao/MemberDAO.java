@@ -31,12 +31,9 @@ public interface MemberDAO {
     MemberDTO findUserByUsername(String username);
 
     //////////멤버 정보 불러오기///////////
-    MemberDTO memberInfo(@Param("member_id") String member_id);
+    MemberDTO getMemberInfo(String member_id);
 
     /*회원목록조회 관리자용*/
-    List<MemberDTO> memberlist(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, @Param("keyword") String keyword);
-
-    int count(@Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, @Param("keyword") String keyword);
     List<MemberDTO> memberlist();
 
     /////////멤버 롤 가져오기/////////////김현민
@@ -47,9 +44,9 @@ public interface MemberDAO {
 
     MemberDTO findIDbyUserName(@Param("name") String name, @Param("email") String email);
 
-    /* MemberDTO findPwbyUserId(@Param("id") String id, @Param("email") String email);
-     */
-    public void updatePassword(@Param("id") String member_id, @Param("newPassword") String rawPassword);
+   /* MemberDTO findPwbyUserId(@Param("id") String id, @Param("email") String email);
+    */
+   public void updatePassword(@Param("id") String member_id, @Param("newPassword") String rawPassword);
     MemberDTO findByUserIdAndEmail(@Param("id")String member_id,@Param("email") String email);
 
 }

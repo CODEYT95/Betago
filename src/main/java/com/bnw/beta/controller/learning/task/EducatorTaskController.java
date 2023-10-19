@@ -65,7 +65,7 @@ public class EducatorTaskController {
                                                                     @RequestParam(defaultValue = "") String group_name,
                                                                     @RequestParam(defaultValue = "") Integer group_no,
                                                                     @RequestParam(value = "page", defaultValue = "1") int page,
-                                                                    @RequestParam(value = "size", defaultValue = "5") int size,
+                                                                    @RequestParam(value = "size", defaultValue = "1") int size,
                                                                     Authentication authentication, Model model){
         System.out.println(task_title);
         if(task_title.equals("전체")){
