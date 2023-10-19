@@ -111,7 +111,7 @@ input#game_date{
 .checkbox-title {
     display: flex;
     flex-direction: row;
-    width: auto;
+    width: 296px;
     border-radius: 11px;
     border: 3px solid #b5bfd9;
     background-color: #fff;
@@ -321,9 +321,11 @@ width: 110px;
 }
 
 #deleteForm{
-column-count:3;
-display: block;
-gap: 35px;
+    column-count: 3;
+    display: flex;
+    gap: 35px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 #myBtn {
