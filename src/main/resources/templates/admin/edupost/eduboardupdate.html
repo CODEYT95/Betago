@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>학습등록 상세페이지</title>
+    <title>둑며들다|자료 등록 상세페이지</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/edupost/eduboardupdate.css}">
 </head>
@@ -16,119 +16,98 @@
               enctype="multipart/form-data">
             <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.edupost_no}"/>
             <input type="hidden" id="removeFileIds" name="removeFileIds"/>
-            <div class="opt">
-                <label for="edupost_title" style="font-size: 16px; margin-right: 9px;">학습자료명</label>
-                <input type="text" class="texarea1" th:value="${post.edupost_title}" id="edupost_title"
-                       name="edupost_title"/>
+            <div class="OOO">
+                <div class="opt">
+                    <label for="edupost_title" style="font-size: 16px;">학습자료명</label>
+                    <input type="text" class="texarea1" th:value="${post.edupost_title}" id="edupost_title"
+                           name="edupost_title"/>
+                </div>
+                <div class="opt">
+                    <label for="edupost_category" style="font-size: 16px;">자료구분</label>
+                    <select id="edupost_category" class="edupost_category" th:value="${post.edupost_category}"
+                            name="edupost_category">
+                        <option value="튜토리얼">튜토리얼</option>
+                        <option value="교육영상">교육영상</option>
+                    </select>
+                </div>
+                <div class="opt">
+                    <label for="edupost_type" style="font-size: 16px;">자료유형</label>
+                    <select id="edupost_type" class="edupost_type" name="edupost_type" th:value="${post.edupost_type}">
+                        <option value="묘수풀이">묘수풀이</option>
+                        <option value="사활">사활</option>
+                        <option value="영토">영토</option>
+                    </select>
+                </div>
+                <div class="opt">
+                    <label for="edupost_fileadd" style="font-size: 16px;">자료file주소</label>
+                    <input class="texarea1" type="text" th:value="${post.edupost_fileadd}" id="edupost_fileadd"
+                           name="edupost_fileadd"/>
+                </div>
+                <div class="opt">
+                    <label for="edupost_service" style="font-size: 16px;">서비스구분</label>
+                    <select class="edupost_service" id="edupost_service" th:value="${post.edupost_service}"
+                            name="edupost_service">
+                        <option value="유료">유료</option>
+                        <option value="무료">무료</option>
+                    </select>
+                </div>
+                <div class="opt">
+                    <label for="edupost_content" style="font-size: 16px;">자료 내용</label>
+                    <textarea class="texarea2" id="edupost_content" th:text="${post.edupost_content}"
+                              name="edupost_content"></textarea>
+                </div>
             </div>
-            <div class="opt">
-                <label for="edupost_category" style="font-size: 16px;">자료구분</label>
-                <select id="edupost_category" class="edupost_category" th:value="${post.edupost_category}"
-                        name="edupost_category">
-                    <option value="튜토리얼">튜토리얼</option>
-                    <option value="교육영상">교육영상</option>
-                </select>
+            <div>
+                <label class="fileselect" style="font-size: 16px;"> 파일등록
+                    <input type="file" class="fileup" id="files" name="files" onchange="selectFile(this);" />
+                </label>
+                <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
             </div>
-            <div class="opt">
-                <label for="edupost_type" style="font-size: 16px;">자료유형</label>
-                <select id="edupost_type" class="edupost_type" name="edupost_type" th:value="${post.edupost_type}">
-                    <option value="묘수풀이">묘수풀이</option>
-                    <option value="사활">사활</option>
-                    <option value="영토">영토</option>
-                </select>
+            <div class="file_list" th:each="fileList : ${fileList}">
+                <div>
+                    <div class="file_input">
+                        <label>파일명
+                            <input type="text" th:value="${fileList.edupost_name}" style="border: none" readonly />
+                        </label>
+                    </div>
+                </div>
+                <button type="button" th:onclick="remove([[${fileList.filepost_no}]]);" class="btns_del_btn"><span>삭제</span></button>
             </div>
-            <div class="opt">
-                <label for="edupost_fileadd" style="font-size: 16px;">자료file주소</label>
-                <input class="texarea1" type="text" th:value="${post.edupost_fileadd}" id="edupost_fileadd"
-                       name="edupost_fileadd"/>
-            </div>
-            <div class="opt">
-                <label for="edupost_service" style="font-size: 16px;">서비스구분</label>
-                <select class="edupost_service" id="edupost_service" th:value="${post.edupost_service}"
-                        name="edupost_service">
-                    <option value="유료">유료</option>
-                    <option value="무료">무료</option>
-                </select>
-            </div>
-            <div class="opt">
-                <label for="edupost_content" style="position: relative; font-size: 16px; bottom: 19rem">자료 내용</label>
-                <textarea class="texarea2" id="edupost_content" th:text="${post.edupost_content}"
-                          name="edupost_content"></textarea>
-            </div>
-            <!--   파일추가 -->
-            <label> 파일 등록 </label>
-            <input type="file" class="fileup" id="custom-upload" name="file" onchange="selectFile(this);"><br/>
+            <div class="addfile-wrap">
 
-            <div class="file_input">
-                <div class="file_list" th:each="fileList : ${fileList}">
-                    <input type="text" th:value="${fileList.edupost_name}" readonly/>
-                    <button type="button" class="btns fn_add_btn"><span>파일 추가</span></button>
-                    <button type="button" id="deleteBtn" th:attr="data-file-no=${fileList.filepost_no}"
-                            class="btns del_btn"><span>삭제</span></button>
-                </div>
-                <div class="addfile-wrap">
-                </div>
-                <button type="submit" id="saveBtn" class="btn_sub">저장하기</button>
             </div>
+            <button type="submit" id="saveBtn" class="btn_sub">저장하기</button>
         </form>
         <script type="text/javascript" th:src="@{/js/admin/edupost/function.js}"></script>
         <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
     </div>
 </div>
 </body>
-<script>
-    // // 파일 삭제 처리용 익명 함수
-    // const removeFileId = (function() {
-    //     const ids = [];
-    //     return {
-    //         add(id) {
-    //             if (ids.includes(id)) {
-    //                 return false;
-    //             }
-    //             ids.push(id);
-    //         },
-    //         getAll() {
-    //             return ids;
-    //         }
-    //     }
-    // }());
-    //
-    window.onload = () => {
-        findAllFile();
+<script th:inline="javascript">
 
-    }
+    // 파일 선택
+    function selectFile(element) {
+        const file = element.files[0];
+        const filename = element.closest('.file_input').firstElementChild;
 
-    //전체 파일 조회
-    function findAllFile() {
-
-        // 1. 신규 등록/수정 체크
-        const post = [[ ${edupost_no}]];
-
-        // 2. API 호출
-        const response = getJson(`/eduposts/${post}/files`);
-
-        // 3. 로직 종료
-        if (!response.length) {
+        // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
+        if (!file) {
+            filename.value = '';
             return false;
         }
 
-        // 4. 업로드 영역 추가
-        for (let i = 0, len = (response.length - 1); i < len; i++) {
-            addFile();
+        // 2. 파일 크기가 10MB를 초과하는 경우
+        const fileSize = Math.floor(file.size / 1024 / 1024);
+        if (fileSize > 10) {
+            alert('10MB 이하의 파일로 업로드해 주세요.');
+            filename.value = '';
+            element.value = '';
+            return false;
         }
 
-        // 5. 파일 선택 & 삭제 이벤트 재선언 & 파일명 세팅
-        const filenameInputs = document.querySelectorAll('.file_list input[type="text"]');
-        filenameInputs.forEach((input, i) => {
-            const fileInput = input.nextElementSibling.firstElementChild;
-            const fileRemoveBtn = input.parentElement.nextElementSibling;
-            fileInput.setAttribute('onchange', `selectFile(this, ${response[i].id})`);
-            fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`);
-            input.value = response[i].filepost_no;
-
-        })
+        // 3. 파일명 지정
+        filename.value = file.name;
     }
-
     // 파일 추가
     function addFile() {
         const fileDiv = document.createElement('div');
@@ -138,92 +117,43 @@
                         <label> 첨부파일
                             <input type="file" name="files" onchange="selectFile(this);" />
                         </label>
+                    <button type="button" class="btns del_btn"><span>삭제</span></button>
                     </div>
-                    <button type="button" th:attr="data-file-no=filepost_no" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
                 `;
         document.querySelector('.addfile-wrap').appendChild(fileDiv);
     }
+    // 파일 삭제
+    function removeFile(element) {
 
-    document.addEventListener("DOMContentLoaded", function () {
-        $("#deleteBtn").click(function () {
-            var file_no = this.getAttribute('data-file-no'); // Use 'this' to refer to the clicked element
-            console.log(file_no);
+        // 2. 파일 영역 초기화 & 삭제
+        const fileAddBtn = element.nextElementSibling;
+        if (fileAddBtn) {
+            const inputs = element.previousElementSibling.querySelectorAll('input');
+            inputs.forEach(input => input.value = '')
+            return false;
+        }
+        element.parentElement.remove();
+    }
+    function remove(file_no) {
+        console.log(file_no);
 
-            $.ajax({
-                type: 'POST',
-                url: '/edupost/filedelete',
-                data: {file_no: file_no},
-                dataType: 'text',
-                success: function (response) {
-                    if (response === "success") {
-                        alert('삭제가 완료 되었습니다.');
-                        location.reload();
-                    } else {
-                        alert('삭제에 실패했습니다.');
-                    }
-
-
-                },
-                error: function () {
-                    alert('삭제중 오류로 인해 실패했습니다.');
+        $.ajax({
+            type: 'POST',
+            url: '/edupost/filedelete',
+            data: {file_no: file_no},
+            dataType: 'text',
+            success: function (response) {
+                if (response === "success") {
+                    alert('삭제가 완료 되었습니다.');
+                    location.reload();
+                } else {
+                    alert('삭제에 실패했습니다.');
                 }
-            });
+            },
+            error: function () {
+                alert('삭제중 오류로 인해 실패했습니다.');
+            }
         });
-
-
-        function savePost() {
-            const form = document.getElementById('saveForm');
-            document.getElementById('saveBtn').disabled = true;
-            form.removeFileIds.value = removeFileId.getAll().join(); // 추가
-            form.submit();
-        }
-
-        function selectFile(element, id) {
-
-            const file = element.files[0];
-            const filename = element.closest('.file_input').firstElementChild;
-
-            // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
-            if (!file) {
-                filename.value = '';
-                return false;
-            }
-
-            // 2. 파일 크기가 10MB를 초과하는 경우
-            const fileSize = Math.floor(file.size / 1024 / 1024);
-            if (fileSize > 10) {
-                alert('10MB 이하의 파일로 업로드해 주세요.');
-                filename.value = '';
-                element.value = '';
-                return false;
-            }
-
-            // 3. 파일명 지정
-            filename.value = file.name;
-
-            // 4. 삭제할 파일 id 추가
-            if (id) {
-                removeFileId.add(id);
-            }
-        }
-
-        // 파일 삭제
-        function removeFile(element, id) {
-
-            // 1. 삭제할 파일 id 추가
-            if (id) {
-                removeFileId.add(id);
-            }
-
-            // 2. 파일 영역 초기화 & 삭제
-            const fileAddBtn = element.nextElementSibling;
-            if (fileAddBtn) {
-                const inputs = element.previousElementSibling.querySelectorAll('input');
-                inputs.forEach(input => input.value = '')
-                return false;
-            }
-            element.parentElement.remove();
-        }
-    });
+    }
 </script>
 </html>

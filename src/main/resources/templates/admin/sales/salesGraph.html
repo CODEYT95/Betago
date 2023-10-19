@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|매출 조회</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/sales/salesGraph.css}">
+    <script type="text/javascript" th:src="@{/js/admin/sales/salesGraph.js}"></script>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/fragments/admin_sidebar :: admin_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="chart-container">
+            <div class="date-container">
+                <div>
+                    <span>조회 기간</span>
+                    <div id="daterange" style="display: none;">
+                        <input type="month" id="startdate">
+                        <span>~</span>
+                        <input type="month" id="enddate">
+                    </div>
+                    <input type="month" id="startdate_single">
+                </div>
+                <div>
+                    <span>일단위</span>
+                    <input type="radio" name="interval" value="day" checked>
+                    <span>월단위</span>
+                    <input type="radio" name= "interval" value= "month">
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info">
+                <h3>총 매출액:<span></span>원</h3>
+                <h3>건수:<span></span>개</h3>
+            </div>
+            <div class="button">
+                <input type="button" class="search-btn" value="조회">
+                <a th:href="@{/game/salesList}"><input type="button" class="chart-btn" value="목록 보기"></a>
+            </div>
+        </div>
+        <h3 style="margin-bottom: 10px;">현재 조회 기간 : <span th:text="${#dates.format(comment, 'yyyy-MM')} + (${comment2 != null ? '~' + #dates.format(comment2, 'yyyy-MM') : ''})"></span>
+        </h3>
+        <div class="graph-container">
+            <div id="columnchart_material" style="width: 100%; min-width: 25%; height: 500px;"></div>
+        </div>
+    </div>
+</div>
+<input type="hidden" th:each="dayList : ${dayList}" th:value="${dayList.day}" id="dayValue" class="data-value">
+<input type="hidden" th:each="dayList : ${dayList}" th:value="${dayList.total_sell}" id="totalSellValue" class="data-value">
+<input type="hidden" th:each="dayList : ${dayList}" th:value="${dayList.total_sales}" id="totalSalesValue" class="data-value">
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

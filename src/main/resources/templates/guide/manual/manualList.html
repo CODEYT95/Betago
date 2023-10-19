@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|매뉴얼</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/manual/manual.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="main-content">
+            <div class="first-contents">
+                <div class="imgbox">
+                    <div class="image-manual">
+                        <img src="../image/guide/manual/교육자3.jpg" alt="교육자3">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span class="title"> 교육자 </span><br>
+                    <span>교육자님은 게임콘텐츠를 구매하여 수업 할 학습그룹을 개설할 수 있습니다.
+                    금액은 패키지와 기간에 따라 차이가 있음을 알려드립니다.
+                    개설한 그룹에 학생들이 가입 신청을 하면 가입 승인을 하여 학습 그룹을 완성하시면 됩니다.
+                    이후 숙제를 만들어 학생들에게 배포하여 학생들이 제출하면, 제출한 숙제 수행 내용을 평가하는 방식으로 학습이 진행됩니다.
+                    또한 교육사이트에서 튜토리얼을 통해 교육에 참고가 될만한 정보를 이용하실 수 있습니다.</span>
+                </div>
+            </div>
+            <div class="second-contents">
+                <div class="imgbox">
+                    <div class="image-manual">
+                        <img src="../image/guide/manual/학생2.jpeg" alt="학생2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+
+                <div class="contents-title">
+                    <span class="title"> 학생(학습자) </span><br>
+                    <span>학생 분들은 수강하고 싶은 그룹을 선택해서 가입 신청을 하시면 됩니다.
+                    가입한 그룹의 학생들은 해당그룹의 콘텐츠를 무료로 이용가능 합니다. 선생님이 숙제를
+                    내주시면 본인의 숙제를 확인하고 학습한 내용을 제출하여 선생님께 숙제평가를 받습니다.</span>
+                </div>
+            </div>
+
+            <div class="third-contents">
+                <div class="imgbox">
+                    <div class="image-manual">
+                        <img src="../image/guide/manual/일반인.jpeg" alt="일반인">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+
+                <div class="contents-title">
+                    <span class="title"> 일반인 </span><br>
+                    <span>일반 학습자 분들도 게임콘텐츠를 개별 구독 신청하실 수 있습니다. 패키지와 기간에 따라 금액에
+                        차이가 있음을 알려드립니다. 또한 콘텐츠 구매시 교육사이트 내에 있는 유료 교육자료를 이용하실 수 있습니다.
+                    </span>
+                </div>
+            </div>
+
+            <div class="fourth-contents">
+                <div class="imgbox">
+                    <div class="image-manual">
+                        <img src="../image/guide/manual/공통사항.jpg" alt="공통사항">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span class="title"> 공통사항 </span><br>
+                    <span>
+                     게임컨텐츠 구매는 구독서비스의 게임 컨텐츠 구매페이지에서 구매하실 수 있으며 무통장 입금, 계좌이체, 카카오페이로
+                     결제하실 수 있습니다. 구매 후 사이트내에 있는 유료 학습자료를 이용가능하며, 상품 구독을 취소하실 경우에는 구독서비스의
+                     내 게임 컨텐츠 조회에서 구독취소할 상품을 체크한다음 구독취소 버튼을 클릭하면 됩니다. 구독하신 상품의 구독기간 중 남은
+                     기간에 따라 환불금액이 달라지는 점에 유의 바랍니다.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

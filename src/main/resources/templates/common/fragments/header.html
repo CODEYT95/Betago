@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,14 +10,14 @@
 <th:block th:fragment="headerFragment">
     <nav>
         <section class="header-navi">
-            <img th:src="@{/image/logo7.png}" alt="Betago Header Image" class="header-image">
+            <img th:src="@{/image/main/logo7.png}" alt="Betago Header Image" class="header-image">
             <i id="main_sideBtn" class='bx bx-menu'></i>
             <section class="header_top">
                 <span class="top_info">Betago를 보다 편리하고 안전하게 이용하세요.</span>
-                <a href="/login" class="loginBtn">로그인/회원가입</a>
+                <a href="/login" class="loginBtn" sec:authorize="isAnonymous()">로그인/회원가입</a>
                 <!--임시로그아웃 김현민-->
                 <form id="logoutForm" method="post" action="/logout" style="display: none;"></form>
-                <button onclick="document.getElementById('logoutForm').submit();" class="logoutBtn">로그아웃</button>
+                <button onclick="document.getElementById('logoutForm').submit();" class="logoutBtn" sec:authorize="isAuthenticated()">로그아웃</button>
                 <!--임시로그아웃 김현민 끝-->
             </section>
             <div class="logo"><a th:href="@{/}">둑며들다</a></div>
@@ -42,6 +42,7 @@
                                     <li><a href="#">바둑 게임(앱)</a></li>
                                     <li><a href="#">튜토리얼</a></li>
                                     <li><a href="#">바둑 영상</a></li>
+
                                 </ul>
                             </li>
                             <li><a th:href="@{/notice/list}">공지사항</a></li>
@@ -49,15 +50,22 @@
                             <li><a th:href="@{/question/list}">Q&A</a></li>
                         </ul>
                     </li>
-                    <li class="first_li">
-                        <a href="#">구독서비스</a>
+                    <li class="first_li" sec:authorize="!hasAnyRole('USER','ADMIN')">
+                        <a th:href="@{/game/list}">구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
                             <li><a th:href="@{/game/list}">게임 컨텐츠 구매</a></li>
                             <li><a th:href="@{/list}">내 게임 컨텐츠 조회</a></li>
                         </ul>
                     </li>
-                    <li class="first_li">
+                    <li class="first_li" sec:authorize="hasAnyRole('USER','ADMIN')">
+                        <a>구독서비스</a>
+                        <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
+                        <ul class="subscribe-sub-menu sub-menu">
+                            <li class="mismatch">권한이 없습니다.</li>
+                        </ul>
+                    </li>
+                    <li class="first_li" sec:authorize="hasRole('USER')">
                         <a th:href="@{/student/group/joinList}">학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
                         <ul class="learning-sub-menu sub-menu">
                             <li><a th:href="@{/student/group/joinList}">학습그룹 가입신청</a></li>
@@ -66,7 +74,13 @@
                             <li><a th:href="@{/student/submitTaskList}">숙제 제출 목록</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" >
+                    <li class="first_li" sec:authorize="!hasRole('USER')">
+                        <a>학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
+                        <ul class="learning-sub-menu sub-menu">
+                            <li class="mismatch">권한이 없습니다.</li>
+                        </ul>
+                    </li>
+                    <li class="first_li" sec:authorize="hasRole('TEACHER')">
                         <a th:href="@{/educator/group/addList}">교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
                         <ul id="service" class="educator-sub-menu sub-menu">
                             <li><a th:href="@{/educator/group/addList}">학습그룹 등록</a></li>
@@ -74,19 +88,25 @@
                             <li><a th:href="@{/educator/group/approveList}">학습그룹 가입 승인</a></li>
                             <li><a th:href="@{/educator/createTaskForm}">숙제 생성</a></li>
                             <li><a th:href="@{/educator/sendTask}">숙제 배포</a></li>
-                            <li><a th:href="@{/educator/evalTask}">숙제 학습진도 조회</a></li>
+                            <li><a th:href="@{/educator/evalTask}">숙제 평가</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="first_li" sec:authorize="!hasRole('TEACHER')">
+                        <a>교육자마당</a><i class='bx bxs-chevron-up educator-arrow arrow'></i>
+                        <ul class="educator-sub-menu sub-menu">
+                            <li class="mismatch">권한이 없습니다</li>
+                        </ul>
+                    </li>
+                    <li class="first_li">
                         <a href="#">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
-                            <li><a th:href="@{/game/insert}">게임컨텐츠 등록</a></li>
-                            <li><a th:href="@{/edupost/insert}">학습자료 등록</a></li>
-                            <li><a href="#">학습자료 조회</a></li>
-                            <li><a href="/admin/notice/write">공지 등록</a></li>
+                            <li><a th:href="@{/game/insert}" sec:authorize="hasRole('ROLE_ADMIN')">게임컨텐츠 등록</a></li>
+                            <li><a th:href="@{/edupost/insert}" sec:authorize="hasRole('ROLE_ADMIN')">학습자료 등록</a></li>
+                            <li><a th:href="@{/edupost/list}">학습자료 조회</a></li>
+                            <li><a href="/admin/notice/write" sec:authorize="hasRole('ROLE_ADMIN')">공지 등록</a></li>
                             <li><a href="#">Q&A</a></li>
-                            <li><a th:href="@{/member/list}">회원조회</a></li>
-                            <li><a href="#">매출 조회</a></li>
+                            <li><a th:href="@{/member/list}" sec:authorize="hasRole('ROLE_ADMIN')">회원조회</a></li>
+                            <li><a href="@{/game/salesList}" sec:authorize="hasRole('ROLE_ADMIN')">매출 조회</a></li>
                         </ul>
                     </li>
                 </ul>

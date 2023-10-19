@@ -5,16 +5,24 @@
     <div class="side-bar active">
         <div class="menu">
             <div class="item">
-                <a th:href="@{/student/group/joinList}">학습그룹 가입 신청</a>
+                <a th:href="@{/student/group/joinList}"
+                   th:class="${joinList != null} ? 'sub-btn-active' : ''"
+                   th:style="${joinList != null} ? 'color: #96a0aa;' : ''">학습그룹 가입 신청</a>
             </div>
             <div class="item">
-                <a th:href="@{/student/group/myJoinList}">학습그룹 신청 내역</a>
+                <a th:href="@{/student/group/myJoinList}"
+                   th:class="${myJoinList != null} ? 'sub-btn-active' : ''"
+                   th:style="${myJoinList != null} ? 'color: #96a0aa;' : ''">학습그룹 신청 내역</a>
             </div>
             <div class="item">
-                <a th:href="@{/student/taskList}">숙제 제출</a>
+                <a th:href="@{/student/taskList}"
+                   th:class="${taskList != null} ? 'sub-btn-active' : ''"
+                   th:style="${taskList != null} ? 'color: #96a0aa;' : ''">숙제 제출</a>
             </div>
             <div class="item">
-                <a th:href="@{/student/submitTaskList}">숙제 제출 목록</a>
+                <a th:href="@{/student/submitTaskList}"
+                   th:class="${submitTaskList != null} ? 'sub-btn-active' : ''"
+                   th:style="${submitTaskList != null} ? 'color: #96a0aa;' : ''">숙제 제출 목록</a>
             </div>
         </div>
     </div>

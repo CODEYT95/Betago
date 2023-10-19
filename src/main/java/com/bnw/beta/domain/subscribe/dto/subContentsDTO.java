@@ -19,6 +19,5 @@ public class subContentsDTO {
     private String group_name;
     private String game_title;
     private String game_level;
-    private LocalDate startDate;
     private LocalDate endDate;
 }

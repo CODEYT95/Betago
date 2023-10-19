@@ -8,19 +8,29 @@
         <![CDATA[
         SELECT COUNT(*) AS count
         FROM (
-            SELECT g.game_total, SUM(s.group_nowcnt) AS group_nowcnt
+            SELECT p.pay_no, g.game_no, g.game_title, g.game_level, g.game_total, fg.filegame_name,
+            m.member_name, SUM(s.group_nowcnt) AS group_nowcnt,
+            MAX(p.pay_date) AS pay_date, MAX(p.pay_enddate) AS pay_enddate
             FROM game g
             LEFT JOIN studygroup s ON g.game_no = s.game_no
             LEFT JOIN pay p ON g.game_no = p.game_no
+            LEFT JOIN filegame fg ON g.game_no = fg.game_no
             JOIN member m ON p.member_id = m.member_id
             WHERE p.member_id = #{member_id}
-        ]]>
-        <if test="game_title != null and game_title != ''">
-            AND g.game_title = #{game_title}
-        </if>
+            ]]>
+            <if test="game_title != null and game_title != ''">
+            <![CDATA[
+                AND g.game_title = #{game_title}
+                AND CURDATE() <= (
+                    SELECT MAX(pay_enddate)
+                    FROM pay
+                    WHERE game_no = g.game_no
+                )
+            ]]>
+            </if>
         <![CDATA[
-        GROUP BY g.game_no, m.member_name
-        HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
+            GROUP BY g.game_no, m.member_name, fg.filegame_name, p.pay_no
+            HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
         ) AS subquery;
         ]]>
     </select>
@@ -30,30 +40,49 @@
         <![CDATA[
         SELECT DISTINCT g.game_title
         FROM game g
-        JOIN pay p ON g.game_no = p.game_no
+        LEFT JOIN studygroup s ON g.game_no = s.game_no
+        LEFT JOIN pay p ON g.game_no = p.game_no
+        LEFT JOIN filegame fg ON g.game_no = fg.game_no
+        JOIN member m ON p.member_id = m.member_id
         WHERE p.member_id = #{member_id}
+          AND CURDATE() <= (
+            SELECT MAX(pay_enddate)
+            FROM pay
+            WHERE game_no = g.game_no
+          )
+        GROUP BY g.game_title
+        HAVING SUM(s.group_nowcnt) < SUM(g.game_total) OR SUM(s.group_nowcnt) IS NULL
+        ORDER BY g.game_title ASC;
         ]]>
     </select>
 
     <!-- 그룹등록 가능한 게임콘텐츠 조회(무한 스크롤) -->
     <select id="groupAddList" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT g.game_no, g.game_title, g.game_level, g.game_total,
+        SELECT p.pay_no, g.game_no, g.game_title, g.game_level, g.game_total, fg.filegame_name,
         m.member_name, SUM(s.group_nowcnt) AS group_nowcnt,
         MAX(p.pay_date) AS pay_date, MAX(p.pay_enddate) AS pay_enddate
         FROM game g
         LEFT JOIN studygroup s ON g.game_no = s.game_no
         LEFT JOIN pay p ON g.game_no = p.game_no
+        LEFT JOIN filegame fg ON g.game_no = fg.game_no
         JOIN member m ON p.member_id = m.member_id
         WHERE p.member_id = #{member_id}
         ]]>
         <if test="game_title != null and game_title != ''">
+        <![CDATA[
             AND g.game_title = #{game_title}
+            AND CURDATE() <= (
+                SELECT MAX(pay_enddate)
+                FROM pay
+                WHERE game_no = g.game_no
+            )
+            ]]>
         </if>
         <![CDATA[
-        GROUP BY g.game_no, m.member_name
+        GROUP BY g.game_no, m.member_name, fg.filegame_name, p.pay_no
         HAVING SUM(s.group_nowcnt) < g.game_total OR SUM(s.group_nowcnt) IS NULL
-        ORDER BY g.game_no DESC
+        ORDER BY g.game_no ASC
         LIMIT #{LIMIT} OFFSET #{OFFSET};
         ]]>
     </select>
@@ -61,11 +90,12 @@
     <!-- 그룹 등록을 위한 게임 콘텐츠 정보 불러오기 -->
     <select id="gameGroupInfo" parameterType="Integer" resultType="GroupDTO">
         <![CDATA[
-        SELECT g.game_no, g.game_title, g.game_total, IFNULL(SUM(sg.group_cnt), 0) AS group_cnt
+        SELECT g.game_no, g.game_title, g.game_total, IFNULL(SUM(sg.group_cnt), 0) AS group_cnt,
+               p.pay_date, p.pay_enddate
         FROM game g
         LEFT JOIN studygroup sg ON g.game_no = sg.game_no
         LEFT JOIN pay p ON g.game_no = p.game_no
-        WHERE g.game_no = #{game_no}
+        WHERE p.pay_no = #{pay_no};
         ]]>
     </select>
 

@@ -18,6 +18,8 @@ public class MemberPageDTO {
     private int startIndex;
     private int listCount;
     private String searchType;
+    private String searchType2;
+    private String searchType3;
     private String keyword = "";
 
     public MemberPageDTO(int total, int currentPage, int size, List<MemberDTO> memberList){

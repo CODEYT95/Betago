@@ -5,22 +5,37 @@
     <div class="side-bar active">
         <div class="menu">
             <div class="item">
-                <a th:href="@{/educator/group/addList}">학습그룹 등록</a>
+                <a th:href="@{/educator/group/addList}"
+                   th:class="${addList != null} ? 'sub-btn-active' : ''"
+                   th:style="${addList != null} ? 'color: #96a0aa;' : ''">
+                    학습그룹 등록
+                </a>
             </div>
             <div class="item">
-                <a th:href="@{/educator/group/list}">학습그룹 조회</a>
+                <a th:href="@{/educator/group/list}"
+                   th:class="${list != null} ? 'sub-btn-active' : ''"
+                   th:style="${list != null} ? 'color: #96a0aa;' : ''">
+                    학습그룹 조회</a>
             </div>
             <div class="item">
-                <a th:href="@{/educator/group/approveList}">학습그룹 가입 승인</a>
+                <a th:href="@{/educator/group/approveList}"
+                   th:class="${approveList != null} ? 'sub-btn-active' : ''"
+                   th:style="${approveList != null} ? 'color: #96a0aa;' : ''">학습그룹 가입 승인</a>
             </div>
             <div class="item">
-                <a th:href="@{/educator/createTaskForm}" class="sub-btn-active" style="color: #96a0aa;">숙제 생성</a>
+                <a th:href="@{/educator/createTaskForm}"
+                   th:class="${createTask != null} ? 'sub-btn-active' : ''"
+                   th:style="${createTask != null} ? 'color: #96a0aa;' : ''">숙제 생성</a>
             </div>
             <div class="item">
-                <a th:href="@{/educator/sendTask}">숙제 배포</a>
+                <a th:href="@{/educator/sendTask}"
+                   th:class="${sendTask != null} ? 'sub-btn-active' : ''"
+                   th:style="${sendTask != null} ? 'color: #96a0aa;' : ''">숙제 배포</a>
             </div>
             <div class="item">
-                <a th:href="@{/educator/evalTask}">숙제 평가</a>
+                <a th:href="@{/educator/evalTask}"
+                   th:class="${evalTask != null} ? 'sub-btn-active' : ''"
+                   th:style="${evalTask != null} ? 'color: #96a0aa;' : ''">숙제 평가</a>
             </div>
         </div>
     </div>

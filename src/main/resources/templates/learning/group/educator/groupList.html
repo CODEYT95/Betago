@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>학습 그룹 조회</title>
+    <title>둑며들다|학습 그룹 조회</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/educator/groupList.css}">
@@ -39,50 +39,58 @@
         </div>
         <section class="main-content">
             <div class="container" >
-                <div class="table-wrap">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>학습 그룹명</th>
-                            <th>게임 콘텐츠명</th>
-                            <th>그룹T/O</th>
-                            <th>구독기간</th>
-                            <th>등록 학생수</th>
-                            <th>상세 조회</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <div>
-                        <tr class="tbody-tr" th:each="groupList : ${groupList}">
-                            <td>
+                <div class="list-wrap">
+                    <div class="list-header">
+                        <div class="check-area">
+                            <span></span>
+                        </div>
+                        <div class="groupname-area">
+                            <span>학습 그룹명</span>
+                        </div>
+                        <div class="gametitle-area">
+                            <span>게임 콘텐츠명</span>
+                        </div>
+                        <div class="groupTO-area">
+                            <span>그룹T/O</span>
+                        </div>
+                        <div class="date-area">
+                            <span>구독기간</span>
+                        </div>
+                        <div class="studentCnt-area">
+                            <span>등록 학생 수</span>
+                        </div>
+                        <div class="detail-area">
+                            <span>상세 조회</span>
+                        </div>
+                    </div>
+                    <ul class="ul-container">
+                        <li class="li-container" th:each="groupList : ${groupList}">
+                            <div class="li-check">
                                 <label class="checkbox-wrap">
                                     <input class="checkbox" type="checkbox" th:attr="data-check-no=${groupList.group_no}">
                                     <span class="checkmark"></span>
                                 </label>
-                            </td>
-                            <td>
+                            </div>
+                            <div class="li-groupname">
                                 <span class="group_name" th:attr="data-group-name=${groupList.group_name}" th:text="${groupList.group_name}"></span>
-                            </td>
-                            <td>
+                            </div>
+                            <div class="li-gametitle">
                                 <span th:text="${groupList.game_title}"></span>
-                            </td>
-                            <td>
+                            </div>
+                            <div class="li-groupTO">
                                 <span th:text="${groupList.group_cnt}-${groupList.group_nowcnt}"></span>
-                            </td>
-                            <td>
+                            </div>
+                            <div class="li-date">
                                 <span th:text="${groupList.group_enddate}"></span>
-                            </td>
-                            <td>
+                            </div>
+                            <div class="li-studentCnt">
                                 <span th:text="${groupList.group_nowcnt}"></span>
-                            </td>
-                            <td>
+                            </div>
+                            <div class="li-detail">
                                 <button class="detail-search" th:attr="data-detail-no=${groupList.group_no}, data-group-name=${groupList.group_name}"><i class="ri-search-eye-line" data-tasksend_no=""></i></button>
-                            </td>
-                        </tr>
-                        </div>
-                        </tbody>
-                    </table>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -100,14 +108,16 @@
                             <span class="option-text" th:text="${groupName.group_name}" th:attr="data-no=${groupName.group_no}"></span>
                         </li>
                     </ul>
-                </div>
                     <button class="search-btn1">조회</button>
+                </div>
+                    <div class="modal-btn-container">
                     <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
                 </div>
                 <div class="groupinfo">
-                    <span>게임 콘텐츠 : 바둑 온라인 교육</span>
-                    <span>그룹 제한 인원 : 50명</span>
-                    <span>그룹 가능 인원 : 30명</span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
                 <hr>
                 <div class="modal-content">

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>둑며들다|숙제 평가</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/educator/evalTask.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/educator/evalTask.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -10,10 +12,189 @@
 <div class="content">
     <div th:replace="~{common/sidebar/edu_sidebar :: edu_sidebarFragment}"></div>
     <div class="content-wrap">
-
-
+        <div class="table-title-wrap">
+            <div class="table-title-wrap">
+                <h2 class="table-title">숙제 목록👀</h2>
+            </div>
+            <div class="select-box">
+                <div class="guide">
+                    <span>숙제를 두 번 클릭하면 수강생이 제출한 숙제를 확인하실 수 있습니다.</span>
+                </div>
+                <div class="title-wrap">
+                    <select id="selectTaskTitle" name="task_title">
+                        <option value="" name="task_title">전체</option>
+                        <th:block th:each="title : ${taskTitle}">
+                            <option th:value="${title}" th:text="${title}" name="task_title"></option>
+                        </th:block>
+                    </select>
+                    <input type="button" class="selectTaskBtn" value="조회하기" id="selectTaskBtn">
+                </div>
+            </div>
+            <div class="task-wrap">
+                <div class="task-detail" >
+                    <div class="table-wrap">
+                        <table class="list-table" id="table">
+                            <thead class="table-head">
+                            <tr>
+                                <th class="t_no"> </th>
+                                <th class="t_name">숙제명</th>
+                                <th class="t_content">숙제내용</th>
+                                <th class="t_progress">진도</th>
+                                <th class="t_deadline">제출기한</th>
+                                <th class="t_senddate">전송날짜</th>
+                                <th class="t_detail">상세조회</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbody-container" id="taskTableBody">
+                            <th:block th:if="${#lists.isEmpty(taskList)}">
+                                <tr>
+                                    <td colspan="7">생성한 숙제가 없습니다.</td>
+                                </tr>
+                            </th:block>
+                            <th:block th:if="${not #lists.isEmpty(taskList)}">
+                                <tr class="tr-list-task"  th:each="list, index : ${taskList}">
+                                    <td class="list_no" th:attr="data-task-no=${list.task_no}" th:value="${list.task_no}" th:text="${index.index + 1}"></td>
+                                    <td class="list_name" th:text="${list.task_title}"></td>
+                                    <td class="list_content" th:text="${list.task_content}"></td>
+                                    <td class="list_progress" th:text="${list.task_chapter}"></td>
+                                    <td class="list_deadline" ><span th:text="${#dates.format(list.task_deadline, 'yyyy-MM-dd')}"></span></td>
+                                    <td class="list_senddate" ><span th:text="${#dates.format(list.task_senddate, 'yyyy-MM-dd')}"></span></td>
+                                    <td class="detailBtn-wrap">
+                                        <button class="detailBtn" data-tasksend_no="${list.tasksend_no}">
+                                            <i class="ri-search-eye-line" data-tasksend_no="${list.tasksend_no}"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr class="divider">
+            <div id="memberTable" class="task-wrap">
+                <div class="task-detail" >
+                    <div class="table-wrap">
+                        <table class="list-table" id="table2">
+                            <thead class="table-head">
+                            <tr>
+                                <th class="t_no"> </th>
+                                <th class="t_member">학습자명</th>
+                                <th class="t_senddate">숙제 제출일자</th>
+                                <th class="t_content">학습 제출 내용</th>
+                                <th class="t_progress">학습 진도</th>
+                                <th class="t_add">추가 질의 내용</th>
+                                <th class="t_eval">평가하기</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tbody-container">
+                            <tr class="tr-list">
+                                <td class="list_no" ></td>
+                                <td class="list_member"></td>
+                                <td class="list_senddate"></td>
+                                <td class="list_content" ></td>
+                                <td class="list_progress" ></td>
+                                <td class="list_add" ></td>
+                                <td class="list_eval"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+<!--상세보기 모달-->
+<div class="modal-bg"></div>
+<div id="myModal" class="modal" style="display:none;">
+    <div class="modal-wrap">
+        <div class="modal-task-title">
+            <div class="modal-content-title">
+                <div id="modal-task-title" class="modal-content-value">숙제명</div>
+            </div>
+        </div>
+        <hr class="modal-divider">
+        <div class="modal-content">
+            <div class="modal-task-content">
+                <div class="modal-content-label">내용</div>
+                <div id="modal-task-content" class="modal-content-value"></div>
+            </div>
+            <div class="modal-task-chapter">
+                <div class="modal-content-label">진도</div>
+                <div id="modal-task-chapter" class="modal-content-value"></div>
+            </div>
+            <div class="modal-task-deadline">
+                <div class="modal-content-label">제출기한</div>
+                <div id="modal-task-deadline" class="modal-content-value"></div>
+            </div>
+            <div class="modal-task-senddate">
+                <div class="modal-content-label">전송날짜</div>
+                <div id="modal-task-senddate" class="modal-content-value"></div>
+            </div>
+        </div>
+        <div class="modalBtn">
+            <button class="conceal">닫기</button>
+        </div>
+    </div>
+</div>
+
+<!--평가하기 모달-->
+<div id="myModal2" class="modal2" style="display:none;">
+    <form th:action="@{/educator/eval}" method="post">
+        <div class="modal-wrap">
+            <div class="modal-content">
+                <div class="modal-member-name">
+                    <div class="modal-content-label">학습자명</div>
+                    <div id="modal-member-name" class="modal-content-value"></div>
+                </div>
+                <div class="modal-task-content">
+                    <div class="modal-content-label">숙제 제출 일자</div>
+                    <div id="modal-submit-date" class="modal-content-value"></div>
+                </div>
+                <div class="modal-task-chapter">
+                    <div class="modal-content-label">학습 제출 내용</div>
+                    <div id="modal-submit-content" class="modal-content-value"></div>
+                </div>
+                <div class="modal-task-deadline">
+                    <div class="modal-content-label">학습 진도</div>
+                    <div id="modal-submit-chapter" class="modal-content-value"></div>
+                </div>
+                <div class="modal-task-senddate">
+                    <div class="modal-content-label">추가 질의 내용</div>
+                    <div id="modal-submit-add" class="modal-content-value"></div>
+                </div>
+            </div>
+            <hr class="modal-divider">
+            <div class="modal-wrap2">
+                <div class="modal-chapter">
+                    <input type="hidden" name="member_no" id="member_no_input">
+                    <input type="hidden" name="group_no" id="group_no_input">
+                    <input type="hidden" name="tasksend_no" id="tasksend_no_input">
+                    <input type="hidden" name="member_level" id="member_level_input">
+                </div>
+                <div class="modal-learning-content">
+                    <div class="comment">
+                        <div class="comment-label">추가 질의 응답</div>
+                        <textarea id="tasksubmit_comment" class="tasksubmit_comment" name="tasksubmit_comment" maxlength="100"></textarea>
+                    </div>
+                    <span>평가</span>
+                    <select id="selectEval" class="task-submit-eval" name="tasksubmit_eval">
+                        <option th:value="선택" name="tasksubmit_eval">선택</option>
+                        <option th:value="미흡" name="tasksubmit_eval">미흡</option>
+                        <option th:value="보통" name="tasksubmit_eval">보통</option>
+                        <option th:value="우수" name="tasksubmit_eval">우수</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modalBtn">
+                <button type="submit" class="submit" disabled>제출하기</button>
+                <input type="button" class="conceal" value="닫기">
+            </div>
+        </div>
+    </form>
+</div>
+
 </body>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </html>

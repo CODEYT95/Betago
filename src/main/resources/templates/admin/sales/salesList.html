@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|매출 조회</title>
+    <!--공통으로 쓰이는 CSS 및  -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/sales/salesList.css}">
+    <script type="text/javascript" th:src="@{/js/admin/sales/salesList.js}"></script>
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/admin_sidebar :: admin_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="content_header">
+            <div class="keyword-container">
+                <div>
+                    <h2>조회 기간</h2>
+                    <div id="daterange" style="display: none;">
+                        <input type="month" id="startdate">
+                        <span>~</span>
+                        <input type="month" id="enddate">
+                    </div>
+                    <input class="monthInput" type="month" id="startdate_single">
+
+                    <div class="day-radio">
+                        <label>
+                            <span>일단위</span>
+                            <input type="radio" name="interval" value="day" checked>
+                        </label>
+                        <label>
+                            <span>월단위</span>
+                            <input type="radio" name= "interval" value= "month">
+                        </label>
+                    </div>
+                </div>
+                <div class="info-container">
+                    <div>
+                        <h3>총 매출액: <span class="totalsell"></span></h3>
+                        <h3>건수: <span class="totalnum"></span></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-delete">
+                <button type="button" class="search-btn" value="학습 그룹 상세 입력">조회</button>
+                <a th:href="@{/game/salesGraph}"><button type="button" class="graph-btn" value="학습 그룹 상세 입력">그래프 보기</button></a>
+            </div>
+        </div>
+        <h3 style="margin-bottom: 10px;">현재 조회 기간 :  <span th:text="${#dates.format(comment, 'yyyy-MM')} + (${comment2 != null ? '~' + #dates.format(comment2, 'yyyy-MM') : ''})"></span></h3>
+        <section class="main-content">
+            <div class="container" >
+                <div class="list-wrap">
+                    <div class="list-header">
+                        <div class="groupname-area">
+                            <span>No</span>
+                        </div>
+                        <div class="gametitle-area">
+                            <span>일/월</span>
+                        </div>
+                        <div class="groupTO-area">
+                            <span>건수</span>
+                        </div>
+                        <div class="date-area">
+                            <span>매출금액</span>
+                        </div>
+                        <div class="detail-area">
+                            <span>상세 조회</span>
+                        </div>
+                    </div>
+                    <ul class="ul-container">
+                        <li class="li-container" th:each="dayList, i : ${dayList}">
+                            <div class="li-groupname">
+                                <span class="group_name" th:text="${i.index}+1"></span>
+                            </div>
+                            <div class="li-gametitle">
+                                <span th:text="${dayList.day}"></span>
+                            </div>
+                            <div class="li-groupTO">
+                                <span th:text="${dayList.total_sales}+건"></span>
+                            </div>
+                            <div class="li-date">
+                                <span th:text="${#numbers.formatDecimal(dayList.total_sell, 0, 'COMMA', 0, 'POINT')}+원"></span>
+                            </div>
+                            <div class="li-detail">
+                                <button class="detail-search"><i class="ri-search-eye-line" th:attr="data-day-no=${dayList.day}"></i></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div id="modal" class="modal">
+            <div class="modal-wrap">
+                <div class="modal-header">
+                    <div class="modal-btn-container">
+                        <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+                <hr>
+                <div class="modal-content">
+                    <div class="memberinfo-header">
+                        <span style="width: 10%;">No</span>
+                        <span style="width: 15%;">구매일자</span>
+                        <span style="width: 20%;">구매자</span>
+                        <span style="width: 40%;">구매상품</span>
+                        <span style="width: 15%;">구매금액</span>
+                    </div>
+                    <ul class="member-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>
