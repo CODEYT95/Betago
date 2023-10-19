@@ -185,3 +185,14 @@
 #submitTask {
     margin: 0;
 }
+
+.content_footer button{
+    width: auto;
+    height: auto;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}

@@ -92,14 +92,26 @@ public class StudentTaskController {
 
     //제출 숙제 조회
     @GetMapping("/submitTaskList")
-    public String selectSubmitTask(Model model, HttpSession session){
+    public String selectSubmitTask(Model model, HttpSession session, @RequestParam(name = "offset", defaultValue = "0") int offset){
         Integer member_no = (Integer) session.getAttribute("member_no");
         if (member_no != null) {
-            List<TaskSubmitDTO> submitList =  taskService.selectSubmitTask(member_no);
+            int limit = 1;
+            List<TaskSendDTO> submitList =  taskService.selectSubmitTask(member_no, limit, offset);
+            int totalCount = taskService.submitTaskCount(member_no);
+
             model.addAttribute("member_name", session.getAttribute("member_name"));
             model.addAttribute("submitList", submitList);
+            model.addAttribute("totalCount", totalCount);
         }
         return "learning/task/student/submitTaskList";
+    }
+
+    @PostMapping("/submitList")
+    @ResponseBody
+    public List<TaskSendDTO> submitList(@RequestParam(name = "offset", defaultValue = "0") int offset, HttpSession session){
+        Integer member_no = (Integer) session.getAttribute("member_no");
+        int limit = 1;
+        return taskService.selectSubmitTask(member_no, limit, offset);
     }
 
     //평가 완료된 숙제 조회

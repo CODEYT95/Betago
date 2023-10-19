@@ -38,6 +38,10 @@ a {
   text-decoration: none;
 }
 
+.mismatch {
+    color: #797979;
+}
+
 .header-image{
     width: 186px;
     position: absolute;
