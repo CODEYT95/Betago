@@ -2,13 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bnw.beta.domain.admin.dao.FilepostDAO">
+
     <!-- 파일 정보 저장 -->
- <!--   <insert id="saveAll" useGeneratedKeys="true" keyProperty="filepost_no" parameterType="java.util.List">
-        <![CDATA[ INSERT INTO filepost (edupost_no, edupost_name,edupost_rename,edupost_size)
-                  VALUES
-                      (#{edupost_no},#{edupost_name},#{edupost_rename},#{edupost_size})
-        ]]>
-    </insert>-->
     <insert id="saveAll" parameterType="list">
         INSERT INTO filepost (edupost_no, filepost_no, edupost_name, edupost_rename, edupost_size)
         VALUES
@@ -17,6 +12,7 @@
         </foreach>
     </insert>
 
+    <!-- 파일 리스트 조회 -->
     <select id="findByNo" parameterType="long" resultType="FilepostDTO">
         select edupost_no, edupost_name, filepost_no, edupost_rename
         from filepost
@@ -25,6 +21,7 @@
             filepost_no
     </select>
 
+    <!-- 파일 리스트 조회 -->
     <select id="findById" parameterType="list" resultType="FilepostDTO">
         select edupost_no, edupost_name, filepost_no, edupost_rename
         from filepost
@@ -36,6 +33,7 @@
             filepost_no
     </select>
 
+    <!-- 파일 삭제 -->
     <delete id="deleteByNo" parameterType="Integer">
         DELETE
         FROM filepost
@@ -45,6 +43,7 @@
 
     </delete>
 
+    <!-- 파일 상세정보 조회 -->
     <select id="findByfileNo" parameterType="long" resultType="FilepostDTO">
         select edupost_no, edupost_name, filepost_no, edupost_rename, edupost_date, edupost_size
         from filepost

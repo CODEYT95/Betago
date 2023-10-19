@@ -30,4 +30,8 @@ public interface payDAO {
     //월단위 조회
     List<payDTO> selectMonthSales(@Param("startDate") String pay_date, @Param("endDate") String pay_enddate);
 
+    //매출 상세 조회
+    List<payDTO> selectSalesDetailDay(@Param("pay_Date") String pay_date);
+    List<payDTO> selectSalesDetailMonth(@Param("pay_Date") String pay_date);
+
 }

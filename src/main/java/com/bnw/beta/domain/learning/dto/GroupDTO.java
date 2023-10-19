@@ -12,6 +12,7 @@ public class GroupDTO {
     private int game_total;
     private Date game_startdate;
     private Date game_enddate;
+    private String filegame_name;
 
     //그룹
     private  int gm_no;
@@ -28,12 +29,14 @@ public class GroupDTO {
     //회원
     private String member_name;
     private int member_no;
+    private Date join_date;
     private String member_phone;
     private String member_email;
     private Date approve_date;
     private int member_count;
 
     //결제
+    private int pay_no;
     private Date pay_date;
     private Date pay_enddate;
 

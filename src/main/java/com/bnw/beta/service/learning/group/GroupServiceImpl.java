@@ -52,8 +52,8 @@ public class GroupServiceImpl implements GroupService {
 
     //그룹 등록을 위한 게임 콘텐츠 정보 불러오기
     @Override
-    public List<GroupDTO> gameGroupInfo(int game_no) {
-        return groupDAO.gameGroupInfo(game_no);
+    public GroupDTO gameGroupInfo(int pay_no) {
+        return groupDAO.gameGroupInfo(pay_no);
     }
 
     //학습 그룹 등록(상세)

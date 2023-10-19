@@ -2,6 +2,7 @@ package com.bnw.beta.service.subscribe.pay;
 
 import com.bnw.beta.domain.subscribe.dto.CartDTO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -21,5 +22,8 @@ public interface PayService {
 
     //월단위 조회
     List<payDTO> selectMonthSales(Date pay_date, Date pay_enddate);
+
+    //매출 상세 조회
+    List<payDTO> selectSalesDetail(Date pay_date, Date pay_date2);
 
 }

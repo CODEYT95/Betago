@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|영상 소개</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/contents/ContentsVideo.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="main-content">
+
+            <div class="first-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/video/바둑영상1.jpg" alt="바둑영상1">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span class="title"> 바둑영상명: 렛츠고 창의인성 바둑스쿨 </span><br>
+                    <span>튜토리얼에 이어서 제공되는 교육영상입니다. 바둑을 처음 접하는 아이들도 쉽게 배울 수 있도록 애니메이션
+                    및 게임을 통해 바둑의 기초와 원리를 배우고 연습문제를 풀어보며 실력을 키울 수 있도록 구성되어 있습니다.
+                    게임콘텐츠를 구매한 모든회원에 제공됩니다.</span>
+                </div>
+            </div>
+
+            <div class="second-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/video/바둑영상2.jpg" alt="바둑영상2">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span class="title"> 바둑영상명: 바둑입문 </span><br>
+                    <span>평소 바둑에 관심이 있거나 바둑 입문에 도전하고 싶으신 분, 바둑관련 용어, 기술 등에 대한 기본기를
+                    탄탄히 다지고 싶으신 분들을 위한 맞춤 강좌입니다. 이해하기 쉬운 설명으로 학습에 흥미를 가지고 즐겁게 들으실 수 있습니다.
+                    본 강의는 영토 스테이지 또는 사활 스테이지 게임콘텐츠를 구매하거나 도전의 탑 게임콘텐츠를 구매한 회원에 한해 제공됩니다.</span>
+                </div>
+            </div>
+            <div class="third-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/video/바둑영상3.jpg" alt="바둑영상3">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+
+                <div class="contents-title">
+                    <span class="title"> 바둑영상명: 단 10분 만에 배우는 바둑격언, 위기십결 </span><br>
+                    <span>중국 당 현종때 바둑의 고수 왕적신이 바둑을 둘 때 명심해야 할 10가지를 위기십결이라고 가르쳐 준 것으로
+                    우리의 인생을 살아감에 있어서도 많은 도움이 되는 명언을 풀이한 영상입니다. 바둑을 통한 삶의 지혜를 얻을 수 있는
+                    유용한 영상입니다. 본 영상은 인공지능 대국 또는 일일퀘스트 게임콘텐츠 구매회원에 한해 제공됩니다.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

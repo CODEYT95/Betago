@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>학습 그룹 가입신청</title>
+    <title>둑며들다|학습 그룹 가입신청</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 
@@ -53,8 +53,8 @@
                                                     <div class="poster"><img src="/image/testBADUK2.png"></div>
                                                     <div class="card-details"></div>
                                                     <div class="details">
-                                                        <h5>게임콘텐츠명 : <span th:text="${joinList.game_title}"></span></h5>
-                                                        <h5>그룹명 : <span th:text="${joinList.group_name}"></span></h5>
+                                                        <h5>게임콘텐츠명 : <span th:text="${item.game_title}"></span></h5>
+                                                        <h5>그룹명 : <span th:text="${item.group_name}"></span></h5>
                                                         <h5>학습 구독 기간 : <span>${item.group_startdate}</span> ~ <span>${item.group_enddate}</span></h5>
                                                         <h5>잔여 T/O : <span>${remainingTo}명</span></h5>
                                                     </div>

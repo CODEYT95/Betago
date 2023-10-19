@@ -30,29 +30,37 @@ document.addEventListener("DOMContentLoaded", function() {
                 dataType: "json",
                 success: function(response) {
                     response.forEach(item => {
+                    const result = item.group_cnt - item.group_nowcnt;
+                    const liElement = document.createElement('li');
                     var remainingTo = item.group_cnt - item.group_nowcnt;
                     console.log(remainingTo);
                         $(".content-container ul").append(`
-                            <li data-game-no=${item.game_no}>
-                                <input hidden="hidden" class="attr" data-game-no=${item.game_no} data-group-no=${item.group_no} data-member-no=${item.member_no}>
-                                    <div class="checkbox">
-                                        <label class="checkbox-wrapper">
-                                            <input type="checkbox" class="checkbox-input"  data-game-no=${item.game_no} data-group-no=${item.group_no} />
-                                            <span class="checkbox-tile">
-                                                <div class="card">
-                                                    <div class="poster"><img src="/image/testBADUK2.png"></div>
-                                                    <div class="card-details"></div>
-                                                    <div class="details">
-                                                        <h5>그룹명 : <span>${item.group_name}</span></h5>
-                                                        <h5>교육자명 : <span>${item.member_name}</span></h5>
-                                                        <h5>학습 구독 기간 : <span>${item.group_startdate}</span> ~ <span>${item.group_enddate}</span></h5>
-                                                        <h5>잔여 T/O : <span>${remainingTo}명</span></h5>
+                            <li class="joinList">
+                                <input hidden="hidden" class="attr" data-group-name=${item.group_name} data-game-no=${item.game_no} data-group-no=${item.group_no} data-member-no=${item.member_no}>
+                                <div class="checkbox">
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" class="checkbox-input" data-game-no=${item.game_no} data-group-no=${item.group_no} data-group-name=${item.group_name}/>
+                                        <span class="checkbox-title">
+                                            <div class="card">
+                                                <div class="poster"><img src="/image/noimage.png"></div>
+                                                <div class="card-details"></div>
+                                                <div class="details">
+                                                    <h5>그룹명 : <span class="group_name">${item.group_name}</span></h5>
+                                                    <h5>교육자명 : <span class="member_name">${item.member_name}</span></h5>
+                                                    <h5>학습 구독 기간 : <span class="group_startdate">${item.group_startdate}</span> ~ <span class="group_enddate">${item.group_enddate}</span></h5>
+                                                    <h5>잔여 T/O : <span class="group_count">${result}</span>명</h5>
+                                                </div>
+                                                <div class="backDetails">
+                                                    <div class="detaillist">
+                                                        <h6>상품상세설명 : <span></span></h6>
                                                     </div>
                                                 </div>
-                                            </span>
-                                        </label>
-                                    </div>
+                                            </div>
+                                        </span>
+                                    </label>
+                                </div>
                             </li>
+
                         `);
                     });
                     updateLiCount();

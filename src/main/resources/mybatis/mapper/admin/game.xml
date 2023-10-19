@@ -3,17 +3,54 @@
 
 <mapper namespace="com.bnw.beta.domain.admin.dao.GameDAO">
 <!--게임콘텐츠 모든 목록 조회-->
-    <select id="selectAll" resultType="GameDTO">
+    <select id="selectGameList" resultType="GameDTO">
         <![CDATA[
         SELECT
             g.*,
             f.filegame_name, f.filegame_path, f.filegame_date
         FROM game g
         LEFT JOIN filegame f ON g.game_no = f.game_no
-        ORDER BY g.game_no DESC;
+        WHERE
+        ]]>
+        <choose>
+            <when test="game_title != null and game_title != ''">
+                game_title = #{game_title}
+            </when>
+            <otherwise>
+                1=1
+            </otherwise>
+        </choose>
+        <![CDATA[
+        ORDER BY g.game_no DESC
+        LIMIT #{limit} OFFSET #{offset}
         ]]>
     </select>
-
+    <!-- 게임 목록 불러오기 -->
+    <select id="selectGameTitle" resultType="GameDTO">
+        SELECT g.game_title
+        FROM game g
+        ORDER BY g.game_title ASC;
+    </select>
+    <!-- 게임 갯수 -->
+    <select id="countGameList" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM game g
+        LEFT JOIN filegame f ON g.game_no = f.game_no
+        WHERE
+        ]]>
+        <choose>
+            <when test="game_title != null and game_title != ''">
+                game_title = #{game_title}
+            </when>
+            <otherwise>
+                1=1
+            </otherwise>
+        </choose>
+        <![CDATA[
+        ORDER BY g.game_no DESC
+        ]]>
+    </select>
    <!--게임콘텐츠 등록-->
     <insert id="insertGame" parameterType="GameDTO">
         <selectKey keyProperty="game_no" resultType="int" order="AFTER">
@@ -35,6 +72,7 @@
         ]]>
     </insert>
 
+<!-- /////////////////////////////////////////// -->
     <!--월간 (일일 단위 매출조회)-->
    <select id="selectDailySales" resultType="GameDTO">
         <![CDATA[
@@ -61,16 +99,6 @@
             DATE_FORMAT(pay_date, '%Y-%m');
         ]]>
     </select>
-
-<!--게임콘텐츠 제목 검색-->
-    <select id="searchByTitle" resultType="GameDTO">
-        <![CDATA[
-            select *
-            from game
-            where game_title = #{game_title}
-        ]]>
-    </select>
-
 
 </mapper>
 

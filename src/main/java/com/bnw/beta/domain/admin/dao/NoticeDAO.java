@@ -49,4 +49,5 @@ public interface NoticeDAO {
 
     //조회수 증가
     void viewCnt(NoticeDTO noticeDTO);
+
 }
