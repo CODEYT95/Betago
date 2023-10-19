@@ -69,7 +69,7 @@ border: none;
 display: inline-grid;
 }
 
-.loginbox{
+.loginbox {
     display: grid;
     width: 260px;
     height: 210px;
@@ -90,10 +90,17 @@ display: inline-grid;
     cursor: pointer;
     transition: background-color 0.2s;
 }
+
 .loginbox button:hover {
  background-color: #007bff;
     color: #fff;
 }
+
+#logoutBtn {
+    width: 210px;
+    height: 60px;
+}
+
 .button_container {
   position: absolute;
   left: 0;
