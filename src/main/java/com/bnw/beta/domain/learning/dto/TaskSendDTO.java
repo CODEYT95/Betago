@@ -22,4 +22,7 @@ public class TaskSendDTO {
     private String member_id;
     private String member_name;
     private String game_title;
+
+    private int LIMIT;
+    private int OFFSET;
 }
