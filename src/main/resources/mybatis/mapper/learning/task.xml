@@ -212,7 +212,7 @@
     </select>
 
     <!-- 숙제 번호로 정보 조회 -->
-    <select id="selectTaskByNo" parameterType="TaskSendDTO" resultType="TaskSendDTO">
+    <select id="selectTaskByNo" parameterType="Integer" resultType="TaskSendDTO">
         <![CDATA[
         SELECT ts.tasksend_no, t.task_no, t.task_title, t.task_content, t.task_chapter, t.task_deadline, ts.task_state, m.member_name, g.game_title
         FROM tasksend AS ts
@@ -221,7 +221,6 @@
         JOIN studygroup AS sg ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.tasksend_no = #{tasksend_no}
-        AND ts.member_no = #{member_no}
         ]]>
     </select>
 
@@ -234,9 +233,9 @@
     </insert>
 
     <!--숙제 수정페이지-->
-    <select id="modifyTask" parameterType="TaskSubmitDTO" resultType="TaskSubmitDTO">
+    <select id="modifyTask" parameterType="Integer" resultType="TaskSubmitDTO">
         <![CDATA[
-        SELECT t.task_title, t.task_content, t.task_deadline, ts.task_state, m.member_name, ts.member_no, g.game_title, sub.*
+        SELECT t.task_title, t.task_chapter, t.task_content, t.task_deadline, ts.task_state, m.member_name, ts.member_no, g.game_title, sub.*
         FROM tasksend AS ts
         JOIN task AS t
         ON ts.task_no = t.task_no
@@ -248,7 +247,6 @@
         ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.tasksend_no = #{tasksend_no}
-        AND ts.member_no = #{member_no}
         ]]>
     </select>
 
@@ -300,7 +298,7 @@
     </select>
 
     <!--평가 완료된 숙제 조회-->
-    <select id="selectSubmitTaskByNo" parameterType="TaskSubmitDTO" resultType="TaskSubmitDTO">
+    <select id="selectSubmitTaskByNo" parameterType="Integer" resultType="TaskSubmitDTO">
         <![CDATA[
         SELECT ts.tasksend_no, t.task_no, t.task_title, t.task_content, t.task_chapter, t.task_deadline, ts.task_state, m.member_name, g.game_title, sub.*
         FROM tasksend AS ts
@@ -310,7 +308,6 @@
         JOIN studygroup AS sg ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.tasksend_no = #{tasksend_no}
-        AND  ts.member_no = #{member_no}
         ]]>
     </select>
 

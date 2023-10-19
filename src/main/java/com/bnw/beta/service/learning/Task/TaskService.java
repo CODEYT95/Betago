@@ -45,24 +45,25 @@ public interface TaskService {
     List<TaskDTO> selectTaskById(Integer member_no);
 
     //숙제 번호로 정보 조회
-    TaskSendDTO selectTaskByNo(Integer tasksend_no, Integer member_no);
+    TaskSendDTO selectTaskByNo(Integer tasksend_no);
 
     //숙제 작성
-    int wirteTask(int tasksend_no, int task_no,  String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id);
+    int wirteTask(Integer tasksend_no, Integer task_no,  String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id);
 
     //작성한 숙제 조회
-    TaskSubmitDTO modifyTask(int tasksend_no, int member_no);
+    TaskSubmitDTO modifyTask(Integer tasksend_no);
 
     //숙제 수정
-    int ModifySubmitTask(int tasksubmit_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add);
+    int ModifySubmitTask(Integer tasksubmit_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add);
 
     //숙제 전송
     int submitTask(List<Integer> tasksend_no);
 
     //제출 숙제 조회
-    List<TaskSubmitDTO> selectSubmitTask(Integer member_no);
+    List<TaskSendDTO> selectSubmitTask(Integer member_no, int limit, int offset);
+    int submitTaskCount(Integer member_no);
 
     //평가 완료된 숙제 조회
-    TaskSubmitDTO selectSubmitTaskByNo(int tasksend_no, int member_no);
+    TaskSubmitDTO selectSubmitTaskByNo(Integer tasksend_no);
 }
 

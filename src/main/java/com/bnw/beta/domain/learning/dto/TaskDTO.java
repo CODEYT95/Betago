@@ -2,6 +2,7 @@ package com.bnw.beta.domain.learning.dto;
 
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -16,5 +17,5 @@ public class TaskDTO {
     private Date task_senddate;
     private Date task_deadline;
     private String member_id;
-    private int tasksent_no;
+    private int tasksend_no;
 }

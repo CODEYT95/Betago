@@ -161,9 +161,13 @@ public class TaskServiceImpl implements TaskService{
         groupDTO.setMember_no(member_no);
         groupDTO.setMember_level(member_level);
 
+
         int insertResult = taskDAO.insertEvaluation(taskSubmitDTO);
+        System.out.println("임플1"+insertResult);
         if(insertResult > 0){
+            System.out.println("그룹디티오"+groupDTO);
             int updateResult = taskDAO.updateMemberLevel(groupDTO);
+            System.out.println("임플2"+updateResult);
             if(updateResult > 0){
                 return 1;
             }
@@ -180,17 +184,13 @@ public class TaskServiceImpl implements TaskService{
 
     //숙제 번호로 정보 조회
     @Override
-    public TaskSendDTO selectTaskByNo(Integer tasksend_no, Integer member_no) {
-        TaskSendDTO taskSendDTO = new TaskSendDTO();
-        taskSendDTO.setMember_no(member_no);
-        taskSendDTO.setTasksend_no(tasksend_no);
-
-        return taskDAO.selectTaskByNo(taskSendDTO);
+    public TaskSendDTO selectTaskByNo(Integer tasksend_no) {
+        return taskDAO.selectTaskByNo(tasksend_no);
     }
 
     //숙제 작성하기
     @Override
-    public int wirteTask(int tasksend_no, int task_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id) {
+    public int wirteTask(Integer tasksend_no, Integer task_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add, String member_id) {
 
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
         taskSubmitDTO.setTasksend_no(tasksend_no);
@@ -208,17 +208,13 @@ public class TaskServiceImpl implements TaskService{
 
     //작성한 숙제 조회
     @Override
-    public TaskSubmitDTO modifyTask(int tasksend_no, int member_no) {
-        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
-        taskSubmitDTO.setTasksend_no(tasksend_no);
-        taskSubmitDTO.setMember_no(member_no);
-
-        return taskDAO.modifyTask(taskSubmitDTO);
+    public TaskSubmitDTO modifyTask(Integer tasksend_no) {
+        return taskDAO.modifyTask(tasksend_no);
     }
 
     //숙제 수정
     @Override
-    public int ModifySubmitTask(int tasksend_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add) {
+    public int ModifySubmitTask(Integer tasksend_no, String tasksubmit_chapter, String tasksubmit_content, String tasksubmit_add) {
 
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
         taskSubmitDTO.setTasksend_no(tasksend_no);
@@ -236,19 +232,23 @@ public class TaskServiceImpl implements TaskService{
 
     //제출 숙제 조회
     @Override
-    public List<TaskSubmitDTO> selectSubmitTask(Integer member_no) {
-        return taskDAO.selectSubmitTask(member_no);
+    public List<TaskSendDTO> selectSubmitTask(Integer member_no, int limit, int offset) {
+       TaskSendDTO taskSendDTO = new TaskSendDTO();
+       taskSendDTO.setMember_no(member_no);
+       taskSendDTO.setLIMIT(limit);
+       taskSendDTO.setOFFSET(limit*offset);
+        return taskDAO.selectSubmitTask(taskSendDTO);
+    }
+
+    //제출 숙제 갯수
+    @Override
+    public int submitTaskCount(Integer member_no) {
+        return taskDAO.submitTaskCount(member_no);
     }
 
     //평가 완료된 숙제 조회
-
     @Override
-    public TaskSubmitDTO selectSubmitTaskByNo(int tasksend_no, int member_no) {
-
-        TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
-        taskSubmitDTO.setTasksend_no(tasksend_no);
-        taskSubmitDTO.setMember_no(member_no);
-
-        return taskDAO.selectSubmitTaskByNo(taskSubmitDTO);
+    public TaskSubmitDTO selectSubmitTaskByNo(Integer tasksend_no) {
+        return taskDAO.selectSubmitTaskByNo(tasksend_no);
     }
 }

@@ -134,7 +134,6 @@ public class EducatorTaskController {
     @GetMapping("/evalDetail")
     @ResponseBody
     public TaskSubmitDTO evalDetail(@RequestParam Integer tasksubmit_no){
-        System.out.println(tasksubmit_no);
         TaskSubmitDTO evalDetail = taskService.evalTaskDetail(tasksubmit_no);
         return evalDetail;
     }
@@ -143,6 +142,8 @@ public class EducatorTaskController {
     public String insertEval(@RequestParam String tasksubmit_comment, @RequestParam String tasksubmit_eval,
                                              @RequestParam Integer group_no, @RequestParam Integer member_no,
                                              @RequestParam String member_level, @RequestParam Integer tasksend_no){
+
+        System.out.println(tasksubmit_comment+"1"+tasksubmit_eval+"2"+group_no+"3"+member_no+"4"+member_level+"5"+tasksend_no);
 
         int result = taskService.insertEvaluation(tasksubmit_comment, tasksubmit_eval, group_no, member_no, member_level, tasksend_no);
         System.out.println("check"+result);
