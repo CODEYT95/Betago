@@ -33,10 +33,14 @@
                 <div class="loginbox">
                     <button type="button" class="btn" onclick="location.href='/login'" sec:authorize="isAnonymous()"><span>로그인</span></button>
                     <button type="button" class="btn" onclick="location.href='/member/agree'" sec:authorize="isAnonymous()"><span>회원가입</span></button>
-                    <div class="login">
-                        <span sec:authentication="name"></span> 님 오늘도 둑며드세요!
-                    </div>
                     <div class="login-info" sec:authorize="isAuthenticated()">
+                        <div class="login">
+                            <div class="login-title">
+                                🧑‍🎓<span th:text="${member_name}" class="member-name"></span>
+                                <span class="dear"> 님</span>
+                            </div>
+                            <p class="comment">오늘도 둑며드세요!</p>
+                        </div>
                         <button class="btn" id="logoutBtn" onclick="document.getElementById('logoutForm').submit();">로그아웃</button>
                     </div>
                 </div>

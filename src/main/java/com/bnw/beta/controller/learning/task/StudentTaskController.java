@@ -24,7 +24,6 @@ public class StudentTaskController {
     //전송된 숙제 조회하기
     @GetMapping("/taskList")
     public String selectTaskById(Model model, HttpSession session){
-        System.out.println(session.getAttribute("member_name"));
         Integer member_no = (Integer) session.getAttribute("member_no");
             if (member_no != null) {
                 List<TaskDTO> taskList = taskService.selectTaskById(member_no);

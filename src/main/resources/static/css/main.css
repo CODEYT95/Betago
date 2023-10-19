@@ -117,6 +117,21 @@ display: inline-grid;
   font-size: 35px;
 }
 
+.login {
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 20px, #a4a4a4 21px), repeating-linear-gradient(90deg, #fff9be, #fff9be 20px, #a4a4a4 21px);
+    display: grid;
+    align-items: center;
+    border: 1px solid #ccc;
+    width: 210px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.login-info {
+    display: grid;
+    align-items: center;
+}
+
 .btn {
   border: none;
   display: block;

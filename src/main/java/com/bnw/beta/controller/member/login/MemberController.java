@@ -12,6 +12,7 @@ import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -119,16 +120,14 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping({"","/"})
-    public String index(Principal principal, HttpSession session) {
+    public String index(Principal principal, HttpSession session, Model model) {
 
         if(principal != null){
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
             session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
             session.setMaxInactiveInterval(1800);
         }
-        System.out.println("성공");
-
-        System.out.println(session.getAttribute("member_no"));
+        model.addAttribute("member_name", session.getAttribute("member_name"));
         return "main"; //메인페이지로 설정
     }
 
