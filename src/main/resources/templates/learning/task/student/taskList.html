@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
@@ -27,10 +28,10 @@
                 </div>
                 <div class="contents-container">
                     <div class="mycontents-list">
-                            <div class="checkbox" th:each="task : ${taskList}">
-                                <label class="checkbox-wrapper">
-                                    <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${task.tasksend_no}" name="tasksend_no[]" th:value="${task.tasksend_no}" th:disabled="${task.task_state == '미작성'}"/>
-                                    <span class="checkbox-title">
+                        <div class="checkbox" th:each="task : ${taskList}">
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${task.tasksend_no}" name="tasksend_no[]" th:value="${task.tasksend_no}" th:disabled="${task.task_state == '미작성'}"/>
+                                <span class="checkbox-title">
                                         <div class="card">
                                             <div class="card-details">
                                                 <div class="card-title">
@@ -64,8 +65,8 @@
                                             </div>
                                         </div>
                                         </span>
-                                </label>
-                            </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </form>

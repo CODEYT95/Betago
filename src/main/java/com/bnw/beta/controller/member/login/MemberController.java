@@ -117,17 +117,18 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping({"","/"})
-    public String index(Principal principal, HttpSession session) {
+    public String index(Principal principal, HttpSession session, Model model) {
 
         if(principal != null){
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
             session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
             session.setMaxInactiveInterval(1800);
+            model.addAttribute("member_name", session.getAttribute("member_name"));
         }
         System.out.println("성공");
 
         System.out.println(session.getAttribute("member_no"));
-        return "main/main"; //메인페이지로 설정
+        return "main"; //메인페이지로 설정
     }
 
     @GetMapping("/loginForm") //기본주소로 설정시 시큐리티가 주소를 낚아채지만 SecurtiyConfig생성후 폼으로 정상 작동

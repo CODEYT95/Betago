@@ -25,13 +25,13 @@ public class StudentTaskController {
     @GetMapping("/taskList")
     public String selectTaskById(Model model, HttpSession session){
         Integer member_no = (Integer) session.getAttribute("member_no");
-            if (member_no != null) {
-                List<TaskDTO> taskList = taskService.selectTaskById(member_no);
-                model.addAttribute("member_name", session.getAttribute("member_name"));
-                model.addAttribute("taskList", taskList);
-            }
-        return "learning/task/student/taskList";
+        if (member_no != null) {
+            List<TaskDTO> taskList = taskService.selectTaskById(member_no);
+            model.addAttribute("member_name", session.getAttribute("member_name"));
+            model.addAttribute("taskList", taskList);
         }
+        return "learning/task/student/taskList";
+    }
 
     //모달창 숙제 정보 불러오기
     @PostMapping("/taskDetail")
@@ -67,8 +67,8 @@ public class StudentTaskController {
     //숙제 수정하기
     @PostMapping("/taskModify")
     public String taskModify(@RequestParam int tasksend_no, @RequestParam String tasksubmit_chapter,
-                                                @RequestParam String tasksubmit_content, @RequestParam String tasksubmit_add,
-                                                @RequestParam String task_state){
+                             @RequestParam String tasksubmit_content, @RequestParam String tasksubmit_add,
+                             @RequestParam String task_state){
 
         int result = taskService.ModifySubmitTask(tasksend_no,tasksubmit_chapter,tasksubmit_content,tasksubmit_add);
         if(task_state.equals("작성중") && result > 0) {

@@ -23,6 +23,7 @@ public class TaskSendDTO {
     private String member_name;
     private String game_title;
 
+    //무한 스크롤
     private int LIMIT;
     private int OFFSET;
 }

@@ -149,7 +149,7 @@ public class TaskServiceImpl implements TaskService{
     //숙제 평가하기
     @Override
     public int insertEvaluation(String tasksubmit_comment,  String tasksubmit_eval,
-                                                    Integer group_no, Integer member_no, String member_level, Integer tasksend_no) {
+                                Integer group_no, Integer member_no, String member_level, Integer tasksend_no) {
 
         TaskSubmitDTO taskSubmitDTO = new TaskSubmitDTO();
         taskSubmitDTO.setTasksend_no(tasksend_no);
@@ -233,10 +233,10 @@ public class TaskServiceImpl implements TaskService{
     //제출 숙제 조회
     @Override
     public List<TaskSendDTO> selectSubmitTask(Integer member_no, int limit, int offset) {
-       TaskSendDTO taskSendDTO = new TaskSendDTO();
-       taskSendDTO.setMember_no(member_no);
-       taskSendDTO.setLIMIT(limit);
-       taskSendDTO.setOFFSET(limit*offset);
+        TaskSendDTO taskSendDTO = new TaskSendDTO();
+        taskSendDTO.setMember_no(member_no);
+        taskSendDTO.setLIMIT(limit);
+        taskSendDTO.setOFFSET(limit*offset);
         return taskDAO.selectSubmitTask(taskSendDTO);
     }
 
