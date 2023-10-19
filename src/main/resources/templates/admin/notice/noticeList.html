@@ -72,13 +72,15 @@
                     </thead>
                     <tbody id="list">
 
-                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type != '일반' } " th:each="notice: ${topNoticeList}" class="tableColor">
+                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type != '일반' } "
+                        th:each="notice: ${topNoticeList}" class="tableColor">
 
                         <td>
-                            <span class="no" th:text="${notice.notice_no}"></span>
+                            <span class="no">
+                                <img src="/image/star.png" width="30px" height="20px" alt="별 이미지">
+                            </span>
                         </td>
 
-                        </td>
                         <td>
                             <span class="type" name="type" th:text="${notice.notice_category}"></span>
                         </td>
@@ -109,7 +111,8 @@
                     <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice, index: ${noticePage.allNoticeList}">
 
                         <td>
-                            <span class="no" th:text="${noticePage.total - (index.index+ noticePage.startIndex)}"></span>
+                            <span class="no"
+                                  th:text="${noticePage.total - (index.index+ noticePage.startIndex)}"></span>
                         </td>
                         <td>
                             <span class="type" name="type" th:text="${notice.notice_category}"></span>
