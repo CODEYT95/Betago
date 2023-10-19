@@ -45,7 +45,7 @@ public class GameController {
 
         if (!imageFile.isEmpty()) {
             String fileName = imageFile.getOriginalFilename();
-            String filePath = "C:/uploadfile/game_img/" + fileName;
+            String filePath = request.getServletContext().getRealPath("/static/image/guide/game/") + fileName;
             try {
                 GameFileDTO gameFileDTO = new GameFileDTO();
                 gameFileDTO.setGame_no(dto.getGame_no());
