@@ -3,6 +3,7 @@ package com.bnw.beta.service.admin.game;
 import com.bnw.beta.domain.admin.dao.GameDAO;
 import com.bnw.beta.domain.admin.dto.GameDTO;
 import com.bnw.beta.domain.admin.dto.GameFileDTO;
+import com.bnw.beta.domain.subscribe.dto.payDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,21 @@ public class GameServiceImpl implements GameService {
 
     /*게임콘텐츠 조회*/
    @Override
-    public List<GameDTO> selectAll() {
-        return gameDAO.selectAll();
+    public List<GameDTO> selectGameList(String game_title, int limit, int offset) {
+        return gameDAO.selectGameList(game_title, limit ,limit*offset);
     }
 
+    //게임콘텐츠 제목 조회
+    @Override
+    public List<GameDTO> selectGameTitle(){
+       return gameDAO.selectGameTitle();
+    }
+
+    //게임콘텐츠 갯수
+    @Override
+    public int countGameList(String game_title){
+       return gameDAO.countGameList(game_title);
+    }
 
     //월간 (일일 단위 매출조회)
     @Override
@@ -42,9 +54,5 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<GameDTO> selectMonthlySales(Date game_startsearch, Date game_endsearch)
     { return gameDAO.selectMonthlySales(game_startsearch, game_endsearch);}
-
-    //게임콘텐츠 제목검색
-    public List<GameDTO> searchByTitle(@Param("game_title") String game_title)
-    {return gameDAO.searchByTitle(game_title);}
 
 }

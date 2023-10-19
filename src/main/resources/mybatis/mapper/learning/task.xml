@@ -8,22 +8,39 @@
     <insert id="createTask" parameterType="TaskDTO">
         <![CDATA[
         INSERT INTO TASK (task_title, task_content, task_chapter, task_deadline, task_regdate, member_id)
-        VALUES (#{task_title}, #{task_content}, #{task_chapter},#{task_deadline}, now(), #{member_id});
+        VALUES (#{task_title}, #{task_content}, #{task_chapter},#{task_deadline}, now(), #{member_id})
         ]]>
     </insert>
+
+    <!--생성한 숙제 조회-->
+    <select id="createTaskList" parameterType="map" resultType="TaskDTO">
+        <![CDATA[
+        SELECT * FROM task WHERE member_id = #{member_id}
+        ORDER BY task_regdate DESC
+        LIMIT #{page}, #{size}
+        ]]>
+    </select>
+
+    <!--생성한 숙제 갯수 조회-->
+    <select id="sendTaskListCount" parameterType="String" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM task WHERE member_id = #{member_id}
+        ]]>
+    </select>
 
     <!--숙제 제목으로 조회-->
     <select id="selectTaskTitle" parameterType="String" resultType="String">
         <![CDATA[
-        SELECT DISTINCT task_title , task_regdate
+        SELECT DISTINCT task_title
         FROM task
         WHERE member_id = #{member_id}
         AND task_deadline > now()
-        ORDER BY task_regdate DESC;
         ]]>
     </select>
 
-    <select id="selectTaskByTitle" parameterType="TaskDTO" resultType="TaskDTO">
+    <!--생성한 숙제 조회-->
+    <select id="selectTaskByTitle" parameterType="map" resultType="TaskDTO">
         <![CDATA[
         SELECT * FROM task
         WHERE
@@ -37,14 +54,35 @@
         <![CDATA[
         AND member_id = #{member_id}
         AND task_deadline > now()
-        ORDER BY task_regdate DESC;
+        ORDER BY task_regdate DESC
+        LIMIT #{page}, #{size}
+        ]]>
+    </select>
+
+    <!--생성한 숙제 갯수 조회-->
+    <select id="countTasksByTitle" parameterType="TaskDTO" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*) FROM task
+        WHERE
+        ]]>
+            <if test="task_title != null and task_title != ''">
+                task_title = #{task_title}
+            </if>
+            <if test="task_title == null or task_title == ''">
+                1=1
+            </if>
+        <![CDATA[
+        AND member_id = #{member_id}
+        AND task_deadline > now()
         ]]>
     </select>
 
     <!--그룹 이름 조회-->
     <select id="selectGroupName" parameterType="String" resultType="GroupDTO">
         <![CDATA[
-        SELECT group_name, group_no FROM studygroup WHERE member_id = #{member_id};
+        SELECT group_name, group_no FROM studygroup
+        WHERE member_id = #{member_id}
+        AND group_enddate > now()
         ]]>
     </select>
 
@@ -78,73 +116,74 @@
         ]]>
     </insert>
 
-    <!--전송한 숙제 조회-->
-    <select id="sendTaskList" parameterType="map" resultType="TaskDTO">
-        <![CDATA[
-        SELECT t.task_no, s.tasksend_no, s.task_senddate, MAX(t.task_title) AS task_title,
-                                                                    MAX(t.task_content) AS task_content, MAX(t.task_chapter) AS task_chapter,
-                                                                    MAX(t.task_regdate) AS task_regdate, MAX(t.task_deadline) AS task_deadline,
-                                                                    MAX(t.member_id) AS member_id, MAX(s.tasksend_no) AS tasksend_no
-        FROM TASK t
-        JOIN tasksend s ON t.task_no = s.task_no
-        WHERE t.member_id = #{member_id}
-        GROUP BY t.task_no, s.task_senddate
-        ORDER BY MAX(t.task_regdate) DESC
-        LIMIT #{page}, #{size};
-        ]]>
-    </select>
-
-    <!--전송한 숙제 갯수 조회-->
-    <select id="sendTaskListCount" parameterType="String" resultType="Integer">
-        <![CDATA[
-        SELECT COUNT(*) AS record_count
-        FROM (
-            SELECT t.task_no, s.task_senddate
-            FROM TASK t
-            JOIN tasksend s ON t.task_no = s.task_no
-            WHERE t.member_id = #{member_id}
-            GROUP BY t.task_no, s.task_senddate
-        ) AS subquery;
-        ]]>
-    </select>
-
     <!--전송 숙제 조회-->
-    <select id="selectSendTask">
+    <select id="selectSendTask" parameterType="map" resultType="TaskSendDTO">
         <![CDATA[
-        SELECT ts.tasksend_no, ts.member_id, ts.task_senddate, t.task_title, t.task_content, t.task_chapter,t.task_deadline
-        FROM tasksend AS ts
-        JOIN task AS t ON ts.task_no = t.task_no
-        WHERE ts.member_id = #{member_id};
+        SELECT tasksend_no, member_id, task_senddate, task_title, task_no,
+                      task_content, task_chapter, task_deadline, group_no, group_name
+        FROM (
+            SELECT ts.tasksend_no, ts.member_id, ts.task_senddate, t.task_title, t.task_no,
+                          t.task_content, t.task_chapter, t.task_deadline, ts.group_no, sg.group_name,
+                   ROW_NUMBER() OVER (PARTITION BY t.task_no ORDER BY ts.task_senddate) AS rn
+            FROM tasksend AS ts
+            JOIN task AS t ON ts.task_no = t.task_no
+            JOIN studygroup AS sg ON ts.group_no = sg.group_no
+            WHERE ts.member_id = #{member_id} AND t.task_deadline > NOW()
+        ]]>
+        <if test="task_title != null and task_title != ''">
+            AND t.task_title = #{task_title}
+        </if>
+        <![CDATA[
+        ) AS subquery
+        WHERE rn = 1
+        ORDER BY task_senddate
         ]]>
     </select>
 
     <!--제출된 숙제 조회-->
-    <select id="evalTaskList" parameterType="String" resultType="TaskSubmitDTO">
+    <select id="evalTaskList" parameterType="map" resultType="TaskSubmitDTO">
         <![CDATA[
-        SELECT sub.tasksubmit_no, sub.tasksubmit_chapter, sub.tasksubmit_content, sub.tasksubmit_add, sub.tasksubmit_regdate, m.member_name, ts.member_id
+        SELECT sub.tasksubmit_no, sub.tasksubmit_chapter, sub.tasksubmit_content,
+                      sub.tasksubmit_add, sub.tasksubmit_regdate, m.member_name, ts.member_id
+
         FROM tasksubmit AS sub
         JOIN member AS m ON sub.member_id = m.member_id
         JOIN tasksend AS ts ON sub.tasksend_no = ts.tasksend_no
         JOIN task AS t ON sub.task_no = t.task_no
-        WHERE ts.member_id = '#{member_id}'
-        AND sub.tasksubmit_no = #{tasksubmit_no}
+        WHERE ts.member_id = #{member_id}
+        AND t.task_no = #{task_no}
         AND ts.task_state = '제출완료'
-        AND t.task_deadline < now();
+        ]]>
+    </select>
+
+    <!--제출된 숙제 상세 조회-->
+    <select id="evalTaskDetail" parameterType="Integer" resultType="TaskSubmitDTO">
+        <![CDATA[
+        SELECT sub.tasksubmit_no, sub.tasksubmit_chapter, sub.tasksubmit_content,
+                      sub.tasksubmit_add, sub.tasksubmit_regdate, m.member_name,
+                      ts.member_id, ts.member_no, ts.group_no, ts.tasksend_no, t.task_chapter
+
+        FROM tasksubmit AS sub
+        JOIN member AS m ON sub.member_id = m.member_id
+        JOIN tasksend AS ts ON sub.tasksend_no = ts.tasksend_no
+        JOIN studygroup AS sg ON ts.group_no = sg.group_no
+        JOIN task AS t ON ts.task_no = t.task_no
+        WHERE sub.tasksubmit_no = #{tasksubmit_no}
         ]]>
     </select>
 
     <!--숙제 평가-->
-    <update id="insertEvaluation" parameterType="TaskDTO">
+    <update id="insertEvaluation" parameterType="TaskSubmitDTO">
         <![CDATA[
         UPDATE tasksend AS ts
-        INNER JOIN tasksubmit AS sub ON ts.tasksend_no = tsub.tasksend_no
-        SET ts.task_state = '평가완료', sub.tasksubmit_eval = #{tasksubmit_eval}, sub.tasksubmit_comment = #{tasksubmit_comment}
-        WHERE ts.tasksend_no = #{tasksend_no};
+        INNER JOIN tasksubmit AS sub ON ts.tasksend_no = sub.tasksend_no
+        SET ts.task_state = '평가완료', sub.tasksubmit_comment = #{tasksubmit_comment}, sub.tasksubmit_eval = #{tasksubmit_eval}
+        WHERE ts.tasksend_no = #{tasksend_no}
         ]]>
     </update>
 
     <!--학생 레벨 업데이트-->
-    <update id="updateMemberLevel">
+    <update id="updateMemberLevel" parameterType="GroupDTO">
         <![CDATA[
         UPDATE groupmember
         SET member_level = #{member_level}
@@ -168,7 +207,7 @@
         WHERE ts.member_no = #{member_no}
         AND (ts.task_state = '미작성' OR ts.task_state = '작성중')
         AND t.task_deadline > now()
-        ORDER BY t.task_regdate desc;
+        ORDER BY t.task_regdate DESC
         ]]>
     </select>
 
@@ -182,7 +221,7 @@
         JOIN studygroup AS sg ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.tasksend_no = #{tasksend_no}
-        AND ts.member_no = #{member_no};
+        AND ts.member_no = #{member_no}
         ]]>
     </select>
 
@@ -190,7 +229,7 @@
     <insert id="wirteTask" parameterType="TaskSubmitDTO">
         <![CDATA[
         INSERT INTO tasksubmit (tasksubmit_chapter, tasksubmit_content, tasksubmit_add, tasksubmit_regdate, tasksend_no, task_no, member_id)
-        VALUES (#{tasksubmit_chapter}, #{tasksubmit_content}, #{tasksubmit_add}, now(), #{tasksend_no}, #{task_no}, #{member_id});
+        VALUES (#{tasksubmit_chapter}, #{tasksubmit_content}, #{tasksubmit_add}, now(), #{tasksend_no}, #{task_no}, #{member_id})
         ]]>
     </insert>
 
@@ -209,7 +248,7 @@
         ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.tasksend_no = #{tasksend_no}
-        AND ts.member_no = #{member_no};
+        AND ts.member_no = #{member_no}
         ]]>
     </select>
 
@@ -218,7 +257,7 @@
         <![CDATA[
         UPDATE tasksubmit
         SET tasksubmit_chapter = #{tasksubmit_chapter}, tasksubmit_content = #{tasksubmit_content}, tasksubmit_add = #{tasksubmit_add}
-        WHERE tasksend_no = #{tasksend_no};
+        WHERE tasksend_no = #{tasksend_no}
         ]]>
     </update>
 
@@ -226,7 +265,7 @@
     <update id="saveTask" parameterType="Integer">
         <![CDATA[
         UPDATE tasksend SET task_state = '작성중'
-        WHERE tasksend_no = #{tasksend_no};
+        WHERE tasksend_no = #{tasksend_no}
         ]]>
     </update>
 
@@ -244,7 +283,7 @@
     </update>
 
     <!--제출 숙제 조회하기-->
-    <select id="selectSubmitTask" parameterType="Integer" resultType="TaskSubmitDTO">
+    <select id="selectSubmitTask" parameterType="TaskSendDTO" resultType="TaskSendDTO">
         <![CDATA[
         SELECT t.task_title, t.task_content, t.task_deadline, t.task_chapter, ts.task_state, ts.tasksend_no, m.member_name, ts.member_no, g.game_title
         FROM tasksend AS ts
@@ -256,7 +295,18 @@
         ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.member_no = #{member_no}
-        AND (ts.task_state = '제출완료' OR ts.task_state = '평가완료');
+        AND (ts.task_state = '제출완료' OR ts.task_state = '평가완료')
+        LIMIT #{LIMIT} OFFSET #{OFFSET}
+        ]]>
+    </select>
+
+    <!--제출 숙제 갯수-->
+    <select id="submitTaskCount" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM tasksend
+        WHERE member_no = #{member_no}
+        AND (task_state = '제출완료' OR task_state = '평가완료');
         ]]>
     </select>
 
@@ -271,7 +321,7 @@
         JOIN studygroup AS sg ON ts.group_no = sg.group_no
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.tasksend_no = #{tasksend_no}
-        AND  ts.member_no = #{member_no};
+        AND  ts.member_no = #{member_no}
         ]]>
     </select>
 

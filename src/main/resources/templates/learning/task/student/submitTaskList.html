@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>둑며들다|진도 등록</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/learning/task/student/submitTaskList.css}">
+    <script type="text/javascript" th:src="@{/js/learning/task/student/submitTaskList.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -48,7 +49,7 @@
                                                 <div class="card-button">
                                                     <div class="button-wrap">
                                                      <a th:if="${task.task_state == '제출완료'}" th:href="@{/student/taskModify/{tasksend_no}(tasksend_no=${task.tasksend_no})}">
-                                                        <input type="button" class="modifyBtn" id="modifyButton_${task.tasksend_no}" value="수정하기">
+                                                        <input type="button" class="modifyBtn" value="수정하기">
                                                     </a>
                                                     <a th:if="${task.task_state == '평가완료'}" th:href="@{/student/viewEval/{tasksend_no}(tasksend_no=${task.tasksend_no})}">
                                                         <input type="button" class="detailBtn" value="조회하기">
@@ -64,6 +65,9 @@
                     </div>
                 </div>
             </form>
+            <div class="content_footer">
+                <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCount}"></span>)<i class="ri-arrow-down-s-line"></i></button>
+            </div>
         </div>
     </div>
 </div>

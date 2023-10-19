@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|튜토리얼 소개</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/guide/contents/ContentsTutorial.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div class="main-content">
+            <div class="first-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/tutorial/바둑튜토리얼9.jpeg" alt="바둑튜토리얼9">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span class="title"> 튜토리얼명: 렛츠고 창의인성 바둑스쿨 </span><br>
+                    <span>바둑을 처음 접하는 누구나 쉽고 재미있게 배울 수 있도록 만들어진 튜토리얼입니다.
+                    해당 튜토리얼은 게임콘텐츠를 구매한 모든회원에 제공됩니다.</span>
+                </div>
+            </div>
+
+            <div class="second-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/tutorial/바둑튜토리얼1.jpg" alt="바둑튜토리얼1">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span class="title"> 튜토리얼명: 단 10분 만에 바둑 기초 배우기 </span><br>
+                    <span>바둑판에 대한 설명과 어디에 두어야 하는지, 활로와 단수, 바둑의 집 짓기, 바둑의 포로 잡기,
+                    바둑의 착수금지에 대한 기초설명으로 누구나 바둑에 도전할 수 있습니다.
+                    해당 튜토리얼은 일일퀘스트 또는 영토스테이지나 사활 스테이지 게임콘텐츠 구매회원에 제공됩니다.</span>
+                </div>
+            </div>
+            <div class="third-contents">
+                <div class="imgbox">
+                    <!-- 이미지 슬라이더 -->
+                    <div class="image-slider">
+                        <img src="../image/guide/tutorial/바둑튜토리얼8.jpg" alt="바둑튜토리얼8">
+                        <!-- 추가 이미지를 넣을 수 있습니다 -->
+                    </div>
+                </div>
+                <div class="contents-title">
+                    <span class="title">게임명: 바둑 입문강좌 </span><br>
+                    <span>10분 만에 바둑기초를 마스터할 수 있는 강좌입니다. 바둑판위 명칭과 바둑에 대한 소개,
+                        집의 개념, 바둑규칙, 마지막으로 완생의 개념에 대해 설명하면서 누구나 부담없이 바둑에 다가가 배울 수
+                        있는 기회를 제공하고 있습니다.
+                        해당 튜토리얼은 도전의 탑 또는 인공지능 대국 게임콘텐츠 구매회원에 제공됩니다.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+</html>

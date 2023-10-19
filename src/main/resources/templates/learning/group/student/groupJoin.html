@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>학습 그룹 가입신청</title>
+    <title>둑며들다|학습 그룹 가입신청</title>
     <!--공통으로 쓰이는 CSS 및  -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/student/groupJoin.css}">
@@ -57,18 +57,23 @@
                         <input hidden="hidden" class="attr" th:attr="data-group-name=${joinList.group_name},data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
-                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no}"/>
-                                <span class="checkbox-tile">
-                                <div class="card">
-                                    <div class="poster"><img th:src="@{/image/testBADUK2.png}"></div>
-                                    <div class="card-details"></div>
-                                    <div class="details">
-                                        <h5>그룹명 : <span th:text="${joinList.group_name}"></span></h5>
-                                        <h5>교육자명 : <span th:text="${joinList.member_name}"></span></h5>
-                                        <h5>학습 구독 기간 : <span th:text="${joinList.group_startdate}"></span> ~ <span th:text="${joinList.group_enddate}"></span></h5>
-                                        <h5>잔여 T/O : <span th:text="${joinList.group_cnt}-${joinList.group_nowcnt}+명"></span></h5>
+                                <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-group-name=${joinList.group_name}"/>
+                                <span class="checkbox-title">
+                                    <div class="card">
+                                        <div class="poster"><img th:src="@{/image/noimage.png}"></div>
+                                        <div class="card-details"></div>
+                                        <div class="details">
+                                            <h5>그룹명 : <span th:text="${joinList.group_name}"></span></h5>
+                                            <h5>교육자명 : <span th:text="${joinList.member_name}"></span></h5>
+                                            <h5>학습 구독 기간 : <span th:text="${joinList.group_startdate}"></span> ~ <span th:text="${joinList.group_enddate}"></span></h5>
+                                            <h5>잔여 T/O : <span th:text="${joinList.group_cnt}-${joinList.group_nowcnt}+명"></span></h5>
+                                        </div>
+                                        <div class="backDetails">
+                                        <div class="detaillist">
+                                            <h6>상품상세설명 : <span></span></h6>
+                                        </div>
+                                        </div>
                                     </div>
-                                </div>
                                 </span>
                             </label>
                         </div>
@@ -105,7 +110,7 @@
     <div class="modal-3" id="joinCompleteModal">
         <div class="modal-content">
             <div>
-            <h3><span class="modalGroupName"></span>에</h3>
+            <h3><span class="modalGroupName"></span>  에</h3>
             <h3>가입신청이 완료 되었습니다.</h3>
             </div>
             <button class="modal-btn-confirm" onclick="closeModal('joinCompleteModal')">확인</button>

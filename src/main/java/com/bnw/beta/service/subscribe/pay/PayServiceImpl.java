@@ -33,9 +33,9 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-        public int insertIntoPay(payDTO payDTO) {
-            return payDAO.insertIntoPay(payDTO);
-        }
+    public int insertIntoPay(payDTO payDTO) {
+        return payDAO.insertIntoPay(payDTO);
+    }
 
     @Override
     public int insertIntoCart(int game_no, String member_id) {
@@ -69,12 +69,16 @@ public class PayServiceImpl implements PayService {
     }
 
     //매출 상세 조회
-    public List<payDTO> selectSalesDetail(Date pay_date){
+    public List<payDTO> selectSalesDetail(Date pay_date, Date pay_date2){
+        if(pay_date2 == null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String startDate = dateFormat.format(pay_date);
+            return payDAO.selectSalesDetailDay(startDate);
+        }else{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+            String startDate = dateFormat.format(pay_date2);
+            return payDAO.selectSalesDetailMonth(startDate);
+        }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-        String startDate = dateFormat.format(pay_date);
-
-
-        return payDAO.selectSalesDetail(startDate);
     }
 }

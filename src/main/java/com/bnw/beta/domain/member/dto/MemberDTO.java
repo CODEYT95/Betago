@@ -1,10 +1,11 @@
 package com.bnw.beta.domain.member.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Data
@@ -23,7 +24,8 @@ public class MemberDTO implements UserDetails {
     private String member_isshow;
     private String role;
     private String license;
-    private LocalDateTime join_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate join_date;
     private String pay_count;
 
     @Override

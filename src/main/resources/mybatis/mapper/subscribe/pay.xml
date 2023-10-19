@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.subscribe.dao.payDAO">
-<!--게임컨텐츠결제-->
-<select id="selectContentsPay" parameterType="Integer" resultType="payDTO">
-    <![CDATA[
+    <!--게임컨텐츠결제-->
+    <select id="selectContentsPay" parameterType="Integer" resultType="payDTO">
+        <![CDATA[
     SELECT * FROM game WHERE game_no = #{game_no};
     ]]>
-</select>
+    </select>
 
-<insert id="insertIntoPay" parameterType="payDTO">
-    <![CDATA[
+    <insert id="insertIntoPay" parameterType="payDTO">
+        <![CDATA[
     INSERT INTO pay (member_id, game_no, pay_name, pay_phone, pay_type, buy_name, pay_enddate)
     VALUES (#{member_id}, #{game_no}, #{pay_name}, #{pay_phone}, #{pay_type}, #{buy_name}, DATE_ADD(CURRENT_DATE(), INTERVAL #{game_date} MONTH));
     ]]>
-</insert>
+    </insert>
 
-<select id="selectBuylist" parameterType="java.util.List" resultType="payDTO">
-    <![CDATA[
+    <select id="selectBuylist" parameterType="java.util.List" resultType="payDTO">
+        <![CDATA[
     SELECT g.*, f.filegame_name, f.filegame_path, f.filegame_date
     FROM game g
     INNER JOIN filegame f ON g.game_no = f.game_no
     WHERE g.game_no IN
     ]]>
-    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-        #{item}
-    </foreach>
-</select>
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
-    <!-- 매출 그래프 일 단위 -->
-<select id="selectDaySales">
-    <![CDATA[
+    <!-- /////////매출 그래프 일 단위//////////-->
+    <select id="selectDaySales">
+        <![CDATA[
     SELECT DATE_FORMAT(p.pay_date, '%Y-%m-%d') AS day,
     SUM(g.game_sell) AS total_sell,
     COUNT(g.game_no) AS total_sales
@@ -39,10 +39,10 @@
     GROUP BY DATE_FORMAT(p.pay_date, '%Y-%m-%d')
     ORDER BY day ASC;
     ]]>
-</select>
+    </select>
     <!-- 매출 그래프 월 단위 -->
-<select id="selectMonthSales">
-    <![CDATA[
+    <select id="selectMonthSales">
+        <![CDATA[
     SELECT DATE_FORMAT(p.pay_date, '%Y-%m') AS day,
     SUM(g.game_sell) AS total_sell,
     COUNT(g.game_no) AS total_sales
@@ -52,12 +52,10 @@
     GROUP BY DATE_FORMAT(p.pay_date, '%Y-%m')
     ORDER BY day ASC;
     ]]>
-</select>
+    </select>
 
-<!-- 매출 상세 일/월 단위 -->
-<select id="selectSalesDetail" resultType="payDTO">
-    <choose>
-        <when test="enddate == " >
+    <!-- 매출 상세 일/월 단위 -->
+    <select id="selectSalesDetailDay" resultType="payDTO">
         <![CDATA[
         SELECT
         DATE_FORMAT(p.pay_date, '%Y-%m-%d') AS day,
@@ -72,12 +70,12 @@
         JOIN
         game AS g ON p.game_no = g.game_no
         WHERE
-        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{startDate} AND #{startDate}
+        DATE_FORMAT(p.pay_date, '%Y-%m-%d') BETWEEN #{pay_Date} AND #{pay_Date}
         ORDER BY
         p.pay_date ASC;
         ]]>
-        </when>
-        <when test="enddate != " >
+    </select>
+    <select id="selectSalesDetailMonth" resultType="payDTO">
         <![CDATA[
         SELECT
         DATE_FORMAT(p.pay_date, '%Y-%m') AS day,
@@ -92,12 +90,10 @@
         JOIN
         game AS g ON p.game_no = g.game_no
         WHERE
-        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{startDate} AND #{startDate}
+        DATE_FORMAT(p.pay_date, '%Y-%m') BETWEEN #{pay_Date} AND #{pay_Date}
         ORDER BY
         p.pay_date ASC;
         ]]>
-        </when>
-    </choose>
-</select>
+    </select>
 
 </mapper>

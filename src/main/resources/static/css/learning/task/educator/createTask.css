@@ -149,37 +149,27 @@ th, td {
 
 .t_no, .list_no {
     position: relative;
-    width: 3%;
+    width: 7%;
 }
 
 .t_name, .list_name{
     position: relative;
-    width: 20%;
+    width: 25%;
 }
 
 .t_progress, .list_progress{
     position: relative;
-    width: 9%;
+    width: 13%;
 }
 
-.t_content {
+.list_content, .t_content {
     position: relative;
-    width: 25%;
+    width: 32%;
 }
 
 .t_limit, .list_limit{
     position: relative;
-    width: 8%;
-}
-
-.t_deadline {
-    position: relative;
-    width: 13%;
-}
-
-.t_send, .list_send{
-    position: relative;
-    width: 8%;
+    width: 15%;
 }
 
 .detailBtn-wrap{
@@ -260,23 +250,33 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
+    gap: 5px;
 }
 
 .pagination-container a {
     float: left;
-    padding: 8px 15px;
     text-decoration: none;
 }
 
 .pagination-container a:hover:not(.active) {
     background-color: #ddd;
-    border-radius : 8px;
-    width: 36px;
+    border-radius : 5px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
 }
 
 .active-page {
     background: #b2d3ff;
-    border-radius: 8px;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
 }
 
 .modal-bg {
