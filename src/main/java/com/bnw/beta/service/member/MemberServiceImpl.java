@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
+    @Autowired
     private final MemberDAO memberDAO;
 
     @Autowired
@@ -100,9 +101,9 @@ public class MemberServiceImpl implements MemberService {
     //////////멤버 정보 불러오기///////////
     public MemberDTO getMemberInfo(String member_id){
 
-        System.out.println(memberDAO.getMemberInfo(member_id).getMember_name());
+        System.out.println(memberDAO.memberInfo(member_id).getMember_name());
 
-        return memberDAO.getMemberInfo(member_id);}
+        return memberDAO.memberInfo(member_id);}
 
     /*회원 목록보기*/
     @Override

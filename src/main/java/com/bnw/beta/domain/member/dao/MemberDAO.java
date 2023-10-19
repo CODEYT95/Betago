@@ -31,7 +31,7 @@ public interface MemberDAO {
     MemberDTO findUserByUsername(String username);
 
     //////////멤버 정보 불러오기///////////
-    MemberDTO getMemberInfo(String member_id);
+    MemberDTO memberInfo(@Param("member_id") String member_id);
 
     /*회원목록조회 관리자용*/
     List<MemberDTO> memberlist(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, @Param("keyword") String keyword);

@@ -24,7 +24,9 @@ import java.security.Principal;
 
 
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
+    @Autowired
     private final MemberService memberService;
 
 
@@ -32,13 +34,6 @@ public class MemberController {
     private MailSendServiceImpl mailSendService;
     @Autowired
     private MemberDAO memberDAO;
-
-    @Autowired
-    public MemberController(MemberService memberService, MailSendServiceImpl mailSendService, MemberDAO memberDAO) {
-        this.memberService = memberService;
-        this.mailSendService = mailSendService;
-        this.memberDAO = memberDAO;
-    }
 
     //시큐리티 통해서 로그인폼 보여주기
     @GetMapping("/login")
@@ -122,11 +117,8 @@ public class MemberController {
     @GetMapping({"","/"})
     public String index(Principal principal, HttpSession session, Model model) {
 
-        if(principal != null){
-            session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
-            session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
-            session.setMaxInactiveInterval(1800);
-        }
+        System.out.println(memberService.getMemberInfo(principal.getName()));
+
         model.addAttribute("member_name", session.getAttribute("member_name"));
         return "main"; //메인페이지로 설정
     }

@@ -127,7 +127,7 @@
     </select>
 
     <!--///////////member_no & member_name 불러오기 -->
-    <select id="getMemberInfo" parameterType="String">
+    <select id="memberInfo">
      <![CDATA[
         SELECT m.*, COUNT(p.pay_no) AS pay_count
         FROM member m
@@ -183,9 +183,7 @@
     <select id="memberlist" parameterType="map" resultType="MemberDTO">
         select member_no, role, member_id, member_name, member_phone, member_email, license, join_date
         from member
-        <where>
-            <include refid="search2"></include>
-        </where>
+
         LIMIT #{page}, #{size};
 
     </select>
@@ -193,8 +191,6 @@
     <select id="count" parameterType="int">
         select count(*)
         from member
-        <where>
-            <include refid="search2"></include>
-        </where>
+
     </select>
 </mapper>
