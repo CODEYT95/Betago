@@ -28,6 +28,12 @@ public class GameServiceImpl implements GameService {
 
     /*게임콘텐츠 조회*/
     @Override
+    public List<GameDTO> selectAll() {
+        return gameDAO.selectAll();
+    }
+
+    /*게임콘텐츠 조회*/
+    @Override
     public List<GameDTO> selectGameList(String game_title, int limit, int offset) {
         return gameDAO.selectGameList(game_title, limit ,limit*offset);
     }

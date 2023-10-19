@@ -19,6 +19,12 @@ public class FAQServiceImpl implements FAQService{
 
     private final FaqDAO faqDAO;
 
+    //faq 메인
+    @Override
+    public List<NoticeDTO> faqAll(){
+        return faqDAO.faqAll();
+    }
+
     //FAQ리스트
     @Override
     public FAQPage faqList(int pageNum, int size, String searchType, String keyword){

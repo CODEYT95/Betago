@@ -21,6 +21,9 @@ public interface GameDAO {
     int insertGameImage(GameFileDTO gameFileDTO);
 
     //게임콘텐츠 조회
+    List<GameDTO> selectAll();
+
+    //게임콘텐츠 조회
     List<GameDTO> selectGameList(@Param("game_title") String game_title,@Param("limit") int limit,@Param("offset") int offset);
 
     //게임콘텐츠 제목 조회

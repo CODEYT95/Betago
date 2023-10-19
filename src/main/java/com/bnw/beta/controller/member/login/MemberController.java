@@ -1,16 +1,17 @@
 package com.bnw.beta.controller.member.login;
 
 import com.bnw.beta.config.vaildation.member.PasswordUtils;
+import com.bnw.beta.domain.admin.dto.GameDTO;
+import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
-import com.bnw.beta.service.member.MailSendServiceImpl;
-import com.bnw.beta.domain.member.dao.MemberDAO;
-import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.service.admin.FAQ.FAQService;
+import com.bnw.beta.service.admin.game.GameService;
+import com.bnw.beta.service.admin.notice.NoticeService;
 import com.bnw.beta.service.member.MailSendServiceImpl;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +21,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 
 @Controller
 public class MemberController {
     private final MemberService memberService;
+    private final NoticeService noticeService;
+    private final GameService gameService;
+
+
 
 
     @Autowired
     private MailSendServiceImpl mailSendService;
     @Autowired
     private MemberDAO memberDAO;
+    @Autowired
+    private FAQService faqService;
 
     @Autowired
-    public MemberController(MemberService memberService, MailSendServiceImpl mailSendService, MemberDAO memberDAO) {
+    public MemberController(MemberService memberService, NoticeService noticeService, GameService gameService,  MailSendServiceImpl mailSendService, MemberDAO memberDAO) {
         this.memberService = memberService;
+        this.noticeService = noticeService;
+        this.gameService = gameService;
         this.mailSendService = mailSendService;
         this.memberDAO = memberDAO;
     }
@@ -119,7 +129,27 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping({"","/"})
-    public String index(Principal principal, HttpSession session) {
+    public String index(Principal principal, HttpSession session, Model model) {
+
+        NoticeDTO noticeDTO = new NoticeDTO();
+
+
+        List<GameDTO> gameList = gameService.selectAll();
+        gameList = gameList.subList(0, Math.min(gameList.size(), 6));
+        model.addAttribute("gameList", gameList);
+
+        List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
+        if (topNoticeList.size() > 5) {
+            topNoticeList = topNoticeList.subList(0, 5);
+        }
+        model.addAttribute("topNoticeList", topNoticeList);
+
+        List<NoticeDTO> faqList = faqService.faqAll();
+        if (faqList.size() > 5) {
+            faqList = faqList.subList(0, 5);
+        }
+        model.addAttribute("faqList", faqList);
+
 
         if(principal != null){
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());

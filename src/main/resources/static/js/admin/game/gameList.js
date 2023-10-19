@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <input type="checkbox" class="checkbox-input" data-game-no="${item.game_no}" name="game_nos" value=${item.game_no} />
                                     <span class="checkbox-tile">
                                     <div class="card">
-                                        <div class="poster"><img class="image" src="/image/game/${item.filegame_name || 'noimage.png'}" alt="${item.filegame_name || 'No Image'}"></div>
+                                        <div class="poster"><img class="image" src="/image/${item.filegame_name ? item.filegame_name : 'noimage.png'}" alt="${item.filegame_name ? item.filegame_name : 'No Image'}"></div>
                                         <div class="card-details"></div>
                                         <div class="details">
                                             <h5>컨텐츠 이름 : <span>${item.game_title}</span></h5>
