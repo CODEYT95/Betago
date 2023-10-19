@@ -7,21 +7,6 @@
     <script type="text/javascript" th:src="@{/js/admin/game/gameInsert.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/game/gameInsert.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
-    <style>
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .form-row .form-group:last-child {
-            margin-right: 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -120,7 +105,7 @@
                     <div class="filebox">
                         <input class="upload-name" placeholder="이미지업로드" readonly>
                         <label for="file" class="file-label">파일찾기</label>
-                        <input type="file" id="file" onchange="displayFileName(this)">
+                        <input type="file" name="imageFile" id="file" onchange="displayFileName(this)">
                     </div>
                 </div>
 
