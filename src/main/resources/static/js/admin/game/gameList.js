@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <h5>컨텐츠 이름 : <span>${item.game_title}</span></h5>
                                             <h5>구매금액 : <span>${item.game_sell}원</span></h5>
                                             <h5>구독기간 : <span>${item.game_date}개월</span></h5>
-                                            <h5>그룹가능인원  : 50명</h5>
+                                            <h5>그룹가능인원  : <span>${item.game_total}명</span></h5>
                                         </div>
                                         <div class="backDetails">
                                             <div class="detaillist">
