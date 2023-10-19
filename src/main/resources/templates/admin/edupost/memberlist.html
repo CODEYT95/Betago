@@ -19,6 +19,9 @@
             <div id="bbsList_header">
                 <div id="leftHeader">
                     <form id="searchForm" th:action="@{/member/list}" method="get" name="searchForm">
+                        <input type="date" name="startDate"> <!-- 시작 날짜 -->
+                        ~
+                        <input type="date" name="endDate"> <!-- 종료 날짜 -->
                         <select name="searchType" class="selectField" title="검색 유형 선택">
                             <option value="" th:classappend="${(searchType == '') ? 'selected' : ''}" >조건검색</option>
                             <option value="member_id" th:classappend="${(searchType == 'member_id') ? 'selected' : ''}">아이디</option>

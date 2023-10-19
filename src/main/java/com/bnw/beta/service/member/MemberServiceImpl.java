@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,16 +108,24 @@ public class MemberServiceImpl implements MemberService {
 
     /*회원 목록보기*/
     @Override
-    public MemberPageDTO memberlist(int pageNum, int size, String searchType, String searchType2, String searchType3, String keyword) {
-        System.out.println("s1 : "+searchType +"s2 : " + searchType2 + "s3 : " + searchType3);
-        System.out.println("key : "+ keyword);
-        if(pageNum <= 0) {
+    public MemberPageDTO memberlist(Date startDate, Date endDate, int pageNum, int size, String searchType, String searchType2, String searchType3, String keyword) {
+        System.out.println("s1 : " + searchType + "s2 : " + searchType2 + "s3 : " + searchType3);
+        System.out.println("start : " + startDate + "end : " + endDate);
+        System.out.println("key : " + keyword);
+
+        if (pageNum <= 0) {
             pageNum = 1;
         }
-        int offset = (pageNum-1) * size;
-        List<MemberDTO> memberlist = memberDAO.memberlist(offset, size, searchType, searchType2, searchType3, keyword);
 
-        int listCount = memberDAO.count(searchType, searchType2, searchType3, keyword);
+        String formatStartDate = startDate != null ? String.valueOf(startDate) : null;
+        String formatEndDate = endDate != null ? String.valueOf(endDate) : null;
+
+        int offset = (pageNum - 1) * size;
+        List<MemberDTO> memberlist = memberDAO.memberlist(formatStartDate, formatEndDate, offset, size, searchType, searchType2, searchType3, keyword);
+
+        System.out.println("aaa" + memberlist);
+
+        int listCount = memberDAO.count(formatStartDate, formatEndDate, searchType, searchType2, searchType3, keyword);
 
         MemberPageDTO memberPageDTO = new MemberPageDTO(listCount, pageNum, size, memberlist);
         memberPageDTO.setListCount(listCount);
@@ -124,8 +134,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int count(String searchType,String searchType2, String searchType3, String keyword) {
-        return memberDAO.count(searchType, searchType2, searchType3, keyword);
+    public int count(Date startDate, Date endDate, String searchType,String searchType2, String searchType3, String keyword) {
+
+        String formatStartDate = startDate != null ? String.valueOf(startDate) : null;
+        String formatEndDate = endDate != null ? String.valueOf(endDate) : null;
+        return memberDAO.count(formatStartDate, formatEndDate, searchType, searchType2, searchType3, keyword);
     }
 
 

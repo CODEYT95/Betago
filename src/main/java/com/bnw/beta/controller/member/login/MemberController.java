@@ -12,6 +12,7 @@ import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Controller
@@ -154,14 +157,17 @@ public class MemberController {
 
     /*회원 목록조회*/
     @GetMapping("/member/list")
-    public String memberlist(@RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "size", defaultValue = "3") int size,
-                             @RequestParam(value = "searchType", defaultValue = "") String searchType,
-                             @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
-                             @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
-                             @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
-
-        MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, searchType2, searchType3, keyword);
+    public String memberlist(
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "3") int size,
+            @RequestParam(value = "searchType", defaultValue = "") String searchType,
+            @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
+            @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
+            @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
+        System.out.println("1");
+        MemberPageDTO memberPageDTO = memberService.memberlist(startDate, endDate, page, size, searchType, searchType2, searchType3, keyword);
         model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
         model.addAttribute("listCount", memberPageDTO.getListCount());
         model.addAttribute("memberPageDTO", memberPageDTO);
