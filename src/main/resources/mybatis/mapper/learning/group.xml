@@ -324,14 +324,13 @@
     <!-- 가입신청 내역 목록 -->
     <select id="myjoinList" resultType="GroupDTO">
         <![CDATA[
-        SELECT gm.member_no, g.game_title,
-               sg.group_no, sg.group_name, sg.group_startdate, sg.group_enddate,
-               m.member_name
-        FROM groupmember AS gm
-        JOIN studygroup AS sg ON gm.group_no = sg.group_no
-        JOIN game AS g ON g.game_no = sg.game_no
-        JOIN member AS m ON m.member_id = sg.member_id
-        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no}
+        SELECT gm.approve_date, gm.approve_state,
+        g.game_title, g.game_total,
+        sg.group_name
+        FROM groupmember gm
+        JOIN game g ON gm.game_no = g.game_no
+        JOIN studygroup sg ON gm.group_no = sg.group_no
+        WHERE gm.member_no = ;
          ]]>
             <if test="group_name != null and group_name != ''">
                 AND sg.group_name = #{group_name}
