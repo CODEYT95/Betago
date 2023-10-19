@@ -132,8 +132,17 @@ display: inline-grid;
 }
 
 .member-name {
-    font-size: 20px;
+    font-size: 22px;
     color: #168fde;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+}
+
+.heart {
+    width: 25px;
 }
 
 .btn {
