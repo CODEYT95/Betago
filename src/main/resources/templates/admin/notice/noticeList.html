@@ -82,7 +82,7 @@
                         </td>
                         <td>
                             <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
-                                <span th:text="${notice.notice_title}" style="background-color: #8f8f8f"></span>
+                                <span th:text="${notice.notice_title}"></span>
                             </a>
                         </td>
                         <td>
@@ -105,10 +105,13 @@
 
                     <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice, index: ${noticePage.allNoticeList}">
 
-                        <td>
-                            <span class="no"
-                                  th:text="${noticePage.total - (index.index+ noticePage.startIndex)}"></span>
+                    <td>
+                           <span class="no"
+                                 th:text="${noticePage.total - (index.index+ noticePage.startIndex) -3}"></span>
                         </td>
+                       <!-- <td>
+                            <span class="no" th:utext="${noticePage.total - (index.index)}"></span>
+                        </td> -->
                         <td>
                             <span class="type" name="type" th:text="${notice.notice_category}"></span>
                         </td>

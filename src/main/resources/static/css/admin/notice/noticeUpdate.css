@@ -3,6 +3,15 @@
 }
 
 @charset "UTF-8";
+input[type="checkbox"] {
+    width: 20px; /* 원하는 너비 설정 */
+    height: 20px; /* 원하는 높이 설정 */
+}
+.opt2 {
+    margin-left: 107px;
+    margin-top: 15px;
+    display: block;
+}
 .head {
     font-size: 18px;
     font-weight: bold;
