@@ -19,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -44,9 +46,12 @@ public class GameController {
         dto.setMember_id(member_id);
         int result = gameService.insertGame(dto);
 
+        String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
+        Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "game");
+
         if (!imageFile.isEmpty()) {
             String fileName = imageFile.getOriginalFilename();
-            String filePath = "C:/Users/user/Desktop/BetaPro/beta/src/main/resources/static/image/guide/game/" + fileName;
+            String filePath = String.valueOf(uploadPath.resolve(fileName));
             try {
                 GameFileDTO gameFileDTO = new GameFileDTO();
                 gameFileDTO.setGame_no(dto.getGame_no());
