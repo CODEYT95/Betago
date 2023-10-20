@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
@@ -126,7 +127,7 @@
                                     </thead>
                                     <tbody class="tbody-container" id="memberTableBodyLeft">
                                     <th:block th:if="${not #lists.isEmpty(groupDetail)} and ${check != ''}">
-                                    <tr class="tr-list" th:each="list, iterStat : ${groupDetail}">
+                                        <tr class="tr-list" th:each="list, iterStat : ${groupDetail}">
                                             <th:block th:if="${iterStat.index % 2 == 0}">
                                                 <td class="list_groupNo">
                                                     <label class="checkbox-wrap">

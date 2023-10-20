@@ -4,15 +4,12 @@ import com.bnw.beta.domain.admin.dao.NoticeDAO;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
-import com.bnw.beta.domain.member.dto.MemberDTO;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -62,12 +59,9 @@ public class NoticeServiceImpl implements NoticeService {
     //공지게시판 글 등록
     @Override
     public void insert(NoticeDTO noticeDTO, MultipartFile[] file,
-                       String type, Date timeWrite,HttpSession session) throws IOException {
-        
-        //세션에서 이름 불러오기
-        String member_name = (String) session.getAttribute("member_name");
+                       String type, Date timeWrite) throws IOException {
 
-        noticeDTO.setMember_name(member_name);
+        System.out.println("dd" + timeWrite);
         noticeDTO.setType(type);
         if (timeWrite != null) {
             java.sql.Date TimeWrite = new java.sql.Date(timeWrite.getTime());
@@ -172,4 +166,5 @@ public class NoticeServiceImpl implements NoticeService {
     public void viewCnt(NoticeDTO noticeDTO) {
         noticeDAO.viewCnt(noticeDTO);
     }
+
 }

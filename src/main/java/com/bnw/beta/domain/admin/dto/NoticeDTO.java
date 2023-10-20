@@ -16,8 +16,8 @@ public class NoticeDTO {
     private LocalDateTime notice_regdate;
     private Date notice_reservation = null; //예약글 시간
     private String notice_isshow;
+    private String member_id;
     int view_cnt;
-    private String member_name;
     private String type = " ";  //상단노출or전체공개or일반글
 
     private List<NoticeDTO> topNoticeList; //상단노출게시글리스트

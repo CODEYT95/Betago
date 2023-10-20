@@ -3,7 +3,6 @@ package com.bnw.beta.service.member;
 import com.bnw.beta.config.vaildation.member.JoinForm;
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -31,9 +30,8 @@ public interface MemberService {
         //////////멤버 정보 불러오기///////////
         MemberDTO getMemberInfo(String member_id);
         /*회원 목록보기*/
-        public MemberPageDTO memberlist(int pageNum, int size, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, String keyword);
+        //public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword);
 
-        public int count(@Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, String keyword);
         //////////멤버 role 불러오기/////////// 김현민
         public String getRoleById(String member_id);
 

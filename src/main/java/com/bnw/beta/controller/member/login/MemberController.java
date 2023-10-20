@@ -1,7 +1,6 @@
 package com.bnw.beta.controller.member.login;
 
 import com.bnw.beta.config.vaildation.member.PasswordUtils;
-import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.member.MailSendServiceImpl;
@@ -12,7 +11,6 @@ import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,9 +23,8 @@ import java.security.Principal;
 
 @Controller
 public class MemberController {
+
     private final MemberService memberService;
-
-
     @Autowired
     private MailSendServiceImpl mailSendService;
     @Autowired
@@ -126,8 +123,11 @@ public class MemberController {
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
             session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
             session.setMaxInactiveInterval(1800);
+            model.addAttribute("member_name", session.getAttribute("member_name"));
         }
-        model.addAttribute("member_name", session.getAttribute("member_name"));
+        System.out.println("성공");
+
+        System.out.println(session.getAttribute("member_no"));
         return "main"; //메인페이지로 설정
     }
 
@@ -150,37 +150,15 @@ public class MemberController {
     public @ResponseBody String admin() {
         return "admin";
     }
+/*
+    유진님 회원가입부분 폼
+    @GetMapping("/join")
+    public String join(**User user) {
+    user.setRole("ROLE_USER");
+    String rawPassword=user.getPassword();
+    String encPassword=passwordEncoder.encode(rawPassword);
+    userRepository.save(user);
+    return "redirect:/loginForm";
+    }*/
 
-    /*회원 목록조회*/
-    @GetMapping("/member/list")
-    public String memberlist(@RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "size", defaultValue = "3") int size,
-                             @RequestParam(value = "searchType", defaultValue = "") String searchType,
-                             @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
-                             @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
-                             @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
-
-        MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, searchType2, searchType3, keyword);
-        model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
-        model.addAttribute("listCount", memberPageDTO.getListCount());
-        model.addAttribute("memberPageDTO", memberPageDTO);
-        model.addAttribute("searchType", searchType);
-        model.addAttribute("searchType2", searchType2);
-        model.addAttribute("searchType3", searchType3);
-        model.addAttribute("keyword", keyword);
-        return "admin/edupost/memberlist";
-    }
-    /*회원 상세조회(관리자)*/
-    @GetMapping("/detail/{member_id}")
-    public String memberView(@PathVariable("member_id") String member_id, Model model) {
-            MemberDTO member = memberService.getMemberInfo(member_id);
-        if (member_id != null) {
-            model.addAttribute("detail", member);
-            return "admin/edupost/memberdetail";
-        } else {
-            return "member";
-            // 멤버 정보가 없는 경우에 대한 처리 로직 추가
-            // 예: 에러 페이지로 리다이렉트 또는 에러 메시지 표시 등
-        }
-    }
 }
