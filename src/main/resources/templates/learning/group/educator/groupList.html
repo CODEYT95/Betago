@@ -98,18 +98,6 @@
             <div class="modal-wrap">
                 <div class="modal-header">
                     <h2>학습 그룹</h2>
-                <div class="select-menu-group">
-                    <div class="select-btn-group">
-                        <span class="sBtn-text1">전체</span>
-                        <i class="bx bx-chevron-down"></i>
-                    </div>
-                    <ul class="options">
-                        <li class="option" th:each="groupName : ${groupName}">
-                            <span class="option-text" th:text="${groupName.group_name}" th:attr="data-no=${groupName.group_no}"></span>
-                        </li>
-                    </ul>
-                    <button class="search-btn1">조회</button>
-                </div>
                     <div class="modal-btn-container">
                     <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
                     </div>
