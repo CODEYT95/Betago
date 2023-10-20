@@ -52,6 +52,7 @@ public class GameController {
                 gameFileDTO.setGame_no(dto.getGame_no());
                 gameFileDTO.setFilegame_name(fileName);
                 gameFileDTO.setFilegame_path(filePath);
+                System.out.println(gameFileDTO);
 
                 gameService.insertGameImage(gameFileDTO);
 

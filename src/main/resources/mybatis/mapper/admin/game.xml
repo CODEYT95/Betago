@@ -65,14 +65,15 @@
     </insert>
 
     <!-- 게임콘텐츠 썸네일 Insert -->
-    <insert id="insertGameImage" parameterType="GameDTO">
+    <insert id="insertGameImage" parameterType="GameFileDTO">
         <![CDATA[
-        INSERT INTO filegame (game_no, filegame_name, filegame_path, filegame_date)
-        VALUES (#{game_no}, #{filegame_name}, #{filegame_path}, now())
-        ]]>
+    INSERT INTO filegame (game_no, filegame_name, filegame_path, filegame_date)
+    VALUES (#{game_no}, #{filegame_name}, #{filegame_path}, now())
+    ]]>
     </insert>
 
-<!-- /////////////////////////////////////////// -->
+
+    <!-- /////////////////////////////////////////// -->
     <!--월간 (일일 단위 매출조회)-->
    <select id="selectDailySales" resultType="GameDTO">
         <![CDATA[
