@@ -10,6 +10,7 @@ import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.member.MailSendServiceImpl;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -26,7 +27,6 @@ import java.security.Principal;
 @Controller
 public class MemberController {
     private final MemberService memberService;
-
 
     @Autowired
     private MailSendServiceImpl mailSendService;
@@ -122,13 +122,14 @@ public class MemberController {
     @GetMapping({"","/"})
     public String index(Principal principal, HttpSession session, Model model) {
 
-        if(principal != null){
+        if (principal != null) {
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
             session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
             session.setMaxInactiveInterval(1800);
         }
-        model.addAttribute("member_name", session.getAttribute("member_name"));
-        return "main"; //메인페이지로 설정
+
+        System.out.println(session.getAttribute("member_no"));
+        return "main/main"; //메인페이지로 설정
     }
 
     @GetMapping("/loginForm") //기본주소로 설정시 시큐리티가 주소를 낚아채지만 SecurtiyConfig생성후 폼으로 정상 작동
