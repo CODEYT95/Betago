@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface FaqDAO {
 
+    //faq 메인
+    List<NoticeDTO> faqAll();
+
     //리스트
     List<NoticeDTO> faqList(@Param("page") int page, @Param("size") int size,
                             @Param("searchType") String searchType, @Param("keyword") String keyword);

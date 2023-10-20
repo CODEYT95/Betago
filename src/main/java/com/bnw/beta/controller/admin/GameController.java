@@ -57,7 +57,6 @@ public class GameController {
                 gameFileDTO.setGame_no(dto.getGame_no());
                 gameFileDTO.setFilegame_name(fileName);
                 gameFileDTO.setFilegame_path(filePath);
-                System.out.println(gameFileDTO);
 
                 gameService.insertGameImage(gameFileDTO);
 
@@ -70,6 +69,7 @@ public class GameController {
         redirectAttributes.addFlashAttribute("message", "등록이 완료되었습니다.");
         return "redirect:/game/list";
     }
+
     //게임콘텐츠 조회
     @GetMapping("/list")
     public String selectAll(@RequestParam(value = "game_title", defaultValue = "") String game_title,
@@ -89,8 +89,8 @@ public class GameController {
     @PostMapping("/list")
     @ResponseBody
     public List<GameDTO> gameListMore(@RequestParam(value = "game_title", defaultValue = "") String game_title,
-                                       @RequestParam(value = "offset", defaultValue = "0") int offset,
-                                       Model model) {
+                                      @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                      Model model) {
         int limit = 6;
         return gameService.selectGameList(game_title, limit, offset);
     }

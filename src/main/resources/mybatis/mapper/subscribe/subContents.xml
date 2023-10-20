@@ -5,24 +5,26 @@
     <!--나의 구독상품 조회-->
     <select id="selectContents" parameterType="subContentsDTO" resultType="subContentsDTO">
         <![CDATA[
-        SELECT
-        g.game_no, p.pay_no, g.game_title, p.pay_date, g.game_date, s.group_name, p.member_id
-        FROM
-        game g
-        JOIN
-        pay p ON g.game_no = p.game_no
-        JOIN
-        studygroup s ON g.game_no = s.game_no
-        WHERE
-        1=1
+        SELECT g.game_no, g.game_sell, p.pay_no, g.game_title,
+               p.pay_date, g.game_date,
+               s.group_name, p.member_id,
+               fg.filegame_name
+        FROM pay p
+        JOIN game g ON p.game_no = g.game_no
+        LEFT JOIN studygroup s ON p.group_no = s.group_no
+        JOIN filegame fg ON g.game_no = fg.game_no
         ]]>
-        <if test="member_id != null">
-            AND p.member_id = #{member_id}
-        </if>
-
-        <if test="startDate != null and endDate != null">
-            AND p.pay_date BETWEEN #{startDate} AND #{endDate}
-        </if>
+        <where>
+            <if test="member_id != null">
+                AND p.member_id = #{member_id}
+            </if>
+            <if test="pay_date != null and endDate != null">
+                AND p.pay_date BETWEEN #{pay_date} AND #{endDate}
+            </if>
+        </where>
+        <![CDATA[
+        ORDER BY p.pay_date ASC;
+        ]]>
     </select>
 
     <!-- 나의 구독상품 삭제 -->

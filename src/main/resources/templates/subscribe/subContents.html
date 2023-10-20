@@ -19,9 +19,9 @@
                 <div class="mycontents-date">
                     구매기간 :
                     <input type="date" id="startDate" data-placeholder="날짜 선택"
-                           required name="startDate" th:value="${startDate}" /> ~
+                           required name="startDate"  /> ~
                     <input type="date" data-placeholder="날짜 선택"
-                           required id="endDate" name="endDate" th:value="${endDate}" />
+                           required id="endDate" name="endDate"  />
                     <input type="submit" value="조회하기" class="submit-button" onclick="fetchData(events)" />
                     <input type="button" value="구독취소" id="paymentButton" disabled class="submit-button" />
                 </div>
@@ -35,12 +35,12 @@
                                 <span class="checkbox-title">
                                         <div class="card">
                                             <div class="poster">
-                                                <img th:src="@{'/image/' + ${content.image_path}}">
+                                                <img th:src="@{'/image/baduk.png'}">
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
-                                                    <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
-                                                    <h3>구독기간 : <span class="status dateDiff" th:attr="data-startdate=${#dates.format(content.startDate, 'yyyy-MM-dd')}, data-enddate=${#dates.format(content.endDate, 'yyyy-MM-dd')}"></span></h3>
-                                                    <h4>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h4>
+                                                    <h1>구매금액 : <span th:text="${content.game_price}"></span>원</h1>
+                                                    <h1>구독기간 : <span th:text="${content.game_date}"></span>개월</h1>
+                                                    <h1>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h1>
                                                 </div>
                                                 <div class="details">
                                                     <h5>학습그룹 등록내역 : <span th:text="${content.group_name}"></span></h5>
@@ -85,7 +85,7 @@
         </div>
     </div>
 </div>
+<button id="myBtn" title="Go to top">Top</button>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
-
 </html>

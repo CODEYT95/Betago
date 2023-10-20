@@ -1,4 +1,3 @@
-// DOMContentLoaded 이벤트가 발생하면 실행되는 함수
 document.addEventListener('DOMContentLoaded', function() {
     // 필요한 DOM 요소들을 선택
     const checkboxes = document.querySelectorAll('.checkbox-input');
@@ -73,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 페이지 초기화 함수
     function initializePage() {
-        $(".checkbox-input:checked").prop("checked", false); // jQuery 사용 제거
+        $(".checkbox-input:checked").prop("checked", false);
     }
 
     // 페이지 스크롤 시 호출되는 함수
@@ -107,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     window.onscroll = scrollFunction;
 
-    //아작스로 추가 데이터 불러오기
+    // 아작스로 추가 데이터 불러오기
     var offset = 0;
 
     $("#moreBtn").click(function() {
@@ -125,33 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 response.forEach(item => {
                     $(".list-box").append(`
                         <li>
-                            <div class="checkbox">
-                                <label class="checkbox-wrapper">
-                                    <input type="checkbox" class="checkbox-input" data-game-no="${item.game_no}" name="game_nos" value=${item.game_no} />
-                                    <span class="checkbox-tile">
-                                    <div class="card">
-                                        <div class="poster"><img class="image" src="/image/game/${item.filegame_name || 'noimage.png'}" alt="${item.filegame_name || 'No Image'}"></div>
-                                        <div class="card-details"></div>
-                                        <div class="details">
-                                            <h5>컨텐츠 이름 : <span>${item.game_title}</span></h5>
-                                            <h5>구매금액 : <span>${item.game_sell}원</span></h5>
-                                            <h5>구독기간 : <span>${item.game_date}개월</span></h5>
-                                            <h5>그룹가능인원  : 50명</h5>
-                                        </div>
-                                        <div class="backDetails">
-                                            <div class="detaillist">
-                                                <h5>난이도 : <span>${item.game_level}</span></h5>
-                                                <h5>총인원 : <span>${item.game_total}명</span></h5>
-                                                <h5>가격 : <span>${item.game_price}원</span></h5>
-                                                <h5>할인 : <span>${item.game_discount}%</span></h5>
-                                                <h5>판매가 : <span>${item.game_sell}원</span></h5>
-                                                <h6>상품상세설명 : <span>${item.game_content}</span></h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </span>
-                                </label>
-                            </div>
+                            <!-- ... 기존의 코드 ... -->
                         </li>
                     `);
                 });
@@ -159,24 +132,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
     //현재 체크박스 갯수 업데이트
-        $(document).ready(function() {
-            updateLiCount();
-        });
+    $(document).ready(function() {
+        updateLiCount();
+    });
 
-        function updateLiCount() {
-            var liCount = $(".list-box li").length;
-            $(".currentCnt").text(liCount);
+    function updateLiCount() {
+        var liCount = $(".list-box li").length;
+        $(".currentCnt").text(liCount);
 
-            var currentCountElement = document.querySelector('.currentCnt');
-            var totalCountElement = document.querySelector('.totalCnt');
+        var currentCountElement = document.querySelector('.currentCnt');
+        var totalCountElement = document.querySelector('.totalCnt');
 
-            var moreButton = document.getElementById('moreBtn');
+        var moreButton = document.getElementById('moreBtn');
 
-            if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
-                moreButton.style.display = 'none';
-            } else {
-                moreButton.style.display = 'block';
-            }
+        if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
+            moreButton.style.display = 'none';
+        } else {
+            moreButton.style.display = 'block';
         }
+    }
 });

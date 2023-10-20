@@ -33,8 +33,8 @@
 }
 
 .image-slider{
-    display: flex;
-    width: 780PX;
+    display: contents;
+    width: 780px;
     height: 100%;
 }
 
@@ -429,10 +429,13 @@ display: inline-grid;
 
 .image-slider img {
     width: 100%;
-    height: auto;
     display: none;
 }
 
+.image-slider > a{
+    margin: 0;
+    width: 100%;
+}
 
 .login-form {
     margin-top: 20px;
