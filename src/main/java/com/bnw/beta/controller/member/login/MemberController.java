@@ -45,7 +45,7 @@ public class MemberController {
     //시큐리티 통해서 로그인폼 보여주기
     @GetMapping("/login")
     public String login(Principal principal, HttpSession session) {
-        System.out.println("실패");
+
         return "member/login/login_form";
     }
 
@@ -132,6 +132,7 @@ public class MemberController {
         System.out.println("성공");
 
         System.out.println(session.getAttribute("member_no"));
+        System.out.println(session.getAttribute("member_name"));
         return "main/main"; //메인페이지로 설정
     }
 
