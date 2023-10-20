@@ -95,6 +95,24 @@
     </select>
 
 
+    <select id="findQuestionsWithAnswerCountByUser" resultType="QuestionDTO">
+        SELECT
+        q.*,
+        COUNT(a.ans_no) AS answerCount
+        FROM
+        question q
+        LEFT JOIN answer a ON a.qna_no = q.qna_no
+        WHERE
+        q.member_id = #{username}
+        GROUP BY
+        q.qna_no
+    </select>
+
+    <select id="countAllQuestions" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM question WHERE qna_isshow = 'Y'
+    </select>
+
+
     <!--질문리스트와 답글갯수 표시-->
     <select id="getQuestionsWithAnswerCount" resultType="QuestionDTO">
         SELECT
@@ -104,6 +122,8 @@
         question
         LEFT JOIN
         answer ON answer.qna_no = question.qna_no
+        WHERE
+        question.qna_isshow = 'Y'  <!-- qna_isshow가 'Y'인 질문만 선택 -->
         GROUP BY
         question.qna_no
         ORDER BY
@@ -111,6 +131,19 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
+
+
+    <select id="countQuestionsByUserId" resultType="int">
+        SELECT COUNT(*)
+        FROM question
+        WHERE member_id = #{username}
+    </select>
+
+    <select id="findQuestionsByUserId" resultType="QuestionDTO" parameterType="map">
+        SELECT * FROM question
+        WHERE member_id = #{userId}
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
 
 
     <!--<select id="findUserByUsername" resultType="MemberDTO" parameterType="String">

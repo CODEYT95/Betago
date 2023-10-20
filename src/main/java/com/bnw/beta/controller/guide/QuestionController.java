@@ -97,16 +97,17 @@ public class QuestionController {
         model.addAttribute("isAdmin", isAdmin);
         AnswerDTO answerDTO= answerService.getAnswer(qna_no);   //답변 넘버 불러올까? 추가함 지워도 되는지 확인
         model.addAttribute("answerDTO", answerDTO); //답변 넘버 불러올까? 추가함 지워도 되는지 확인
+        QuestionDTO questionDTO = questionService.selectQuestion(qna_no);
+        System.out.println(qna_no);
 
         String loginId = (principal != null) ? principal.getName() : "Anonymous";
         //로그인유저 널값
 
-        QuestionDTO questionDTO = questionService.selectQuestion(qna_no);
         List<QuestionDTO> question = questionService.getQuestionInfo(qna_no);
         /*QuestionDTO question2 = questionService.getQuestion(id);*/
         System.out.println(question);
         model.addAttribute("qna_pw", questionDTO.getQna_pw());
-        /* model.addAttribute("qna_pw", question.getQna_pw());*/
+        /*model.addAttribute("qna_pw", question.getQna_pw());*/
         if (question != null && questionDTO.getQna_pw().equals(pw)) {
             FileQuestionDTO fileQuestion = questionDAO.selectFilesByQnaNo(qna_no);
             if (fileQuestion != null) {
@@ -123,7 +124,8 @@ public class QuestionController {
             model.addAttribute("isPasswordCorrect", true);  // 비밀번호가 맞으면 true 값을 설정합니다.
             return "/guide/question/question_detail";
         } else {
-            System.out.println("틀린 경우");
+            System.out.println("틀린 경우1");
+            model.addAttribute("questionDTO", questionDTO);
             model.addAttribute("errormessage","비밀번호가 맞지 않습니다.");
             model.addAttribute("question", question);/*이거 안 넣어서 오류 났었음*/
             model.addAttribute("isPasswordCorrect", false); // 비밀번호가 틀리면 false 값을 설정합니다.
@@ -162,7 +164,6 @@ public class QuestionController {
         }
 
         model.addAttribute("login_id", loginId);
-
         model.addAttribute("login_id", principal.getName());
         model.addAttribute("qna_id", questionDTO.getMember_id());
         model.addAttribute("question", question);
@@ -266,23 +267,83 @@ public class QuestionController {
      public String questionList(Model model, @RequestParam(value="page",defaultValue="1") int page){
          /*List<QuestionDTO> questions= this.questionService.getQuestions(page-1);
         model.addAttribute("questions",questions);*/
-        List<QuestionDTO> questionsWithAnswers = this.questionService.getQuestionsWithAnswerCount(page - 1);
+        int pageSize = 10;
+        List<QuestionDTO> questionsWithAnswers = this.questionService.getQuestionsWithAnswerCount(page);
+
+        int totalQuestions = this.questionService.getTotalQuestionsCount();
+        int totalPages = (int) Math.ceil((double) totalQuestions / pageSize);
+
         model.addAttribute("questions", questionsWithAnswers);
+        model.addAttribute("currentPage", page); // 현재 페이지 번호
+        model.addAttribute("totalPages", totalPages); // 전체 페이지 수
         return "guide/question/question_list";//  templates폴더하위  question_list.html문서
     }
+/*
 
     @GetMapping("/mypost")
-    public String getMyQuestions(Model model, Principal principal) {
+    public String getMyQuestions(Model model, Principal principal,  @RequestParam(value="page",defaultValue="1") int page) {
         // 현재 사용자의 이름 가져오기
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        String username = principal.getName();
+
+        // 페이지당 게시물 수와 총 게시물 수를 사용하여 총 페이지 수 계산
+        int pageSize = 10; // 페이지당 표시할 게시물 수
+        int totalQuestions = this.questionService.countQuestionsByUserId(username); // 사용자의 게시물 수를 가져오는 메소드 필요
+        int totalPages = (int) Math.ceil((double) totalQuestions / pageSize);
+
+        // 수정된 서비스 메소드를 호출하여 특정 페이지의 게시물 가져오기
+        List<QuestionDTO> questionsWithAnswers = this.questionService.findQuestionsByUserId(username, page, pageSize); // 수정된 부분
+
+        model.addAttribute("questions", questionsWithAnswers);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+
+        return "guide/question/question_list";
+    }
+*/
+
+/*
+
+    @GetMapping("/mypost")
+    public String getMyQuestions(Model model, Principal principal,  @RequestParam(value="page",defaultValue="1") int page) {
+        // 현재 사용자의 이름 가져오기
+        if (principal == null) {
+            return "redirect:/login";
+        }
         String username = principal.getName();
 
         // 현재 사용자가 작성한 게시물 검색 (서비스 계층에서 처리)
+        List<QuestionDTO> questionsWithAnswers = this.questionService.getQuestionsWithAnswerCount(page - 1);
         List<QuestionDTO> question = questionService.findQuestionsByUserId(username);
-
-        // 모델에 게시물 추가 및 뷰 반환
         model.addAttribute("questions", question);
         return "guide/question/question_list";//
     }
+*/
+
+    /*10.19꺼*/
+    @GetMapping("/mypost")
+    public String getMyQuestions(Model model, Principal principal,  @RequestParam(value="page",defaultValue="1") int page) {
+        // 현재 사용자의 이름 가져오기
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        String username = principal.getName();
+        int pageSize = 10;
+        /*List<QuestionDTO> questionsWithAnswers = this.questionService.getQuestionsWithAnswerCount(page);*/
+        int totalQuestions = this.questionService.countQuestionsByUserId(username);
+        int totalPages = (int) Math.ceil((double) totalQuestions / pageSize);
+
+        List<QuestionDTO> myQuestions = this.questionService.findQuestionsByUserId(username, page, pageSize);
+        /*model.addAttribute("questions", questionsWithAnswers);*/
+        model.addAttribute("isMyPost", true);
+        model.addAttribute("questions", myQuestions);
+        model.addAttribute("currentPage", page); // 현재 페이지 번호
+        model.addAttribute("totalPages", totalPages); // 전체 페이지 수
+        return "guide/question/question_list";//
+    }
+
 
 
 }

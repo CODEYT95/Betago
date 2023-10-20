@@ -54,4 +54,9 @@ public interface MemberDAO {
    public void updatePassword(@Param("id") String member_id, @Param("newPassword") String rawPassword);
     MemberDTO findByUserIdAndEmail(@Param("id")String member_id,@Param("email") String email);
 
+    //임시비밀번호 비밀번호 변경
+    @Update("UPDATE member SET member_pw = #{newPassword} WHERE member_email = #{email}")
+    void updateSetPassword(@Param("email") String email, @Param("newPassword") String password);
+
+    String findPasswordByEmail(String email);
 }

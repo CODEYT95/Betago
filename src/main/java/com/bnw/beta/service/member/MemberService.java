@@ -50,4 +50,45 @@ public interface MemberService {
 
         //////// 임시 비번 바꿔//////////////김현민
         void updatePassword(String member_id, String encryptedPassword);
+
+
+        void changeUserPassword(String email, String newPassword);
+
+        boolean checkPassword(String email, String currentPassword);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*현민님꺼
+        private final MemberMapper memberMapper;
+        private final PasswordEncoder passwordEncoder;
+
+
+        @Autowired
+        public MemberService(MemberMapper memberMapper, PasswordEncoder passwordEncoder) {
+                this.memberMapper = memberMapper;
+                this.passwordEncoder = passwordEncoder;
+        }
+
+        @Transactional
+        public void registerMember(MemberDTO memberDTO) {
+
+                String encodedPassword = passwordEncoder.encode(memberDTO.getMember_pw());
+                memberDTO.setMember_pw(encodedPassword);
+
+                memberMapper.insertMember(memberDTO);
+        }
+        */
 }

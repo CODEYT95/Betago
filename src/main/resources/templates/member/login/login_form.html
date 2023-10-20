@@ -1,78 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>로그인 페이지</title>
-    <!--공통으로 쓰이는 CSS 및  -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common/edu_sidebar.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 디자인을 위해 추가된 뷰포트 -->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member/login/login.css}"> <!-- 스타일시트 연결 -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 
-    <style>
-        h1 {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        h2 {
-            font-size: 16px;
-        }
-        p, body {
-            font-size: 14px;
-        }
-        .content {
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-            border-radius: 5px;
-        }
-    </style>
-
+    <title>로그인 페이지</title>
 </head>
 <body>
-<div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<div class="content shadow-box">
-    <div class="content-wrap">
-        <h4 class="title">로그인</h4>
-        <h5 class="subtitle">로그인해주세요~.</h5>
-        <p class="content-text">호호호호.</p>
+<div th:replace="common/fragments/header :: headerFragment"></div>
 
-        <form  th:action="@{/login}" method="post">
 
-            <div class="mb-3">
-                <label for="username" class="form-label">ID</label>
-                <input type="text" name="username" id="username" placeholder="Username" class="form-control"/>
-            </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">비밀번호</label>
-                <input type="password" name="password" id="password" placeholder="Password" class="form-control"/>
-            </div>
-            <input type="submit" value="로그인" class="btn btn-primary my-2">
+<div class="main-container">
+    <div class="content shadow-box">
+        <div class="logo-container">
+            <div class="logo-login-box">
+                <div class="logo-img">
+                    <img src="/image/dol3.png" class="animated-image" alt="description" />
+                    <img src="/image/png2.png" class="second-animated-image" alt="description" />
+                    <div class="login-section">
+                        <div class="login-box">
+                            <form th:action="@{/login}" method="post">
+                                <h2 class="login-title">로그인</h2>
+                                <!-- ID 입력 -->
+                                <div class="input-group">
+                                    <input type="text" id="username" name="username" placeholder="ID" required> <!-- placeholder 추가 -->
+                                </div>
 
-            <div th:if="${param.error}" style="color: red;">
-                <div class="alert alert-danger">
-                    사용자ID 또는 비밀번호를 확인해주세요
+                                <!-- 비밀번호 입력 -->
+                                <div class="input-group">
+                                    <input type="password" id="password" name="password" placeholder="Password" required> <!-- placeholder 추가 -->
+                                </div>
+                                <!-- 에러 메시지 -->
+                                <div th:if="${param.error}" class="alert alert-danger">
+                                    사용자ID 또는 비밀번호를 확인해주세요.
+                                </div>
+                                <!-- 로그인 버튼 -->
+
+
+                                <!--<button type="submit" class="login-btn">로그인</button>-->
+
+                                <div class="button_container">
+
+                                    <button type="submit" class="btn"><span>Login</span></button>
+                                    <!--<p class="link">
+                                      Design by
+                                      <a href="https://dribbble.com/skytrip" target="_blank">SkyTrip</a>
+                                    </p>-->
+                                </div>
+
+
+                                <!-- 부가 링크 -->
+                                <div class="links">
+                                    <a href="#" onclick="findId()">아이디찾기</a> |
+                                    <a href="#" onclick="findPw()">비밀번호찾기</a> |
+                                    <a th:href="@{/member/agree}">회원가입</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </form>
-
-
-        <div class="form-container-columnList">
-            <form th:action="@{member/agree}">
-                <input type="submit" value="회원가입" class="btn btn-primary my-2">
-            </form>
-            <form onsubmit="return findId()">
-                <input type="submit" value="아이디찾기" class="btn btn-primary my-2">
-            </form>
-            <form onsubmit="return findPw()">
-                <input type="submit" value="비밀번호찾기" class="btn btn-primary my-2">
-            </form>
         </div>
-
-
     </div>
+</div>
 </div>
 
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
-</body>
+
+
+
 <script>
     function findId() {
          var newWindow = window.open('/findId', '_blank', 'width=300, height=400,top=100,left=100');
@@ -92,4 +92,8 @@
           }
     }
 </script>
+
+
+
+</body>
 </html>

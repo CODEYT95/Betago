@@ -26,6 +26,11 @@ public class MemberDTO implements UserDetails {
     private LocalDateTime join_date;
     private String pay_count;
 
+    private String currentPassword; // 현재 비밀번호 김현민
+    private String newPassword; // 새로운 비밀번호 김현민
+    private String confirmPassword; // 새로운 비밀번호 확인 김현민
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 사용자의 권한 정보 반환 (권한이 여러 개인 경우 Collection으로 반환)

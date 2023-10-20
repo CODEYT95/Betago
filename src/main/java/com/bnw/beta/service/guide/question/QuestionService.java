@@ -36,4 +36,11 @@ public interface QuestionService {
 
     /*페이징+답변갯수 표시*/
     List<QuestionDTO> getQuestionsWithAnswerCount(int page);
+
+    int getTotalQuestionsCount();
+
+    List<QuestionDTO>  findQuestionsByUserId(String username, int page, int pageSize);
+
+
+    int countQuestionsByUserId(String username);
 }

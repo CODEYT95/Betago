@@ -7,6 +7,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class MailSendServiceImpl{
 
     private final JavaMailSender javaMailSender;
+    private final PasswordEncoder passwordEncoder;
     private static final String senderEmail= "uu940903@gmail.com";
     private static final String senderEmail2= "elekdrnddl@gmail.com";
     private static int number;
@@ -56,12 +58,25 @@ public class MailSendServiceImpl{
     /////임시비밀번호 발송////김현민
     public void sendTemporaryPassword(String email, String tempPassword) {
         try {
+
             MimeMessage message = javaMailSender.createMimeMessage();
             // 메시지 내용 채우기
             message.setFrom(senderEmail2);
             message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email)); // '받는 사람' 이메일 설정
             message.setSubject("임시 비밀번호 발송 안내"); // 이메일 제목 설정
-            message.setText("귀하의 임시 비밀번호는 다음과 같습니다: " + tempPassword, "utf-8", "html"); // 이메일 본문 설정
+
+            // 비밀번호 재설정 URL. 실제 서비스에서는 보안을 위한 토큰이나 유니크한 식별자를 포함해야 합니다.
+            String resetUrl = "http://localhost:8800/resetPw?email=" + email;
+
+        /* 기존꺼
+           message.setText("귀하의 임시 비밀번호는 다음과 같습니다: " + tempPassword, "utf-8", "html"); // 이메일 본문 설정
+        */
+            // HTML 형식의 이메일 내용 생성
+            String emailContent = "<p>귀하의 임시 비밀번호는 다음과 같습니다: " + tempPassword + "</p>"
+                    + "<p>비밀번호를 재설정하려면 다음 링크를 클릭하세요: "
+                    + "<a href=\"" + resetUrl + "\">비밀번호 재설정</a></p>";
+
+            message.setContent(emailContent, "text/html;charset=UTF-8"); // 이메일 본문 설정
 
             javaMailSender.send(message);
         } catch (MessagingException e) {

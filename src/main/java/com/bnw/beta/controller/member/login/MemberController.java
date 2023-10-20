@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +42,17 @@ public class MemberController {
         this.mailSendService = mailSendService;
         this.memberDAO = memberDAO;
     }
+
+/*    @RequestMapping("/")
+    public String username(Model model) {
+        // 사용자 인증 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            model.addAttribute("username", username); // 모델에 username을 추가합니다.
+        }
+        return "header";  // 이 부분은 thymeleaf 템플릿 파일의 이름과 일치해야 합니다 (예: index.html).
+    }*/
 
     //시큐리티 통해서 로그인폼 보여주기
     @GetMapping("/login")
@@ -95,6 +109,64 @@ public class MemberController {
     // 임시 비밀번호 생성 로직 메소드
     private String generateTemporaryPassword() {
         return PasswordUtils.generateTemporaryPassword(10); }
+
+    /*임시비밀번호 바꾸는 명령문*/
+    @GetMapping("/resetPw")
+    public String displayResetPasswordPage(@RequestParam("email") String email, Model model) {
+        // 비밀번호 재설정 페이지를 표시하기 전에 이메일 주소가 유효한지 확인할 수도 있습니다.
+        model.addAttribute("email", email);
+        return "member/login/resetPassword"; // 비밀번호 재설정 HTML 페이지의 템플릿 이름.
+    }
+
+    @PostMapping("/resetPw")
+    public String handlePasswordReset(@RequestParam(name ="email") String email,
+                                      @ModelAttribute("currentPassword") String currentPassword, // 현재 비밀번호 필드 추가
+                                      @ModelAttribute("password") String newPassword,
+                                      @ModelAttribute("confirmPassword") String confirmPassword,
+                                      Model model) {
+
+        boolean isCurrentPasswordCorrect = memberService.checkPassword(email, currentPassword);
+        if (!isCurrentPasswordCorrect) {
+            model.addAttribute("error", "현재 비밀번호가 잘못되었습니다.");
+            return "member/login/resetPassword"; // 비밀번호 재설정 페이지로 다시 리다이렉트
+        }
+
+        // 여기서 새 비밀번호 유효성 검사 수행
+         String validationResult = validateNewPassword(newPassword, confirmPassword);
+        if (validationResult != null) {
+            model.addAttribute("error", validationResult);
+            return "member/login/resetPassword"; // 비밀번호 재설정 페이지로 다시 리다이렉트
+        }
+
+        // 비밀번호 변경 로직
+        try {
+            memberService.changeUserPassword(email, newPassword);
+            System.out.println("비밀번호 최종변경완료");
+        } catch (Exception e) {
+            model.addAttribute("error", "비밀번호 변경 중 문제가 발생했습니다.");
+            return "member/login/resetPassword";
+        }
+
+        // 변경이 성공적으로 완료되면, 로그인 페이지로 리디렉션하거나 성공 메시지를 표시합니다.
+        return "redirect:/login";
+    }
+
+    private String validateNewPassword(String newPassword, String confirmPassword) {
+        // 비밀번호 규칙 확인 (예: 길이, 문자, 숫자, 특수 문자 등)
+        if (!newPassword.equals(confirmPassword)) {
+            return "입력한 비밀번호가 서로 일치하지 않습니다.";
+        }
+        if (newPassword.length() < 8) {
+            return "비밀번호는 최소 8자 이상이어야 합니다.";
+        }
+        if (!newPassword.matches(".*[a-zA-Z].*")) {
+            return "비밀번호에는 적어도 하나의 알파벳이 포함되어야 합니다.";
+        }
+        if (!newPassword.matches(".*[0-9].*")) {
+            return "비밀번호에는 적어도 하나의 숫자가 포함되어야 합니다.";
+        }
+        return null;
+    }
 
 
 
