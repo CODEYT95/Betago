@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -109,6 +110,8 @@ public class MemberServiceImpl implements MemberService {
     /*회원 목록보기*/
     @Override
     public MemberPageDTO memberlist(Date startDate, Date endDate, int pageNum, int size, String searchType, String searchType2, String searchType3, String keyword) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         System.out.println("s1 : " + searchType + "s2 : " + searchType2 + "s3 : " + searchType3);
         System.out.println("start : " + startDate + "end : " + endDate);
         System.out.println("key : " + keyword);
@@ -117,8 +120,10 @@ public class MemberServiceImpl implements MemberService {
             pageNum = 1;
         }
 
-        String formatStartDate = startDate != null ? String.valueOf(startDate) : null;
-        String formatEndDate = endDate != null ? String.valueOf(endDate) : null;
+        String formatStartDate = startDate != null ? sdf.format(startDate) : null;
+        String formatEndDate = endDate != null ? sdf.format(endDate) : null;
+
+        System.out.println("start"+formatStartDate+"end"+formatEndDate+"서치1"+searchType+"서치2"+searchType2+"서치3"+searchType3+"키워드"+keyword);
 
         int offset = (pageNum - 1) * size;
         List<MemberDTO> memberlist = memberDAO.memberlist(formatStartDate, formatEndDate, offset, size, searchType, searchType2, searchType3, keyword);
@@ -126,7 +131,7 @@ public class MemberServiceImpl implements MemberService {
         System.out.println("aaa" + memberlist);
 
         int listCount = memberDAO.count(formatStartDate, formatEndDate, searchType, searchType2, searchType3, keyword);
-
+        System.out.println("불러오는 갯수"+listCount);
         MemberPageDTO memberPageDTO = new MemberPageDTO(listCount, pageNum, size, memberlist);
         memberPageDTO.setListCount(listCount);
 
