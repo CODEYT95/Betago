@@ -480,12 +480,3 @@ svg {
 .modal-btn-container{
     margin: 0;
 }
-
-.monthInput{
-    height: 24px;
-}
-
-.day-radio > label{
-    display: flex;
-    gap: 5px;
-}

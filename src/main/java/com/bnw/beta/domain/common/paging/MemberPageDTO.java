@@ -4,6 +4,7 @@ import com.bnw.beta.domain.member.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -17,6 +18,8 @@ public class MemberPageDTO {
     private int endPage;
     private int startIndex;
     private int listCount;
+    private Date startDate;
+    private Date endDate;
     private String searchType;
     private String searchType2;
     private String searchType3;

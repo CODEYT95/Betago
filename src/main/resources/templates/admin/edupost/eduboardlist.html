@@ -115,15 +115,15 @@
                                 <ul class="pagination-container" id="pagination">
                                     <!-- 이전 페이지 링크 -->
                                     <li th:if="${edupostPageDTO.startPage > 5}" class="page-item">
-                                        <a class="page-link" th:with="prevPage=${edupostPageDTO.startPage - 1}" th:href="@{/edupost/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword})}"><</a>
+                                        <a class="page-link" th:with="prevPage=${edupostPageDTO.startPage - 1}" th:href="@{/edupost/list(page=${prevPage}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}"><</a>
                                     </li>
                                     <!-- 페이지 번호 링크 -->
                                     <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(edupostPageDTO.startPage, edupostPageDTO.endPage)}" class="page-item">
-                                        <a th:href="@{/edupost/list(page=${pageNum},searchType=${searchType}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                        <a th:href="@{/edupost/list(page=${pageNum}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
                                     </li>
                                     <!-- 다음 페이지 링크 -->
                                     <li th:if="${edupostPageDTO.endPage < edupostPageDTO.totalPages}" class="page-item">
-                                        <a class="page-link" th:with="nextPage=${edupostPageDTO.startPage + 5}" th:href="@{/edupost/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword})}">></a>
+                                        <a class="page-link" th:with="nextPage=${edupostPageDTO.startPage + 5}" th:href="@{/edupost/list(page=${nextPage}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}">></a>
                                     </li>
                                 </ul>
                             </div>

@@ -12,6 +12,7 @@ import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,11 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Controller
 public class MemberController {
-
     private final MemberService memberService;
     @Autowired
     private MailSendServiceImpl mailSendService;
@@ -41,7 +43,7 @@ public class MemberController {
     //시큐리티 통해서 로그인폼 보여주기
     @GetMapping("/login")
     public String login(Principal principal, HttpSession session) {
-        System.out.println("실패");
+
         return "member/login/login_form";
     }
 
@@ -149,25 +151,30 @@ public class MemberController {
         return "admin";
     }
 
-    /*회원 목록조회
+    /*회원 목록조회*/
     @GetMapping("/member/list")
-    public String memberlist(@RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "size", defaultValue = "3") int size,
-                             @RequestParam(value = "searchType", defaultValue = "") String searchType,
-                             @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
-                             @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
-                             @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
-
-        MemberPageDTO memberPageDTO = memberService.memberlist(page, size, searchType, searchType2, searchType3, keyword);
+    public String memberlist(
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "3") int size,
+            @RequestParam(value = "searchType", defaultValue = "") String searchType,
+            @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
+            @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
+            @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
+        System.out.println("1");
+        MemberPageDTO memberPageDTO = memberService.memberlist(startDate, endDate, page, size, searchType, searchType2, searchType3, keyword);
         model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
         model.addAttribute("listCount", memberPageDTO.getListCount());
         model.addAttribute("memberPageDTO", memberPageDTO);
+        model.addAttribute("startDate",startDate);
+        model.addAttribute("endDate",endDate);
         model.addAttribute("searchType", searchType);
         model.addAttribute("searchType2", searchType2);
         model.addAttribute("searchType3", searchType3);
         model.addAttribute("keyword", keyword);
         return "admin/edupost/memberlist";
-    }*/
+    }
     /*회원 상세조회(관리자)*/
     @GetMapping("/detail/{member_id}")
     public String memberView(@PathVariable("member_id") String member_id, Model model) {

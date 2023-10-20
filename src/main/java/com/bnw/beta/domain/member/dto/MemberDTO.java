@@ -66,4 +66,3 @@ public class MemberDTO implements UserDetails {
         return true;  // 활성화된 계정인 경우 항상 true 반환
     }
 }
-

@@ -5,6 +5,8 @@ import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -30,8 +32,9 @@ public interface MemberService {
         //////////멤버 정보 불러오기///////////
         MemberDTO getMemberInfo(String member_id);
         /*회원 목록보기*/
-        //public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword);
+        public MemberPageDTO memberlist(Date startDate, Date endDate, int pageNum, int size, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, String keyword);
 
+        public int count(Date startDate, Date endDate, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, String keyword);
         //////////멤버 role 불러오기/////////// 김현민
         public String getRoleById(String member_id);
 
@@ -46,40 +49,4 @@ public interface MemberService {
 
         //////// 임시 비번 바꿔//////////////김현민
         void updatePassword(String member_id, String encryptedPassword);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*현민님꺼
-        private final MemberMapper memberMapper;
-        private final PasswordEncoder passwordEncoder;
-
-
-        @Autowired
-        public MemberService(MemberMapper memberMapper, PasswordEncoder passwordEncoder) {
-                this.memberMapper = memberMapper;
-                this.passwordEncoder = passwordEncoder;
-        }
-
-        @Transactional
-        public void registerMember(MemberDTO memberDTO) {
-
-                String encodedPassword = passwordEncoder.encode(memberDTO.getMember_pw());
-                memberDTO.setMember_pw(encodedPassword);
-
-                memberMapper.insertMember(memberDTO);
-        }
-        */
 }

@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +23,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
-    private  MemberDAO memberDAO;
+    private MemberDAO memberDAO;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -104,22 +107,35 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.getMemberInfo(member_id);}
 
     /*회원 목록보기*/
-//    @Override
-//    public MemberPageDTO memberlist(int pageNum, int size, String searchType, String keyword) {
-//        if(pageNum <= 0) {
-//            pageNum = 1;
-//        }
-//        System.out.println("size :" + size);
-//        int offset = (pageNum-1) * size;
-//        List<MemberDTO> memberlist = memberDAO.memberlist(offset, size, searchType, keyword);
-//        System.out.println("size2 :" + size);
-//        int listCount = memberDAO.count(searchType, keyword);
-//
-//        MemberPageDTO memberPageDTO = new MemberPageDTO(listCount, pageNum, size, memberlist);
-//        memberPageDTO.setListCount(listCount);
-//
-//        return memberPageDTO;
-//    }
+    @Override
+    public MemberPageDTO memberlist(Date startDate, Date endDate, int pageNum, int size, String searchType, String searchType2, String searchType3, String keyword) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (pageNum <= 0) {
+            pageNum = 1;
+        }
+
+        String formatStartDate = startDate != null ? sdf.format(startDate) : null;
+        String formatEndDate = endDate != null ? sdf.format(endDate) : null;
+
+
+        int offset = (pageNum - 1) * size;
+        List<MemberDTO> memberlist = memberDAO.memberlist(formatStartDate, formatEndDate, offset, size, searchType, searchType2, searchType3, keyword);
+
+        int listCount = memberDAO.count(formatStartDate, formatEndDate, searchType, searchType2, searchType3, keyword);
+        MemberPageDTO memberPageDTO = new MemberPageDTO(listCount, pageNum, size, memberlist);
+        memberPageDTO.setListCount(listCount);
+
+        return memberPageDTO;
+    }
+
+    @Override
+    public int count(Date startDate, Date endDate, String searchType,String searchType2, String searchType3, String keyword) {
+
+        String formatStartDate = startDate != null ? String.valueOf(startDate) : null;
+        String formatEndDate = endDate != null ? String.valueOf(endDate) : null;
+        return memberDAO.count(formatStartDate, formatEndDate, searchType, searchType2, searchType3, keyword);
+    }
 
 
     //////////멤버 ROLE 불러오기/////////// 김현민

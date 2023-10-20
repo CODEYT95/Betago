@@ -19,6 +19,9 @@
             <div id="bbsList_header">
                 <div id="leftHeader">
                     <form id="searchForm" th:action="@{/member/list}" method="get" name="searchForm">
+                        <input type="date" name="startDate"> <!-- 시작 날짜 -->
+                        ~
+                        <input type="date" name="endDate"> <!-- 종료 날짜 -->
                         <select name="searchType" class="selectField" title="검색 유형 선택">
                             <option value="" th:classappend="${(searchType == '') ? 'selected' : ''}" >조건검색</option>
                             <option value="member_id" th:classappend="${(searchType == 'member_id') ? 'selected' : ''}">아이디</option>
@@ -97,13 +100,13 @@
                             <div class="pagingNum">
                                 <ul class="pagination-container" id="pagination">
                                     <li th:if="${memberPageDTO.startPage > 5}" class="page-item">
-                                        <a class="page-link" th:with="prevPage=${memberPageDTO.startPage - 1}" th:href="@{/member/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword})}"><</a>
+                                        <a class="page-link" th:with="prevPage=${memberPageDTO.startPage - 1}" th:href="@{/member/list(page=${prevPage}, startDate=${startDate != null ? #dates.format(startDate, 'yyyy-MM-dd') : null}, endDate=${endDate != null ? #dates.format(endDate, 'yyyy-MM-dd') : null}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}"><</a>
                                     </li>
                                     <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(memberPageDTO.startPage, memberPageDTO.endPage)}" class="page-item">
-                                        <a th:href="@{/member/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                        <a th:href="@{/member/list(page=${pageNum}, startDate=${startDate != null ? #dates.format(startDate, 'yyyy-MM-dd') : null}, endDate=${endDate != null ? #dates.format(endDate, 'yyyy-MM-dd') : null}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
                                     </li>
                                     <li th:if="${memberPageDTO.endPage < memberPageDTO.totalPages}" class="page-item">
-                                        <a class="page-link" th:with="nextPage=${memberPageDTO.startPage + 5}" th:href="@{/member/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword})}">></a>
+                                        <a class="page-link" th:with="nextPage=${memberPageDTO.startPage + 5}" th:href="@{/member/list(page=${nextPage}, startDate=${startDate != null ? #dates.format(startDate, 'yyyy-MM-dd') : null}, endDate=${endDate != null ? #dates.format(endDate, 'yyyy-MM-dd') : null}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}">></a>
                                     </li>
                                 </ul>
                             </div>
