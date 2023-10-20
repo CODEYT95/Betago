@@ -126,5 +126,15 @@
         }
         element.parentElement.remove();
     }
+    document.getElementById('saveForm').addEventListener('submit', function(event) {
+       var title = document.getElementById('edupost_title').value.trim();
+       var content = document.getElementById('edupost_content').value.trim();
+
+       if (title=='' || content=='') {
+           event.preventDefault();
+           alert('자료명과 자료내용은 필수 입력입니다.');
+       }
+    });
+
 </script>
 </html>
