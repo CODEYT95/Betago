@@ -2,92 +2,172 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.member.dao.MemberDAO">
     <sql id="search2">
-            <choose>
-                <!-- 구분과 자격이 없을때-->
-                    <when test="(searchType2 == null or searchType2 == '') and (searchType3 == null or searchType3 == '')">
+        <choose>
+            <!-- 키워드가 있는 경우 -->
+            <when test="keyword != null and keyword != ''">
+                <choose>
+                    <!-- 날짜가 있는 경우 -->
+                    <when test="(startDate != null and startDate != '') or (endDate != null and endDate != '')">
                         <choose>
-                            <when test="searchType != null and searchType != ''">
+                            <!-- searchType값에 따른 분기 -->
+                            <when test="searchType == 'member_id'">
+                                member_id LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_phone'">
+                                member_phone LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_name'">
+                                member_name LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == ''">
+                                1=1
+                            </when>
+                        </choose>
+                        AND join_date BETWEEN #{startDate} AND #{endDate}
+                        <choose>
+                            <!-- searchType2가 있는 경우 -->
+                            <when test="searchType2 != null and searchType2 != ''">
+                                AND role LIKE CONCAT('%', #{searchType2}, '%')
                                 <choose>
-                                    <when test="'member_id'.equals(searchType)">
-                                        (member_id LIKE CONCAT('%', #{keyword}, '%'))
-                                    </when>
-                                    <when test="'member_phone'.equals(searchType)">
-                                        (member_phone LIKE CONCAT('%', #{keyword}, '%'))
-                                    </when>
-                                    <when test="'member_name'.equals(searchType)">
-                                        (member_name LIKE CONCAT('%', #{keyword}, '%'))
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
                                     </when>
                                 </choose>
                             </when>
                             <otherwise>
-                                (member_id LIKE CONCAT('%', #{keyword}, '%') OR member_phone LIKE CONCAT('%', #{keyword}, '%') OR member_name LIKE CONCAT('%', #{keyword}, '%'))
+                                <choose>
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
+                                    </when>
+                                </choose>
                             </otherwise>
                         </choose>
                     </when>
-                <!-- 구분과 자격이 있을때-->
-                    <when test="(searchType2 != null and searchType2 != '') and (searchType3 != null and searchType3 != '')">
+                    <!-- startDate와 endDate가 없는 경우 -->
+                    <otherwise>
                         <choose>
-                            <when test="searchType != null and searchType != ''">
+                            <!-- searchType값에 따른 분기 -->
+                            <when test="searchType == 'member_id'">
+                                member_id LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_phone'">
+                                member_phone LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_name'">
+                                member_name LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == ''">
+                                1=1
+                            </when>
+                        </choose>
+                        <choose>
+                            <!-- searchType2가 있는 경우 -->
+                            <when test="searchType2 != null and searchType2 != ''">
+                                AND role LIKE CONCAT('%', #{searchType2}, '%')
                                 <choose>
-                                    <when test="'member_id'.equals(searchType)">
-                                        member_id LIKE CONCAT('%', #{keyword}, '%') AND role LIKE CONCAT('%', #{searchType2}, '%') AND license LIKE CONCAT('%', #{searchType3}, '%')
-                                    </when>
-                                    <when test="'member_phone'.equals(searchType)">
-                                        member_phone LIKE CONCAT('%', #{keyword}, '%') AND role LIKE CONCAT('%', #{searchType2}, '%') AND license LIKE CONCAT('%', #{searchType3}, '%')
-                                    </when>
-                                    <when test="'member_name'.equals(searchType)">
-                                        member_name LIKE CONCAT('%', #{keyword}, '%') AND role LIKE CONCAT('%', #{searchType2}, '%') AND license LIKE CONCAT('%', #{searchType3}, '%')
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
                                     </when>
                                 </choose>
                             </when>
                             <otherwise>
-                                role LIKE CONCAT('%', #{searchType2}, '%') AND license LIKE CONCAT('%', #{searchType3}, '%')
+                                <choose>
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
+                                    </when>
+                                </choose>
                             </otherwise>
                         </choose>
-                    </when>
-                <!--자격이 있을 때-->
-                    <when test="searchType3 != null and searchType3 != ''">
+                    </otherwise>
+                </choose>
+            </when>
+            <!-- 키워드가 없는 경우 -->
+            <otherwise>
+                <choose>
+                    <!-- 날짜가 있는 경우 -->
+                    <when test="(startDate != null and startDate != '') or (endDate != null and endDate != '')">
                         <choose>
-                            <when test="searchType != null and searchType != ''">
+                            <!-- searchType값에 따른 분기 -->
+                            <when test="searchType == 'member_id'">
+                                member_id LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_phone'">
+                                member_phone LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_name'">
+                                member_name LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == ''">
+                                1=1
+                            </when>
+                        </choose>
+                        AND join_date BETWEEN #{startDate} AND #{endDate}
+                        <choose>
+                            <!-- searchType2가 있는 경우 -->
+                            <when test="searchType2 != null and searchType2 != ''">
+                                AND role LIKE CONCAT('%', #{searchType2}, '%')
                                 <choose>
-                                    <when test="'member_id'.equals(searchType)">
-                                        member_id LIKE CONCAT('%', #{keyword}, '%') AND license LIKE CONCAT('%', #{searchType3}, '%')
-                                    </when>
-                                    <when test="'member_phone'.equals(searchType)">
-                                        member_phone LIKE CONCAT('%', #{keyword}, '%') AND license LIKE CONCAT('%', #{searchType3}, '%')
-                                    </when>
-                                    <when test="'member_name'.equals(searchType)">
-                                        member_name LIKE CONCAT('%', #{keyword}, '%') AND license LIKE CONCAT('%', #{searchType3}, '%')
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
                                     </when>
                                 </choose>
                             </when>
                             <otherwise>
-                                license LIKE CONCAT('%', #{searchType3}, '%')
+                                <choose>
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
+                                    </when>
+                                </choose>
                             </otherwise>
                         </choose>
                     </when>
-                <!--구분이 있을때-->
-                    <when test="searchType2 != null and searchType2 != ''">
+                    <!-- startDate와 endDate가 없는 경우 -->
+                    <otherwise>
                         <choose>
-                            <when test="searchType != null and searchType != ''">
+                            <!-- searchType값에 따른 분기 -->
+                            <when test="searchType == 'member_id'">
+                                AND member_id LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_phone'">
+                                AND member_phone LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'member_name'">
+                                AND member_name LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == ''">
+                                1=1
+                            </when>
+                        </choose>
+                        <choose>
+                            <!-- searchType2가 있는 경우 -->
+                            <when test="searchType2 != null and searchType2 != ''">
+                                AND role LIKE CONCAT('%', #{searchType2}, '%')
                                 <choose>
-                                    <when test="'member_id'.equals(searchType)">
-                                        member_id LIKE CONCAT('%', #{keyword}, '%') AND role LIKE CONCAT('%', #{searchType2}, '%')
-                                    </when>
-                                    <when test="'member_phone'.equals(searchType)">
-                                        member_phone LIKE CONCAT('%', #{keyword}, '%') AND role LIKE CONCAT('%', #{searchType2}, '%')
-                                    </when>
-                                    <when test="'member_name'.equals(searchType)">
-                                        member_name LIKE CONCAT('%', #{keyword}, '%') AND role LIKE CONCAT('%', #{searchType2}, '%')
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
                                     </when>
                                 </choose>
                             </when>
                             <otherwise>
-                                role LIKE CONCAT('%', #{searchType2}, '%')
+                                <choose>
+                                    <!-- searchType3가 있는 경우 -->
+                                    <when test="searchType3 != null and searchType3 != ''">
+                                        AND license LIKE CONCAT('%', #{searchType3}, '%')
+                                    </when>
+                                </choose>
                             </otherwise>
                         </choose>
-                    </when>
-            </choose>
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
     </sql>
     <!--약관동의-->
     <insert id="memberAgree" parameterType="MemberDTO">
@@ -127,6 +207,13 @@
     </select>
 
     <!--///////////member_no & member_name 불러오기 -->
+    <!--<select id="getMemberInfo" parameterType="String">
+        <![CDATA[
+        SELECT *
+        FROM member
+        WHERE member_id = #{member_id};
+        ]]>
+    </select>-->
     <select id="getMemberInfo" parameterType="String">
      <![CDATA[
         SELECT m.*, COUNT(p.pay_no) AS pay_count
@@ -185,9 +272,8 @@
         from member
         <where>
             <include refid="search2"></include>
-            AND
         </where>
-        LIMIT #{page}, #{size};
+        LIMIT #{size} OFFSET #{page}
 
     </select>
     <!--회원목록 카운트-->

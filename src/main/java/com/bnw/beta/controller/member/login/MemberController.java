@@ -172,6 +172,8 @@ public class MemberController {
         model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
         model.addAttribute("listCount", memberPageDTO.getListCount());
         model.addAttribute("memberPageDTO", memberPageDTO);
+        model.addAttribute("startDate",startDate);
+        model.addAttribute("endDate",endDate);
         model.addAttribute("searchType", searchType);
         model.addAttribute("searchType2", searchType2);
         model.addAttribute("searchType3", searchType3);
