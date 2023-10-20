@@ -109,8 +109,8 @@
     display: flex;
     justify-content: center;
     border-radius: 10px;
-    width: 100%;
-    height: 266PX;
+    width: 200px;
+    height: 200px;
 }
 
 .details {
@@ -137,9 +137,10 @@
     z-index: 1;
     font-size: 20px;
 }
+
+
+
 .detaillist h6{
-        display: grid;
-        justify-content: space-between;
 }
 
 .details h5{
@@ -262,7 +263,7 @@ h1, h2, h3, h4{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 65px;
+    gap: 120px;
     margin-top:30px;
     margin-left:30px;
 }
