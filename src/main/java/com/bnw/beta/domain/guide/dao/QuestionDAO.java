@@ -44,4 +44,12 @@ public interface QuestionDAO {
 
 
     List<QuestionDTO> getQuestionsWithAnswerCount(@Param("limit") int limit, @Param("offset") int offset);
+
+    List<QuestionDTO> findQuestionsWithAnswerCountByUser(String username);
+
+    int countAllQuestions();
+
+    int countQuestionsByUserId(String username);
+
+    List<QuestionDTO> findQuestionsByUserId(@Param("userId") String userId, @Param("offset") int offset, @Param("pageSize") int pageSize);
 }

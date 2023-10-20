@@ -1,0 +1,184 @@
+/* login.css */
+
+/* 이미지 겹치기 */
+/*.logo-container {
+  text-align: center; *//* 이미지를 센터에 정렬합니다. *//*
+  margin-bottom: 30px; *//* 로고와 로그인 박스 사이의 공간을 만듭니다. *//*
+  position: relative;
+  width: 400px;
+  height: auto;
+}*/
+.logo-login-box {
+    position: relative; /* 이 컨테이너에 절대 위치의 자식 요소가 있음을 나타냅니다. */
+    width: 100%; /* 예시입니다. 필요에 따라 조정하세요. */
+    height: 100%; /* 이미지와 로그인 박스에 충분한 공간을 확보합니다. */
+}
+.logo-container {
+    text-align: center;
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
+.logo-img{
+    width: 100%;
+    height: 586px;
+    display: flex;
+    align-items: center;
+}
+
+.login-section {
+    display: flex;
+    margin-top:7%;
+}
+
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20%); /* 이미지를 위쪽으로 이동하여 화면 밖에서 시작 */
+  }
+  to {
+    transform: translateY(0); /* 이미지를 원래 위치로 돌아오게 함 */
+  }
+}
+
+.animated-image {
+    position: absolute;
+   top: 4%;
+       left: 38%;
+    transform: translateX(-50%);
+    animation: slideDown 0.75s ease-out forwards;
+    display: flex;
+    width: 25%;
+    z-index: 1; /* 이 값이 로그인 박스보다 낮습니다 */
+    /* 다른 스타일 */
+}
+.second-animated-image {
+
+    left: 50%;
+transform: translateX(-50%);
+position: absolute;
+    height:100%;
+    margin-top: 6%;
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* 시작할 때 완전히 투명하게 설정합니다. */
+    visibility: hidden; /* 시작할 때 박스가 보이지 않게 합니다. */
+  }
+  100% {
+    opacity: 1; /* 애니메이션이 끝날 때 완전히 불투명하게 설정합니다. */
+    visibility: visible; /* 애니메이션이 끝날 때 박스가 보이게 합니다. */
+  }
+}
+
+
+.login-box {
+    /* background-color: #ffffff; */
+    /* border: 1px solid #e0e0e0; */
+    border-radius: 10px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    border: none;
+    position:relative;
+    z-index:2;
+    animation: fadeIn 1s ease-in-out 0.85s forwards; /* 이름, 지속시간, 타이밍 함수, 지연 시간, 애니메이션 채우기 모드 */
+    opacity: 0; /* 초기 상태를 완전히 투명하게 설정합니다. */
+    visibility: hidden; /* 초기 상태에서 박스가 보이지 않게 합니다. */
+}
+
+.login-title {
+    display: inline-block;
+    background-color: #ffffff; /* 회색 배경 */
+    color: #000000; /* 검은색 글씨 */
+    font-size: 20px; /* 텍스트 크기, 원하는 크기로 조정 가능 */
+    border-radius: 20px; /* 동그란 모서리 생성, 원하는 값으로 조정 가능 */
+    padding: 5px 15px; /* 내부 여백, 텍스트 주변의 공간 제공 */
+    margin-bottom: 15px; /* 타이틀 아래에 여백 제공. 필요에 따라 조정 */
+    /* 필요한 경우 추가적인 스타일 속성을 이곳에 추가하세요 */
+}
+
+/* 입력 필드 스타일 */
+.input-group {
+  margin-bottom: 15px; /* 각 입력 필드 사이의 간격 */
+}
+
+.input-group label {
+
+}
+
+.input-group input {
+  width: calc(100% - 20px); /* 전체 너비 */
+  padding: 10px; /* 텍스트와 경계 사이의 패딩 */
+  border-radius: 5px; /* 약간 둥근 모서리 */
+  border: 1px solid #ddd; /* 일반 경계 */
+  font-size: 16px; /* 적절한 텍스트 크기 */
+  line-height: 1.5; /* 라인 높이 */
+}
+
+.input-group input:focus {
+  border-color: #a5a5a5; /* 포커스 시 경계 색상 */
+}
+
+/* 로그인 버튼 스타일 */
+.btn {
+  border: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #222;
+  padding: 17px 60px;
+  margin: 0 auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  /*background: #78c7d2;*/
+  background: #888888;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+/* 부가 링크 스타일 */
+.links {
+  margin-top: 45px; /* 링크 위의 간격 */
+  text-align: center; /* 센터 정렬 */
+}
+
+.links a {
+  color: #ffffff; /* 일관된 색상 체계 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.links a:hover {
+  text-decoration: underline; /* 호버시 밑줄 표시 */
+}

@@ -63,6 +63,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
             questionDAO.insertFileQuestion(fileQuestion);  // 파일 정보 데이터베이스에 저장
+
         }
     }
 
@@ -75,10 +76,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     public List<QuestionDTO> getQuestionInfo(Integer id){
         return questionDAO.getQuestionInfo(id);
-    };
+    }
 
     public List<QuestionDTO> findQuestionsByUserId(String username){
-        return questionDAO.findQuestionsByMemberId(username);
+       /* return questionDAO.findQuestionsByMemberId(username);*/
+        return questionDAO.findQuestionsWithAnswerCountByUser(username);
     }
 
     public void modify(QuestionDTO question, String subject, String content, String pw, MultipartFile file) {
@@ -148,8 +150,24 @@ public class QuestionServiceImpl implements QuestionService {
 
     public List<QuestionDTO> getQuestionsWithAnswerCount(int page) {
         int limit = 10; // 페이지 당 표시할 항목 수
-        int offset = limit * page;
+        /*int offset = limit * page;*/
+        /*int offset = (page > 0) ? 10 * (page - 1) : 0;*/
+        int offset = limit * (page - 1);
         return questionDAO.getQuestionsWithAnswerCount(limit, offset);
+    }
+
+    public List<QuestionDTO> findQuestionsByUserId(String username, int page, int pageSize) {
+        // 페이지 계산 (일반적으로 페이지는 1부터 시작하지만, 데이터베이스 offset은 0부터 시작)
+        int offset = (page - 1) * pageSize;
+        return questionDAO.findQuestionsByUserId(username, offset, pageSize);
+    }
+
+    public int countQuestionsByUserId(String username){
+        return questionDAO.countQuestionsByUserId(username);
+    };
+
+    public int getTotalQuestionsCount() {
+        return questionDAO.countAllQuestions();
     }
 
    /* public QuestionDTO getQuestion(Integer id) {

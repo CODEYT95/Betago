@@ -14,12 +14,6 @@
             <i id="main_sideBtn" class='bx bx-menu'></i>
             <section class="header_top">
                 <span class="top_info">Betago를 보다 편리하고 안전하게 이용하세요.</span>
-                <!--<a href="/login" class="loginBtn">로그인/회원가입</a>-->
-
-                <div th:if="${username != null}">
-                    <span th:text="${username}">username</span> 님 환영합니다!
-                </div>
-
                 <!-- 로그인하지 않은 사용자에게 보이는 부분 -->
                 <div th:if="${username == null}">
                     <a href="/login" class="loginBtn">로그인/회원가입</a>

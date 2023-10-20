@@ -1,0 +1,139 @@
+@charset "UTF-8";
+#leftHeader {
+    margin-bottom: 15px;
+}
+
+
+.paging {
+    margin-top: 15px;
+    display: flex;
+}
+#pagination{
+    display: flex;
+    margin: 15px 0 0 15px;
+    gap: 5px;
+    justify-content: center;
+}
+
+.pagination-container a {
+    float: left;
+    display: flex;
+    text-decoration: none;
+    width: 55px;
+    height: 100%;
+    align-items: center;
+    justify-content: center; /* 추가: 수평 중앙 정렬 */
+}
+
+.pagination-container li {
+    margin: 0;
+    text-align: center;
+    width: 35px;
+    height: 30px;
+    display: flex; /* 추가: flexbox 레이아웃 적용 */
+    justify-content: center; /* 추가: 수평 중앙 정렬 */
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius : 5px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.active-page {
+    background: #b2d3ff;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.head {
+    font-size: 18px;
+    font-weight: bold;
+    color: #454545;
+    margin-bottom: 30px;
+    line-height: 35px;
+}
+
+
+/* 버튼 스타일 */
+.selectMemberBtn, .selectAllBtn, .sendTaskBtn {
+    width: 35px; /* 원하는 너비로 조정 가능 */
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    text-decoration: none; /* 추가: 버튼에 밑줄 없애기 */
+    /* 추가: 기타 필요한 스타일 규칙 */
+}
+
+/* 버튼 hover 스타일 */
+.selectTaskBtn:hover, .selectMemberBtn:hover, .selectAllBtn:hover, .sendTaskBtn:hover, .pagination-container a:hover:not(.active) {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* 테이블 스타일 */
+table {
+    border: 1px #a39485 solid;
+    font-size: .9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+th {
+    text-align: left;
+}
+
+thead {
+    font-weight: bold;
+    background: #b2d3ff;
+}
+
+
+.num {
+    width: 10%; /* 필요에 따라 조정 */
+}
+.subject {
+    width: 30%; /* 필요에 따라 조정 */
+}
+.answer {
+    width: 5%; /* 필요에 따라 조정 */
+}
+.user {
+    width: 20%; /* 필요에 따라 조정 */
+}
+.createdate {
+    width: 30%; /* 필요에 따라 조정 */
+}
+
+td, th {
+    padding: 1em .5em;
+    vertical-align: middle;
+    overflow-wrap: break-word;
+}
+
+td {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    background: #fff;
+}
+
+a {
+    color: #73685d;
+}
+
+
+
