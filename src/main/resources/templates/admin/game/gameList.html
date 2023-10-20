@@ -41,7 +41,7 @@
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
-                                <span class="checkbox-tilte">
+                                <span class="checkbox-tile">
                                 <div class="card">
                                     <div class="poster"><img class="image" th:src="${content.filegame_name} ? @{|/image/game/${content.filegame_name}|} : @{/image/noimage.png}" th:alt="${content.filegame_name}"></div>
                                     <div class="card-details"></div>
@@ -49,7 +49,7 @@
                                         <h5>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h5>
                                         <h5>구매금액 : <span th:text="${content.game_sell}"></span>원</h5>
                                         <h5>구독기간 : <span th:text="${content.game_date}"></span>개월</h5>
-                                        <h5>그룹가능인원  : 50명</h5>
+                                        <h5>그룹가능인원  : <span th:text="${content.game_total}"></span>명</h5>
                                     </div>
                                     <div class="backDetails">
                                         <div class="detaillist">
@@ -70,9 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="content_footer">
-        <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCount}"></span>)<i class="ri-arrow-down-s-line"></i></button>
-    </div>
+</div>
 </div>
 <button id="myBtn" title="Go to top">Top</button>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
