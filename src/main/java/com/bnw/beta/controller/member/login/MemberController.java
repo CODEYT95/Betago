@@ -1,6 +1,7 @@
 package com.bnw.beta.controller.member.login;
 
 import com.bnw.beta.config.vaildation.member.PasswordUtils;
+import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.member.MailSendServiceImpl;
@@ -148,7 +149,7 @@ public class MemberController {
         return "admin";
     }
 
-    /*회원 목록조회*/
+    /*회원 목록조회
     @GetMapping("/member/list")
     public String memberlist(@RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "size", defaultValue = "3") int size,
@@ -166,7 +167,7 @@ public class MemberController {
         model.addAttribute("searchType3", searchType3);
         model.addAttribute("keyword", keyword);
         return "admin/edupost/memberlist";
-    }
+    }*/
     /*회원 상세조회(관리자)*/
     @GetMapping("/detail/{member_id}")
     public String memberView(@PathVariable("member_id") String member_id, Model model) {
