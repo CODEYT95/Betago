@@ -12,7 +12,6 @@
     <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
     <div class="content-wrap">
         <div id="bbsList">
-
             <div id="bbsList_title">
                 <h2 class="head">공지 게시판</h2>
             </div>
@@ -46,15 +45,16 @@
                         </div>
                     </form>
                 </div>
-
-                    <form id="pageSizeForm" action="/notice/list" method="get">
-                        <select class="form-control form-control-sm" name="size" id="listSize" th:value="${listSize}" onchange="changePageSize()">
-                            <option value="10" th:selected="${noticePage.getAllNoticeList().size() == 10}">10개</option>
-                            <option value="15" th:selected="${noticePage.getAllNoticeList().size() == 15}">15개</option>
-                            <option value="20" th:selected="${noticePage.getAllNoticeList().size() == 20}">20개</option>
-                        </select>
-                    </form>
+                <form id="pageSizeForm" action="/notice/list" method="get">
+                    <select class="form-control form-control-sm" name="size" id="listSize" th:value="${listSize}"
+                            onchange="changePageSize()">
+                        <option value="10" th:selected="${noticePage.getAllNoticeList().size() == 10}">10개</option>
+                        <option value="15" th:selected="${noticePage.getAllNoticeList().size() == 15}">15개</option>
+                        <option value="20" th:selected="${noticePage.getAllNoticeList().size() == 20}">20개</option>
+                    </select>
+                </form>
             </div>
+
 
 
             <div id="bbsList_list">
@@ -70,16 +70,13 @@
                     </tr>
                     </thead>
                     <tbody id="list">
-
                     <tr th:if="${notice.notice_category != 'FAQ' && notice.type != '일반' } "
                         th:each="notice: ${topNoticeList}" class="tableColor">
-
                         <td>
                             <span class="no">
                                 <img src="/image/star.png" width="30px" height="20px" alt="별 이미지">
                             </span>
                         </td>
-
                         <td>
                             <span class="type" name="type" th:text="${notice.notice_category}"></span>
                         </td>
@@ -89,7 +86,7 @@
                             </a>
                         </td>
                         <td>
-                            <span class="writer" th:text="${notice.member_id}"></span>
+                            <span class="writer" th:text="${notice.member_name}"></span>
                         </td>
 
                         <td>
@@ -102,7 +99,7 @@
 
                     <tr th:if="${noticePage.allNoticeList.size() == 0}">
                         <td colspan="6" style="text-align: center;">
-                            <span >글이 없습니다.</span>
+                            <span>글이 없습니다.</span>
                         </td>
                     </tr>
 
@@ -153,15 +150,12 @@
                                     <span class="page" th:text="${pageNum}"></span>
                                 </a>
                             </li>
-
-                        <li th:if="${noticePage.endPage < noticePage.totalPages}" class="page-item">
-                            <a class="page-link" th:with="nextPage=${noticePage.startPage + 5}" th:href="@{/notice/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword} , size=${listSize})}">Next</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
+                            <li th:if="${noticePage.endPage < noticePage.totalPages}" class="page-item">
+                                <a class="page-link" th:with="nextPage=${noticePage.startPage + 5}"
+                                   th:href="@{/notice/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword} , size=${listSize})}">Next</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

@@ -56,7 +56,7 @@ public class FAQController {
     public String update(@RequestParam("notice_no") Long notice_no,
                          @ModelAttribute NoticeDTO noticeDTO,
                          Principal principal) throws IOException {
-        noticeDTO.setMember_id(principal.getName());
+        noticeDTO.setMember_name(principal.getName());
         System.out.println("faq컨트롤"+noticeDTO);
         faqService.update(noticeDTO,notice_no);
         return "redirect:/FAQ/list";

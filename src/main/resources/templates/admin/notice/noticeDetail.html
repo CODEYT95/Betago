@@ -21,7 +21,7 @@
                 </tr>
                 <tr class="tab">
                     <th class="col-2">작성자</th>
-                    <td class="col-4" th:text="${noticeDTO.member_id}"></td>
+                    <td class="col-4" th:text="${noticeDTO.member_name}"></td>
                     <th class="col-2">조회수</th>
                     <td class="col-4" th:text="${noticeDTO.view_cnt}"></td>
                 </tr>
@@ -34,7 +34,7 @@
         <div class="content">
             <div class="content-container" >
                 <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}" style="text-align: center;">
-                    <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300" alt="image">
+                    <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" alt="image">
                 </div>
                 <div colspan="4" class="text" style="text-align: center;">
                     <pre style="white-space: pre-wrap; border: none; background-color: white;" th:text="${noticeDTO.notice_content}"></pre>
