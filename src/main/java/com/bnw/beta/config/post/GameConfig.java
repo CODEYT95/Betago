@@ -9,7 +9,7 @@ public class GameConfig implements WebMvcConfigurer{
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry){
             registry.addResourceHandler("/image/game/**")
-                    .addResourceLocations("file:///c:/uploadfile/game_img/");
+                    .addResourceLocations("file:C:/Users/user/Desktop/BetaPro/beta/src/main/resources/static/image/guide/game/");
         }
     }
 

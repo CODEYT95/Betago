@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -38,19 +39,20 @@ public class GameController {
     }
 
     @PostMapping("/gameInsert")
-    public String insertGame(@ModelAttribute GameDTO dto, @RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        String member_id = "admin1";
+    public String insertGame(Principal principal, @ModelAttribute GameDTO dto, @RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String member_id = principal.getName();
         dto.setMember_id(member_id);
         int result = gameService.insertGame(dto);
 
         if (!imageFile.isEmpty()) {
             String fileName = imageFile.getOriginalFilename();
-            String filePath = "C:/uploadfile/game_img/" + fileName;
+            String filePath = "C:/Users/user/Desktop/BetaPro/beta/src/main/resources/static/image/guide/game/" + fileName;
             try {
                 GameFileDTO gameFileDTO = new GameFileDTO();
                 gameFileDTO.setGame_no(dto.getGame_no());
                 gameFileDTO.setFilegame_name(fileName);
                 gameFileDTO.setFilegame_path(filePath);
+                System.out.println(gameFileDTO);
 
                 gameService.insertGameImage(gameFileDTO);
 
@@ -63,7 +65,6 @@ public class GameController {
         redirectAttributes.addFlashAttribute("message", "등록이 완료되었습니다.");
         return "redirect:/game/list";
     }
-
     //게임콘텐츠 조회
     @GetMapping("/list")
     public String selectAll(@RequestParam(value = "game_title", defaultValue = "") String game_title,

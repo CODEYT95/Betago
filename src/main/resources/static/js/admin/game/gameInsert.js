@@ -1,3 +1,12 @@
+ function displayFileName(input) {
+            var uploadName = document.querySelector('.upload-name');
+            if (input.files.length > 0) {
+                uploadName.value = input.files[0].name;
+            } else {
+                uploadName.value = '';
+            }
+        }
+
 document.addEventListener('DOMContentLoaded', function() {
     let subscriptionDuration = document.getElementById('game_date');
     let gameTotal = document.getElementById('game_total');
@@ -75,17 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
 
-        //진호
-        function displayFileName(input) {
-            var uploadName = document.querySelector('.upload-name');
-            if (input.files.length > 0) {
-            // 파일이 선택되었을 때 파일명을 입력란에 표시
-                uploadName.value = input.files[0].name;
-            } else {
-             // 파일 선택이 해제되었을 때 입력란 초기화
-                uploadName.value = '';
-            }
-        }
+
 
     });
 
