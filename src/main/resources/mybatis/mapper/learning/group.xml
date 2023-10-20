@@ -35,7 +35,7 @@
         ]]>
     </select>
 
-    <!-- 게임 콘텐츠 title 조회 그룹인원 초과된건 조회안되게 학원가서 수정 -->
+    <!-- 게임 콘텐츠 title 조회 -->
     <select id="selectGameTitle" resultType="GroupDTO">
         <![CDATA[
         SELECT DISTINCT g.game_title
@@ -325,7 +325,7 @@
     <select id="myjoinList" resultType="GroupDTO">
         <![CDATA[
         SELECT
-        gm.approve_date,
+        gm.approve_date, gm.approve_state,
         g.game_no, g.game_title, g.game_total, g.game_level, g.game_no,
         sg.group_no, sg.group_name, sg.group_intro, sg.group_cnt, sg.group_nowcnt, sg.group_startdate, sg.group_enddate,
         fg.filegame_name
@@ -342,7 +342,7 @@
         JOIN
         member m ON g.member_name = #{member_name}
         </if>
-        WHERE m.member_no = #{member_no}
+        WHERE gm.member_no = #{member_no}
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
         </if>
@@ -364,13 +364,12 @@
             studygroup sg ON gm.group_no = sg.group_no
         LEFT JOIN
         filegame fg ON gm.game_no = fg.game_no
-        WHERE m.member_no = #{member_no}
-        ]]>
+         ]]>
         <if test = "member_name != null and member_name != ''">
             JOIN
             member m ON g.member_name = #{member_name}
         </if>
-        WHERE m.member_no = #{member_no}
+        WHERE gm.member_no = #{member_no}
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
         </if>
