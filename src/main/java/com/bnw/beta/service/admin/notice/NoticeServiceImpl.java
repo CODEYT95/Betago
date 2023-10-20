@@ -62,7 +62,7 @@ public class NoticeServiceImpl implements NoticeService {
             noticeDAO.insert(noticeDTO);
         } else {
             noticeDAO.insert(noticeDTO);
-            String path = "C:/uploadfile/notice_img/";
+            String path = "C:/Users/Jin/Desktop/BetaPro/beta/src/main/resources/static/image/notice";
             File directory = new File(path);
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -98,7 +98,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public int update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] file) throws IOException {
         System.out.println("업데이트 임플" + noticeDTO);
-        String path = "C:/uploadfile/notice_img/";
+        String path = "C:/Users/Jin/Desktop/BetaPro/beta/src/main/resources/static/image/notice";
         if (file != null && file[0] != null && !file[0].isEmpty()) {
             File directory = new File(path);
             if (!directory.exists()) {
