@@ -52,5 +52,4 @@ public class FAQServiceImpl implements FAQService{
         System.out.println("FAQ삭제"+notice_no);
         faqDAO.delete(notice_no);
     }
-
 }

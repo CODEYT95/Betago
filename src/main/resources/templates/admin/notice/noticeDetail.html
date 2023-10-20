@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>둑며들다|공지 상세</title>
+    <title>게시판 상세보기</title>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin/notice/noticeDetail.css}">
 </head>
@@ -21,7 +21,7 @@
                 </tr>
                 <tr class="tab">
                     <th class="col-2">작성자</th>
-                    <td class="col-4" th:text="${noticeDTO.member_name}"></td>
+                    <td class="col-4" th:text="${noticeDTO.member_id}"></td>
                     <th class="col-2">조회수</th>
                     <td class="col-4" th:text="${noticeDTO.view_cnt}"></td>
                 </tr>
@@ -34,7 +34,7 @@
         <div class="content">
             <div class="content-container" >
                 <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}" style="text-align: center;">
-                    <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" alt="image">
+                    <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" width="300" height="300" alt="image">
                 </div>
                 <div colspan="4" class="text" style="text-align: center;">
                     <pre style="white-space: pre-wrap; border: none; background-color: white;" th:text="${noticeDTO.notice_content}"></pre>

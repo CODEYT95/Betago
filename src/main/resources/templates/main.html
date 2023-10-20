@@ -40,7 +40,9 @@
                                 <span th:text="${member_name}" class="member-name"></span>
                                 <span class="dear"> 님</span>
                             </div>
-                            <p class="comment">오늘도 둑며드세요!<span style="font-size: 18px;">🫠</span></p>
+                            <p class="comment">오늘도 둑며드세요!<span style="font-size: 18px;"></span>
+                                <img alt="heart" th:src="@{|image/main/heart.png|}" class="heart">
+                            </p>
                         </div>
                         <button class="btn" id="logoutBtn" onclick="document.getElementById('logoutForm').submit();">로그아웃</button>
                     </div>

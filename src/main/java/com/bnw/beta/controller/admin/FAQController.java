@@ -5,7 +5,6 @@ import com.bnw.beta.domain.common.paging.FAQPage;
 import com.bnw.beta.domain.common.paging.NoticePage;
 import com.bnw.beta.service.admin.FAQ.FAQServiceImpl;
 import com.bnw.beta.service.admin.notice.NoticeServiceImpl;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,9 +55,8 @@ public class FAQController {
     @PostMapping("/admin/FAQ/update")
     public String update(@RequestParam("notice_no") Long notice_no,
                          @ModelAttribute NoticeDTO noticeDTO,
-                         HttpSession session) throws IOException {
-        String member_name = (String) session.getAttribute("member_name");
-        noticeDTO.setMember_name(member_name);
+                         Principal principal) throws IOException {
+        noticeDTO.setMember_id(principal.getName());
         System.out.println("faq컨트롤"+noticeDTO);
         faqService.update(noticeDTO,notice_no);
         return "redirect:/FAQ/list";

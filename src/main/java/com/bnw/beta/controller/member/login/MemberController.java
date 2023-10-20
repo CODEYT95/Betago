@@ -1,7 +1,6 @@
 package com.bnw.beta.controller.member.login;
 
 import com.bnw.beta.config.vaildation.member.PasswordUtils;
-import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.member.MailSendServiceImpl;
@@ -10,10 +9,8 @@ import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.member.MailSendServiceImpl;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,8 +23,8 @@ import java.security.Principal;
 
 @Controller
 public class MemberController {
-    private final MemberService memberService;
 
+    private final MemberService memberService;
     @Autowired
     private MailSendServiceImpl mailSendService;
     @Autowired
@@ -127,9 +124,8 @@ public class MemberController {
             session.setAttribute("member_name", memberService.getMemberInfo(principal.getName()).getMember_name());
             session.setMaxInactiveInterval(1800);
         }
-
-        System.out.println(session.getAttribute("member_no"));
-        return "main/main"; //메인페이지로 설정
+        model.addAttribute("member_name", session.getAttribute("member_name"));
+        return "main"; //메인페이지로 설정
     }
 
     @GetMapping("/loginForm") //기본주소로 설정시 시큐리티가 주소를 낚아채지만 SecurtiyConfig생성후 폼으로 정상 작동

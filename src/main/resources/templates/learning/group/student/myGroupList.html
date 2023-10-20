@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>둑며들다|학습 그룹 가입신청</title>
+    <title>학습 그룹 가입신청</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/learning/group/student/myGroupList.css}">
+    <script type="text/javascript" th:src="@{/js/learning/group/student/myGroupList.js}"></script>
     <!--공통으로 쓰이는 CSS 및  -->
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 
@@ -49,7 +51,7 @@
         </div>
         <div class="content-container">
             <ul class="list-box">
-                <li class="" th:each="joinList : ${groupJoinList}" th:attr="data-game-no=${joinList.game_no}">
+                <li class="" th:each="joinList : ${groupJoinList}" th:attr="data-gm-no=${joinList.gm_no}">
                     <input hidden="hidden" class="attr" th:attr="data-group-name=${joinList.group_name},data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
                     <div class="checkbox">
                         <label class="checkbox-wrapper">

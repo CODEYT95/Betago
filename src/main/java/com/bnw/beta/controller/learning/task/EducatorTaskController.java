@@ -26,8 +26,8 @@ public class EducatorTaskController {
     //숙제 생성 폼 보여주기 (페이징)
     @GetMapping("/createTaskForm")
     public String saveTaskForm(@RequestParam(value = "page", defaultValue = "1") int page,
-                                                       @RequestParam(value = "size", defaultValue = "3") int size,
-                                                        Authentication authentication, Model model) {
+                               @RequestParam(value = "size", defaultValue = "3") int size,
+                               Authentication authentication, Model model) {
 
         String member_id = authentication.getName();
         TaskPageDTO taskPageDTO = taskService.createTaskList(member_id, page, size);
@@ -42,9 +42,9 @@ public class EducatorTaskController {
     //숙제 생성하기
     @PostMapping("/createTask")
     public String saveTask(@RequestParam String task_title, @RequestParam String task_content,
-                                            @RequestParam String task_chapter, @RequestParam String year,
-                                            @RequestParam String month, @RequestParam String day, Model model,
-                                            Authentication authentication) {
+                           @RequestParam String task_chapter, @RequestParam String year,
+                           @RequestParam String month, @RequestParam String day, Model model,
+                           Authentication authentication) {
         String member_id = authentication.getName();
         String task_deadline = year + "-" + month + "-" + day;
 
@@ -62,11 +62,11 @@ public class EducatorTaskController {
     //숙제 제목으로 조회하기
     @GetMapping("/sendTask")
     public String selectTaskDetailByTitle(@RequestParam(defaultValue = "") String task_title,
-                                                                    @RequestParam(defaultValue = "") String group_name,
-                                                                    @RequestParam(defaultValue = "") Integer group_no,
-                                                                    @RequestParam(value = "page", defaultValue = "1") int page,
-                                                                    @RequestParam(value = "size", defaultValue = "5") int size,
-                                                                    Authentication authentication, Model model){
+                                          @RequestParam(defaultValue = "") String group_name,
+                                          @RequestParam(defaultValue = "") Integer group_no,
+                                          @RequestParam(value = "page", defaultValue = "1") int page,
+                                          @RequestParam(value = "size", defaultValue = "5") int size,
+                                          Authentication authentication, Model model){
         System.out.println(task_title);
         if(task_title.equals("전체")){
             task_title="";
@@ -95,8 +95,8 @@ public class EducatorTaskController {
     //숙제 전송
     @PostMapping("/sendToMember")
     public String sendTask(@RequestParam("task_no[]") List<Integer> task_no,
-                                            @RequestParam("member_no[]") List<Integer> member_no,
-                                            @RequestParam ("group_no") Integer group_no, Authentication authentication){
+                           @RequestParam("member_no[]") List<Integer> member_no,
+                           @RequestParam ("group_no") Integer group_no, Authentication authentication){
 
         String member_id = authentication.getName();
         String result = taskService.sendTask(task_no, member_no, group_no, member_id);
@@ -134,15 +134,16 @@ public class EducatorTaskController {
     @GetMapping("/evalDetail")
     @ResponseBody
     public TaskSubmitDTO evalDetail(@RequestParam Integer tasksubmit_no){
-        System.out.println(tasksubmit_no);
         TaskSubmitDTO evalDetail = taskService.evalTaskDetail(tasksubmit_no);
         return evalDetail;
     }
 
     @PostMapping("/eval")
     public String insertEval(@RequestParam String tasksubmit_comment, @RequestParam String tasksubmit_eval,
-                                             @RequestParam Integer group_no, @RequestParam Integer member_no,
-                                             @RequestParam String member_level, @RequestParam Integer tasksend_no){
+                             @RequestParam Integer group_no, @RequestParam Integer member_no,
+                             @RequestParam String member_level, @RequestParam Integer tasksend_no){
+
+        System.out.println(tasksubmit_comment+"1"+tasksubmit_eval+"2"+group_no+"3"+member_no+"4"+member_level+"5"+tasksend_no);
 
         int result = taskService.insertEvaluation(tasksubmit_comment, tasksubmit_eval, group_no, member_no, member_level, tasksend_no);
         System.out.println("check"+result);
