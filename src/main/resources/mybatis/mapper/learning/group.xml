@@ -35,7 +35,7 @@
         ]]>
     </select>
 
-    <!-- 게임 콘텐츠 title 조회 그룹인원 초과된건 조회안되게 학원가서 수정 -->
+    <!-- 게임 콘텐츠 title 조회 -->
     <select id="selectGameTitle" resultType="GroupDTO">
         <![CDATA[
         SELECT DISTINCT g.game_title
@@ -324,20 +324,28 @@
     <!-- 가입신청 내역 목록 -->
     <select id="myjoinList" resultType="GroupDTO">
         <![CDATA[
-        SELECT gm.approve_date, gm.approve_state,
-        g.game_title, g.game_total,
-        sg.group_name
-        FROM groupmember gm
-        JOIN game g ON gm.game_no = g.game_no
-        JOIN studygroup sg ON gm.group_no = sg.group_no
-        WHERE gm.member_no = ;
-         ]]>
-            <if test="group_name != null and group_name != ''">
-                AND sg.group_name = #{group_name}
-            </if>
-            <if test="member_name != null and member_name != ''">
-                AND m.member_name = #{member_name}
-            </if>
+        SELECT
+        gm.approve_date, gm.approve_state,
+        g.game_no, g.game_title, g.game_total, g.game_level, g.game_no,
+        sg.group_no, sg.group_name, sg.group_intro, sg.group_cnt, sg.group_nowcnt, sg.group_startdate, sg.group_enddate,
+        fg.filegame_name
+        FROM
+            groupmember gm
+        JOIN
+            game g ON gm.game_no = g.game_no
+        JOIN
+            studygroup sg ON gm.group_no = sg.group_no
+        LEFT JOIN
+        filegame fg ON gm.game_no = fg.game_no
+        ]]>
+        <if test = "member_name != null and member_name != ''">
+        JOIN
+        member m ON g.member_name = #{member_name}
+        </if>
+        WHERE gm.member_no = #{member_no}
+        <if test="group_name != null and group_name != ''">
+            AND sg.group_name = #{group_name}
+        </if>
         <![CDATA[
         ORDER BY gm.approve_date DESC
         LIMIT #{LIMIT} OFFSET #{OFFSET};
@@ -348,41 +356,56 @@
     <select id="myjoinListCount" resultType="Integer">
         <![CDATA[
         SELECT COUNT(*)
-        FROM groupmember AS gm
-        JOIN studygroup AS sg ON gm.group_no = sg.group_no
-        JOIN game AS g ON g.game_no = sg.game_no
-        JOIN member AS m ON m.member_id = sg.member_id
-        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no};
-        ]]>
+        FROM
+            groupmember gm
+        JOIN
+            game g ON gm.game_no = g.game_no
+        JOIN
+            studygroup sg ON gm.group_no = sg.group_no
+        LEFT JOIN
+        filegame fg ON gm.game_no = fg.game_no
+         ]]>
+        <if test = "member_name != null and member_name != ''">
+            JOIN
+            member m ON g.member_name = #{member_name}
+        </if>
+        WHERE gm.member_no = #{member_no}
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
-        </if>
-        <if test="member_name != null and member_name != ''">
-            AND m.member_name = #{member_name}
         </if>
     </select>
 
     <!-- 가입내역 그룹명 목록 -->
     <select id="myjoinListTitle" resultType="GroupDTO">
         <![CDATA[
-        SELECT DISTINCT sg.group_name
-        FROM groupmember AS gm
-        JOIN studygroup AS sg ON gm.group_no = sg.group_no
-        JOIN game AS g ON g.game_no = sg.game_no
-        JOIN member AS m ON m.member_id = sg.member_id
-        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no};
+        SELECT g.game_title
+        FROM
+            groupmember gm
+        JOIN
+            game g ON gm.game_no = g.game_no
+        JOIN
+            studygroup sg ON gm.group_no = sg.group_no
+        LEFT JOIN
+        filegame fg ON gm.game_no = fg.game_no
+        WHERE gm.member_no = #{member_no}
         ]]>
     </select>
 
     <!-- 가입내역 교육자 목록 -->
     <select id="myjoinListEducator" resultType="GroupDTO">
         <![CDATA[
-        SELECT DISTINCT m.member_name
-        FROM groupmember AS gm
-        JOIN studygroup AS sg ON gm.group_no = sg.group_no
-        JOIN game AS g ON g.game_no = sg.game_no
-        JOIN member AS m ON m.member_id = sg.member_id
-        WHERE CURDATE() <= sg.group_enddate AND gm.member_no = #{member_no};
+        SELECT m.member_name
+        FROM
+            groupmember gm
+        JOIN
+            game g ON gm.game_no = g.game_no
+        JOIN
+            studygroup sg ON gm.group_no = sg.group_no
+        LEFT JOIN
+        filegame fg ON gm.game_no = fg.game_no
+        JOIN
+        member m ON g.member_id = m.member_id
+        WHERE gm.member_no = #{member_no}
         ]]>
     </select>
 </mapper>
