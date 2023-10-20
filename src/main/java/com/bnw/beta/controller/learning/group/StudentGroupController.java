@@ -3,6 +3,7 @@ package com.bnw.beta.controller.learning.group;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
 import jakarta.servlet.http.HttpSession;
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ public class StudentGroupController {
                             @RequestParam(name = "group_name", defaultValue = "") String group_name,
                             @RequestParam(name = "educator_name", defaultValue = "") String educator_name,
                             Model model, HttpSession session){
+
 
         System.out.println(group_name+educator_name);
 
