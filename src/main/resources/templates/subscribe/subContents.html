@@ -39,7 +39,7 @@
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
                                                     <h2>구매금액 : <span th:text="${content.game_price}"></span>원</h2>
-                                                    <h3>구독기간 : <span class="status dateDiff" th:attr="data-startdate=${#dates.format(content.startDate, 'yyyy-MM-dd')}, data-enddate=${#dates.format(content.endDate, 'yyyy-MM-dd')}"></span></h3>
+                                                    <h3>구독기간 : <span class="status dateDiff" th:attr="data-startdate=${#dates.format(content.pay_date, 'yyyy-MM-dd')}, data-enddate=${#dates.format(content.endDate, 'yyyy-MM-dd')}"></span></h3>
                                                     <h4>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h4>
                                                 </div>
                                                 <div class="details">
