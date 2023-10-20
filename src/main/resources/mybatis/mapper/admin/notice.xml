@@ -4,8 +4,8 @@
     <!--게시글 등록-->
     <insert id="insert" parameterType="NoticeDTO" useGeneratedKeys="true" keyProperty="notice_no">
     <![CDATA[
-        INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_id, view_cnt, type, notice_reservation)
-        VALUES (#{notice_title}, #{notice_content}, #{notice_category}, CURRENT_TIMESTAMP, "Y", #{member_id}, 0, #{type},
+        INSERT INTO notice(notice_title, notice_content, notice_category, notice_regdate, notice_isshow, member_name, view_cnt, type, notice_reservation)
+        VALUES (#{notice_title}, #{notice_content}, #{notice_category}, CURRENT_TIMESTAMP, "Y", #{member_name}, 0, #{type},
                 CASE
                     WHEN #{notice_reservation} IS NOT NULL AND #{notice_reservation} != 'null' THEN #{notice_reservation}
                     ELSE NULL
@@ -26,7 +26,7 @@
         <select id="detail" parameterType="Long" resultType="NoticeDTO">
         <![CDATA[
             SELECT n.notice_no, n.notice_title, n.notice_content, n.notice_category,
-                   n.notice_regdate, n.notice_isshow, n.member_id, n.view_cnt
+                   n.notice_regdate, n.notice_isshow, n.member_name, n.view_cnt
             FROM notice n
             WHERE n.notice_no = #{notice_no}
             ]]>
@@ -67,7 +67,7 @@
     <!--게시글 목록 조회-->
     <select id="noticeList"  parameterType="NoticeDTO">
         <![CDATA[
-        SELECT notice_no,notice_category,notice_title,member_id,notice_regdate,view_cnt, type, notice_reservation
+        SELECT notice_no,notice_category,notice_title,member_name,notice_regdate,view_cnt, type, notice_reservation
         FROM notice
         WHERE notice_isshow = 'Y' AND notice_category != 'FAQ' AND (notice_reservation < now() OR notice_reservation is null)
           AND notice_no NOT IN (

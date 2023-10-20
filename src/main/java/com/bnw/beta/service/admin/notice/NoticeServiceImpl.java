@@ -1,22 +1,19 @@
 package com.bnw.beta.service.admin.notice;
-
 import com.bnw.beta.domain.admin.dao.NoticeDAO;
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.admin.dto.NoticeFileDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-
 @Service
 @AllArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
     private final NoticeDAO noticeDAO;
-
     //공지게시판 리스트 조회
     @Override
     public NoticePage noticeList(int pageNum, int size, String searchType, String keyword) {
@@ -24,44 +21,38 @@ public class NoticeServiceImpl implements NoticeService {
         if (pageNum <= 0) {
             pageNum = 1;
         }
-
         //상단고정게시물
         List<NoticeDTO> topNoticeList = noticeDAO.noticeTop();
-
         // 공지게시판 리스트 조회 - 상단고정 게시물과 일반 게시물을 병합
         List<NoticeDTO> allNoticeList = new ArrayList<>();
         allNoticeList.addAll(topNoticeList);
-
         // 일반 게시물 목록을 가져와서 allNoticeList에 추가
         List<NoticeDTO> noticeList = noticeDAO.noticeList(offset, size, searchType, keyword, topNoticeList);
         allNoticeList.addAll(noticeList);
-
         int listCnt = noticeDAO.listCnt(searchType, keyword);
-
         NoticePage noticePage = new NoticePage(listCnt, pageNum, size, allNoticeList, topNoticeList, searchType, keyword);
         noticePage.setListCnt(listCnt);
         noticePage.setAllNoticeList(noticeList);
         return noticePage;
     }
-
     //상단 고정 게시물
     @Override
     public List<NoticeDTO> getTopNoticeList() {
         return noticeDAO.noticeTop();
     }
-
     //총 게시글 개수 확인
     @Override
     public int listCnt(String searchType, String keyword) {
         return this.noticeDAO.listCnt(searchType, keyword);
     }
-
     //공지게시판 글 등록
     @Override
     public void insert(NoticeDTO noticeDTO, MultipartFile[] file,
-                       String type, Date timeWrite) throws IOException {
+                       String type, Date timeWrite,HttpSession session) throws IOException {
 
-        System.out.println("dd" + timeWrite);
+        //세션에서 이름 불러오기
+        String member_name = (String) session.getAttribute("member_name");
+        noticeDTO.setMember_name(member_name);
         noticeDTO.setType(type);
         if (timeWrite != null) {
             java.sql.Date TimeWrite = new java.sql.Date(timeWrite.getTime());
@@ -95,17 +86,14 @@ public class NoticeServiceImpl implements NoticeService {
             }
         }
     }
-
     //공지게시판 상세조회
     @Override
     public NoticeDTO detail(Long notice_no) {
         NoticeDTO noticeDTO = noticeDAO.detail(notice_no);
         List<NoticeFileDTO> fileList = noticeDAO.getNoticeFiles(notice_no);
         noticeDTO.setNoticeFiles(fileList);
-
         return noticeDTO;
     }
-
     //공지게시판 수정
     @Override
     public int update(Long notice_no, NoticeDTO noticeDTO, MultipartFile[] file) throws IOException {
@@ -113,7 +101,6 @@ public class NoticeServiceImpl implements NoticeService {
         String path = "C:/uploadfile/notice_img/";
         if (file != null && file[0] != null && !file[0].isEmpty()) {
             File directory = new File(path);
-
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -140,7 +127,6 @@ public class NoticeServiceImpl implements NoticeService {
                     String savedPath = path + reName;
                     File savedFile = new File(path, reName);
                     nofile.transferTo(savedFile);
-
                     NoticeFileDTO noticeFileDTO = new NoticeFileDTO();
                     noticeFileDTO.setFile_name(originName);
                     noticeFileDTO.setFile_rename(reName);
@@ -153,14 +139,11 @@ public class NoticeServiceImpl implements NoticeService {
         // 글 업데이트
         return noticeDAO.update(noticeDTO);
     }
-
-
     //공지게시판 삭제
     @Override
     public void delete(Long notice_no) {
         noticeDAO.delete(notice_no);
     }
-
     //조회수 증가 + 중복 방지
     @Override
     public void viewCnt(NoticeDTO noticeDTO) {
