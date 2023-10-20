@@ -107,31 +107,57 @@ document.addEventListener('DOMContentLoaded', function() {
     window.onscroll = scrollFunction;
 
     // 아작스로 추가 데이터 불러오기
-    var offset = 0;
+     var offset = 0;
 
-    $("#moreBtn").click(function() {
-        offset += 1;
-        var title = $("#title").val();
-        $.ajax({
-            url: "/game/list",
-            type: "POST",
-            data: {
-                offset: offset,
-                title: title
-            },
-            dataType: "json",
-            success: function(response) {
-                response.forEach(item => {
-                    $(".list-box").append(`
-                        <li>
-                            <!-- ... 기존의 코드 ... -->
-                        </li>
-                    `);
-                });
-                updateLiCount();
-            }
+        $("#moreBtn").click(function() {
+            offset += 1;
+            var title = $("#title").val();
+            $.ajax({
+                url: "/game/list",
+                type: "POST",
+                data: {
+                    offset: offset,
+                    title: title
+                },
+                dataType: "json",
+                success: function(response) {
+                    response.forEach(item => {
+                        $(".list-box").append(`
+                            <li>
+                                <div class="checkbox">
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" class="checkbox-input" data-game-no="${item.game_no}" name="game_nos" value=${item.game_no} />
+                                        <span class="checkbox-tile">
+                                        <div class="card">
+                                            <div class="poster"><img class="image" src="/image/game/${item.filegame_name || 'noimage.png'}" alt="${item.filegame_name || 'No Image'}"></div>
+                                            <div class="card-details"></div>
+                                            <div class="details">
+                                                <h5>컨텐츠 이름 : <span>${item.game_title}</span></h5>
+                                                <h5>구매금액 : <span>${item.game_sell}원</span></h5>
+                                                <h5>구독기간 : <span>${item.game_date}개월</span></h5>
+                                                <h5>그룹가능인원  : 50명</h5>
+                                            </div>
+                                            <div class="backDetails">
+                                                <div class="detaillist">
+                                                    <h5>난이도 : <span>${item.game_level}</span></h5>
+                                                    <h5>총인원 : <span>${item.game_total}명</span></h5>
+                                                    <h5>가격 : <span>${item.game_price}원</span></h5>
+                                                    <h5>할인 : <span>${item.game_discount}%</span></h5>
+                                                    <h5>판매가 : <span>${item.game_sell}원</span></h5>
+                                                    <h6>상품상세설명 : <span>${item.game_content}</span></h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </span>
+                                    </label>
+                                </div>
+                            </li>
+                        `);
+                    });
+                    updateLiCount();
+                }
+            });
         });
-    });
 
     //현재 체크박스 갯수 업데이트
     $(document).ready(function() {
