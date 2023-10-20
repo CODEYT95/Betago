@@ -3,6 +3,7 @@ package com.bnw.beta.service.member;
 import com.bnw.beta.config.vaildation.member.JoinForm;
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

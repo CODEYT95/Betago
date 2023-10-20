@@ -157,7 +157,7 @@ public class MemberController {
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(name = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "3") int size,
+            @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "searchType", defaultValue = "") String searchType,
             @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
             @RequestParam(value = "searchType3", defaultValue = "") String searchType3,

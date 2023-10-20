@@ -21,7 +21,10 @@ import java.util.UUID;
 
 @Component
 public class FileUtils  {
-    private final String uploadPath = Paths.get("C:", "develop", "upload-files").toString();
+
+    String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
+    Path uploadPath2 = Paths.get(projectDir, "src", "main", "resources", "static", "file", "admin");
+    private final String uploadPath = String.valueOf(uploadPath2);
 /*
      * 다중 파일 업로드
      * @param multipartFiles - 파일 객체 List
@@ -52,10 +55,9 @@ public class FileUtils  {
 
         String saveName = generateSaveFilename(multipartFile.getOriginalFilename());
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
-        String uploadPath = getUploadPath(today) + File.separator + saveName;
+        String UploadPath = uploadPath+File.separator + saveName;
 
-
-        File uploadFile = new File(uploadPath);
+        File uploadFile = new File(UploadPath);
 
         try {
             multipartFile.transferTo(uploadFile);
@@ -83,40 +85,6 @@ public class FileUtils  {
     }
 
 /**
-     * 업로드 경로 반환
-     * @return 업로드 경로
-     */
-
-    private String getUploadPath() {
-        return makeDirectories(uploadPath);
-    }
-
-/*
-*
-     * 업로드 경로 반환
-     * @param addPath - 추가 경로
-     * @return 업로드 경로
-
-*/
-
-    private String getUploadPath(final String addPath) {
-        return makeDirectories(uploadPath + File.separator + addPath);
-    }
-/*
-*
-     * 업로드 폴더(디렉터리) 생성
-     * @param path - 업로드 경로
-     * @return 업로드 경로
-
-*/
-    private String makeDirectories(final String path) {
-        File dir = new File(path);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir.getPath();
-    }
-
     /**
      * 파일 삭제 (from Disk)
      * @param files - 삭제할 파일 정보 List
@@ -156,9 +124,8 @@ public class FileUtils  {
      * @return 첨부파일(리소스)
      */
     public Resource readFileAsResource(final FilepostDTO file) {
-        String uploadedDate = file.getEdupost_date().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
         String filename = file.getEdupost_rename();
-        Path filePath = Paths.get(uploadPath, uploadedDate, filename);
+        Path filePath = Paths.get(uploadPath, filename);
         try {
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() == false || resource.isFile() == false) {
