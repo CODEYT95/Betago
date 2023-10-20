@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -133,12 +135,11 @@ public class QuestionServiceImpl implements QuestionService {
     /*파일삭제*/
 
 
-    /*이미지 파일 업로드*/
-    private final String UPLOAD_DIR = "C:/uploadfile/question_img/";
-
     public String storeFile(MultipartFile file) {
+        String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
+        Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "question");
         String originalFilename = file.getOriginalFilename();
-        String storedPath = UPLOAD_DIR + "/" + originalFilename;
+        String storedPath = uploadPath + "/" + originalFilename;
 
         try {
             file.transferTo(new File(storedPath));
