@@ -155,28 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         </li>
                     `);
                 });
-                updateLiCount();
             }
         });
     });
     //현재 체크박스 갯수 업데이트
-        $(document).ready(function() {
-            updateLiCount();
-        });
-
-        function updateLiCount() {
-            var liCount = $(".list-box li").length;
-            $(".currentCnt").text(liCount);
-
-            var currentCountElement = document.querySelector('.currentCnt');
-            var totalCountElement = document.querySelector('.totalCnt');
-
-            var moreButton = document.getElementById('moreBtn');
-
-            if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
-                moreButton.style.display = 'none';
-            } else {
-                moreButton.style.display = 'block';
-            }
-        }
 });
