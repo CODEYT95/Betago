@@ -177,6 +177,7 @@ h1, h2, h3, h4{
     position: absolute;
     white-space: nowrap;
     width: 1px;
+    display: block;
 
 &:checked + .checkbox-title {
     border-color: #2260ff;
@@ -203,7 +204,7 @@ h1, h2, h3, h4{
     }
 }
 
-.checkbox-tilte {
+.checkbox-title {
     display: flex;
     flex-direction: row;
     width: 286px;
@@ -211,7 +212,7 @@ h1, h2, h3, h4{
     border-radius: 11px;
     border: 3px solid #b5bfd9;
     background-color: #fff;
-    box-shadow: 0 5px 10px rgba(#000, 0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     transition: 0.15s ease;
     cursor: pointer;
     position: relative;
