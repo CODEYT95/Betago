@@ -21,8 +21,8 @@ public class SubContentsController {
     private SubContentsService subContentsService;
 
     @GetMapping("/list")
-    public String mycontentsList(@RequestParam(name = "startDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-                                 @RequestParam(name = "endDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+    public String mycontentsList(@RequestParam(name = "startDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                 @RequestParam(name = "endDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
                                  Model model, Principal principal) {
 
         String member_id = principal.getName();
@@ -31,11 +31,17 @@ public class SubContentsController {
         subContentsDTO.setMember_id(member_id);
         Date pay_date = new Date();
 
-        subContentsDTO.setPay_date(pay_date);
-        subContentsDTO.setEndDate(endDate);
+        System.out.println(startDate+"ss"+endDate);
 
-        model.addAttribute("pay_date",pay_date);
-        model.addAttribute("endDate",endDate);
+        java.sql.Date sqlStartDate = startDate != null ? new java.sql.Date(startDate.getTime()) : null;
+        java.sql.Date sqlEndDate = endDate != null ? new java.sql.Date(endDate.getTime()) : null;
+
+
+        subContentsDTO.setPay_date(sqlStartDate);
+        subContentsDTO.setEndDate(sqlEndDate);
+
+        model.addAttribute("pay_date", sqlStartDate);
+        model.addAttribute("endDate", sqlEndDate);
 
         List<subContentsDTO> contentsList = subContentsService.selectContents(subContentsDTO);
         System.out.println(contentsList);
