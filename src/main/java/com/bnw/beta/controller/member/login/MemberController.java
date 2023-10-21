@@ -12,8 +12,8 @@ import com.bnw.beta.service.admin.notice.NoticeService;
 import com.bnw.beta.service.member.MailSendServiceImpl;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class MemberController {
     //시큐리티 통해서 로그인폼 보여주기
     @GetMapping("/login")
     public String login(Principal principal, HttpSession session) {
-        System.out.println("실패");
+
         return "member/login/login_form";
     }
 
@@ -170,26 +169,6 @@ public class MemberController {
         return null;
     }
 
-
-
-
-    /*@PostMapping("/findPw")
-    public String findPw(@RequestParam("id") String id,
-                         @RequestParam("email") String email, Model model) {
-        // 서비스 계층을 통해 아이디 찾기 로직 처리
-        MemberDTO memberDTO = memberService.findPw(id, email);
-        if (memberDTO != null) {
-            // 아이디 찾기에 성공한 경우, 결과를 모델에 추가
-            model.addAttribute("memberDTO", memberDTO);
-        } else {
-            // 실패한 경우 (일치하는 사용자 없음)
-            model.addAttribute("findPwFail", true);
-        }
-        return "member/login/findPw";
-    }*/
-
-
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -236,7 +215,8 @@ public class MemberController {
     }
 
     @GetMapping("/user")
-    public @ResponseBody String user() {
+    @ResponseBody
+    public  String user() {
         return "user";
     }
 

@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function (events) {
 function fetchData() {
     var startDate = document.getElementById("startDate").value;
-    var endDate = document.getElementById("end
-    Date").value;
+    var endDate = document.getElementById("endDate").value;
 
     // startDate, endDate 중 하나라도 비어있을 경우에 알림 메시지 표시 및 폼 제출 방지
     if (!startDate || !endDate) {

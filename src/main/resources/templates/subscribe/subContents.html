@@ -18,10 +18,8 @@
             <form action="/list" method="get" class="form-container">
                 <div class="mycontents-date">
                     구매기간 :
-                    <input type="date" id="startDate" data-placeholder="날짜 선택"
-                           required name="startDate"  /> ~
-                    <input type="date" data-placeholder="날짜 선택"
-                           required id="endDate" name="endDate"  />
+                    <input type="date" id="startDate" th:value="${pay_date}" data-placeholder="날짜 선택" required name="startDate"/> ~
+                    <input type="date" data-placeholder="날짜 선택" th:value="${endDate}" required id="endDate" name="endDate"  />
                     <input type="submit" value="조회하기" class="submit-button" onclick="fetchData(events)" />
                     <input type="button" value="구독취소" id="paymentButton" disabled class="submit-button" />
                 </div>
@@ -38,7 +36,7 @@
                                                 <img th:src="@{'/image/baduk.png'}">
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
-                                                    <h1>구매금액 : <span th:text="${content.game_price}"></span>원</h1>
+                                                    <h1>구매금액 : <span th:text="${content.game_sell}"></span>원</h1>
                                                     <h1>구독기간 : <span th:text="${content.game_date}"></span>개월</h1>
                                                     <h1>구매일자 : <span th:text="${#dates.format(content.pay_date, 'yyyy-MM-dd')}"></span></h1>
                                                 </div>

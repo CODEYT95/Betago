@@ -2,7 +2,6 @@ package com.bnw.beta.domain.subscribe.dto;
 
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 //나의 구독상품 조회
@@ -12,6 +11,7 @@ public class subContentsDTO {
     private int pay_no;
     private int group_no;
     private int game_price;
+    private int game_sell;
     private Date pay_date;
     private String game_date;
     private String pay_type;
@@ -19,5 +19,5 @@ public class subContentsDTO {
     private String group_name;
     private String game_title;
     private String game_level;
-    private LocalDate endDate;
+    private Date endDate;
 }

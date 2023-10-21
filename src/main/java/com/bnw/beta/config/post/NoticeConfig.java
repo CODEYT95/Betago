@@ -15,8 +15,7 @@ public class NoticeConfig implements WebMvcConfigurer {
         String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
         Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "game");
 
-
-        registry.addResourceHandler("/image/notice/**")
-                .addResourceLocations("file:///C:/Users/Jin/Desktop/BetaPro/beta/src/main/resources/static/image/notice/");
+        registry.addResourceHandler("/image/game/**")
+                .addResourceLocations("file:///"+uploadPath+"/");
     }
 }
