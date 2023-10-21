@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // '구독' 버튼 클릭 시 실행되는 함수
+     // '구독' 버튼 클릭 시 실행되는 함수
     function handleSubscribeButtonClick(e) {
         const selectedGameNo = Array.from(document.querySelectorAll('.checkbox-input:checked'))
             .map(cb => cb.getAttribute('data-game-no'))
