@@ -21,6 +21,7 @@ public class GroupDTO {
     private String group_intro;
     private Date group_startdate;
     private Date group_enddate;
+    private String approve_state;
     private int group_cnt;
     private int group_nowcnt;
     private String member_id;

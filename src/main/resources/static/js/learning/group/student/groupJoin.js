@@ -35,14 +35,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     var remainingTo = item.group_cnt - item.group_nowcnt;
                     console.log(remainingTo);
                         $(".content-container ul").append(`
-                            <li class="joinList">
+                            <li data-game-no="${item.group_no}">
                                 <input hidden="hidden" class="attr" data-group-name=${item.group_name} data-game-no=${item.game_no} data-group-no=${item.group_no} data-member-no=${item.member_no}>
                                 <div class="checkbox">
                                     <label class="checkbox-wrapper">
                                         <input type="checkbox" class="checkbox-input" data-game-no=${item.game_no} data-group-no=${item.group_no} data-group-name=${item.group_name}/>
                                         <span class="checkbox-title">
                                             <div class="card">
-                                                <div class="poster"><img src="/image/noimage.png"></div>
+                                                <div class="poster"><img src="/image/game/${item.filegame_name}"></div>
                                                 <div class="card-details"></div>
                                                 <div class="details">
                                                     <h5>그룹명 : <span class="group_name">${item.group_name}</span></h5>
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 </div>
                                                 <div class="backDetails">
                                                     <div class="detaillist">
-                                                        <h6>상품상세설명 : <span></span></h6>
+                                                        <h6>그룹 설명 : <span>${item.group_intro}</span></h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -107,7 +107,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var url = "";
 
-            if(groupName === "전체" && educatorName !== "전체") {
+            if(groupName === "전체" && educatorName === "전체") {
+                url = "/student/group/joinList"
+
+            } else if(groupName === "전체" && educatorName !== "전체") {
                 url = "/student/group/joinList?educator_name=" + encodeURIComponent(educatorName);
 
             } else if(educatorName === "전체" && groupName !== "전체") {
@@ -146,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             let selectedOption = $(this).find('.option-text').text();
             if (educatorSBtnText.text() !== '전체' && selectedOption !== '전체') {
-                alert('둘 중 하나만 선택할 수 있습니다.');
+                alert('검색 옵션은 둘 중 하나만 선택이 가능합니다.');
                 educatorOptions.removeClass('selected');
                 groupOptions.removeClass('selected');
                 educatorSBtnText.text('전체');
@@ -163,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             let selectedOption = $(this).find('.option-text-educator').text();
             if (groupSBtnText.text() !== '전체' && selectedOption !== '전체') {
-                alert('둘 중 하나만 선택할 수 있습니다.');
+                alert('검색 옵션은 둘 중 하나만 선택이 가능합니다.');
                 educatorOptions.removeClass('selected');
                 groupOptions.removeClass('selected');
                 groupSBtnText.text('전체');

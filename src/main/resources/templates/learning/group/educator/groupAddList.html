@@ -45,7 +45,7 @@
                                 <input type="checkbox" class="checkbox-input"  th:attr="data-pay-no=${groupAddList.pay_no}"/>
                                 <span class="checkbox-tile">
                                 <div class="card">
-                                    <div class="poster"><img th:src="@{/image/baduk.png}"></div>
+                                    <div class="poster"><img th:src="@{|/image/game/${groupAddList.filegame_name}|}"></div>
                                     <div class="card-details"></div>
                                     <div class="details">
                                         <h5>게임 콘텐츠 : <span th:text="${groupAddList.game_title}"></span></h5>
