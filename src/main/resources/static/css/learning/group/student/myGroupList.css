@@ -100,7 +100,52 @@
 .select-menu-educator.active .options {
     width: auto;
     z-index: 4;
-    max-height: max-content;
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.select-menu-group.active .options::-webkit-scrollbar {
+    background-color:#fff;
+    width:16px;
+}
+
+.select-menu-group.active .options::-webkit-scrollbar-track {
+    background-color:#fff
+}
+.select-menu-group.active .options::-webkit-scrollbar-track:hover {
+    background-color:#f4f4f4
+}
+
+.select-menu-group.active .options::-webkit-scrollbar-thumb {
+    background-color:#babac0;
+    border-radius:16px;
+    border:5px solid #fff
+}
+.select-menu-group.active .options::-webkit-scrollbar-thumb:hover {
+    background-color:#a0a0a5;
+    border:4px solid #f4f4f4
+}
+
+.select-menu-educator.active .options::-webkit-scrollbar {
+    background-color:#fff;
+    width:16px;
+}
+
+.select-menu-educator.active .options::-webkit-scrollbar-track {
+    background-color:#fff
+}
+.select-menu-educator.active .options::-webkit-scrollbar-track:hover {
+    background-color:#f4f4f4
+}
+
+.select-menu-educator.active .options::-webkit-scrollbar-thumb {
+    background-color:#babac0;
+    border-radius:16px;
+    border:5px solid #fff
+}
+.select-menu-educator.active .options::-webkit-scrollbar-thumb:hover {
+    background-color:#a0a0a5;
+    border:4px solid #f4f4f4
 }
 
 @keyframes slideDown {
@@ -130,12 +175,11 @@
 
 .card {
     position: relative;
-    width: 126%;
+    width: 100%;
     border-radius: 7px;
     overflow: hidden;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
-
 
 .poster{
     object-fit: cover;
@@ -147,7 +191,9 @@
     justify-content: center;
     border-radius: 10px;
     width: 100%;
+    height: 266PX;
 }
+
 
 .details {
     position: relative;
@@ -160,7 +206,7 @@
     font-size: 20px;
 }
 .details h5{
-    font-size: 14px;
+    font-size: 13px;
     font-weight: normal;
     width: max-content;
     margin: 0px 0px 10px;

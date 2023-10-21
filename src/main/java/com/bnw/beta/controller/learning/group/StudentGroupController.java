@@ -28,6 +28,7 @@ public class StudentGroupController {
 
         int limit = 6;
 
+        System.out.println(groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset));
         model.addAttribute("joinList", 1);
         model.addAttribute("groupTitle", group_name);
         model.addAttribute("educatorTitle", educator_name);
@@ -50,8 +51,6 @@ public class StudentGroupController {
 
         int limit = 6;
 
-        System.out.println(groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset));
-
         return groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset);
     }
 
@@ -68,7 +67,7 @@ public class StudentGroupController {
             return "applyable";
 
         }else{
-            System.out.println("실패");
+
             return "unapplyable";
         }
 
@@ -86,7 +85,7 @@ public class StudentGroupController {
         System.out.println(member_no);
         System.out.println(groupService.myjoinListTitle(member_no));
 
-        int limit = 1;
+        int limit = 6;
 
         model.addAttribute("myJoinList", 1);
         model.addAttribute("groupTitle", group_name);
@@ -95,6 +94,9 @@ public class StudentGroupController {
         model.addAttribute("educator", groupService.myjoinListEducator(member_no));//나중에 title이랑 합치기 중복됨
         model.addAttribute("totalCnt", groupService.myjoinListCount(member_no, group_name, educator_name));
         model.addAttribute("groupJoinList", groupService.myjoinList(member_no, group_name, educator_name, limit, offset));
+
+        System.out.println(groupService.myjoinList(member_no, group_name, educator_name, limit, offset));
+        System.out.println(groupService.myjoinListTitle(member_no));
 
         return "/learning/group/student/myGroupList";
     }
@@ -111,8 +113,8 @@ public class StudentGroupController {
 
         int member_no = (int) session.getAttribute("member_no");
 
-        int limit = 1;
+        int limit = 6;
 
-        return groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset);
+        return groupService.myjoinList(member_no, group_name, educator_name, limit, offset);
     }
 }

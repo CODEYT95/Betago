@@ -161,6 +161,9 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDTO> selectJoinGroup(int member_no, String group_name, String educator_name, int limit, int offset){
 
+        if (group_name.equals("전체")){
+            group_name="";
+        }
 
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setMember_no(member_no);
@@ -174,6 +177,10 @@ public class GroupServiceImpl implements GroupService {
     //그룹 가입신청 가능한 목록 갯수
     @Override
     public int joinGroupCount(int member_no, String educator_name, String group_name){
+
+        if (group_name.equals("전체")){
+            group_name="";
+        }
 
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setMember_no(member_no);
@@ -221,6 +228,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDTO> myjoinList(int member_no, String group_name, String educator_name, int limit, int offset){
 
+        if (group_name.equals("전체")){
+            group_name="";
+        }
+
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setMember_no(member_no);
         groupDTO.setGroup_name(group_name);
@@ -234,6 +245,10 @@ public class GroupServiceImpl implements GroupService {
     //가입신청 내역 목록 갯수
     @Override
     public int myjoinListCount(int member_no, String group_name, String educator_name){
+
+        if (group_name.equals("전체")){
+            group_name="";
+        }
 
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setMember_no(member_no);

@@ -47,8 +47,6 @@ public class EducatorGroupController {
                                        @RequestParam(name = "title", defaultValue = "",required = false) String game_title,
                                        Principal principal) {
 
-        System.out.println("들어옴"+game_title);
-
         int limit = 6;
 
         return groupService.groupAddList(principal.getName(), game_title, limit, offset);
@@ -108,7 +106,7 @@ public class EducatorGroupController {
     //그룹 학습자 가입 승인
     @GetMapping("approveList")
     public String approveStudent(@RequestParam(value = "page", defaultValue = "1") int page,
-                                 @RequestParam(value = "size", defaultValue = "1") int size,
+                                 @RequestParam(value = "size", defaultValue = "5") int size,
                                  @RequestParam(value = "group_no", required = false) Integer group_no,
                                  Model model, Principal principal){
 
@@ -120,7 +118,6 @@ public class EducatorGroupController {
         model.addAttribute("check",group_no);
         if(group_no != null){
             model.addAttribute("groupInfo",groupService.selectGroupInfo(group_no));
-            System.out.println("여기들어옴"+groupService.selectGroupInfo(group_no));
         }
         model.addAttribute("approveList",1);
         return "/learning/group/educator/joinApprove";

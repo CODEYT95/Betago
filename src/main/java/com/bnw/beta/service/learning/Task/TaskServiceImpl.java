@@ -7,14 +7,13 @@ import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
 import lombok.RequiredArgsConstructor;
+import okhttp3.internal.concurrent.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -42,17 +41,14 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public int createTask(String member_id, String task_title, String task_content, String task_chapter, String task_deadline) {
 
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(task_deadline, formatter);
-        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+        java.sql.Date endDate = java.sql.Date.valueOf(task_deadline);
 
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setMember_id(member_id);
         taskDTO.setTask_title(task_title);
         taskDTO.setTask_content(task_content);
         taskDTO.setTask_chapter(task_chapter);
-        taskDTO.setTask_deadline(sqlDate);
+        taskDTO.setTask_deadline(endDate);
 
         return taskDAO.createTask(taskDTO);
     }

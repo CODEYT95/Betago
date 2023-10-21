@@ -5,7 +5,7 @@ import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
-import com.bnw.beta.service.learning.Task.TaskService;
+import com.bnw.beta.service.learning.Task.*;
 import io.lettuce.core.ScriptOutputType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -45,10 +45,9 @@ public class EducatorTaskController {
                            @RequestParam String task_chapter, @RequestParam String year,
                            @RequestParam String month, @RequestParam String day, Model model,
                            Authentication authentication) {
+
         String member_id = authentication.getName();
         String task_deadline = year + "-" + month + "-" + day;
-
-        System.out.println("test" + task_deadline);
 
         int result = taskService.createTask(member_id, task_title, task_content, task_chapter, task_deadline);
 

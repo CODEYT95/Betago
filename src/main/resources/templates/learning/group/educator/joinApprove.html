@@ -108,13 +108,13 @@
                             <div class="pagingNum">
                                 <ul class="pagination-container" id="pagination">
                                     <li th:if="${GroupPageDTO.startPage > 5}" class="page-item">
-                                        <a class="page-link" th:with="prevPage=${GroupPageDTO.startPage - 1}" th:href="@{/educator/group/approveList(page=${prevPage})}">Prev</a>
+                                        <a class="page-link" th:with="prevPage=${GroupPageDTO.startPage - 1}" th:href="@{/educator/group/approveList(page=${prevPage}, group_no=${check})}">Prev</a>
                                     </li>
                                     <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(GroupPageDTO.startPage, GroupPageDTO.endPage)}" class="page-item">
-                                        <a th:href="@{/educator/group/approveList(page=${pageNum})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                        <a th:href="@{/educator/group/approveList(page=${pageNum}, group_no=${check})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
                                     </li>
                                     <li th:if="${GroupPageDTO.endPage < GroupPageDTO.totalPages}" class="page-item">
-                                        <a class="page-link" th:with="nextPage=${GroupPageDTO.startPage + 5}" th:href="@{/educator/group/approveList(page=${nextPage})}">Next</a>
+                                        <a class="page-link" th:with="nextPage=${GroupPageDTO.startPage + 5}" th:href="@{/educator/group/approveList(page=${nextPage}, group_no=${check})}">Next</a>
                                     </li>
                                 </ul>
                             </div>

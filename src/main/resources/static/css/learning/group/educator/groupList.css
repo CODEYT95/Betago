@@ -243,6 +243,9 @@ svg {
 }
 
 .modal-header h2, .modal-header .select-menu-group, .modal-header .search-btn{
+    width: 95%;
+    justify-content: space-evenly;
+    display: flex;
     font-size: 16px;
     margin: 0;
 }
@@ -445,4 +448,45 @@ svg {
 
 .modal-btn-container{
     margin: 0;
+}
+
+.no-student-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.no-student-modal .modal-wrap {
+    position: relative;
+    top: 30%;
+    height: auto;
+    width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.no-student-modal .modal-content p {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.confirm-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirm-btn:hover {
+    background-color: #0056b3;
 }
