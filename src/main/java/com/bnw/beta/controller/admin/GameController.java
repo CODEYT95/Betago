@@ -50,7 +50,7 @@ public class GameController {
         Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "game");
 
         if (!imageFile.isEmpty()) {
-            String fileName = imageFile.getOriginalFilename();
+            String fileName = imageFile.getOriginalFilename()+principal.getName();
             String filePath = String.valueOf(uploadPath.resolve(fileName));
             try {
                 GameFileDTO gameFileDTO = new GameFileDTO();
@@ -76,7 +76,6 @@ public class GameController {
                             Model model) {
 
         int limit = 6;
-
         model.addAttribute("gameList", gameService.selectGameList(game_title, limit, offset));
         model.addAttribute("gameTitle", gameService.selectGameTitle());
         model.addAttribute("totalCount", gameService.countGameList(game_title));

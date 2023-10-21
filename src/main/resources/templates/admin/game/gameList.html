@@ -23,7 +23,7 @@
 
             <div class="gameContent-search">
                 <form th:action="@{/game/searchByTitle}" method="get" class="form-container" id="searchForm">
-                <div class="searchReq">
+                    <div class="searchReq">
                         <select name="game_title"  class="titlelist" id="gameTitleSelect">
                             <option selected value = "">게임 선택</option>
                             <option th:each="game : ${gameTitle}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
@@ -43,7 +43,7 @@
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
                                 <span class="checkbox-title">
                                 <div class="card">
-                                    <div class="poster"><img th:src="@{/image/baduk.png}"></div>
+                                    <div class="poster"><img class="image" th:src="@{|/image/game/${content.filegame_name}|}" th:alt="${content.filegame_name}"></div>
                                     <div class="card-details"></div>
                                     <div class="details">
                                         <h5>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h5>
