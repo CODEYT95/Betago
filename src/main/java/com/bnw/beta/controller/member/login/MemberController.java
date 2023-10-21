@@ -1,17 +1,19 @@
 package com.bnw.beta.controller.member.login;
 
 import com.bnw.beta.config.vaildation.member.PasswordUtils;
+import com.bnw.beta.domain.admin.dto.GameDTO;
+import com.bnw.beta.domain.admin.dto.NoticeDTO;
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
-import com.bnw.beta.service.member.MailSendServiceImpl;
-import com.bnw.beta.domain.member.dao.MemberDAO;
-import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.service.admin.FAQ.FAQService;
+import com.bnw.beta.service.admin.game.GameService;
+import com.bnw.beta.service.admin.notice.NoticeService;
 import com.bnw.beta.service.member.MailSendServiceImpl;
 import com.bnw.beta.service.member.MemberService;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,35 +26,34 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
 public class MemberController {
     private final MemberService memberService;
+    private final NoticeService noticeService;
+    private final GameService gameService;
+
+
+
+
     @Autowired
     private MailSendServiceImpl mailSendService;
     @Autowired
     private MemberDAO memberDAO;
+    @Autowired
+    private FAQService faqService;
 
     @Autowired
-    public MemberController(MemberService memberService, MailSendServiceImpl mailSendService, MemberDAO memberDAO) {
+    public MemberController(MemberService memberService, NoticeService noticeService, GameService gameService,  MailSendServiceImpl mailSendService, MemberDAO memberDAO) {
         this.memberService = memberService;
+        this.noticeService = noticeService;
+        this.gameService = gameService;
         this.mailSendService = mailSendService;
         this.memberDAO = memberDAO;
     }
-
-/*    @RequestMapping("/")
-    public String username(Model model) {
-        // 사용자 인증 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
-            String username = authentication.getName();
-            model.addAttribute("username", username); // 모델에 username을 추가합니다.
-        }
-        return "header";  // 이 부분은 thymeleaf 템플릿 파일의 이름과 일치해야 합니다 (예: index.html).
-    }*/
 
     //시큐리티 통해서 로그인폼 보여주기
     @GetMapping("/login")
@@ -168,31 +169,31 @@ public class MemberController {
         return null;
     }
 
-
-
-
-    /*@PostMapping("/findPw")
-    public String findPw(@RequestParam("id") String id,
-                         @RequestParam("email") String email, Model model) {
-        // 서비스 계층을 통해 아이디 찾기 로직 처리
-        MemberDTO memberDTO = memberService.findPw(id, email);
-        if (memberDTO != null) {
-            // 아이디 찾기에 성공한 경우, 결과를 모델에 추가
-            model.addAttribute("memberDTO", memberDTO);
-        } else {
-            // 실패한 경우 (일치하는 사용자 없음)
-            model.addAttribute("findPwFail", true);
-        }
-        return "member/login/findPw";
-    }*/
-
-
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping({"","/"})
     public String index(Principal principal, HttpSession session, Model model) {
+
+        NoticeDTO noticeDTO = new NoticeDTO();
+
+
+        List<GameDTO> gameList = gameService.selectAll();
+        gameList = gameList.subList(0, Math.min(gameList.size(), 6));
+        model.addAttribute("gameList", gameList);
+
+        List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
+        if (topNoticeList.size() > 5) {
+            topNoticeList = topNoticeList.subList(0, 5);
+        }
+        model.addAttribute("topNoticeList", topNoticeList);
+
+        List<NoticeDTO> faqList = faqService.faqAll();
+        if (faqList.size() > 5) {
+            faqList = faqList.subList(0, 5);
+        }
+        model.addAttribute("faqList", faqList);
+
 
         if (principal != null) {
             session.setAttribute("member_no", memberService.getMemberInfo(principal.getName()).getMember_no());
@@ -214,7 +215,8 @@ public class MemberController {
     }
 
     @GetMapping("/user")
-    public @ResponseBody String user() {
+    @ResponseBody
+    public  String user() {
         return "user";
     }
 

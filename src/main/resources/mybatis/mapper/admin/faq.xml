@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bnw.beta.domain.admin.dao.FaqDAO">
 
+    <select id="faqAll" resultType="NoticeDTO">
+        <![CDATA[
+        SELECT * FROM notice
+        WHERE notice_category = 'FAQ'
+        ORDER BY type = 'upView' DESC, notice_regdate DESC
+        ]]>
+    </select>
+
     <select id="faqList" parameterType="NoticeDTO">
         <![CDATA[
         SELECT * FROM notice
