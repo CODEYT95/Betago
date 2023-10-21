@@ -14,6 +14,9 @@ import java.util.List;
 @Mapper
 @Repository
 public interface GameDAO {
+
+    List<GameDTO> selectAll();
+
     //게임콘텐츠 등록
     int insertGame(GameDTO dto);
 

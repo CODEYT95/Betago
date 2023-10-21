@@ -18,6 +18,9 @@ public interface GameService {
     int insertGameImage(GameFileDTO gameFileDTO);
 
     //게임콘텐츠 조회
+    List<GameDTO> selectAll();
+
+    //게임콘텐츠 조회
     List<GameDTO> selectGameList(String game_title, int limit, int offset);
 
     //게임콘텐츠 제목 조회

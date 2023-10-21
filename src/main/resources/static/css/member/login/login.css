@@ -140,6 +140,7 @@ position: absolute;
   background-color: #222;
   padding: 17px 60px;
   margin: 0 auto;
+  margin-bottom: 37px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.20);
 }
 
@@ -170,7 +171,6 @@ position: absolute;
 
 /* 부가 링크 스타일 */
 .links {
-  margin-top: 45px; /* 링크 위의 간격 */
   text-align: center; /* 센터 정렬 */
 }
 

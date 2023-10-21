@@ -32,7 +32,7 @@
                     </div>
                 </form>
                 <div class="subscribe">
-                    <button id="subscribeButton" disabled class="submit-button">구독하기</button>
+                    <button id="subscribeButton" class="submit-button">구독하기</button>
                 </div>
             </div>
             <div class="content-container">
@@ -41,7 +41,7 @@
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
-                                <span class="checkbox-tile">
+                                <span class="checkbox-title">
                                 <div class="card">
                                     <div class="poster"><img class="image" th:src="@{|/image/game/${content.filegame_name}|}" th:alt="${content.filegame_name}"></div>
                                     <div class="card-details"></div>

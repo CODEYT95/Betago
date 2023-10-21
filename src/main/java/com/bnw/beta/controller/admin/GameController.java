@@ -57,7 +57,6 @@ public class GameController {
                 gameFileDTO.setGame_no(dto.getGame_no());
                 gameFileDTO.setFilegame_name(fileName);
                 gameFileDTO.setFilegame_path(filePath);
-                System.out.println(gameFileDTO);
 
                 gameService.insertGameImage(gameFileDTO);
 
@@ -88,8 +87,8 @@ public class GameController {
     @PostMapping("/list")
     @ResponseBody
     public List<GameDTO> gameListMore(@RequestParam(value = "game_title", defaultValue = "") String game_title,
-                                       @RequestParam(value = "offset", defaultValue = "0") int offset,
-                                       Model model) {
+                                      @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                      Model model) {
         int limit = 6;
         return gameService.selectGameList(game_title, limit, offset);
     }

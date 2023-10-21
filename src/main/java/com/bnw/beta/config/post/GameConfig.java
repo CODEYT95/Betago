@@ -17,7 +17,7 @@ public class GameConfig implements WebMvcConfigurer{
             Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "game");
 
             registry.addResourceHandler("/image/game/**")
-                    .addResourceLocations("file:///"+uploadPath);
+                    .addResourceLocations("file:"+uploadPath+"/");
         }
     }
 
