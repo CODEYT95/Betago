@@ -5,6 +5,7 @@ import com.bnw.beta.config.vaildation.member.JoinForm;
 import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.member.dto.AgreeCheckDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.domain.member.dto.RoleDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,29 @@ public class MemberServiceImpl implements MemberService {
         int cnt = memberDAO.phoneCheck(phone);
         return cnt;
     }
+
+    //회원코드 일치체크
+    @Override
+    public RoleDTO codeCheck(int role_code,String role_name) {
+        System.out.println("서비스"+role_code);
+        System.out.println("서비스"+role_name);
+
+        RoleDTO rolename = memberDAO.checkCode(role_code, role_name);
+
+        if (rolename != null) {
+            System.out.println("RoleDTO is not null");
+        } else {
+            System.out.println("RoleDTO is null");
+        }
+
+        if (rolename != null && rolename.getRole_name() != null && rolename.getRole_name().equals(role_name) && rolename.getRole_code() == role_code) {
+            System.out.println("RoleDTO values match");
+            return rolename;
+        }
+        System.out.println("RoleDTO values do not match");
+        return rolename;
+    }
+
 
     //글등록 유저 아이디 가져오기
     public Optional<MemberDTO> getUser(String username){

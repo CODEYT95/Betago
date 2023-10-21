@@ -25,6 +25,7 @@
     height: 53.5px;
     margin-bottom: 10px;
     margin-top: 7px;
+    margin-left: -4px;
 
 }
 .spanName{
@@ -121,4 +122,11 @@ radiodiv{
     display: table;
     width: 70%;
     margin-top: -15px;
+}
+
+#error-message{
+    display: block;
+    color: red;
+    margin-left: 108px;
+    margin-top: -9px;
 }

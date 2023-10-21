@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>둑며들다|공지 목록</title>
+    <link rel="stylesheet" th:href="@{/css/admin/notice/noticelist.css}">
+    <div th:replace="~{common/fragments/config :: configFragment}"></div>
+</head>
+<body>
+<div th:replace="~{common/fragments/header :: headerFragment}"></div>
+<div class="content">
+    <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+        <div id="bbsList">
+            <div id="bbsList_title">
+                <h2 class="head">공지 게시판</h2>
+            </div>
+
+            <div class="button-container">
+                <div class="writeBtn right-aligned">
+                    <a class="btnWrite" th:href="@{/admin/notice/write}">
+                        <button class="btnWrite">글쓰기</button>
+                    </a>
+                </div>
+
+                <div class="search-container">
+                    <form id="searchForm" method="get" th:action="@{/notice/list}" autocomplete="off">
+                        <div class="sch_group">
+                            <label>
+                                <select class="search-box" name="searchType">
+                                    <option value="notice_title"
+                                            th:classappend="${(searchType == 'notice_title') ? 'selected' : ''}">제목
+                                    </option>
+                                    <option value="notice_content"
+                                            th:classappend="${(searchType == 'notice_content') ? 'selected' : ''}">내용
+                                    </option>
+                                    <option value="title_content"
+                                            th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용
+                                    </option>
+                                </select>
+                            </label>
+                            <input class="search-text" type="text" placeholder="키워드를 입력해 주세요." name="keyword"/>
+                            <button type="submit" class="bt_search"><i class="fas fa-search"></i><span
+                                    class="skip_info">검색</span></button>
+                        </div>
+                    </form>
+                </div>
+                <form id="pageSizeForm" action="/notice/list" method="get">
+                    <select class="form-control form-control-sm" name="size" id="listSize" th:value="${listSize}"
+                            onchange="changePageSize()">
+                        <option value="10" th:selected="${noticePage.getAllNoticeList().size() == 10}">10개</option>
+                        <option value="15" th:selected="${noticePage.getAllNoticeList().size() == 15}">15개</option>
+                        <option value="20" th:selected="${noticePage.getAllNoticeList().size() == 20}">20개</option>
+                    </select>
+                </form>
+            </div>
+
+
+
+            <div id="bbsList_list">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>NO</th>
+                        <th>분류</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>등록일시</th>
+                        <th>조회수</th>
+                    </tr>
+                    </thead>
+
+                    <tr th:if="${noticePage.allNoticeList.size() == 0}">
+                        <td colspan="6" style="text-align: center;">
+                            <span>글이 없습니다.</span>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice, index: ${noticePage.allNoticeList}">
+
+                        <td>
+                           <span class="no"
+                                 th:text="${noticePage.total - (index.index+ noticePage.startIndex) -3}"></span>
+                        </td>
+                        <td>
+                            <span class="type" name="type" th:text="${notice.notice_category}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
+                                <span th:text="${notice.notice_title}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="writer" th:text="${notice.member_name}"></span>
+                        </td>
+                        <td>
+                            <span class="writer"
+                                  th:text="${#temporals.format(notice.notice_regdate, 'yyyy-MM-dd HH:mm')}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${notice.view_cnt}"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--페이징-->
+        <div class="pagination">
+            <div class="paging">
+                <div class="text-center clearfix">
+                    <div class="pagingNum">
+                        <ul class="pagination-container" id="pagination">
+                            <li th:if="${noticePage.startPage > 5}" class="page-item">
+                                <a class="page-link" th:with="prevPage=${noticePage.startPage - 1}"
+                                   th:href="@{/notice/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}">Prev</a>
+                            </li>
+                            <li class="page-link" th:if="${pageNum > 0}"
+                                th:each="pageNum : ${#numbers.sequence(noticePage.startPage, noticePage.endPage)}">
+                                <a th:href="@{/notice/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}"
+                                   th:classappend="${currentPage == pageNum} ? 'active-page' : ''">
+                                    <span class="page" th:text="${pageNum}"></span>
+                                </a>
+                            </li>
+                            <li th:if="${noticePage.endPage < noticePage.totalPages}" class="page-item">
+                                <a class="page-link" th:with="nextPage=${noticePage.startPage + 5}"
+                                   th:href="@{/notice/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword} , size=${listSize})}">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
+</body>
+<script>
+    //페이지 표기 수 변경
+    function changePageSize() {
+        document.getElementById("pageSizeForm").submit();
+
+        var selectedSize = document.getElementById("listSize").value;
+
+        // 페이지 이동
+        var currentPage = document.getElementById("currentPage").value; // 현재 페이지 번호 가져오기
+        var searchType = document.getElementById("searchType").value; // 현재 검색 타입 가져오기
+        var keyword = document.getElementById("keyword").value; // 현재 키워드 가져오기
+
+        var newURL = '/notice/list?page=' + currentPage + '&size=' + selectedSize + '&searchType=' + searchType + '&keyword=' + keyword;
+
+        // 페이지 이동
+        window.location.href = newURL;
+
+    }
+</script>
+
+</html>

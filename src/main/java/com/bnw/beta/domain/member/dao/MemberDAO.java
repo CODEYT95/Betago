@@ -2,6 +2,7 @@ package com.bnw.beta.domain.member.dao;
 
 import com.bnw.beta.domain.member.dto.AgreeCheckDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.domain.member.dto.RoleDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,9 @@ public interface MemberDAO {
 
     //핸드폰 중복체크
     int phoneCheck(String phone);
+
+    //회원코드 일치체크
+    RoleDTO checkCode(@Param("role_code") int role_code,@Param("role_name") String role_name);
 
     //question 글등록 유저 아이디
     MemberDTO findUserByUsername(String username);

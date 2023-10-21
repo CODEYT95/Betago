@@ -1,13 +1,14 @@
 package com.bnw.beta.controller.member.join;
 
+import com.bnw.beta.domain.member.dto.RoleDTO;
 import com.bnw.beta.service.member.MemberServiceImpl;
 import com.bnw.beta.config.vaildation.member.JoinForm;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -89,9 +90,16 @@ public class JoinController {
         return cnt;
     }
 
+    //회원코드 일치확인
+    @PostMapping("/codeCheck")
+    @ResponseBody
+    public RoleDTO checkCode(@Param("role_code") int role_code, @Param("role_name") String role_name) {
+        RoleDTO role = memberService.codeCheck(role_code,role_name);
+        System.out.println("컨트롤"+role);
+        return role;
+    }
 
 
-    
     //이용약관 팝업창 띄우기
     @GetMapping("/check/{checkId}")
     public String openPopup(@PathVariable String checkId) {
