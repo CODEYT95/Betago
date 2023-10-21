@@ -128,6 +128,14 @@ document.addEventListener("DOMContentLoaded", function() {
             showSlide(index);
         });
     });
+    slides.forEach(function(image) {
+        image.addEventListener("click", function() {
+            var url = image.getAttribute("data-url");
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
 
     let isPaused = false;
     document.getElementById("pauseBtn").addEventListener("click", function() {
