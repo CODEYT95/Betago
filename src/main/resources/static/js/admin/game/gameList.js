@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <input type="checkbox" class="checkbox-input" data-game-no="${item.game_no}" name="game_nos" value="${item.game_no}" />
                                     <span class="checkbox-title">
                                     <div class="card">
-                                        <div class="poster"><img src="/image/baduk.png"></div>
+                                        <div class="poster"><img src="/image/game/${item.filegame_name}" alt="${item.filegame_name}></div>
                                         <div class="card-details"></div>
                                         <div class="details">
                                             <h5>컨텐츠 이름 : <span>${item.game_title}</span></h5>
@@ -155,8 +155,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         </li>
                     `);
                 });
+                updateLiCount();
             }
         });
     });
     //현재 체크박스 갯수 업데이트
+    $(document).ready(function() {
+        updateLiCount();
+    });
+
+    function updateLiCount() {
+        var liCount = $(".list-box li").length;
+        $(".currentCnt").text(liCount);
+
+        var currentCountElement = document.querySelector('.currentCnt');
+        var totalCountElement = document.querySelector('.totalCnt');
+
+        var moreButton = document.getElementById('moreBtn');
+
+        if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
+            moreButton.style.display = 'none';
+        } else {
+            moreButton.style.display = 'block';
+        }
+    }
 });
