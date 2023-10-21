@@ -20,8 +20,8 @@
             AND p.member_id = #{member_id}
         </if>
 
-        <if test="startDate != null and endDate != null">
-            AND p.pay_date BETWEEN #{startDate} AND #{endDate}
+        <if test="pay_date != null and endDate != null">
+            AND p.pay_date BETWEEN #{pay_date} AND #{endDate}
         </if>
     </select>
 
