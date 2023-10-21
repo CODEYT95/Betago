@@ -12,12 +12,12 @@ public class GameConfig implements WebMvcConfigurer{
 
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry){
+
             String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
             Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "game");
 
             registry.addResourceHandler("/image/game/**")
-                    .addResourceLocations("file:///"+uploadPath);
-
+                    .addResourceLocations("file:"+uploadPath+"/");
         }
     }
 

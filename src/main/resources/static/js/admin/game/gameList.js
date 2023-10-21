@@ -124,19 +124,19 @@ document.addEventListener('DOMContentLoaded', function() {
             success: function(response) {
                 response.forEach(item => {
                     $(".list-box").append(`
-                        <li>
+                        <li data-game-no="${item.game_no}">
                             <div class="checkbox">
                                 <label class="checkbox-wrapper">
-                                    <input type="checkbox" class="checkbox-input" data-game-no="${item.game_no}" name="game_nos" value=${item.game_no} />
-                                    <span class="checkbox-tile">
+                                    <input type="checkbox" class="checkbox-input" data-game-no="${item.game_no}" name="game_nos" value="${item.game_no}" />
+                                    <span class="checkbox-title">
                                     <div class="card">
-                                        <div class="poster"><img class="image" src="/image/game/${item.filegame_name || 'noimage.png'}" alt="${item.filegame_name || 'No Image'}"></div>
+                                        <div class="poster"><img src="/image/baduk.png"></div>
                                         <div class="card-details"></div>
                                         <div class="details">
                                             <h5>컨텐츠 이름 : <span>${item.game_title}</span></h5>
                                             <h5>구매금액 : <span>${item.game_sell}원</span></h5>
                                             <h5>구독기간 : <span>${item.game_date}개월</span></h5>
-                                            <h5>그룹가능인원  : 50명</h5>
+                                            <h5>그룹가능인원  : <span>${item.game_total}명</span></h5>
                                         </div>
                                         <div class="backDetails">
                                             <div class="detaillist">

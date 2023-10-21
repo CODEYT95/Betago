@@ -23,4 +23,9 @@ public class NoticeDTO {
     private List<NoticeDTO> topNoticeList; //상단노출게시글리스트
     private List<NoticeFileDTO> noticeFiles;
 
+    private int faq_no;
+    private String faq_title;
+    private String faq_content;
+    private String faq_isshow;
+
 }

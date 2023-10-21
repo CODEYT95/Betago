@@ -86,6 +86,14 @@ function isAnyCheckboxChecked() {
     // 초기 로드 시 한번 확인
     updatePaymentButtonState();
 
+    function topFunction() {
+            const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(topFunction);
+                window.scrollTo(0, currentScroll - (currentScroll / 10));
+            }
+        }
+
     //---------------modal창-------------------------
 
         var modal = document.getElementById("cancelSubscriptionModal");

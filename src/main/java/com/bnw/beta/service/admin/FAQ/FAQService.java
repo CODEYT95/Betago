@@ -9,6 +9,10 @@ import java.util.List;
 
 @Service
 public interface FAQService {
+
+    //faq 메인
+    List<NoticeDTO> faqAll();
+
     FAQPage faqList(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("keyword") String keyword);
 
     //수정

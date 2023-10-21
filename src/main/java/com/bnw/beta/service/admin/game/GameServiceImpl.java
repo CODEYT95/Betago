@@ -22,12 +22,18 @@ public class GameServiceImpl implements GameService {
         return gameDAO.insertGame(dto);
     }
 
-     //게임콘텐츠 썸네일 등록
+    //게임콘텐츠 썸네일 등록
     @Override
     public int insertGameImage(GameFileDTO gameFileDTO){return gameDAO.insertGameImage(gameFileDTO);}
 
     /*게임콘텐츠 조회*/
-   @Override
+    @Override
+    public List<GameDTO> selectAll() {
+        return gameDAO.selectAll();
+    }
+
+    /*게임콘텐츠 조회*/
+    @Override
     public List<GameDTO> selectGameList(String game_title, int limit, int offset) {
         return gameDAO.selectGameList(game_title, limit ,limit*offset);
     }
@@ -35,13 +41,13 @@ public class GameServiceImpl implements GameService {
     //게임콘텐츠 제목 조회
     @Override
     public List<GameDTO> selectGameTitle(){
-       return gameDAO.selectGameTitle();
+        return gameDAO.selectGameTitle();
     }
 
     //게임콘텐츠 갯수
     @Override
     public int countGameList(String game_title){
-       return gameDAO.countGameList(game_title);
+        return gameDAO.countGameList(game_title);
     }
 
     //월간 (일일 단위 매출조회)

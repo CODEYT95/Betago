@@ -7,6 +7,14 @@
     flex-direction: column;
 }
 
+.gameContent-search{
+    display: flex;
+    padding: 22px;
+    align-items: flex-start;
+    gap: 40px;
+    margin-left: 80px;
+}
+
 .form-container{
     display: flex;
     justify-content: center;
@@ -35,18 +43,6 @@
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-.gameContent-search{
-    display: flex;
-    padding: 22px;
-    align-items: flex-start;
-    gap: 40px;
-    margin-left: 80px;
-}
-
-.subscribe{
-    display: flex;
-}
-
 #searchButton{
     height: 40px;
     background: #fff;
@@ -60,7 +56,6 @@
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     color:black;
 }
-
 #searchButton:hover {
     background-color: #205AEF;
     cursor: pointer;
@@ -80,93 +75,19 @@
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     color:black;
 }
-
 .submit-button:hover {
     background-color: #205AEF;
     cursor: pointer;
     color:white;
 }
 
-
-.card {
-    position: relative;
-    width: 126%;
-    border-radius: 7px;
-    overflow: hidden;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-}
-
-    .card:hover .backDetails {
-    bottom: 0;
-}
-
-.poster{
-    object-fit: cover;
-    transition: .3s;
-}
-
-.card img{
+.list-box{
     display: flex;
-    justify-content: center;
-    border-radius: 10px;
-    width: 200px;
-    height: 200px;
-}
-
-.details {
-    position: relative;
-    left: 0;
-    padding: 0.5px 7.5px 1.5px;
-    background: #fff;
-    backdrop-filter: blur(16px) saturate(120%);
-    color: #000;
-    z-index: 2;
-    font-size: 20px;
-}
-
-.backDetails{
-    position: absolute;
-    bottom: -101%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 1.5em 1.5em 2em;
-    background: #000a;
-    backdrop-filter: blur(16px) saturate(120%);
-    color: #fff;
-    z-index: 1;
-    font-size: 20px;
-}
-
-
-
-.detaillist h6{
-}
-
-.details h5{
-    font-size: 14px;
-    margin-bottom: 10px;
-
-}
-
-.backDetails h5{
-    font-size: 14px;
-    margin-bottom: 10px;
-
-}
-
-.card:hover .details1 {
-    bottom: 100px;
-}
-
-h1, h2, h3, h4{
-    font-size: 17px;
-    display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
-}
-
-.checkbox{
-    margin-bottom: 25px;
+    gap: 65px;
+    margin-top:30px;
+    margin-left:30px;
 }
 
 .checkbox-input {
@@ -194,8 +115,7 @@ h1, h2, h3, h4{
     color: #2260ff;
     }
 }
-
-&:focus + .checkbox-tilte {
+&:focus + .checkbox-title {
     box-shadow: 0 5px 10px rgba(#000, 0.1), 0 0 0 4px #b5c9fc;
     &:before {
     transform: scale(1);
@@ -208,7 +128,7 @@ h1, h2, h3, h4{
     display: flex;
     flex-direction: row;
     width: 286px;
-    height: 382px;
+    height: 350px;
     border-radius: 11px;
     border: 3px solid #b5bfd9;
     background-color: #fff;
@@ -235,7 +155,6 @@ h1, h2, h3, h4{
     background-position: 50% 50%;
     z-index: 3;
 }
-
 &:hover {
     border-color: #2260ff;
 &:before {
@@ -260,18 +179,76 @@ h1, h2, h3, h4{
     text-align: center;
 }
 
-.list-box{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 120px;
-    margin-top:30px;
-    margin-left:30px;
+.card {
+    position: relative;
+    width: 126%;
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
-.list-box li{
-    margin: 0;
+.card:hover .backDetails {
+    bottom: 0;
 }
+
+.poster{
+    height:68%;
+    object-fit: cover;
+    transition: .3s;
+}
+
+.card img{
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    width: 100%;
+    height: 266PX;
+}
+
+.details {
+    position: relative;
+    left: 0;
+    padding: 0.5px 7.5px 1.5px;
+    background: #fff;
+    backdrop-filter: blur(16px) saturate(120%);
+    color: #000;
+    z-index: 2;
+    font-size: 20px;
+}
+
+.backDetails{
+    position: absolute;
+    bottom: -101%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background: #000a;
+    backdrop-filter: blur(16px) saturate(120%);
+    color: #fff;
+    z-index: 1;
+    font-size: 20px;
+}
+.detaillist h6{
+    display: grid;
+    justify-content: space-between;
+    font-size: 14px;
+    gap: 4px;
+    margin-top:10px;
+}
+
+.details h5{
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.backDetails h5{
+    font-size: 16px;
+    margin-bottom: 4px;
+    display: block;
+    width: 170px;
+}
+
 .content_footer{
     display: flex;
     justify-content: center;
@@ -288,22 +265,22 @@ h1, h2, h3, h4{
     outline: none;
 }
 
-    #myBtn {
-        display: none; /* Hidden by default */
-        position: fixed; /* Fixed/sticky position */
-        bottom: 20px; /* Place the button at the bottom of the page */
-        right: 30px; /* Place the button 30px from the right */
-        z-index: 99; /* Make sure it does not overlap */
-        border: none; /* Remove borders */
-        outline: none; /* Remove outline */
-        background-color: #555; /* Set a background color */
-        color: white; /* Text color */
-        cursor: pointer; /* Add a mouse pointer on hover */
-        padding: 15px; /* Some padding */
-        border-radius: 10px; /* Rounded corners */
-        font-size: 18px; /* Increase font size */
-    }
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+}
 
-    #myBtn:hover {
-        background-color: #555; /* Add a dark-grey background on hover */
-    }
+#myBtn:hover {
+    background-color: #555;
+}
