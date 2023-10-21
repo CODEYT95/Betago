@@ -136,7 +136,6 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupDTO selectGroupInfo(int group_no){return groupDAO.selectGroupInfo(group_no);};
 
-    //그룹 학생 목록 업데이트
     @Override
     //그룹 학생 목록 업데이트
     public String updateGroupMembber(List<Integer> approveList, List<Integer> rejectList, int group_no){
@@ -162,12 +161,13 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDTO> selectJoinGroup(int member_no, String group_name, String educator_name, int limit, int offset){
 
+
         GroupDTO groupDTO = new GroupDTO();
         groupDTO.setMember_no(member_no);
         groupDTO.setGroup_name(group_name);
         groupDTO.setMember_name(educator_name);
         groupDTO.setLIMIT(limit);
-        groupDTO.setOFFSET(offset);
+        groupDTO.setOFFSET(offset*limit);
 
         return groupDAO.selectJoinGroup(groupDTO);}
 
@@ -226,7 +226,7 @@ public class GroupServiceImpl implements GroupService {
         groupDTO.setGroup_name(group_name);
         groupDTO.setMember_name(educator_name);
         groupDTO.setLIMIT(limit);
-        groupDTO.setOFFSET(offset);
+        groupDTO.setOFFSET(offset*limit);
 
         return groupDAO.myjoinList(groupDTO);
     }

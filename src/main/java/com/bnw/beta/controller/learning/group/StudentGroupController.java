@@ -24,12 +24,9 @@ public class StudentGroupController {
                             @RequestParam(name = "educator_name", defaultValue = "") String educator_name,
                             Model model, HttpSession session){
 
-
-        System.out.println(group_name+educator_name);
-
         int member_no = (int) session.getAttribute("member_no");
 
-        int limit = 1;
+        int limit = 6;
 
         model.addAttribute("joinList", 1);
         model.addAttribute("groupTitle", group_name);
@@ -51,7 +48,9 @@ public class StudentGroupController {
 
         int member_no = (int) session.getAttribute("member_no");
 
-        int limit = 1;
+        int limit = 6;
+
+        System.out.println(groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset));
 
         return groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset);
     }

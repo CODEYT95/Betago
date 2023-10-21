@@ -7,14 +7,13 @@ import com.bnw.beta.domain.learning.dto.TaskDTO;
 import com.bnw.beta.domain.learning.dto.TaskSendDTO;
 import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
 import lombok.RequiredArgsConstructor;
-import okhttp3.internal.concurrent.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -42,23 +41,18 @@ public class TaskServiceImpl implements TaskService{
     //숙제 생성
     @Override
     public int createTask(String member_id, String task_title, String task_content, String task_chapter, String task_deadline) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date endDate;
 
-        try {
-            endDate = sdf.parse(task_deadline);
-            System.out.println(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return 0;
-        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(task_deadline, formatter);
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
 
         TaskDTO taskDTO = new TaskDTO();
         taskDTO.setMember_id(member_id);
         taskDTO.setTask_title(task_title);
         taskDTO.setTask_content(task_content);
         taskDTO.setTask_chapter(task_chapter);
-        taskDTO.setTask_deadline(endDate);
+        taskDTO.setTask_deadline(sqlDate);
 
         return taskDAO.createTask(taskDTO);
     }

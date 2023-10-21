@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     var remainingTo = item.group_cnt - item.group_nowcnt;
                     console.log(remainingTo);
                         $(".content-container ul").append(`
-                            <li class="joinList">
+                            <li class="" data-game-no="${item.group_no}">
                                 <input hidden="hidden" class="attr" data-group-name=${item.group_name} data-game-no=${item.game_no} data-group-no=${item.group_no} data-member-no=${item.member_no}>
                                 <div class="checkbox">
                                     <label class="checkbox-wrapper">
