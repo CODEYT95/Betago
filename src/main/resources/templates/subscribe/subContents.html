@@ -33,7 +33,7 @@
                                 <span class="checkbox-title">
                                         <div class="card">
                                             <div class="poster">
-                                                <img th:src="@{'/image/baduk.png'}">
+                                                <img th:src="@{|/image/game/${content.filegame_name}|}">
                                                 <div class="card-details">
                                                     <h1>컨텐츠 이름 : <span th:text="${content.game_title}"></span></h1>
                                                     <h1>구매금액 : <span th:text="${content.game_sell}"></span>원</h1>

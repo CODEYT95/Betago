@@ -20,4 +20,7 @@ public class subContentsDTO {
     private String game_title;
     private String game_level;
     private Date endDate;
+
+    private int filegame_no;
+    private String filegame_name;
 }
