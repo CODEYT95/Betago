@@ -8,7 +8,7 @@
     <insert id="createTask" parameterType="TaskDTO">
         <![CDATA[
         INSERT INTO TASK (task_title, task_content, task_chapter, task_deadline, task_regdate, member_id)
-        VALUES (#{task_title}, #{task_content}, #{task_chapter},#{task_deadline}, now(), #{member_id})
+        VALUES (#{task_title}, #{task_content}, #{task_chapter},#{task_deadline}, CURDATE(), #{member_id})
         ]]>
     </insert>
 
@@ -35,7 +35,7 @@
         SELECT DISTINCT task_title
         FROM task
         WHERE member_id = #{member_id}
-        AND task_deadline > now()
+        AND task_deadline >= CURDATE()
         ]]>
     </select>
 
@@ -53,7 +53,7 @@
         </if>
         <![CDATA[
         AND member_id = #{member_id}
-        AND task_deadline > now()
+        AND task_deadline >= CURDATE()
         ORDER BY task_regdate DESC
         LIMIT #{page}, #{size}
         ]]>
@@ -73,7 +73,7 @@
         </if>
         <![CDATA[
         AND member_id = #{member_id}
-        AND task_deadline > now()
+        AND task_deadline >= CURDATE()
         ]]>
     </select>
 
@@ -82,7 +82,7 @@
         <![CDATA[
         SELECT group_name, group_no FROM studygroup
         WHERE member_id = #{member_id}
-        AND group_enddate > now()
+        AND group_enddate >= CURDATE()
         ]]>
     </select>
 
@@ -96,7 +96,7 @@
         JOIN game AS g ON g.game_no = sg.game_no
         WHERE sg.member_id = #{member_id}
         AND gm.approve_state = '승인'
-        AND sg.group_enddate > now()
+        AND sg.group_enddate >= CURDATE()
         ]]>
         <if test="group_name != null and group_name != ''">
             <![CDATA[
@@ -128,7 +128,7 @@
             FROM tasksend AS ts
             JOIN task AS t ON ts.task_no = t.task_no
             JOIN studygroup AS sg ON ts.group_no = sg.group_no
-            WHERE ts.member_id = #{member_id} AND t.task_deadline > NOW()
+            WHERE ts.member_id = #{member_id} AND t.task_deadline >= CURDATE()
         ]]>
         <if test="task_title != null and task_title != ''">
             AND t.task_title = #{task_title}
@@ -206,7 +206,7 @@
         JOIN game AS g ON sg.game_no = g.game_no
         WHERE ts.member_no = #{member_no}
         AND (ts.task_state = '미작성' OR ts.task_state = '작성중')
-        AND t.task_deadline > now()
+        AND t.task_deadline >= CURDATE()
         ORDER BY t.task_regdate DESC
         ]]>
     </select>
@@ -272,7 +272,7 @@
         <![CDATA[
         UPDATE tasksend AS ts
         JOIN tasksubmit sub ON ts.tasksend_no = sub.tasksend_no
-        SET ts.task_state = '제출완료', sub.tasksubmit_regdate = now()
+        SET ts.task_state = '제출완료', sub.tasksubmit_regdate = CURDATE()
         WHERE ts.tasksend_no IN
         ]]>
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
@@ -304,7 +304,7 @@
         SELECT COUNT(*)
         FROM tasksend
         WHERE member_no = #{member_no}
-        AND (task_state = '제출완료' OR task_state = '평가완료');
+        AND (task_state = '제출완료' OR task_state = '평가완료')
         ]]>
     </select>
 
