@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 체크박스 상태 변경 시 실행되는 함수
     function handleCheckboxChange() {
         const gameNo = this.getAttribute('data-game-no');
+        console.log(gameNo);
         if (this.checked) {
             selectedGameNos.push(Number(gameNo));
         } else {
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const checkedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
         const selectedGameNo = Array.from(checkedCheckboxes).map(cb => cb.getAttribute('data-game-no')).join(",");
+        console.log(selectedGameNo);
         window.location.href = "/pay/cartList?game_no=" + selectedGameNo;
     }
 

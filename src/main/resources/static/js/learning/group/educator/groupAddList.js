@@ -33,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function() {
             success: function(response) {
                 response.forEach(item => {
                     $(".content-container ul").append(`
-                        <li>
+                        <li data-pay-no="${item.pay_no}">
                             <div class="checkbox">
                                 <label class="checkbox-wrapper">
-                                    <input type="checkbox" class="checkbox-input"  data-game-no=${item.game_no} />
+                                    <input type="checkbox" class="checkbox-input"  data-pay-no=${item.pay_no} />
                                     <span class="checkbox-tile">
                                         <div class="card">
                                             <div class="poster"><img src="/image/baduk.png"></div>

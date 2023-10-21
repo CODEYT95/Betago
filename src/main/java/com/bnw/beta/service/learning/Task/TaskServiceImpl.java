@@ -47,6 +47,7 @@ public class TaskServiceImpl implements TaskService{
 
         try {
             endDate = sdf.parse(task_deadline);
+            System.out.println(endDate);
         } catch (ParseException e) {
             e.printStackTrace();
             return 0;
