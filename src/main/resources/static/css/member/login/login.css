@@ -171,7 +171,6 @@ position: absolute;
 
 /* 부가 링크 스타일 */
 .links {
-  margin-top: 45px; /* 링크 위의 간격 */
   text-align: center; /* 센터 정렬 */
 }
 
