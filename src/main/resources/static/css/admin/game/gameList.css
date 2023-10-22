@@ -101,6 +101,7 @@ height: 40px;
     position: absolute;
     white-space: nowrap;
     width: 1px;
+    display: block;
 
 &:checked + .checkbox-title {
     border-color: #2260ff;
@@ -134,7 +135,7 @@ height: 40px;
     border-radius: 11px;
     border: 3px solid #b5bfd9;
     background-color: #fff;
-    box-shadow: 0 5px 10px rgba(#000, 0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     transition: 0.15s ease;
     cursor: pointer;
     position: relative;
