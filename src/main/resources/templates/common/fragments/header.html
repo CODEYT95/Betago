@@ -37,7 +37,7 @@
                             <li><a th:href="@{/introduction/site}">사이트 소개</a></li>
                             <li><a th:href="@{/manual/list}">이용 가이드</a></li>
                             <li class="more">
-                                <a href="#">컨텐츠소개</a>
+                                <a th:href="@{/contents/contentsGame}">컨텐츠소개</a>
                                 <i class='bx bxs-chevron-right arrow more-arrow'></i>
                                 <ul class="more-sub-menu sub-menu">
                                     <li><a th:href="@{/contents/contentsGame}">바둑 게임(앱)</a></li>
@@ -99,14 +99,20 @@
                         </ul>
                     </li>
                     <li class="first_li">
-                        <a href="#">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/game/insert}">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
-                            <li><a th:href="@{/game/insert}" sec:authorize="hasRole('ROLE_ADMIN')">게임컨텐츠 등록</a></li>
-                            <li><a th:href="@{/edupost/insert}" sec:authorize="hasRole('ROLE_ADMIN')">학습자료 등록</a></li>
+                            <li><a th:href="@{/game/insert}">게임컨텐츠 등록</a></li>
+                            <li><a th:href="@{/edupost/insert}">학습자료 등록</a></li>
                             <li><a th:href="@{/edupost/list}">학습자료 조회</a></li>
-                            <li><a th:href="@{/admin/notice/write}" sec:authorize="hasRole('ROLE_ADMIN')">공지 등록</a></li>
-                            <li><a th:href="@{/member/list}" sec:authorize="hasRole('ROLE_ADMIN')">회원조회</a></li>
-                            <li><a th:href="@{/game/salesList}" sec:authorize="hasRole('ROLE_ADMIN')">매출 조회</a></li>
+                            <li><a th:href="@{/admin/notice/write}">공지 등록</a></li>
+                            <li><a th:href="@{/member/list}">회원조회</a></li>
+                            <li><a th:href="@{/game/salesList}">매출 조회</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_li">
+                        <a sec:authorize="hasAnyRole('TEACHER','USER')" th:href="@{/edupost/list}">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
+                        <ul class="admin-sub-menu sub-menu">
+                            <li><a th:href="@{/edupost/list}">학습자료 조회</a></li>
                         </ul>
                     </li>
                 </ul>
