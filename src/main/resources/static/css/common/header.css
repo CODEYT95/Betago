@@ -43,10 +43,10 @@ a {
 }
 
 .header-image{
-    width: 186px;
+    width: 140px;
     position: absolute;
-    margin-right: 1334px;
-    margin-top: 76px;
+    margin-right: 1340px;
+    margin-top: 20px;
 }
 
 nav {
@@ -86,6 +86,7 @@ nav {
   color: #666;
   letter-spacing: -1px;
   line-height: 30px;
+  cursor:pointer;
 }
 
 nav .header-navi {

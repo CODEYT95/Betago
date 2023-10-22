@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <input type="checkbox" class="checkbox-input"  data-pay-no=${item.pay_no} />
                                     <span class="checkbox-tile">
                                         <div class="card">
-                                            <div class="poster"><img src="/image/baduk.png"></div>
+                                            <div class="poster"><img src="/image/game/${item.filegame_name}"></div>
                                             <div class="card-details"></div>
                                             <div class="details">
                                                 <h5>게임 콘텐츠 : <span>${item.game_title}</span></h5>

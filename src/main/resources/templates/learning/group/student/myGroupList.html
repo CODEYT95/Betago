@@ -58,13 +58,14 @@
                             <input type="text" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no}"/>
                             <span class="checkbox-tile">
                                 <div class="card">
-                                    <div class="poster"><img th:src="@{/image/testBADUK2.png}"></div>
+                                    <div class="poster"><img th:src="@{|/image/game/${joinList.filegame_name}|}"></div>
                                     <div class="card-details"></div>
                                     <div class="details">
                                         <h5>게임콘텐츠명 : <span th:text="${joinList.game_title}"></span></h5>
                                         <h5>그룹명 : <span th:text="${joinList.group_name}"></span></h5>
                                         <h5>교육자명 : <span th:text="${joinList.member_name}"></span></h5>
                                         <h5>학습 구독 기간 : <span th:text="${joinList.group_startdate}"></span> ~ <span th:text="${joinList.group_enddate}"></span></h5>
+                                        <h5>가입 상태 : <span th:text="${joinList.approve_state}"></span></h5>
                                     </div>
                                 </div>
                                 </span>

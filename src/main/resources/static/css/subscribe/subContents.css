@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
 .main-content{
-width: 100%;
-height: auto;
-display: flex;
-flex-direction: column;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-container{
@@ -28,18 +28,18 @@ flex-direction: column;
 }
 
 input{
-height: 30px;
-width: 200px;
-text-align: center;
+    height: 30px;
+    width: 200px;
+    text-align: center;
 }
 input[type="date"]::before {
-  content: attr(data-placeholder);
-  width: 100%;
+    content: attr(data-placeholder);
+    width: 100%;
 }
 
 input[type='date']:focus::before,
 input[type='date']:valid::before {
-  display: none;
+    display: none;
 }
 
 input#game_date{
@@ -69,39 +69,39 @@ input#game_date{
     color:white;
 }
 
-    .checkbox{
+.checkbox{
     margin: 0;
     margin-bottom: 25px;
 }
 
 .checkbox-input {
-  clip: rect(0 0 0 0);
-  clip-path: inset(100%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 
   &:checked + .checkbox-title {
-   border-color: #2260ff;
-   box-shadow: 0 5px 10px rgba(#000, 0.1);
-   color: #2260ff;
-   &:before {
+    border-color: #2260ff;
+    box-shadow: 0 5px 10px rgba(#000, 0.1);
+    color: #2260ff;
+&:before {
     transform: scale(1);
     opacity: 1;
     background-color: #2260ff;
     border-color: #2260ff;
    }
 
-   .checkbox-icon, .checkbox-label {
+.checkbox-icon, .checkbox-label {
     color: #2260ff;
    }
   }
 
   &:focus + .checkbox-title {
-   box-shadow: 0 5px 10px rgba(#000, 0.1), 0 0 0 4px #b5c9fc;
-   &:before {
+    box-shadow: 0 5px 10px rgba(#000, 0.1), 0 0 0 4px #b5c9fc;
+&:before {
     transform: scale(1);
     opacity: 1;
    }
@@ -112,6 +112,7 @@ input#game_date{
     display: flex;
     flex-direction: row;
     width: 296px;
+    height:390px;
     border-radius: 11px;
     border: 3px solid #b5bfd9;
     background-color: #fff;
@@ -119,29 +120,27 @@ input#game_date{
     transition: 0.15s ease;
     cursor: pointer;
     position: relative;
-
-  &:before {
-   content: "";
-   position: absolute;
-   display: block;
-   width: 1.25rem;
-   height: 1.25rem;
-   border: 2px solid #b5bfd9;
-   background-color: #fff;
-   border-radius: 50%;
-   top: 0.25rem;
-   left: 0.25rem;
-   transition: 0.25s ease;
-   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
-   background-size: 12px;
-   background-repeat: no-repeat;
-   background-position: 50% 50%;
-   z-index: 3;
+&:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #b5bfd9;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 0.25rem;
+    left: 0.25rem;
+    transition: 0.25s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    z-index: 3;
   }
-
-  &:hover {
-   border-color: #2260ff;
-   &:before {
+&:hover {
+    border-color: #2260ff;
+    &:before {
     transform: scale(1);
     opacity: 1;
    }
@@ -149,18 +148,18 @@ input#game_date{
 }
 
 .checkbox-icon {
-  transition: .375s ease;
-  color: #494949;
-  svg {
-   width: 3rem;
-   height: 3rem;
+    transition: .375s ease;
+    color: #494949;
+    svg {
+    width: 3rem;
+    height: 3rem;
   }
 }
 
 .checkbox-label {
-  color: #707070;
-  transition: .375s ease;
-  text-align: center;
+    color: #707070;
+    transition: .375s ease;
+    text-align: center;
 }
 
 .contents-container{
@@ -173,25 +172,27 @@ input#game_date{
 }
 
 .card {
-position: relative;
-width: 125%;
-height: auto;
-border-radius: 6px;
-overflow: hidden;
-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    position: relative;
+    width: 125%;
+    height: auto;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
 .poster{
-width: 100%;
-height: 100%%;
-object-fit: cover;
-transition: .3s;
+    width: 100%;
+    height: 100%%;
+    object-fit: cover;
+    transition: .3s;
 }
 
-img{
-display: flex;
-justify-content: center;
-width: 100%;
+.card img{
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    width: 100%;
+    height: 266PX;
 }
 
 .details {
@@ -206,10 +207,11 @@ width: 100%;
     color: #fff;
     z-index: 1;
     font-size: 20px;
+    margin-top:7px;
 }
 
 .card:hover .details {
-bottom: 0;
+    bottom: 0;
 }
 
 h1{
@@ -229,7 +231,7 @@ h1{
 }
 
 .modal {
-position: fixed;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -249,7 +251,7 @@ position: fixed;
 }
 
 .close {
-color: #aaa;
+    color: #aaa;
     font-size: 28px;
     font-weight: bold;
     position: relative;
@@ -258,12 +260,12 @@ color: #aaa;
     height:40px;
 }
 
-.close:hover,
-.close:focus {
+.close:hover, .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
+
 .modal-title{
     font-size: 20px;
     font-weight: bold;
@@ -272,12 +274,12 @@ color: #aaa;
     text-align: center;
 }
 .modal-guidtitle{
-       display: flex;
-       text-align: center;
-       margin: 10px;
-       font-size: 16px;
-       font-weight: bold;
-       justify-content: center;
+    display: flex;
+    text-align: center;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    justify-content: center;
 }
 .modal-guid{
     display: grid;
@@ -290,12 +292,12 @@ color: #aaa;
 }
 
 .modal-buttons{
-       display: flex;
-       justify-content: center;
-       text-align: center;
-       align-items: center;
-       gap: 60px;
-       margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    gap: 60px;
+    margin-top: 24px;
 }
 .modal-guid1{
 }
@@ -304,18 +306,17 @@ color: #aaa;
 .modal-guid3{
 }
 .modal-guid4{
-color:red;
+    color:red;
 }
 
-
 .yes{
-width: 110px;
+    width: 110px;
     height: 24px;
     border-radius:5px;
 }
 
 .no{
-width: 110px;
+    width: 110px;
     height: 24px;
     border-radius:5px;
 }

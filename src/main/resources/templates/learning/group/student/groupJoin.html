@@ -53,14 +53,14 @@
             </div>
             <div class="content-container">
                 <ul class="list-box">
-                    <li class="" th:each="joinList : ${groupJoinList}" th:attr="data-game-no=${joinList.game_no}">
+                    <li class="" th:each="joinList : ${groupJoinList}" th:attr="data-game-no=${joinList.group_no}">
                         <input hidden="hidden" class="attr" th:attr="data-group-name=${joinList.group_name},data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-member-no=${joinList.member_no}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" class="checkbox-input"  th:attr="data-game-no=${joinList.game_no},data-group-no=${joinList.group_no},data-group-name=${joinList.group_name}"/>
                                 <span class="checkbox-title">
                                     <div class="card">
-                                        <div class="poster"><img th:src="@{/image/noimage.png}"></div>
+                                        <div class="poster"><img th:src="@{|/image/game/${joinList.filegame_name}|}"></div>
                                         <div class="card-details"></div>
                                         <div class="details">
                                             <h5>그룹명 : <span th:text="${joinList.group_name}"></span></h5>
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="backDetails">
                                         <div class="detaillist">
-                                            <h6>상품상세설명 : <span></span></h6>
+                                            <h6>그룹 설명 : <span th:text="${joinList.group_intro}"></span></h6>
                                         </div>
                                         </div>
                                     </div>

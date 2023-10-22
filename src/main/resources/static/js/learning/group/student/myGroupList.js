@@ -21,7 +21,7 @@
             var title = $(".title").value;
 
             $.ajax({
-                url: "/student/group/joinList",
+                url: "/student/group/myJoinList",
                 type: "POST",
                 data: {
                     offset: offset,
@@ -40,13 +40,14 @@
                                             <input type="text" class="checkbox-input"  data-game-no=${item.game_no} data-group-no=${item.group_no} />
                                             <span class="checkbox-tile">
                                                 <div class="card">
-                                                    <div class="poster"><img src="/image/testBADUK2.png"></div>
+                                                    <div class="poster"><img src="/image/game/${item.filegame_name}"></div>
                                                     <div class="card-details"></div>
                                                     <div class="details">
                                                         <h5>게임콘텐츠명 : <span th:text="${item.game_title}"></span></h5>
                                                         <h5>그룹명 : <span th:text="${item.group_name}"></span></h5>
+                                                        <h5>교육자명 : <span th:text="${item.member_name}"></span></h5>
                                                         <h5>학습 구독 기간 : <span>${item.group_startdate}</span> ~ <span>${item.group_enddate}</span></h5>
-                                                        <h5>잔여 T/O : <span>${remainingTo}명</span></h5>
+                                                        <h5>가입 상태 : <span>${item.approve_state}</span></h5>
                                                     </div>
                                                 </div>
                                             </span>
@@ -98,8 +99,10 @@
             var educatorName = $(".sBtn-text-educator").text();
 
             var url = "";
+            if(groupName === "전체" && educatorName === "전체") {
+                url = "/student/group/myJoinList"
 
-            if(groupName === "전체" && educatorName !== "전체") {
+            } else if(groupName === "전체" && educatorName !== "전체") {
                 url = "/student/group/myJoinList?educator_name=" + encodeURIComponent(educatorName);
 
             } else if(educatorName === "전체" && groupName !== "전체") {
@@ -138,7 +141,7 @@
 
             let selectedOption = $(this).find('.option-text').text();
             if (educatorSBtnText.text() !== '전체' && selectedOption !== '전체') {
-                alert('둘 중 하나만 선택할 수 있습니다.');
+                alert('검색 옵션은 둘 중 하나만 선택이 가능합니다.');
                 educatorOptions.removeClass('selected');
                 groupOptions.removeClass('selected');
                 educatorSBtnText.text('전체');
@@ -151,11 +154,11 @@
         });
 
         educatorOptions.on('click', function(e) {
-            e.stopPropagation();  // prevent the event from reaching the document
+            e.stopPropagation();
 
             let selectedOption = $(this).find('.option-text-educator').text();
             if (groupSBtnText.text() !== '전체' && selectedOption !== '전체') {
-                alert('둘 중 하나만 선택할 수 있습니다.');
+                alert('검색 옵션은 둘 중 하나만 선택이 가능합니다.');
                 educatorOptions.removeClass('selected');
                 groupOptions.removeClass('selected');
                 groupSBtnText.text('전체');
@@ -167,7 +170,6 @@
             }
         });
 
-        // Close menus when clicking outside
         $(document).on("click", function() {
             groupMenu.removeClass("active");
             educatorMenu.removeClass("active");
