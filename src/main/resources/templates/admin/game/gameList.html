@@ -34,7 +34,7 @@
                 <div class="subscribe">
                     <button id="subscribeButton" class="submit-button">구독하기</button>
                 </div>
-                <div class="delete">
+                <div class="delete" sec:authorize="hasRole('ADMIN')" >
                     <button id="deleteButton" class="submit-button">삭제하기</button>
                 </div>
             </div>

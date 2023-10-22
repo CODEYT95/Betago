@@ -183,4 +183,32 @@ document.addEventListener('DOMContentLoaded', function() {
             moreButton.style.display = 'block';
         }
     }
+     // 게임 삭제 함수
+        function deleteGame() {
+            var game_no = document.getElementById('gameTitleSelect').value;
+
+            if (!game_no) {
+                alert("게임을 선택해주세요.");
+                return;
+            }
+
+            $.ajax({
+                url: '/game/updateGame',  // 이 URL이 맞는지 확인 필요, 보통 삭제 요청은 '/delete' 또는 '/remove' 같은 엔드포인트를 사용합니다.
+                method: 'POST',
+                data: { game_no: game_no },
+                success: function(response) {
+                    // ... 기존 코드 ...
+                },
+                error: function() {
+                    alert("서버와의 통신 중 에러가 발생했습니다.");
+                }
+            });
+        }
+
+        // 삭제 버튼 이벤트 리스너 등록
+        var deleteButton = document.getElementById('deleteButton');  // 'deleteButton'은 삭제 버튼의 ID입니다. 실제 ID로 바꿔주세요.
+        if (deleteButton) {
+            deleteButton.addEventListener('click', deleteGame);
+        }
+    });
 });

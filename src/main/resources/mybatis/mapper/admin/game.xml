@@ -36,8 +36,25 @@
         <![CDATA[
         ORDER BY g.game_no DESC
         LIMIT #{limit} OFFSET #{offset}
+        AND game_isshow = 'Y'
         ]]>
     </select>
+
+    <update id="updateGame" parameterType="Integer">
+        <![CDATA[
+        update game SET game_isshow = 'N'
+        WHERE game_no = #{game_no}
+        ]]>
+    </update>
+
+    <select id="gameCount" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM pay
+        WHERE game_no = #{game_no}
+        ]]>
+    </select>
+
     <!-- 게임 목록 불러오기 -->
     <select id="selectGameTitle" resultType="GameDTO">
         SELECT g.game_title
