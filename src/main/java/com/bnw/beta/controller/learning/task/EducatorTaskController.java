@@ -43,8 +43,6 @@ public class EducatorTaskController {
         String member_id = authentication.getName();
         String task_deadline = year + "-" + month + "-" + day;
 
-        System.out.println("test" + task_deadline);
-
         int result = taskService.createTask(member_id, task_title, task_content, task_chapter, task_deadline);
 
         if (result == 1) {
@@ -140,7 +138,6 @@ public class EducatorTaskController {
                              @RequestParam String member_level, @RequestParam Integer tasksend_no){
 
         int result = taskService.insertEvaluation(tasksubmit_comment, tasksubmit_eval, group_no, member_no, member_level, tasksend_no);
-        System.out.println("check"+result);
         if(result > 0){
             return  "redirect:/educator/evalTask";
         }
