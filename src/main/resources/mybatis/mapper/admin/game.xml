@@ -34,9 +34,9 @@
             </otherwise>
         </choose>
         <![CDATA[
+        AND game_isshow = 'Y'
         ORDER BY g.game_no DESC
         LIMIT #{limit} OFFSET #{offset}
-        AND game_isshow = 'Y'
         ]]>
     </select>
 
