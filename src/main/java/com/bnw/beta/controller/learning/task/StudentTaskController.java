@@ -1,8 +1,6 @@
 package com.bnw.beta.controller.learning.task;
 
 import com.bnw.beta.domain.learning.dto.TaskDTO;
-import com.bnw.beta.domain.learning.dto.TaskSendDTO;
-import com.bnw.beta.domain.learning.dto.TaskSubmitDTO;
 import com.bnw.beta.service.learning.Task.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -36,8 +33,8 @@ public class StudentTaskController {
     //모달창 숙제 정보 불러오기
     @PostMapping("/taskDetail")
     @ResponseBody
-    public TaskSendDTO taskDetail(@RequestParam int tasksend_no){
-        TaskSendDTO taskDetail = taskService.selectTaskByNo(tasksend_no);
+    public TaskDTO taskDetail(@RequestParam int tasksend_no){
+        TaskDTO taskDetail = taskService.selectTaskByNo(tasksend_no);
         return taskDetail;
     }
 
@@ -58,9 +55,8 @@ public class StudentTaskController {
     //숙제 수정페이지
     @PostMapping("/modify")
     @ResponseBody
-    public TaskSubmitDTO taskModify(int tasksend_no){
-        System.out.println("xxx");
-        TaskSubmitDTO taskSubmit = taskService.modifyTask(tasksend_no);
+    public TaskDTO taskModify(int tasksend_no){
+        TaskDTO taskSubmit = taskService.modifyTask(tasksend_no);
         return taskSubmit;
     }
 
@@ -96,7 +92,7 @@ public class StudentTaskController {
         Integer member_no = (Integer) session.getAttribute("member_no");
         if (member_no != null) {
             int limit = 1;
-            List<TaskSendDTO> submitList =  taskService.selectSubmitTask(member_no, limit, offset);
+            List<TaskDTO> submitList =  taskService.selectSubmitTask(member_no, limit, offset);
             int totalCount = taskService.submitTaskCount(member_no);
 
             model.addAttribute("member_name", session.getAttribute("member_name"));
@@ -109,18 +105,18 @@ public class StudentTaskController {
     //무한 스크롤
     @PostMapping("/submitList")
     @ResponseBody
-    public List<TaskSendDTO> submitList(@RequestParam(name = "offset", defaultValue = "0") int offset, HttpSession session){
+    public List<TaskDTO> submitList(@RequestParam(name = "offset", defaultValue = "0") int offset, HttpSession session){
         Integer member_no = (Integer) session.getAttribute("member_no");
         int limit = 1;
-        List<TaskSendDTO> submitTask = taskService.selectSubmitTask(member_no, limit, offset);
+        List<TaskDTO> submitTask = taskService.selectSubmitTask(member_no, limit, offset);
         return submitTask;
     }
 
     //평가 완료된 숙제 조회
     @PostMapping("/viewEval")
     @ResponseBody
-    public TaskSubmitDTO selectSubmitTaskByNo(@RequestParam int tasksend_no){
-        TaskSubmitDTO taskEval = taskService.selectSubmitTaskByNo(tasksend_no);
+    public TaskDTO selectSubmitTaskByNo(@RequestParam int tasksend_no){
+        TaskDTO taskEval = taskService.selectSubmitTaskByNo(tasksend_no);
         return taskEval;
     }
 }
