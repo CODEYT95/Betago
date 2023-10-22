@@ -5,22 +5,34 @@
     <div class="side-bar active">
         <div class="menu">
             <div class="item" sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/game/insert}">게임콘텐츠 등록</a>
+                <a th:href="@{/game/insert}"
+                   th:class="${gameInsert != null} ? 'sub-btn-active' : ''"
+                   th:style="${gameInsert != null} ? 'color: #96a0aa;' : ''">게임콘텐츠 등록</a>
             </div>
             <div class="item" sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/edupost/insert}" class="sub-btn">학습자료 등록</a>
+                <a th:href="@{/edupost/insert}"
+                   th:class="${edupostInsert != null} ? 'sub-btn-active' : ''"
+                   th:style="${edupostInsert != null} ? 'color: #96a0aa;' : ''">학습자료 등록</a>
             </div>
             <div class="item">
-                <a th:href="@{/edupost/list}">학습자료 조회</a>
+                <a th:href="@{/edupost/list}"
+                   th:class="${edupostList != null} ? 'sub-btn-active' : ''"
+                   th:style="${edupostList != null} ? 'color: #96a0aa;' : ''">학습자료 조회</a>
             </div>
             <div class="item" sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/admin/notice/write}">공지 등록</a>
+                <a th:href="@{/admin/notice/write}"
+                   th:class="${noticeInsert != null} ? 'sub-btn-active' : ''"
+                   th:style="${noticeInsert != null} ? 'color: #96a0aa;' : ''">공지 등록</a>
             </div>
             <div class="item" sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/game/salesList}">매출 조회</a>
+                <a th:href="@{/member/list}"
+                   th:class="${memberList != null} ? 'sub-btn-active' : ''"
+                   th:style="${memberList != null} ? 'color: #96a0aa;' : ''">회원 조회</a>
             </div>
             <div class="item" sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/member/list}">회원 조회</a>
+                <a th:href="@{/game/salesList}"
+                   th:class="${salesList != null} ? 'sub-btn-active' : ''"
+                   th:style="${salesList != null} ? 'color: #96a0aa;' : ''">매출 조회</a>
             </div>
         </div>
     </div>

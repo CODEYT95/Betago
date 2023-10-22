@@ -46,9 +46,10 @@ public class AnswerController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{ans_no}")
     public String deleteAnswer(@PathVariable("ans_no") int ans_no, Principal principal,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes, Model model) {
         // 현재 사용자 확인
         String username = principal.getName();
+        model.addAttribute("qnaList",1);
         // 댓글 소유자 확인
         AnswerDTO answerDTO = answerService.findAnswerById(ans_no);
         if (answerDTO == null || !answerDTO.getMember_id().equals(principal.getName())) {
@@ -68,7 +69,8 @@ public class AnswerController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{ans_no}")
     public String getAnswerForm(@PathVariable("ans_no") int ans_no, AnswerForm answerForm,
-                                Principal principal) {
+                                Principal principal, Model model) {
+        model.addAttribute("qnaList",1);
         AnswerDTO answerDTO = answerService.getAnswer(ans_no); // 혹은 적절한 메소드를 사용하여 ID로 댓글 가져오기
         if (answerDTO == null) {
             // 적절한 예외 처리 (데이터가 존재하지 않는 경우)

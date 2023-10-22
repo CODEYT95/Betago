@@ -36,7 +36,8 @@ public class GameController {
     //게임콘텐츠 등록
 
     @GetMapping("/insert")
-    public String insertGame() {
+    public String insertGame(Model model) {
+        model.addAttribute("gameInsert",1);
         return "admin/game/gameInsert";
     }
 
@@ -114,6 +115,7 @@ public class GameController {
     public String get(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
                       @RequestParam(value = "pay_enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_enddate,
                       Model model) {
+        model.addAttribute("salesList",1);
         if (pay_date != null && pay_enddate == null) {
             model.addAttribute("comment", pay_date);
             model.addAttribute("dayList", payService.selectDaySales(pay_date));
@@ -129,7 +131,7 @@ public class GameController {
     public String get2(@RequestParam(value = "pay_date", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_date,
                        @RequestParam(value = "pay_enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM") Date pay_enddate,
                        Model model) {
-
+        model.addAttribute("salesList",1);
         if (pay_date != null && pay_enddate == null) {
             model.addAttribute("comment", pay_date);
             model.addAttribute("dayList", payService.selectDaySales(pay_date));

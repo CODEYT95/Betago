@@ -33,6 +33,7 @@ public class FAQController {
         faqPage.setKeyword(keyword);
         faqPage.setSearchType(searchType);
 
+        model.addAttribute("faqList",1);
         model.addAttribute("currentPage", page);
         model.addAttribute("faqPage", faqPage);
         model.addAttribute("searchType", searchType);
@@ -46,6 +47,7 @@ public class FAQController {
     public String edit(@PathVariable("notice_no") Long notice_no, Model model) {
         NoticeDTO noticeDTO = noticeService.detail(notice_no);
 
+        model.addAttribute("faqList",1);
         model.addAttribute("notice_no", notice_no);
         model.addAttribute("faq", noticeDTO);
         return "admin/FAQ/FAQUpdate";
@@ -64,8 +66,9 @@ public class FAQController {
 
     //FAQ삭제
     @GetMapping("/admin/FAQ/delete/{notice_no}")
-    public String delete(@PathVariable("notice_no") Long notice_no) {
+    public String delete(@PathVariable("notice_no") Long notice_no, Model model) {
         System.out.println("FAQ삭제"+notice_no);
+        model.addAttribute("faqList",1);
         faqService.delete(notice_no);
         return "redirect:/FAQ/list";
     }

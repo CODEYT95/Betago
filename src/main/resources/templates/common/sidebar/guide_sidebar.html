@@ -5,28 +5,44 @@
     <div class="side-bar active">
         <div class="menu">
             <div class="item">
-                <a th:href="@{/introduction/site}">사이트 소개</a>
+                <a th:href="@{/introduction/site}"
+                   th:class="${introduction != null} ? 'sub-btn-active' : ''"
+                   th:style="${introduction != null} ? 'color: #96a0aa;' : ''">사이트 소개</a>
             </div>
             <div class="item">
-                <a th:href="@{/manual/list}">이용 가이드</a>
+                <a th:href="@{/manual/list}"
+                   th:class="${manualList != null} ? 'sub-btn-active' : ''"
+                   th:style="${manualList != null} ? 'color: #96a0aa;' : ''">이용 가이드</a>
             </div>
             <div class="item">
                 <div class="item">
                 <a class="sub-btn">컨텐츠 소개<i class="fas fa-angle-right dropdown"></i></a>
                 <div class="sub-menu">
-                    <a th:href="@{/contents/contentsGame}" class="sub-item">바둑 게임(앱)</a>
-                    <a th:href="@{/contents/contentsTutorial}" class="sub-item">튜토리얼</a>
-                    <a th:href="@{/contents/contentsVideo}" class="sub-item">바둑 영상</a>
+                    <a th:href="@{/contents/contentsGame}" class="sub-item"
+                       th:class="${contents != null} ? 'sub-btn-active' : ''"
+                       th:style="${contents != null} ? 'color: #96a0aa;' : ''">바둑 게임(앱)</a>
+                    <a th:href="@{/contents/contentsTutorial}" class="sub-item"
+                       th:class="${tutorial != null} ? 'sub-btn-active' : ''"
+                       th:style="${tutorial != null} ? 'color: #96a0aa;' : ''">튜토리얼</a>
+                    <a th:href="@{/contents/contentsVideo}" class="sub-item"
+                       th:class="${video != null} ? 'sub-btn-active' : ''"
+                       th:style="${video != null} ? 'color: #96a0aa;' : ''">바둑 영상</a>
                 </div>
             </div>
             <div class="item">
-                <a th:href="@{/notice/list}">공지 사항</a>
+                <a th:href="@{/notice/list}"
+                   th:class="${noticeList != null} ? 'sub-btn-active' : ''"
+                   th:style="${noticeList != null} ? 'color: #96a0aa;' : ''">공지 사항</a>
             </div>
             <div class="item">
-                <a th:href="@{/FAQ/list}">FAQ</a>
+                <a th:href="@{/FAQ/list}"
+                   th:class="${faqList != null} ? 'sub-btn-active' : ''"
+                   th:style="${faqList != null} ? 'color: #96a0aa;' : ''">FAQ</a>
             </div>
             <div class="item">
-                <a th:href="@{/question/list}">Q&A</a>
+                <a th:href="@{/question/list}"
+                   th:class="${qnaList != null} ? 'sub-btn-active' : ''"
+                   th:style="${qnaList != null} ? 'color: #96a0aa;' : ''">Q&A</a>
             </div>
         </div>
     </div>

@@ -29,7 +29,8 @@ public class EdupostController {
     private final FileUtils fileUtils;
     //학습자료 등록
     @GetMapping("/insert")
-    public String eduInsert() {
+    public String eduInsert(Model model) {
+        model.addAttribute("edupostInsert",1);
         return "/admin/edupost/eduboard";
     }
     @PostMapping("/admin/insert")
@@ -58,10 +59,9 @@ public class EdupostController {
                            @RequestParam(value = "keyword", defaultValue = "") String keyword,
                            Model model) {
 
-        System.out.println("s1"+searchType+"s2"+searchType2+"s3"+searchType3+"k"+keyword);
-
         EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, searchType2, searchType3, keyword);
 
+        model.addAttribute("edupostList",1);
         model.addAttribute("currentPage", edupostList.getCurrentPage());
         model.addAttribute("listCount", edupostList.getListCount());
         model.addAttribute("edupostPageDTO", edupostList);
@@ -76,6 +76,7 @@ public class EdupostController {
     public String postView(@PathVariable("edupost_no") final Long edupost_no, Model model) {
         EdupostDTO post = edupostService.findPostId(edupost_no);
         model.addAttribute("post", post);
+        model.addAttribute("edupostList",1);
         System.out.println("조회 값 : "+post);
         return "admin/edupost/eduboarddetail";
     }
@@ -83,9 +84,8 @@ public class EdupostController {
     public String updateForm(@PathVariable("edupost_no") final Long edupost_no, Model model) {
         EdupostDTO post = edupostService.findPostId(edupost_no);
         model.addAttribute("fileList",fileEduService.findByNo(edupost_no));
-        System.out.println("파일번호리스트 : "+fileEduService.findByNo(edupost_no));
         model.addAttribute("post", post);
-        System.out.println("조회 값 : "+post);
+        model.addAttribute("edupostInsert",1);
         return "admin/edupost/eduboardupdate";
     }
     //학습자료 게시판 수정

@@ -238,6 +238,7 @@ public class MemberController {
             @RequestParam(value = "keyword", defaultValue="") String keyword, Model model) {
         System.out.println("1");
         MemberPageDTO memberPageDTO = memberService.memberlist(startDate, endDate, page, size, searchType, searchType2, searchType3, keyword);
+        model.addAttribute("memberList",1);
         model.addAttribute("currentPage", memberPageDTO.getCurrentPage());
         model.addAttribute("listCount", memberPageDTO.getListCount());
         model.addAttribute("memberPageDTO", memberPageDTO);

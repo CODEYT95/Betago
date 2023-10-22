@@ -48,7 +48,8 @@ public class QuestionController {
 
     /*이미지 파일 서빙 미리보기*/
     @GetMapping("/image/{filequ_name}")
-    public ResponseEntity<InputStreamResource> showImage(@PathVariable String filequ_name) {
+    public ResponseEntity<InputStreamResource> showImage(@PathVariable String filequ_name, Model model) {
+        model.addAttribute("qnaList",1);
         try {
             Path imagePath = Paths.get("C:/uploadfile/question_img/", filequ_name);
             InputStreamResource resource = new InputStreamResource(Files.newInputStream(imagePath));
@@ -62,7 +63,8 @@ public class QuestionController {
     }
 
     @GetMapping("/download/{filequ_name}")
-    public ResponseEntity<InputStreamResource> downloadImage(@PathVariable String filequ_name) {
+    public ResponseEntity<InputStreamResource> downloadImage(@PathVariable String filequ_name, Model model) {
+        model.addAttribute("qnaList",1);
         try {
             Path imagePath = Paths.get("C:/uploadfile/question_img/", filequ_name);
             InputStreamResource resource = new InputStreamResource(Files.newInputStream(imagePath));
@@ -141,6 +143,7 @@ public class QuestionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
         model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("qnaList",1);
         AnswerDTO answerDTO= answerService.getAnswer(qna_no);   //답변 넘버 불러올까? 추가함 지워도 되는지 확인
         model.addAttribute("answerDTO", answerDTO); //답변 넘버 불러올까? 추가함 지워도 되는지 확인
         QuestionDTO questionDTO = questionService.selectQuestion(qna_no);
@@ -187,9 +190,10 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{qna_no}")
     public String questionModify(QuestionForm questionForm, AnswerForm answerForm,
-                                 @PathVariable("qna_no") Integer qna_no,Principal principal){
+                                 @PathVariable("qna_no") Integer qna_no,Principal principal, Model model){
         //1 파라미터 받기
         //2 비즈니스로직수행
+        model.addAttribute("qnaList",1);
         QuestionDTO question = questionService.selectQuestion(qna_no); //질문상세
         if(!question.getMember_id().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없습니다.");
@@ -221,9 +225,10 @@ public class QuestionController {
 
     @GetMapping("/delete/{qna_no}")
     public String questionDelete(@PathVariable("qna_no") Integer qna_no,
-                                 Principal principal){
+                                 Principal principal, Model model){
         //1 파라미터 받기
         //2 비즈니스로직수행
+        model.addAttribute("qnaList",1);
         QuestionDTO question = questionService.selectQuestion(qna_no);
         if(!question.getMember_id().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
@@ -236,7 +241,8 @@ public class QuestionController {
     //질문글 등록폼
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/add")
-    public String add(QuestionForm questionForm){
+    public String add(QuestionForm questionForm, Model model){
+        model.addAttribute("qnaList",1);
         return "guide/question/question_form";
     }
 
@@ -276,6 +282,7 @@ public class QuestionController {
         model.addAttribute("questions", questionsWithAnswers);
         model.addAttribute("currentPage", page); // 현재 페이지 번호
         model.addAttribute("totalPages", totalPages); // 전체 페이지 수
+        model.addAttribute("qnaList",1);
         return "guide/question/question_list";//  templates폴더하위  question_list.html문서
     }
 /*
@@ -341,6 +348,7 @@ public class QuestionController {
         model.addAttribute("questions", myQuestions);
         model.addAttribute("currentPage", page); // 현재 페이지 번호
         model.addAttribute("totalPages", totalPages); // 전체 페이지 수
+        model.addAttribute("qnaList",1);
         return "guide/question/question_list";//
     }
 

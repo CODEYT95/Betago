@@ -33,6 +33,7 @@ public class NoticeController {
         noticePage.setSearchType(searchType);
 
         // 모든 게시물 목록을 모델에 추가
+        model.addAttribute("noticeList",1);
         model.addAttribute("allNoticeList", noticePage.getAllNoticeList());
         System.out.println(noticePage.getAllNoticeList());
         model.addAttribute("listSize", size);
@@ -46,7 +47,8 @@ public class NoticeController {
     }
     //공지게시판 글작성 폼
     @GetMapping("/admin/notice/write")
-    public String noticeWriteForm() {
+    public String noticeWriteForm(Model model) {
+        model.addAttribute("noticeInsert",1);
         return "admin/notice/noticeWrite";
     }
     //공지게시판 글작성 처리
@@ -75,6 +77,7 @@ public class NoticeController {
         NoticeDTO noticeDTO = (NoticeDTO) noticeService.detail(notice_no);
         noticeService.viewCnt(noticeDTO);
         model.addAttribute("noticeDTO", noticeDTO);
+        model.addAttribute("noticeList",1);
         System.out.println("컨트롤DTO=" + noticeDTO);
         return "admin/notice/noticeDetail";
     }
@@ -84,6 +87,7 @@ public class NoticeController {
         NoticeDTO noticeDTO = noticeService.detail(notice_no);
         model.addAttribute("notice_no", notice_no);
         model.addAttribute("noticeDTO", noticeDTO);
+        model.addAttribute("noticeInsert",1);
         System.out.println("수정컨트롤 파일" + noticeDTO);
         return "admin/notice/noticeUpdate";
     }

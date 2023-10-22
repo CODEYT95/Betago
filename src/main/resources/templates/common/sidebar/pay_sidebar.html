@@ -5,10 +5,14 @@
     <div class="side-bar active">
         <div class="menu">
             <div class="item">
-                <a th:href="@{/game/list}">게임콘텐츠 조회 및 구독</a>
+                <a th:href="@{/game/list}"
+                   th:class="${gameList != null} ? 'sub-btn-active' : ''"
+                   th:style="${gameList != null} ? 'color: #96a0aa;' : ''">게임콘텐츠 조회 및 구독</a>
             </div>
             <div class="item" sec:authorize="!hasRole('ADMIN')">
-                <a th:href="@{/list}">나의 구독상품 조회</a>
+                <a th:href="@{/list}"
+                   th:class="${payList != null} ? 'sub-btn-active' : ''"
+                   th:style="${payList != null} ? 'color: #96a0aa;' : ''">나의 구독상품 조회</a>
             </div>
         </div>
     </div>
