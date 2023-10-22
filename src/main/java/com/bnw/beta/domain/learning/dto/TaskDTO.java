@@ -16,6 +16,7 @@ public class TaskDTO {
 
     //숙제 전송
     private int tasksend_no;
+    private Date task_senddate;
     private int group_no;
     private String task_state;
     private String game_title;
