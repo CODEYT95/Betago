@@ -167,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
     $(document).ready(function() {
         updateLiCount();
     });
-
     function updateLiCount() {
         var liCount = $(".list-box li").length;
         $(".currentCnt").text(liCount);
@@ -183,32 +182,39 @@ document.addEventListener('DOMContentLoaded', function() {
             moreButton.style.display = 'block';
         }
     }
-     // 게임 삭제 함수
-        function deleteGame() {
-            var game_no = document.getElementById('gameTitleSelect').value;
 
-            if (!game_no) {
-                alert("게임을 선택해주세요.");
+    $(document).ready(function () {
+        $('#deleteButton').click(function () {
+            const selectedGameNo = $('input[name="game_nos"]:checked').val();
+
+            if (selectedGameNos.length === 0) {
+                alert("게임을 선택하세요.");
+                return;
+            } else if (selectedGameNos.length > 1) {
+                alert("한 번에 하나의 게임만 선택하세요.");
                 return;
             }
 
+            // AJAX 요청을 사용하여 컨트롤러에 데이터를 전송
             $.ajax({
-                url: '/game/updateGame',  // 이 URL이 맞는지 확인 필요, 보통 삭제 요청은 '/delete' 또는 '/remove' 같은 엔드포인트를 사용합니다.
-                method: 'POST',
-                data: { game_no: game_no },
-                success: function(response) {
-                    // ... 기존 코드 ...
+                type: 'POST',
+                url: '/game/updateGame',
+                data: { game_no: selectedGameNo },
+                success: function (response) {
+                    if (response == 0) {
+                        alert("선택한 게임은 삭제할 수 없습니다.");
+                    } else if (response == 1) {
+                        alert("선택한 게임이 삭제되었습니다.");
+                        location.reload();
+                    } else if (response == 2) {
+                        alert("다시 시도해주세요.");
+                    }
                 },
-                error: function() {
-                    alert("서버와의 통신 중 에러가 발생했습니다.");
+                error: function () {
+                    alert("서버 오류가 발생했습니다.");
                 }
             });
-        }
-
-        // 삭제 버튼 이벤트 리스너 등록
-        var deleteButton = document.getElementById('deleteButton');  // 'deleteButton'은 삭제 버튼의 ID입니다. 실제 ID로 바꿔주세요.
-        if (deleteButton) {
-            deleteButton.addEventListener('click', deleteGame);
-        }
+        });
     });
+
 });

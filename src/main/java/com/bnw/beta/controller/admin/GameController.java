@@ -86,11 +86,14 @@ public class GameController {
     @PostMapping("/updateGame")
     @ResponseBody
     public int updateGame(@RequestParam Integer game_no){
+        System.out.println("삭제 커느롤");
         int count = gameService.gameCount(game_no);
+        System.out.println(count);
         if(count > 0){
             return 0;
         }else {
             int update = gameService.updateGame(game_no);
+            System.out.println(update);
             if(update > 0){
                 return 1;
             }else {
