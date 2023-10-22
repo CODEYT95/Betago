@@ -450,7 +450,7 @@ svg {
     margin: 0;
 }
 
-.no-student-modal {
+.no-student-modal, .no-delete-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -461,7 +461,7 @@ svg {
     z-index: 1000;
 }
 
-.no-student-modal .modal-wrap {
+.no-student-modal .modal-wrap, .no-delete-modal .modal-wrap {
     position: relative;
     top: 30%;
     height: auto;
@@ -471,7 +471,7 @@ svg {
     border-radius: 5px;
 }
 
-.no-student-modal .modal-content p {
+.no-student-modal .modal-content p, .no-delete-modal .modal-content p {
     text-align: center;
     margin: 20px 0;
 }
@@ -489,4 +489,52 @@ svg {
 
 .confirm-btn:hover {
     background-color: #0056b3;
+}
+
+.modal-3{
+    display: none;
+}
+
+
+.modal-3{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal-content1 {
+    background: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 28%;
+    display: flex;
+    gap: 28px;
+    border-radius: 5px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-btn-confirm, .modal-btn-cancel {
+    background: none;
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+.modal-btn-confirm:hover{
+    background: #2260ff;
+}
+
+.modal-btn-cancel:hover{
+    background: #ff1919;
+}
+
+.modalGroupName{
+    margin: 0;
 }

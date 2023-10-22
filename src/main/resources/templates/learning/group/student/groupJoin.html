@@ -94,8 +94,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 모달2: 잔여 T/O 확인 -->
     <div class="modal-2" id="noRemainingModal">
         <div class="modal-content">
             <div>
@@ -105,8 +103,6 @@
             <button class="modal-btn-confirm" onclick="closeModal('noRemainingModal')">확인</button>
         </div>
     </div>
-
-    <!-- 모달3: 가입 신청 완료 -->
     <div class="modal-3" id="joinCompleteModal">
         <div class="modal-content">
             <div>
@@ -114,6 +110,17 @@
             <h3>가입신청이 완료 되었습니다.</h3>
             </div>
             <button class="modal-btn-confirm" onclick="closeModal('joinCompleteModal')">확인</button>
+        </div>
+    </div>
+    <div id="alreadyJoinModal" class="already-Join-modal">
+        <div class="modal-wrap">
+            <div class="modal-header">
+                <h2>알림</h2>
+            </div>
+            <div class="modal-content1">
+                <p>이미 신청한 그룹입니다.</p>
+                <button id="confirmButton" class="confirm-btn">확인</button>
+            </div>
         </div>
     </div>
     <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

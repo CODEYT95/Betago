@@ -47,6 +47,12 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <h5>학습 가능 인원 : <span data-game-total=${item.game_total}>${item.game_total}명</span></h5>
                                                 <h5>그룹 지정된 인원 : <span data-group-cnt=${item.group_nowcnt}>${item.group_nowcnt}명</span></h5>
                                             </div>
+                                            <div class="backDetails">
+                                            <div class="detaillist">
+                                                <h6>그룹 설명 :<p>
+                                                    <span style="font-size:14px;">${item.game_content}</span></p></h6>
+                                            </div>
+                                            </div>
                                         </div>
                                     </span>
                                 </label>

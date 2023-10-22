@@ -43,9 +43,9 @@
                                                     <div class="poster"><img src="/image/game/${item.filegame_name}"></div>
                                                     <div class="card-details"></div>
                                                     <div class="details">
-                                                        <h5>게임콘텐츠명 : <span th:text="${item.game_title}"></span></h5>
-                                                        <h5>그룹명 : <span th:text="${item.group_name}"></span></h5>
-                                                        <h5>교육자명 : <span th:text="${item.member_name}"></span></h5>
+                                                        <h5>게임콘텐츠명 : <span>${item.game_title}</span></h5>
+                                                        <h5>그룹명 : <span>${item.group_name}</span></h5>
+                                                        <h5>교육자명 : <span>${item.member_name}</span></h5>
                                                         <h5>학습 구독 기간 : <span>${item.group_startdate}</span> ~ <span>${item.group_enddate}</span></h5>
                                                         <h5>가입 상태 : <span>${item.approve_state}</span></h5>
                                                     </div>

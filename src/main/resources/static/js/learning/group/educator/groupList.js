@@ -15,13 +15,28 @@ $(document).ready(function() {
         });
 
         // 선택한 항목들을 삭제
-        $(".delete-btn").click(function() {
+        $(".delete-btn").click(function () {
             var selectCheck = [];
-            $(".checkbox:checked").each(function() {
+            var hasStudents = false; // 학생이 있는 그룹이 있는지 여부를 체크하는 변수
+
+            $(".checkbox:checked").each(function () {
                 var checkNo = $(this).attr("data-check-no");
                 selectCheck.push(checkNo);
+
+                // 해당 그룹의 학생 수를 확인
+                var studentCount = parseInt($(this).closest(".li-container").find(".li-studentCnt span").text());
+                if (studentCount > 0) {
+                    hasStudents = true;
+                    return false; // 학생이 있는 그룹이 하나라도 확인되면 루프 종료
+                }
             });
 
+            // 학생이 있는 그룹이 있다면 삭제 요청을 막고 모달창을 띄웁니다.
+            if (hasStudents) {
+                $("#noDeleteModal").css("display", "block");
+                return;
+            }
+            console.log(selectCheck);
             // 선택한 항목에 대한 AJAX 삭제 요청
             $.ajax({
                 url: "/educator/group/delete",
@@ -29,19 +44,27 @@ $(document).ready(function() {
                 data: { group_no: selectCheck },
                 dataType: "text",
                 traditional: true,
-                success: function(response) {
-                    if(response==="success"){
-                        console.log("삭제 요청이 성공적으로 처리되었습니다.");
-                    } else {
-                        console.log("삭제 실패");
+                success: function (response) {
+                    if (response === "success") {
+                        // 그룹 삭제가 성공한 경우
+                        $("#deleteCompleteModal").css("display", "block");
                     }
-                    console.log(response);
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("삭제 요청 중 오류가 발생했습니다.");
                     console.error(error);
-                }
+                },
             });
+        });
+
+        // 확인 버튼을 누르면 모달 창을 닫고 페이지를 새로고침합니다.
+        $("#confirmButton2").click(function () {
+            $("#noDeleteModal").css("display", "none");
+        });
+
+        // 그룹 삭제 완료 모달에서 확인 버튼을 누르면 페이지를 새로고침합니다.
+        $(".modal-btn-confirm").click(function () {
+            location.reload();
         });
 
         // 학습 그룹 선택 후 조회
@@ -175,4 +198,19 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(".modify-btn").click(function() {
+            var selectedCheckboxes = $(".checkbox:checked"); // 체크된 체크박스들을 가져옵니다.
+
+            if (selectedCheckboxes.length === 0) {
+                alert("수정할 그룹을 선택하세요.");
+            } else if (selectedCheckboxes.length > 1) {
+                alert("그룹 수정은 하나의 그룹만 선택이 가능합니다.");
+            } else {
+                // 첫 번째 체크된 체크박스의 data-check-no 값을 가져옵니다.
+                var groupNo = selectedCheckboxes.first().attr("data-check-no");
+                // 특정 주소에 groupNo를 추가하여 이동합니다.
+                window.location.href = "/educator/group/modify?group_no=" + groupNo;
+            }
+        });
 });

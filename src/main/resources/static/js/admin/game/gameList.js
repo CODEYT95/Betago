@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-     // '구독' 버튼 클릭 시 실행되는 함수
+    // '구독' 버튼 클릭 시 실행되는 함수
     function handleSubscribeButtonClick(e) {
         const selectedGameNo = Array.from(document.querySelectorAll('.checkbox-input:checked'))
             .map(cb => cb.getAttribute('data-game-no'))
@@ -70,8 +70,22 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             alert("게임을 선택해주세요!");
         } else {
-            console.log(selectedGameNo);
-            window.location.href = "/pay/cartList?game_no=" + selectedGameNo;
+            // Ajax 요청을 보냅니다.
+            $.ajax({
+                type: "POST", // 또는 "GET", "PUT" 등 적절한 HTTP 메서드 사용
+                url: "/game/buyCheck", // 서버의 처리 URL
+                data: { game_no: selectedGameNo },
+                success: function(response) {
+                    if (response === "possible") {
+                        window.location.href = "/pay/cartList?game_no=" + selectedGameNo;
+                    } else if (response === "reject") {
+                        alert("이미 구매한 콘텐츠가 있습니다.");
+                    }
+                },
+                error: function() {
+                    alert("오류가 발생했습니다. 다시 시도해주세요.");
+                }
+            });
         }
     }
 

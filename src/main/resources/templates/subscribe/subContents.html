@@ -83,6 +83,9 @@
         </div>
     </div>
 </div>
+<div class="content_footer">
+    <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCount}"></span>)<i class="ri-arrow-down-s-line"></i></button>
+</div>
 <button id="myBtn" title="Go to top">Top</button>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>

@@ -32,6 +32,9 @@ public interface GameDAO {
     //게임콘텐츠 갯수
     int countGameList(String game_title);
 
+    //구독하기 체크
+    int gameBuyCheck(GameDTO gameDTO);
+
     //월간 (일일 단위 매출조회)
     List<GameDTO> selectDailySales(@Param("game_startsearch") Date game_startsearch, @Param("game_endsearch") Date game_endsearch);
 

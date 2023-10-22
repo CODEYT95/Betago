@@ -59,7 +59,7 @@
     <!-- 그룹등록 가능한 게임콘텐츠 조회(무한 스크롤) -->
     <select id="groupAddList" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
-        SELECT p.pay_no, g.game_no, g.game_title, g.game_level, g.game_total, fg.filegame_name,
+        SELECT p.pay_no, g.game_no, g.game_title, g.game_level, g.game_total, g.game_content, fg.filegame_name,
         m.member_name, SUM(s.group_nowcnt) AS group_nowcnt,
         MAX(p.pay_date) AS pay_date, MAX(p.pay_enddate) AS pay_enddate
         FROM game g
@@ -114,7 +114,6 @@
         WHERE
             sg.member_id = #{member_id}
         ]]>
-
         <if test="group_name != null and group_name != ''">
             AND sg.group_name = #{group_name}
         </if>
@@ -151,6 +150,18 @@
         <if test="group_name != null and group_name != ''">
             AND g.group_name = #{group_name}
         </if>
+    </select>
+    <!-- 특정 그룹 조회 -->
+    <select id="selectGroupUpdate" parameterType="GroupDTO" resultType="GroupDTO">
+        <![CDATA[
+        SELECT
+        g.game_title, m.member_name,
+        sg.group_no, sg.group_name, sg.group_intro, sg.group_startdate, sg.group_enddate, sg.group_cnt, sg.group_nowcnt
+        FROM studygroup AS sg
+        JOIN game AS g ON sg.game_no = g.game_no
+        JOIN member  AS m ON sg.member_id = m.member_id
+        WHERE sg.group_no = #{group_no};
+        ]]>
     </select>
 
     <!-- 학습 그룹 삭제 -->
@@ -222,6 +233,7 @@
         </if>
     </select>
 
+    <!-- 학습자 가입상태 업데이트 -->
     <update id="updateGroupMembber">
         UPDATE groupmember
         SET approve_state = #{state}
@@ -292,7 +304,7 @@
         ]]>
     </select>
 
-    <!-- 그룹 신청 가능 실시간 체크 -->
+    <!-- 그룹 신청 가능 실시간 체크1 -->
     <select id="checkJoin" parameterType="Integer" resultType="Integer">
         <![CDATA[
         SELECT group_no
@@ -302,6 +314,13 @@
         <if test="group_no != null and group_no != ''">
             AND group_no = #{group_no}
         </if>
+    </select>
+
+    <!-- 그룹 신청 가능 실시간 체크2 -->
+    <select id="checkJoin2" parameterType="GroupDTO" resultType="Integer">
+        SELECT group_no
+        FROM groupmember
+        WHERE group_no = #{group_no} AND member_no = #{member_no};
     </select>
 
     <!-- 학생 그룹 가입신청 Insert -->

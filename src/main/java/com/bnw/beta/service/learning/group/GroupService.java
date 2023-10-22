@@ -33,6 +33,9 @@ public interface GroupService {
     //학습 그룹 상세 조회
     List<GroupDTO> selectGroupDetail(int group_no, String group_name);
 
+    //특정 학습 그룹 정보 불러오기
+    GroupDTO selectGroupUpdate(int group_no, String member_id);
+
     //학습 그룹 삭제
     String deleteGroup(List<Integer> group_no);
 
@@ -60,10 +63,7 @@ public interface GroupService {
     List<GroupDTO> selectEducatorName();
 
     //그룹 신청 가능 실시간 체크
-    String checkJoin(int group_no);
-
-    //학생 그룹 가입신청 Insert
-    int insertGroupJoin(int member_no, int group_no, int game_no);
+    String checkJoin(int group_no, int game_no, int member_no);
 
     //가입신청 내역 목록
     List<GroupDTO> myjoinList(int member_no, String group_name, String educator_name, int limit, int offset);

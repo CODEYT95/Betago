@@ -61,16 +61,7 @@ public class StudentGroupController {
                        @RequestParam(name = "game_no") int game_no, HttpSession session){
 
         int member_no = (int) session.getAttribute("member_no");
-
-        if(groupService.checkJoin(group_no).equals("applyable")){
-            groupService.insertGroupJoin(member_no, group_no, game_no);
-            return "applyable";
-
-        }else{
-
-            return "unapplyable";
-        }
-
+            return groupService.checkJoin(group_no, game_no, member_no);
     }
 
     //가입신청 내역

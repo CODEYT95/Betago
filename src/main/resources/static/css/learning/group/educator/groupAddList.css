@@ -136,6 +136,10 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
+.card:hover .backDetails {
+    bottom: 0;
+}
+
 
 .poster{
     object-fit: cover;
@@ -160,6 +164,21 @@
     z-index: 2;
     font-size: 20px;
 }
+
+.backDetails{
+    position: absolute;
+    bottom: -101%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1.5em 1.5em 2em;
+    background: #000a;
+    backdrop-filter: blur(16px) saturate(120%);
+    color: #fff;
+    z-index: 1;
+    font-size: 20px;
+}
+
 .details h5{
     font-size: 13.5px;
     width: max-content;

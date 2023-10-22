@@ -35,6 +35,9 @@ public interface GroupDAO {
     //학습 그룹 상세 조회
     List<GroupDTO> selectGroupDetail(GroupDTO groupDTO);
 
+    //특정 학습 그룹 정보 불러오기
+    GroupDTO selectGroupUpdate(GroupDTO groupDTO);
+
     //학습 그룹 삭제
     int deleteGroup(List<Integer> group_no);
 
@@ -66,6 +69,9 @@ public interface GroupDAO {
 
     //그룹 신청 가능 실시간 체크
     int checkJoin(int group_no);
+
+    //그룹 신청 가능 실시간 체크2
+    int checkJoin2(GroupDTO groupDTO);
 
     //학생 그룹 가입신청 Insert
     int insertGroupJoin(GroupDTO groupDTO);

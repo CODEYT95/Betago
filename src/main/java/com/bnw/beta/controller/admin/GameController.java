@@ -93,6 +93,12 @@ public class GameController {
         return gameService.selectGameList(game_title, limit, offset);
     }
 
+    //게임 콘텐츠 구독 유효성
+    @PostMapping("/buyCheck")
+    @ResponseBody
+    public String gameBuyCheck(@RequestParam(name = "game_no") List<Integer> game_no, Principal principal){
+        return gameService.gameBuyCheck(game_no,principal.getName());
+    }
 
     //////
     @GetMapping("/salesGraph")

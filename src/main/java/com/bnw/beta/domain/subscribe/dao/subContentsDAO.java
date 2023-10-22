@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface subContentsDAO {
     List<subContentsDTO> selectContents(subContentsDTO subContentsDTO);
+
+    int contentsCnt(subContentsDTO subContentsDTO);
     List<subContentsDTO> selectContentsByDate(@Param("member_id") String member_id,
                                               @Param("startDate") LocalDate  startDate,
                                               @Param("endDate") LocalDate endDate);

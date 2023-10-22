@@ -4,7 +4,6 @@ import com.bnw.beta.domain.common.paging.GroupPageDTO;
 import com.bnw.beta.domain.learning.dto.GroupDTO;
 import com.bnw.beta.service.learning.group.GroupService;
 import com.bnw.beta.service.member.MemberService;
-import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -57,7 +56,6 @@ public class EducatorGroupController {
     public String addGroup(@RequestParam("pay_no") int pay_no, Principal principal, Model model){
         model.addAttribute("member_name",memberService.getMemberInfo(principal.getName()).getMember_name());
         model.addAttribute("gameGroupInfo", groupService.gameGroupInfo(pay_no));
-        System.out.println(groupService.gameGroupInfo(pay_no));
         return "/learning/group/educator/groupAdd";
     }
 
@@ -89,14 +87,20 @@ public class EducatorGroupController {
     @ResponseBody
     public List<GroupDTO> selectGroupDetail(@RequestParam(name = "group_no") int group_no,
                                             @RequestParam(name = "group_name",defaultValue = "") String group_name){
-        System.out.println(group_no+""+group_name);
-        System.out.println(groupService.selectGroupDetail(group_no,group_name));
         return groupService.selectGroupDetail(group_no,group_name);
     }
 
+    //학습 그룹 수정
+    @GetMapping("/modify")
+    public String groupModify(@RequestParam(name = "group_no") int group_no,Principal principal, Model model){
+        System.out.println("들어옴");
+        model.addAttribute("groupInfo", groupService.selectGroupUpdate(group_no, principal.getName()));
+        System.out.println(groupService.selectGroupUpdate(group_no, principal.getName()));
+        return "/learning/group/educator/groupModify";
+    }
 
     //학습 그룹 삭제
-    @PostMapping("delete")
+    @PostMapping("/delete")
     @ResponseBody
     public String groupDelete(@RequestParam(name = "group_no") List<Integer> group_no) {
         return groupService.deleteGroup(group_no);
@@ -104,7 +108,7 @@ public class EducatorGroupController {
 
 
     //그룹 학습자 가입 승인
-    @GetMapping("approveList")
+    @GetMapping("/approveList")
     public String approveStudent(@RequestParam(value = "page", defaultValue = "1") int page,
                                  @RequestParam(value = "size", defaultValue = "5") int size,
                                  @RequestParam(value = "group_no", required = false) Integer group_no,
@@ -124,15 +128,11 @@ public class EducatorGroupController {
     }
 
     //그룹 학생 목록 업데이트
-    @PostMapping("approveUpdate")
+    @PostMapping("/approveUpdate")
     @ResponseBody
     public String updateGroupMembber(@RequestParam(value = "approve[]", required = false) List<Integer> approveList,
                                      @RequestParam(value = "reject[]", required = false) List<Integer> rejectList,
                                      @RequestParam(value = "group_no", required = false) int group_no){
-
-        System.out.println(approveList);
-        System.out.println(rejectList);
-        System.out.println(group_no);
 
         return groupService.updateGroupMembber(approveList, rejectList, group_no);
     }
