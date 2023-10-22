@@ -82,6 +82,20 @@ public class GameController {
         model.addAttribute("title",game_title);
         return "admin/game/gameList";
     }
+    @PostMapping("/updateGame")
+    @ResponseBody
+    public int updateGame(@RequestParam Integer game_no){
+        int count = gameService.gameCount(game_no);
+        if(count > 0){
+            return 0;
+        }else {
+            int update = gameService.updateGame(game_no);
+            if(update > 0){
+                return 1;
+            }else {
+                return 2;}
+        }
+    }
 
     // 게임콘텐츠 제목 검색
     @PostMapping("/list")

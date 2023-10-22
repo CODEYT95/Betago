@@ -21,7 +21,7 @@
     align-items: center;
     height: 40px;
     width: auto;
-    margin-left:216px;
+    margin-left:70px;
 }
 
 .searchReq{
@@ -31,30 +31,32 @@
 }
 
 .titlelist{
-    display: flex;
-    height: auto;
-    background: #fff;
-    padding: 8px;
-    font-size: 18px;
-    font-weight: 400;
-    border-radius: 8px;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        display: flex;
+        height: auto;
+        background: #fff;
+        padding: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        font-family: 'Binggrae', sans-serif;
 }
 
 #searchButton{
-    height: 40px;
+height: 40px;
     background: #fff;
     padding: 20px;
     font-size: 18px;
     border: none;
-    font-weight: 400;
+    font-weight: bold;
     border-radius: 8px;
     line-height: 0;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    color:black;
+    color: black;
+    font-family: 'Binggrae', sans-serif;
 }
 #searchButton:hover {
     background-color: #205AEF;
@@ -63,17 +65,18 @@
 }
 
 .submit-button{
-    height: 40px;
+height: 40px;
     background: #fff;
     padding: 20px;
     font-size: 18px;
     border: none;
-    font-weight: 400;
+    font-weight: bold;
     border-radius: 8px;
     line-height: 0;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    color:black;
+    color: black;
+    font-family: 'Binggrae', sans-serif;
 }
 .submit-button:hover {
     background-color: #205AEF;

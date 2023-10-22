@@ -26,6 +26,10 @@ public interface GameDAO {
     //게임콘텐츠 조회
     List<GameDTO> selectGameList(@Param("game_title") String game_title,@Param("limit") int limit,@Param("offset") int offset);
 
+    int updateGame(Integer game_no);
+
+    int gameCount(Integer game_no);
+
     //게임콘텐츠 제목 조회
     List<GameDTO> selectGameTitle();
 

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:https="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>둑며들다</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
     <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
@@ -57,12 +59,12 @@
                     <div class="v-slider">
                         <div class="v-slide-track">
                             <iframe src="https://textbookmedia.gimmyoung.com/baduk/" class="y-video" title="YouTube video player" allowfullscreen></iframe>
-                            <iframe src="https://www.youtube.com/embed/4Gt-wj2LIPI?si=L_japBF_OBUlL31S" class="y-video" title="YouTube video player" allowfullscreen></iframe>
-                            <iframe src="https://www.youtube.com/embed/-ezZ1Aavv-I" class="y-video" title="YouTube video player" allowfullscreen></iframe>
-                            <iframe src="https://www.youtube.com/embed/wkLTG_3ihGc?si=jDnSRUxVA271pmc4" class="y-video" title="YouTube video player" allowfullscreen></iframe>
-                            <iframe src="https://www.youtube.com/embed/8iWYSpecAuw?si=4_SHrCvJjS7W7awz" class="y-video" title="YouTube video player" allowfullscreen></iframe>
-                            <iframe src="https://www.youtube.com/embed/76J0dzkj0wA?si=fl-Odx0xaSyExWjP" class="y-video" title="YouTube video player" allowfullscreen></iframe>
-                            <iframe src="https://www.youtube.com/embed/wQs1M9LbEbk?si=Lr1VH5msbyIDLB1D" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe id="video1" src="https://www.youtube.com/embed/4Gt-wj2LIPI?enablejsapi=1" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe id="video2" src="https://www.youtube.com/embed/-ezZ1Aavv-I" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe id="video3" src="https://www.youtube.com/embed/wkLTG_3ihGc?si=jDnSRUxVA271pmc4" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe id="video4" src="https://www.youtube.com/embed/8iWYSpecAuw?si=4_SHrCvJjS7W7awz" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe id="video5" src="https://www.youtube.com/embed/76J0dzkj0wA?si=fl-Odx0xaSyExWjP" class="y-video" title="YouTube video player" allowfullscreen></iframe>
+                            <iframe id="video6" src="https://www.youtube.com/embed/wQs1M9LbEbk?si=Lr1VH5msbyIDLB1D" class="y-video" title="YouTube video player" allowfullscreen></iframe>
                         </div>
                     </div>
                     <button id="v-nextBtn" onclick="v_nextVideoSlide()">

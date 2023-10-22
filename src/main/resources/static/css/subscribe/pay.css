@@ -7,22 +7,25 @@ display: flex;
 flex-direction: column;
 }
 .navbar {
-background-color: #333;
+background-color: #7290dd;
     overflow: hidden;
     display: flex;
     width: 100%;
+    border-radius:8px;
 }
 
 /* 네비게이션 바 링크 스타일 */
 .navbar a {
-    float: left;  /* 왼쪽으로 정렬 */
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;  /* 밑줄 제거 */
-    font-size: 17px;
-    cursor: pointer;
+       float: left;
+       display: block;
+       color: white;
+       text-align: center;
+       padding: 14px 16px;
+       text-decoration: none;
+       font-size: 20px;
+       cursor: pointer;
+       font-weight: bolder;
+       font-family: 'Binggrae', sans-serif;
 }
 
 /* 링크에 마우스를 올렸을 때의 스타일 */
@@ -298,6 +301,7 @@ font-weight: bold;
 border-radius: 5px;
 border:none;
 box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+font-family: 'Binggrae', sans-serif;
 }
 .submit-button:hover {
 background-color: #f9da8d;

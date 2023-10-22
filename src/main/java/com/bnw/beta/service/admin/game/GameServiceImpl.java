@@ -38,6 +38,16 @@ public class GameServiceImpl implements GameService {
         return gameDAO.selectGameList(game_title, limit ,limit*offset);
     }
 
+    @Override
+    public int updateGame(Integer game_no) {
+        return gameDAO.updateGame(game_no);
+    }
+
+    @Override
+    public int gameCount(Integer game_no) {
+        return gameDAO.gameCount(game_no);
+    }
+
     //게임콘텐츠 제목 조회
     @Override
     public List<GameDTO> selectGameTitle(){

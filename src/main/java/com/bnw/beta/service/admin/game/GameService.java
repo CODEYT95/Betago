@@ -22,6 +22,9 @@ public interface GameService {
 
     //게임콘텐츠 조회
     List<GameDTO> selectGameList(String game_title, int limit, int offset);
+    int updateGame(Integer game_no);
+
+    int gameCount(Integer game_no);
 
     //게임콘텐츠 제목 조회
     List<GameDTO> selectGameTitle();
