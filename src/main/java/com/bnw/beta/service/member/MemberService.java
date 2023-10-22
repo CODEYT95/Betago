@@ -56,39 +56,7 @@ public interface MemberService {
 
         boolean checkPassword(String email, String currentPassword);
 
+        //회원 license 업데이트
+        int updateLicense(@Param("member_id") String member_id);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*현민님꺼
-        private final MemberMapper memberMapper;
-        private final PasswordEncoder passwordEncoder;
-
-
-        @Autowired
-        public MemberService(MemberMapper memberMapper, PasswordEncoder passwordEncoder) {
-                this.memberMapper = memberMapper;
-                this.passwordEncoder = passwordEncoder;
-        }
-
-        @Transactional
-        public void registerMember(MemberDTO memberDTO) {
-
-                String encodedPassword = passwordEncoder.encode(memberDTO.getMember_pw());
-                memberDTO.setMember_pw(encodedPassword);
-
-                memberMapper.insertMember(memberDTO);
-        }
-        */
 }

@@ -192,6 +192,9 @@ public class MemberServiceImpl implements MemberService {
         return passwordEncoder.matches(currentPassword, passwordHashFromDB);
     }
 
+    //회원 license 업데이트
+    @Override
+    public int updateLicense(String member_id) {return memberDAO.updateLicense(member_id);}
 
 
 }

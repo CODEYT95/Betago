@@ -60,4 +60,7 @@ public interface MemberDAO {
     void updateSetPassword(@Param("email") String email, @Param("newPassword") String password);
 
     String findPasswordByEmail(String email);
+
+    //회원 license 업데이트
+    int updateLicense(@Param("member_id") String member_id);
 }

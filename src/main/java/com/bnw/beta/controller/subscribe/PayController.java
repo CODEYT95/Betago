@@ -1,6 +1,8 @@
 package com.bnw.beta.controller.subscribe;
 
+import com.bnw.beta.domain.member.dao.MemberDAO;
 import com.bnw.beta.domain.subscribe.dto.payDTO;
+import com.bnw.beta.service.member.MemberService;
 import com.bnw.beta.service.subscribe.pay.PayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +19,8 @@ import java.util.List;
 public class PayController {
     @Autowired
     private PayService payService;
+    @Autowired
+    private MemberService memberService;
 
     @GetMapping("/cartList")
     public String cartList(Model model, @RequestParam("game_no") List<Integer> game_no) {
@@ -31,7 +35,7 @@ public class PayController {
                             @RequestParam("game_date[]") List<String> game_date,
                             @RequestParam("pay_type") String pay_type,
                             payDTO payDTO, Principal principal) {
-        System.out.println("테스트"+pay_type);
+
         String member_id = principal.getName();
 
         for (int i = 0; i < game_no.size(); i++) {
@@ -42,6 +46,9 @@ public class PayController {
             payDTO.setGame_date(gameDate);
             System.out.println(payDTO);
             payService.insertIntoPay(payDTO);
+        }
+        if(!game_no.isEmpty()){
+            memberService.updateLicense(member_id);
         }
 
         return "redirect:/game/list";

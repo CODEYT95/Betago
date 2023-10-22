@@ -283,4 +283,11 @@
             <include refid="search2"></include>
         </where>
     </select>
+    
+    <!-- 회원 license 업데이트 -->
+    <update id="updateLicense" parameterType="String">
+        UPDATE member
+        SET license = "유료"
+        WHERE member_id = #{member_id}
+    </update>
 </mapper>

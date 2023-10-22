@@ -26,4 +26,5 @@ public interface PayService {
     //매출 상세 조회
     List<payDTO> selectSalesDetail(Date pay_date, Date pay_date2);
 
+
 }
