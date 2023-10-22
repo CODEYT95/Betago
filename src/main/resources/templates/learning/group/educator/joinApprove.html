@@ -40,7 +40,7 @@
         </div>
         <div class="content-header2">
             <div>
-                <h3>게임콘텐츠: <span th:text="${groupInfo != null ? groupInfo.game_title : '게임콘텐츠를 선택해주세요.'}"></span></h3>
+                <h3>게임콘텐츠: <span th:if="${groupInfo != null}" th:text="${groupInfo.game_title + '(' + groupInfo.game_level + ')'}"></span><span th:unless="${groupInfo != null}">게임콘텐츠를 선택해주세요.</span></h3>
             </div>
             <div>
                 <h3>구독 가능인원: <span th:text="${groupInfo != null ? groupInfo.group_cnt+'명' : '0명'}"></span></h3>

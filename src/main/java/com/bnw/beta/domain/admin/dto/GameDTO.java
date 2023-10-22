@@ -1,8 +1,6 @@
 package com.bnw.beta.domain.admin.dto;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Data

@@ -174,4 +174,90 @@ document.addEventListener('DOMContentLoaded', function() {
         alert("삭제가 완료되었습니다.");
         deleteForm.submit();
     });
+
+    // 현재 체크박스 갯수 업데이트
+        updateLiCount();
+
+        function updateLiCount() {
+            var liCount = $(".checkbox").length;
+            $(".currentCnt").text(liCount);
+
+            var currentCountElement = document.querySelector('.currentCnt');
+            var totalCountElement = document.querySelector('.totalCnt');
+
+            var moreButton = document.getElementById('moreBtn');
+
+            if (parseInt(currentCountElement.textContent) >= parseInt(totalCountElement.textContent)) {
+                moreButton.style.display = 'none';
+            } else {
+                moreButton.style.display = 'block';
+            }
+        }
+        var offset = 0;
+       $("#moreBtn").click(function() {
+           offset += 1;
+
+           var payDate = $(".hidestart").val();
+           var endDate = $(".hideend").val();
+
+           $.ajax({
+               url: "/list",
+               type: "POST",
+               data: {
+                   offset: offset,
+                   startDate: payDate,
+                   endDate: endDate
+               },
+               dataType: "json",
+               success: function(response) {
+                   response.forEach(item => {
+                       var formattedPayDate = new Date(item.pay_date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+                       $("#deleteForm").append(`
+                           <div class="checkbox" data-game-no=${item.pay_no}>
+                               <label class="checkbox-wrapper">
+                                   <input type="checkbox" class="checkbox-input" data-game-no=${item.pay_no} name="selectedGameNos" value="${item.pay_no}" />
+                                   <span class="checkbox-title">
+                                       <div class="card">
+                                           <div class="poster">
+                                               <img src="/image/game/${item.filegame_name}">
+                                               <div class="card-details">
+                                                   <h1>컨텐츠 이름 : <span>${item.game_title}</span></h1>
+                                                   <h1>구매금액 : <span>${item.game_sell}</span>원</h1>
+                                                   <h1>구독기간 : <span>${item.game_date}</span>개월</h1>
+                                                   <h1>구매일자 : <span>${formattedPayDate}</span></h1>
+                                               </div>
+                                               <div class="details">
+                                                   <h5>학습그룹 등록내역 : <span>${item.group_name}</span></h5>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </span>
+                               </label>
+                           </div>
+                       `);
+                   });
+                   updateLiCount();
+               }
+           });
+       });
+       const myButton = document.getElementById("myBtn");
+       myButton.addEventListener("click", topFunction);
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                myButton.style.display = "block";
+            } else {
+                myButton.style.display = "none";
+            }
+        }
+
+       function topFunction() {
+           const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+           if (currentScroll > 0) {
+               window.requestAnimationFrame(topFunction);
+               window.scrollTo(0, currentScroll - (currentScroll / 10));
+           }
+       }
+       window.addEventListener("scroll", scrollFunction);
 });

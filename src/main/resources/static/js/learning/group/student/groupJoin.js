@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         educatorOptions.on('click', function(e) {
-            e.stopPropagation();  // prevent the event from reaching the document
+            e.stopPropagation();
 
             let selectedOption = $(this).find('.option-text-educator').text();
             if (groupSBtnText.text() !== '전체' && selectedOption !== '전체') {
@@ -178,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        // Close menus when clicking outside
         $(document).on("click", function() {
             groupMenu.removeClass("active");
             educatorMenu.removeClass("active");
@@ -187,6 +186,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
    $(document).ready(function() {
+
+    $('#confirmButton').click(function() {
+           closeModal('alreadyJoinModal'); // 모달 창을 닫는 함수 호출
+       });
        function showModal(modalId) {
            $('#' + modalId).css('display', 'block');
        }
@@ -223,10 +226,13 @@ document.addEventListener("DOMContentLoaded", function() {
                    dataType: 'text',
                    success: function(response) {
                        closeModal('joinConfirmModal');
-                       if (response === "applyable") {
+                        if(response === "already"){
+                            showModal('alreadyJoinModal');
+                        }
+                        else if (response === "applyable") {
                            $('.modalGroupName').text(group_name);
                            showModal('joinCompleteModal');
-                       } else {
+                        } else {
                            showModal('noRemainingModal');
                        }
                    },

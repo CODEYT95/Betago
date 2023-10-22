@@ -15,7 +15,13 @@ public class SubContentsServiceImpl implements SubContentsService {
 
     @Override
     public List<subContentsDTO> selectContents(subContentsDTO subContentsDTO) {
+        System.out.println("임플"+subContentsDTO);
         return subContentsDAO.selectContents(subContentsDTO);
+    }
+
+    @Override
+    public int contentsCnt(subContentsDTO subContentsDTO){
+        return subContentsDAO.contentsCnt(subContentsDTO);
     }
 
     @Override

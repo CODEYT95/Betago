@@ -99,6 +99,17 @@ public class GroupServiceImpl implements GroupService {
         return groupDAO.selectGroupDetail(groupDTO);
     }
 
+    //특정 학습 그룹 정보 불러오기
+    @Override
+    public GroupDTO selectGroupUpdate(int group_no, String member_id){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroup_no(group_no);
+        groupDTO.setMember_id(member_id);
+
+        return groupDAO.selectGroupUpdate(groupDTO);
+    }
+
     //학습 그룹 삭제
     @Override
     public String deleteGroup(List<Integer> group_no){
@@ -199,29 +210,26 @@ public class GroupServiceImpl implements GroupService {
 
     //그룹 신청 가능 실시간 체크
     @Override
-    public String checkJoin(int group_no) {
+    public String checkJoin(int group_no, int game_no, int member_no) {
 
         int result = groupDAO.checkJoin(group_no);
 
-        if (result > 0) {
-
-            return "applyable";
-
-        } else {
-
-            return "unapplyable";
-        }
-    }
-
-    //학생 그룹 가입신청 Insert
-    @Override
-    public int insertGroupJoin(int member_no, int group_no, int game_no){
-
         GroupDTO groupDTO = new GroupDTO();
-        groupDTO.setMember_no(member_no);
         groupDTO.setGroup_no(group_no);
+        groupDTO.setMember_no(member_no);
         groupDTO.setGame_no(game_no);
-        return groupDAO.insertGroupJoin(groupDTO);
+
+        if(groupDAO.checkJoin2(groupDTO) > 0){
+            return "already";
+        }else{
+            if (result > 0) {
+                groupDAO.insertGroupJoin(groupDTO);
+                return "applyable";
+            } else {
+                return "unapplyable";
+            }
+        }
+
     }
 
     //가입신청 내역 목록

@@ -23,8 +23,27 @@
             </if>
         </where>
         <![CDATA[
-        ORDER BY p.pay_date ASC;
+        ORDER BY p.pay_date ASC
+        LIMIT #{limit} OFFSET #{offset}
         ]]>
+    </select>
+
+    <select id="contentsCnt" parameterType="subContentsDTO" resultType="Integer">
+        <![CDATA[
+        SELECT count(*)
+        FROM pay p
+        JOIN game g ON p.game_no = g.game_no
+        LEFT JOIN studygroup s ON p.group_no = s.group_no
+        JOIN filegame fg ON g.game_no = fg.game_no
+        ]]>
+        <where>
+            <if test="member_id != null">
+                AND p.member_id = #{member_id}
+            </if>
+            <if test="pay_date != null and endDate != null">
+                AND p.pay_date BETWEEN #{pay_date} AND #{endDate}
+            </if>
+        </where>
     </select>
 
     <!-- 나의 구독상품 삭제 -->

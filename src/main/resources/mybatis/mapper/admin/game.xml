@@ -81,6 +81,16 @@
         ORDER BY g.game_no DESC
         ]]>
     </select>
+
+    <!-- 게임 콘텐츠 구매 체크 -->
+    <select id="gameBuyCheck" parameterType="GameDTO" resultType="Integer">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM pay
+        WHERE member_id = #{member_id} AND game_no = #{game_no};
+        ]]>
+    </select>
+
     <!--게임콘텐츠 등록-->
     <insert id="insertGame" parameterType="GameDTO">
         <selectKey keyProperty="game_no" resultType="int" order="AFTER">

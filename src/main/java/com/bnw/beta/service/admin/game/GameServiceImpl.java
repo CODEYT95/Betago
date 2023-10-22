@@ -60,6 +60,25 @@ public class GameServiceImpl implements GameService {
         return gameDAO.countGameList(game_title);
     }
 
+    //구독하기 체크
+    @Override
+    public String gameBuyCheck(List<Integer> game_no, String member_id){
+
+        GameDTO gameDTO = new GameDTO();
+        gameDTO.setMember_id(member_id);
+
+        for (Integer gameNo : game_no) {
+            gameDTO.setGame_no(gameNo);
+
+            int result = gameDAO.gameBuyCheck(gameDTO);
+
+            if (result > 0) {
+                return "reject";
+            }
+        }
+        return "possible";
+    }
+
     //월간 (일일 단위 매출조회)
     @Override
     public List<GameDTO> selectDailySales(Date game_startsearch, Date game_endsearch)

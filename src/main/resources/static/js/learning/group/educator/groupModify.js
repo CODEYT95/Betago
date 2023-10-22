@@ -77,3 +77,15 @@ document.addEventListener("DOMContentLoaded", function() {
   document.querySelector(".endDate").max = gameEndDate;
 
 });
+document.addEventListener('DOMContentLoaded', function () {
+    // group_nowcnt의 값 가져오기
+     var groupNowCnt = document.querySelector('.readOnly').value;
+
+    // group_nowcnt가 0명 이상이면 필드를 읽기 전용으로 변경
+    if (groupNowCnt >= 0) {
+        document.querySelector('.group-people').disabled = true;
+        document.querySelector('.startDate').disabled = true;
+        document.querySelector('.endDate').disabled = true;
+        document.querySelector('.content').disabled = true;
+    }
+});

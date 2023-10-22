@@ -32,6 +32,9 @@ public interface GameService {
     //게임콘텐츠 갯수
     int countGameList(String game_title);
 
+    //구독하기 체크
+    String gameBuyCheck(List<Integer> game_no, String member_id);
+
     //월간 (일일 단위 매출조회)
     public List<GameDTO> selectDailySales(Date game_startsearch, Date game_endsearch);
 

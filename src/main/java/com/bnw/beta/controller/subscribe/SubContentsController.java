@@ -23,7 +23,10 @@ public class SubContentsController {
     @GetMapping("/list")
     public String mycontentsList(@RequestParam(name = "startDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                                  @RequestParam(name = "endDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+                                 @RequestParam(name = "offset",defaultValue = "0") int offset,
                                  Model model, Principal principal) {
+
+        int limit = 6;
 
         String member_id = principal.getName();
 
@@ -31,22 +34,48 @@ public class SubContentsController {
         subContentsDTO.setMember_id(member_id);
         Date pay_date = new Date();
 
-        System.out.println(startDate+"ss"+endDate);
 
         java.sql.Date sqlStartDate = startDate != null ? new java.sql.Date(startDate.getTime()) : null;
         java.sql.Date sqlEndDate = endDate != null ? new java.sql.Date(endDate.getTime()) : null;
-
-
         subContentsDTO.setPay_date(sqlStartDate);
         subContentsDTO.setEndDate(sqlEndDate);
 
+        subContentsDTO.setLimit(limit);
+        subContentsDTO.setOffset(limit*offset);
+
+        model.addAttribute("totalCount", subContentsService.contentsCnt(subContentsDTO));
         model.addAttribute("pay_date", sqlStartDate);
         model.addAttribute("endDate", sqlEndDate);
-
         List<subContentsDTO> contentsList = subContentsService.selectContents(subContentsDTO);
-        System.out.println(contentsList);
         model.addAttribute("contentsList", contentsList);
         return "subscribe/subContents";
+    }
+
+    @PostMapping("/list")
+    @ResponseBody
+    public List<subContentsDTO>listAdd (@RequestParam(name = "startDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                         @RequestParam(name = "endDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+                                         @RequestParam(name = "offset",defaultValue = "0") int offset,Principal principal){
+
+
+        int limit = 6;
+
+        String member_id = principal.getName();
+
+        subContentsDTO subContentsDTO = new subContentsDTO();
+        subContentsDTO.setMember_id(member_id);
+        Date pay_date = new Date();
+
+
+        java.sql.Date sqlStartDate = startDate != null ? new java.sql.Date(startDate.getTime()) : null;
+        java.sql.Date sqlEndDate = endDate != null ? new java.sql.Date(endDate.getTime()) : null;
+        subContentsDTO.setPay_date(sqlStartDate);
+        subContentsDTO.setEndDate(sqlEndDate);
+
+        subContentsDTO.setLimit(limit);
+        subContentsDTO.setOffset(limit*offset);
+
+        return subContentsService.selectContents(subContentsDTO);
     }
 
     @PostMapping("/deleteContents")

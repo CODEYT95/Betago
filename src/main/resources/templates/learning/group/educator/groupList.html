@@ -75,7 +75,7 @@
                                 <span class="group_name" th:attr="data-group-name=${groupList.group_name}" th:text="${groupList.group_name}"></span>
                             </div>
                             <div class="li-gametitle">
-                                <span th:text="${groupList.game_title}"></span>
+                                <span th:text="${groupList.game_title + '(' + groupList.game_level + ')'}"></span>
                             </div>
                             <div class="li-groupTO">
                                 <span th:text="${groupList.group_cnt}-${groupList.group_nowcnt}"></span>
@@ -130,6 +130,25 @@
                     <p>그룹에 가입된 학생이 없습니다.</p>
                     <button id="confirmButton" class="confirm-btn">확인</button>
                 </div>
+            </div>
+        </div>
+        <div id="noDeleteModal" class="no-delete-modal">
+            <div class="modal-wrap">
+                <div class="modal-header">
+                    <h2>알림</h2>
+                </div>
+                <div class="modal-content">
+                    <p>그룹에 가입된 학생이 있으면 삭제가 불가 합니다.</p>
+                    <button id="confirmButton2" class="confirm-btn">확인</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-3" id="deleteCompleteModal">
+            <div class="modal-content1">
+                <div>
+                    <h3>그룹 삭제가 완료 되었습니다.</h3>
+                </div>
+                <button class="modal-btn-confirm">확인</button>
             </div>
         </div>
     </div>
