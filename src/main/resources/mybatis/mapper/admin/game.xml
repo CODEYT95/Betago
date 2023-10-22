@@ -23,20 +23,16 @@
             f.filegame_name, f.filegame_path, f.filegame_date
         FROM game g
         LEFT JOIN filegame f ON g.game_no = f.game_no
-        WHERE
+        WHERE game_isshow = 'Y'
         ]]>
-        <choose>
-            <when test="game_title != null and game_title != ''">
-                game_title = #{game_title}
-            </when>
-            <otherwise>
-                1=1
-            </otherwise>
-        </choose>
-        <![CDATA[
+            <choose>
+                <when test="game_title != null and game_title != ''">
+                    AND game_title = #{game_title}
+                </when>
+            </choose>
+            <![CDATA[
         ORDER BY g.game_no DESC
         LIMIT #{limit} OFFSET #{offset}
-        AND game_isshow = 'Y'
         ]]>
     </select>
 
