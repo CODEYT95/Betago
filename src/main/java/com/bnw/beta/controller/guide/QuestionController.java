@@ -50,7 +50,9 @@ public class QuestionController {
     @GetMapping("/image/{filequ_name}")
     public ResponseEntity<InputStreamResource> showImage(@PathVariable String filequ_name) {
         try {
-            Path imagePath = Paths.get("C:/uploadfile/question_img/", filequ_name);
+            String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
+            Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "question");
+            Path imagePath = Paths.get(String.valueOf(uploadPath), filequ_name);
             InputStreamResource resource = new InputStreamResource(Files.newInputStream(imagePath));
 
             return ResponseEntity.ok()
@@ -64,7 +66,9 @@ public class QuestionController {
     @GetMapping("/download/{filequ_name}")
     public ResponseEntity<InputStreamResource> downloadImage(@PathVariable String filequ_name) {
         try {
-            Path imagePath = Paths.get("C:/uploadfile/question_img/", filequ_name);
+            String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
+            Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "question");
+            Path imagePath = Paths.get(String.valueOf(uploadPath), filequ_name);
             InputStreamResource resource = new InputStreamResource(Files.newInputStream(imagePath));
 
             return ResponseEntity.ok()
