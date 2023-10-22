@@ -34,6 +34,7 @@ public class EducatorGroupController {
         model.addAttribute("addList",1);
         model.addAttribute("title", game_title);
         model.addAttribute("groupAddList", groupService.groupAddList(principal.getName(), game_title, limit, offset));
+        System.out.println(groupService.groupAddList(principal.getName(), game_title, limit, offset));
         model.addAttribute("gameTitle", groupService.selectGameTitle(principal.getName()));
         model.addAttribute("totalCnt" , groupService.groupAddListCnt(principal.getName(), game_title));
         return "/learning/group/educator/groupAddList";
@@ -97,6 +98,12 @@ public class EducatorGroupController {
         model.addAttribute("groupInfo", groupService.selectGroupUpdate(group_no, principal.getName()));
         System.out.println(groupService.selectGroupUpdate(group_no, principal.getName()));
         return "/learning/group/educator/groupModify";
+    }
+
+    @PostMapping("/modify")
+    public String groupModify(GroupDTO groupDTO){
+
+        return "";
     }
 
     //학습 그룹 삭제

@@ -75,7 +75,7 @@
                                 <span class="group_name" th:attr="data-group-name=${groupList.group_name}" th:text="${groupList.group_name}"></span>
                             </div>
                             <div class="li-gametitle">
-                                <span th:text="${groupList.game_title}"></span>
+                                <span th:text="${groupList.game_title + '(' + groupList.game_level + ')'}"></span>
                             </div>
                             <div class="li-groupTO">
                                 <span th:text="${groupList.group_cnt}-${groupList.group_nowcnt}"></span>

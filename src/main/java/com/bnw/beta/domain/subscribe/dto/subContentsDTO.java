@@ -23,4 +23,8 @@ public class subContentsDTO {
 
     private int filegame_no;
     private String filegame_name;
+
+    private int limit;
+    private int offset;
+
 }

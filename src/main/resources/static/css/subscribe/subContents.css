@@ -349,3 +349,18 @@ h1{
     background-color: #555;
 }
 
+.content_footer{
+    display: flex;
+    justify-content: center;
+}
+
+.content_footer button{
+    width: auto;
+    height: auto;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}

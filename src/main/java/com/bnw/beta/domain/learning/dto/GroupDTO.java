@@ -10,6 +10,7 @@ public class GroupDTO {
     private int game_no;
     private String game_title;
     private String game_content;
+    private String game_level;
     private int game_total;
     private Date game_startdate;
     private Date game_enddate;

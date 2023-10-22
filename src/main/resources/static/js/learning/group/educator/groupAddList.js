@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 <h5>게임 콘텐츠 : <span>${item.game_title}</span></h5>
                                                 <h5>학습 구독 기간 : <span>${item.pay_date}</span> ~ <span>${item.pay_enddate}</span></h5>
                                                 <h5>학습 가능 인원 : <span data-game-total=${item.game_total}>${item.game_total}명</span></h5>
-                                                <h5>그룹 지정된 인원 : <span data-group-cnt=${item.group_nowcnt}>${item.group_nowcnt}명</span></h5>
+                                                <h5>그룹 지정된 인원 : <span data-group-cnt=${item.group_cnt}>${item.group_cnt}명</span></h5>
                                             </div>
                                             <div class="backDetails">
                                             <div class="detaillist">

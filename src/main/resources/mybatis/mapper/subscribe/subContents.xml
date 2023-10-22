@@ -23,7 +23,7 @@
             </if>
         </where>
         <![CDATA[
-        ORDER BY p.pay_date ASC;
+        ORDER BY p.pay_date ASC
         LIMIT #{limit} OFFSET #{offset}
         ]]>
     </select>
