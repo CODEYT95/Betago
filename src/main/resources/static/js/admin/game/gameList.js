@@ -225,4 +225,3 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteButton.addEventListener('click', deleteGame);
         }
     });
-});
