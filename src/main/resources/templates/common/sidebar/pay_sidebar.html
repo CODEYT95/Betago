@@ -4,7 +4,10 @@
 <th:block th:fragment="pay_sidebarFragment">
     <div class="side-bar active">
         <div class="menu">
-            <div class="item"><a th:href="@{/game/list}">게임콘텐츠 조회 및 구독</a>
+            <div class="item">
+                <a th:href="@{/game/list}">게임콘텐츠 조회 및 구독</a>
+            </div>
+            <div class="item" sec:authorize="!hasRole('ADMIN')">
                 <a th:href="@{/list}">나의 구독상품 조회</a>
             </div>
         </div>
