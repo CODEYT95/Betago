@@ -51,15 +51,15 @@
                             <li><a th:href="@{/question/list}">Q&A</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="!hasAnyRole('USER','ADMIN')">
+                    <li class="first_li" sec:authorize="!hasRole('USER')">
                         <a th:href="@{/game/list}">구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
                             <li><a th:href="@{/game/list}">게임 컨텐츠 구매</a></li>
-                            <li><a th:href="@{/list}">내 게임 컨텐츠 조회</a></li>
+                            <li sec:authorize="!hasRole('ADMIN')"><a th:href="@{/list}">내 게임 컨텐츠 조회</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="hasAnyRole('USER','ADMIN')">
+                    <li class="first_li" sec:authorize="hasRole('USER')">
                         <a>구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
