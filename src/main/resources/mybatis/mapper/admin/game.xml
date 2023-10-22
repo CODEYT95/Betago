@@ -23,17 +23,20 @@
             f.filegame_name, f.filegame_path, f.filegame_date
         FROM game g
         LEFT JOIN filegame f ON g.game_no = f.game_no
-        WHERE game_isshow = 'Y'
+        WHERE
         ]]>
-            <choose>
-                <when test="game_title != null and game_title != ''">
-                    AND game_title = #{game_title}
-                </when>
-            </choose>
-            <![CDATA[
+        <choose>
+            <when test="game_title != null and game_title != ''">
+                game_title = #{game_title}
+            </when>
+            <otherwise>
+                1=1
+            </otherwise>
+        </choose>
+        <![CDATA[
+        AND game_isshow = 'Y'
         ORDER BY g.game_no DESC
         LIMIT #{limit} OFFSET #{offset}
-        AND game_isshow = 'Y'
         ]]>
     </select>
 
@@ -56,6 +59,7 @@
     <select id="selectGameTitle" resultType="GameDTO">
         SELECT g.game_title
         FROM game g
+        WHERE game_isshow = 'Y'
         ORDER BY g.game_title ASC;
     </select>
     <!-- 게임 갯수 -->
@@ -78,16 +82,6 @@
         ORDER BY g.game_no DESC
         ]]>
     </select>
-
-    <!-- 게임 콘텐츠 구매 체크 -->
-    <select id="gameBuyCheck" parameterType="GameDTO" resultType="Integer">
-        <![CDATA[
-        SELECT COUNT(*)
-        FROM pay
-        WHERE member_id = #{member_id} AND game_no = #{game_no};
-        ]]>
-    </select>
-
     <!--게임콘텐츠 등록-->
     <insert id="insertGame" parameterType="GameDTO">
         <selectKey keyProperty="game_no" resultType="int" order="AFTER">

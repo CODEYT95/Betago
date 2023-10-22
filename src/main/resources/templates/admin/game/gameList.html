@@ -31,10 +31,10 @@
                         <input type="submit" value="조회하기" id="searchButton" onsubmit="handleGameTitleChange(event)"/>
                     </div>
                 </form>
-                <div class="subscribe">
+                <div class="subscribe" sec:authorize="!hasRole('ADMIN')" >
                     <button id="subscribeButton" class="submit-button">구독하기</button>
                 </div>
-                <div class="delete" sec:authorize="hasRole('ADMIN')" >
+                <div class="delete" sec:authorize="hasRole('ADMIN')">
                     <button id="deleteButton" class="submit-button">삭제하기</button>
                 </div>
             </div>

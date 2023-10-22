@@ -23,21 +23,19 @@ function fetchData() {
    xhr.open("GET", url, true);
    xhr.send();
 }
-// start date input 요소 가져오기
+
     const startDateInput = document.getElementById('startDate');
-    // end date input 요소 가져오기
+
     const endDateInput = document.getElementById('endDate');
 
-    // start date input의 변경 이벤트에 대한 핸들러 등록
+
     startDateInput.addEventListener('change', function() {
-        // start date input의 값을 가져오기
+
         const startDateValue = startDateInput.value;
 
-        // end date input의 최솟값을 start date로 설정
+
         endDateInput.setAttribute('min', startDateValue);
 
-        // start date가 변경될 때 end date를 업데이트하는 추가적인 로직을 여기에 작성할 수 있어
-        // 예를 들어, 특정 기간 이후의 날짜만 end date로 선택 가능하게 하는 등의 조건을 설정할 수 있어
     });
     window.onload = function() {
         var dateDiffs = document.querySelectorAll('.dateDiff');
