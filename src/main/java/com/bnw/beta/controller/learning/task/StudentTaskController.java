@@ -95,6 +95,7 @@ public class StudentTaskController {
             List<TaskDTO> submitList =  taskService.selectSubmitTask(member_no, limit, offset);
             int totalCount = taskService.submitTaskCount(member_no);
 
+            model.addAttribute("submitTaskList", 1);
             model.addAttribute("member_name", session.getAttribute("member_name"));
             model.addAttribute("submitList", submitList);
             model.addAttribute("totalCount", totalCount);
