@@ -61,17 +61,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // '구독' 버튼 클릭 시 실행되는 함수
-    function handleSubscribeButtonClick(e) {
-        if (!isAnyCheckboxChecked()) {
-            e.preventDefault();
-            alert("게임을 선택해주세요!");
-            return;
+        function handleSubscribeButtonClick(e) {
+            const selectedGameNo = Array.from(document.querySelectorAll('.checkbox-input:checked'))
+                .map(cb => cb.getAttribute('data-game-no'))
+                .join(",");
+
+            if (selectedGameNo.length === 0) {
+                e.preventDefault();
+                alert("게임을 선택해주세요!");
+            } else {
+                console.log(selectedGameNo);
+                window.location.href = "/pay/cartList?game_no=" + selectedGameNo;
+            }
         }
-        const checkedCheckboxes = document.querySelectorAll('.checkbox-input:checked');
-        const selectedGameNo = Array.from(checkedCheckboxes).map(cb => cb.getAttribute('data-game-no')).join(",");
-        console.log(selectedGameNo);
-        window.location.href = "/pay/cartList?game_no=" + selectedGameNo;
-    }
 
     // 페이지 초기화 함수
     function initializePage() {
