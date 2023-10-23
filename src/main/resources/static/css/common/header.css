@@ -331,10 +331,6 @@ nav .header-navi .links li:hover .admin-sub-menu {
     width: 1080px;
   }
   
-  .foot {
-    width: 1080px !important;
-  }
-  
   nav .header-navi {
     max-width: 100%;
     padding: 0 25px;
