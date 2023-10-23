@@ -206,6 +206,16 @@
         ]]>
     </select>
 
+    <!--회원코드일치확인-->
+    <select id="checkCode" resultType="RoleDTO">
+    <![CDATA[
+        SELECT * FROM role
+        WHERE role_code = #{role_code}
+        And role_name = #{role_name};
+        ]]>
+    </select>
+
+
     <!--///////////member_no & member_name 불러오기 -->
     <select id="getMemberInfo" parameterType="String">
      <![CDATA[

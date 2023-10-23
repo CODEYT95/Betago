@@ -18,11 +18,11 @@
         <div class="edupost_cont">
             <form id="notice" th:action="@{/admin/notice/write}" enctype="multipart/form-data" method="post">
                 <div class="edupost_write_box">
-                    <h2 class="head">공지 등록창</h2>
+                    <h2 class="head">공지 등록</h2>
 
                     <div class="opt">
                         <laber for="notice_title" style="font-size: 16px; margin-right: 9px;">제목</laber>
-                        <input type="text" class="texarea1" id="notice_title" name="notice_title"/>
+                        <input type="text" class="texarea1" id="notice_title" name="notice_title"  required/>
                     </div>
 
                     <div class="opt">
@@ -41,15 +41,16 @@
                     </div>
                     <div class="opt2">
                         <label for="upLoadNow" class="view">즉시등록
-                            <input type="checkbox" id="upLoadNow"></label>
+                            <input type="checkbox" id="upLoadNow" name="timeOption" value="upLoadNow"></label>
                         <label for="upDateChoice" class="view">게시일자등록
-                            <input type="date" id="upDateChoice" name="timeWrite"></label><br/>
+                            <input type="checkbox" id="upDateChoice" name="timeOption" value="upDateChoice">
+                            <input type="date" id="datePicker" name="timeWrite" disabled>
+                        </label>
                     </div>
                 </div>
                 <div class="opt">
-                    <label for="notice_content"
-                           style="position: relative; font-size: 16px; bottom: 19rem">내용</label>
-                    <textarea class="texarea2" id="notice_content" name="notice_content"></textarea>
+                    <label for="notice_content" style="position: relative; font-size: 16px; bottom: 19rem;">내용</label>
+                    <textarea class="texarea2" id="notice_content" name="notice_content" required style="resize: none;"></textarea>
                 </div>
 
                 <div class="file_input">
@@ -76,9 +77,45 @@
         </div>
     </div>
 </div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 
 <script>
+    // 폼 유효성 검사
+    function validateForm() {
+        var title = document.getElementById('notice_title').value;
+        var content = document.getElementById('notice_content').value;
+
+        // 제목(title)과 내용(content)이 빈 값인지 확인
+        if (title.trim() === '' || content.trim() === '') {
+            alert('제목과 내용을 입력하세요.');
+            return false; // 폼 제출 중단
+        }
+
+        return true; // 유효성 검사 통과
+    }
+
+    //즉시 등록 & 게시 일자 등록 하나만 선택 가능하게
+    document.addEventListener("DOMContentLoaded", function () {
+        var upLoadNowCheckbox = document.getElementById('upLoadNow');
+        var upDateChoiceCheckbox = document.getElementById('upDateChoice');
+        var datePicker = document.getElementById('datePicker');
+
+        upDateChoiceCheckbox.addEventListener('change', function () {
+            if (upDateChoiceCheckbox.checked) {
+                datePicker.disabled = false;
+                upLoadNowCheckbox.checked = false;
+            }
+        });
+
+        upLoadNowCheckbox.addEventListener('change', function () {
+            if (upLoadNowCheckbox.checked) {
+                datePicker.disabled = true;
+                upDateChoiceCheckbox.checked = false;
+            }
+        });
+    });
+
     document.addEventListener("DOMContentLoaded", function () {
         var dropArea = document.getElementById('dropArea');
         var fileInput = document.getElementById('custom-upload');
@@ -144,8 +181,22 @@
         tomorrow.setDate(today.getDate() + 1);
         // 내일 날짜를 YYYY-MM-DD 형식으로 변환
         var tomorrowFormatted = tomorrow.toISOString().split('T')[0];
-        // 내일 날짜를 min 속성에 설정
-        document.getElementById("upDateChoice").setAttribute("min", tomorrowFormatted);
+
+        // "upDateChoice" 체크박스 요소 가져오기
+        var upDateChoice = document.getElementById("upDateChoice");
+        // "datePicker" 입력 필드 요소 가져오기
+        var datePicker = document.getElementById("datePicker");
+
+        // 체크박스의 상태가 변경될 때 이벤트 처리
+        upDateChoice.addEventListener("change", function () {
+            // 체크박스가 선택되었을 때만 "datePicker" 필드를 활성화하고 "min" 속성 설정
+            if (this.checked) {
+                datePicker.disabled = false;
+                datePicker.min = tomorrowFormatted;
+            } else {
+                datePicker.disabled = true;
+            }
+        });
 
         //등록일시 체크 여부
         document.getElementById('btn').addEventListener('click', function (e) {
@@ -160,7 +211,7 @@
             var upLoadNowChecked = upLoadNowCheckbox.checked;
 
             // upDateChoice 입력 필드의 값 가져오기
-            var upDateChoiceInput = document.getElementById('upDateChoice');
+            var upDateChoiceInput = document.getElementById('datePicker');
             var upDateChoiceValue = upDateChoiceInput.value;
 
             // upLoadNow 또는 upDateChoice 중 하나 이상이 선택되었는지 확인

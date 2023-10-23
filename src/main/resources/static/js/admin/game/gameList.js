@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return Array.from(checkboxes).some(checkbox => checkbox.checked);
     }
 
+
     // '구독' 버튼 상태 업데이트 함수
     function updateSubscribeButtonState() {
         if (isAnyCheckboxChecked()) {
@@ -103,7 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
         checkbox.addEventListener('change', handleCheckboxChange);
     });
     searchButton.addEventListener('click', handleGameTitleChange);
-    subscribeButton.addEventListener('click', handleSubscribeButtonClick);
+    if (subscribeButton) {
+        subscribeBtn.addEventListener('click', handleSubscribeButtonClick);
+    }
     myButton.addEventListener("click", topFunction);
     window.onload = initializePage;
     window.onpageshow = function(event) {
