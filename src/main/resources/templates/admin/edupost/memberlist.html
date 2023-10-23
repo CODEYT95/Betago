@@ -19,9 +19,9 @@
             <div id="bbsList_header">
                 <div id="leftHeader">
                     <form id="searchForm" th:action="@{/member/list}" method="get" name="searchForm">
-                        <input type="date" name="startDate"> <!-- 시작 날짜 -->
+                        <input type="date" id="startDate" name="startDate"> <!-- 시작 날짜 -->
                         ~
-                        <input type="date" name="endDate"> <!-- 종료 날짜 -->
+                        <input type="date" id="endDate" name="endDate"> <!-- 종료 날짜 -->
                         <select name="searchType" class="selectField" title="검색 유형 선택">
                             <option value="" th:classappend="${(searchType == '') ? 'selected' : ''}" >조건검색</option>
                             <option value="member_id" th:classappend="${(searchType == 'member_id') ? 'selected' : ''}">아이디</option>
@@ -42,9 +42,7 @@
                             <option value="무료">무료</option>
                             <option value="유료">유료</option>
                         </select>
-                        <!--    <select name="searchType">
-                                <option value="edupost_category" th:>자료구분</option>
-                            </select>-->
+
                         <input type="text" name="keyword" class="textField"/>
                         <input type="submit" value=" 검 색 " class="btn2"/>
                     </form>
@@ -125,6 +123,64 @@
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function (events) {
+        function fetchData() {
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            // startDate, endDate 중 하나라도 비어있을 경우에 알림 메시지 표시 및 폼 제출 방지
+            if (!startDate || !endDate) {
+                alert("날짜를 선택해주세요.");
+                event.preventDefault(); // 폼의 기본 제출을 방지
+                return; // 이후 로직 실행을 중단
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+
+                    // 조회 결과를 동적으로 표시
+                    updateContentsList(response);
+                }
+            };
+            var url = "http://localhost:8800/list?startDate=" + encodeURIComponent(startDate) + "&endDate=" + encodeURIComponent(endDate);
+            xhr.open("GET", url, true);
+            xhr.send();
+        }
+
+        const startDateInput = document.getElementById('startDate');
+
+        const endDateInput = document.getElementById('endDate');
+
+
+        startDateInput.addEventListener('change', function () {
+
+            const startDateValue = startDateInput.value;
+
+
+            endDateInput.setAttribute('min', startDateValue);
+
+        });
+        window.onload = function () {
+            var dateDiffs = document.querySelectorAll('.dateDiff');
+
+            dateDiffs.forEach(function (element) {
+                var date1 = new Date(element.getAttribute('data-enddate'));
+                var date2 = new Date(element.getAttribute('data-startdate'));
+
+                var diff = Math.abs(date1.getTime() - date2.getTime());
+                var diffMonths = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+                var diffDays = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30.44;
+
+                if (diffMonths === 0) {
+                    element.innerText = diffDays + "일";
+                } else {
+                    element.innerText = diffMonths + "개월 " + diffDays + "일";
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>

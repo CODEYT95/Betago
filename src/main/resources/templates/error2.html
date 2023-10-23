@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B 로고</title>
+</head>
+<style>
+    @import url('https://webfontworld.github.io/binggrae/Binggrae.css');
+    body {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 98vh;
+        background-color: #f1f1f1;
+        padding-right: 50px;
+        overflow: hidden;
+        font-family: '빙그레체', sans-serif;
+    }
+
+    .circle-container {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: -135px;
+    }
+
+    .circle {
+        display: flex;
+        border-radius: 50%;
+        margin: 0 10px;
+        box-shadow: 11px 2px 13px 10px;
+        color: #ccc;
+    }
+
+    .circle.black {
+        position: relative;
+        right: -240px;
+        width: 40rem;
+        height: 40rem;
+        background-color: black;
+        color: #22222278;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 6px 3px 16px 4px;
+    }
+
+    .circle.white {
+        width: 40rem;
+        height: 40rem;
+        background-color: white;
+    }
+
+    .logo {
+        font-size: 15rem;
+        position: absolute;
+        right: 236px;
+        bottom: 186px;
+        color: white;
+    }
+
+    .error-msg {
+        font-size: 35px;
+    }
+
+    .error-msg h1 {
+        margin-top: 0;
+    }
+
+    .guide-msg {
+        display: grid;
+        font-size: 20px;
+    }
+
+    .button-wrap {
+        margin-top: 40px;
+    }
+
+    .homeBtn {
+        border-radius: 50px;
+        border: none;
+        background: black;
+        width: 200px;
+        height: 56px;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        transition: background-color 0.5s cubic-bezier(0.34, 0.06, 0.55, 1.05);
+        cursor: pointer;
+    }
+
+    .homeBtn:hover {
+        color: white;
+        background: #2260ff;
+    }
+
+</style>
+<body>
+<div class="circle-container">
+    <div class="content">
+        <div class="error-msg">
+            <h1>ERROR</h1>
+        </div>
+        <div class="guide-msg">
+            <span>해당 게시글에 대한 권한이 없습니다.</span>
+
+        </div>
+        <div class="button-wrap">
+            <a th:href="@{/}">
+                <button type="button" class="homeBtn">홈으로</button>
+            </a>
+        </div>
+    </div>
+    <div class="circle black">
+        <span class="logo">β</span>
+    </div>
+    <div class="circle white"></div>
+</div>
+</body>
+</html>

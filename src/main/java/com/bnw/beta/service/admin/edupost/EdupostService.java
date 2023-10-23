@@ -11,8 +11,8 @@ public interface EdupostService {
 
     Long eduinsert(EdupostDTO dto) throws Exception;
 
-    EdupostPageDTO edulist(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, @Param("keyword") String keyword);
-    public int count(String searchType, String searchType2, String searchType3, String keyword);
+    EdupostPageDTO edulist(@Param("page") int page, @Param("size") int size, @Param("searchType") String searchType, @Param("searchType2") String searchType2, @Param("searchType3") String searchType3, @Param("searchType4") String searchType4, @Param("keyword") String keyword);
+    public int count(String searchType, String searchType2, String searchType3, String searchType4, String keyword);
 
     EdupostDTO findPostId(final Long edupost_no);
 

@@ -20,6 +20,7 @@ public class EdupostPageDTO {
     private String searchType;
     private String searchType2;
     private String searchType3;
+    private String searchType4;
     private String keyword = "";
 
     public EdupostPageDTO(int total, int currentPage, int size, List<EdupostDTO> edupostList){
