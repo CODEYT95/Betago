@@ -66,7 +66,7 @@
                             <li class="mismatch">권한이 없습니다.</li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="hasRole('USER')">
+                    <li class="first_li" sec:authorize="hasRole('STUDENT')">
                         <a th:href="@{/student/group/joinList}">학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
                         <ul class="learning-sub-menu sub-menu">
                             <li><a th:href="@{/student/group/joinList}">학습그룹 가입신청</a></li>
