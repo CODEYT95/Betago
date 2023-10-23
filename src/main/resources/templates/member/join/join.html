@@ -458,7 +458,7 @@
 
     roleSelect.addEventListener("change", function () {
         var selectedRole = roleSelect.value;
-        if (selectedRole === "ROLE_ADMIN" || selectedRole === "ROLE_TEACHER" || selectedRole === "ROLE_USER") {
+        if (selectedRole === "ROLE_STUDENT" || selectedRole === "ROLE_TEACHER") {
             codeInput.style.display = "block"; // 코드 입력 필드 표시
         } else {
             codeInput.style.display = "none"; // 코드 입력 필드 숨김
@@ -510,11 +510,14 @@
 
         if (age >= 6 && age <= 12) {
             document.querySelector('select[name="role"]').value = 'ROLE_STUDENT';
+            document.getElementById('codeInput').style.display = 'block'; // 코드 입력란 보이기
+        } else {
+            document.getElementById('codeInput').style.display = 'none'; // 코드 입력란 숨기기
         }
     }
 
     // Attach the setRoleBasedOnAge function to the change event of the birthdate selects
-    document.getElementById('year').addEventListener('change', setRoleBasedOnAge);
-    document.getElementById('month').addEventListener('change', setRoleBasedOnAge);
-    document.getElementById('day').addEventListener('change', setRoleBasedOnAge);
+    document.getElementById('year').addEventListener('change', setRoleBasedOnAge2);
+    document.getElementById('month').addEventListener('change', setRoleBasedOnAge2);
+    document.getElementById('day').addEventListener('change', setRoleBasedOnAge2);
 </script>

@@ -86,7 +86,6 @@ public class EdupostController {
         model.addAttribute("post", post);
         model.addAttribute("edupostList",1);
         System.out.println("조회 값 : "+post);
-        return "admin/edupost/eduboarddetail";
         if("유료".equals(member.getLicense())) {
             System.out.println("조회 값 : "+post);
             return "admin/edupost/eduboarddetail";
