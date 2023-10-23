@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>findId</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member/login/find.css}">
 </head>
 <body>
+
+<div class="find-account">
 <form action="/findId" method="post">
-    <label for="name">이름:</label>
-    <input type="text" id="name" name="name" required>
+    <input type="text" id="name" name="name" required placeholder="이름을 입력하세요">
     <br>
-    <label for="email">이메일:</label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="email" required placeholder="이메일을 입력하세요">
     <br>
     <button type="submit">아이디 찾기</button>
 </form>
+</div>
 
 <div id="result" class="result">
     <!-- Thymeleaf 조건문을 사용하여 검색 결과를 표시 -->
