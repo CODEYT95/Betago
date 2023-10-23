@@ -102,6 +102,19 @@
     padding-top: 10px;
 }
 
+.textarea6 {
+    border: 1px solid #d1d1d1;
+    height: 200px;
+    width: 80%;
+    margin-left: 102px;
+    margin-bottom: 20px;
+    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+    box-radius : 5px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+}
 
 .opt {
     margin-top: 15px;
@@ -117,13 +130,16 @@
     width: 234px;
     font-size: 12px;
 }
+
 .bt_1 {
     position: relative;
     right: -342px;
     bottom: 29px;
 }
+
 .btn_sub {
     position: relative;
+    border: none;
     left: 45rem;
     width: 100px;
     height: 36px;
@@ -133,9 +149,17 @@
 }
 
 .btn_update {
-   border: none;
+    border: none;
     color: white;
     background: black;
+    width: 100px;
+    height: 36px;
+    cursor: pointer;
+}
+.btn_del {
+    border: none;
+    color: white;
+    background: darkred;
     width: 100px;
     height: 36px;
     cursor: pointer;
@@ -147,33 +171,6 @@
     width: 234px;
     font-size: 12px;
 }
-
-
-.btn_del {
-border: none;
-    color: white;
-    background: darkred;
-    width: 100px;
-    height: 36px;
-    cursor: pointer;
-}
-
-/*.btn_update {
-    border: none;
-    color: white;
-    background: black;
-    width: 100px;
-    height: 36px;
-    cursor: pointer;
-}
-.btn_del {
-    border: none;
-    color: white;
-    background: darkred;
-    width: 100px;
-    height: 36px;
-    cursor: pointer;
-}*/
 
 .form-container{
     display: flex;
