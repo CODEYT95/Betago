@@ -1,14 +1,15 @@
 package com.bnw.beta.controller.admin;
 
+import com.bnw.beta.domain.admin.dto.NoticeDTO;
+import com.bnw.beta.domain.admin.dto.NoticeManagementDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
 import com.bnw.beta.service.admin.notice.NoticeManagementServicelmpl;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -39,23 +40,53 @@ public class NoticeManagementController {
     }
     
     //다중삭제
-    @PostMapping("/admin/noticeManage/delete")
-    public String deleteSelectedPosts(@RequestParam("allCheck") List<Long> allCheck ) {
-        noticeManagementService.delete(allCheck);
+    @PostMapping ("/admin/noticeManage/delete")
+    public String deleteSelectedPosts(@RequestParam("allCheck") List<Integer> allCheck) {
         System.out.println("DDFgd"+allCheck);
+        noticeManagementService.delete(allCheck);
         return "redirect:/admin/noticeManage/list";
     }
 
-    //드롭다운 삭제
-    @PostMapping("/admin/noticeManage/updateStatus")
-    public ResponseEntity<String> updateNoticeStatus(@RequestParam("newStatus") String newStatus) {
-        try {
-            //noticeManagementService.updateStatus(newStatus);
-            return ResponseEntity.ok("success");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
-        }
+    // 드롭다운 N/Y변경
+    @PostMapping("/admin/updateStatus")
+    @ResponseBody
+    public String updateStatus(@RequestParam("notice_isshow") String notice_isshow, @RequestParam("notice_no") Long notice_no) {
+        System.out.println("컨트롤"+notice_isshow);
+        System.out.println("컨트롤"+notice_no);
+        return noticeManagementService.updateStatus(notice_isshow,notice_no);
+
     }
+
+    //드롭다운으로 카테고리 변경
+    @PostMapping("/admin/updateCategory")
+    @ResponseBody
+    public String updateCategory(@RequestParam("notice_category") String notice_category, @RequestParam("notice_no") Long notice_no) {
+        System.out.println("컨트롤"+notice_category);
+        System.out.println("컨트롤"+notice_no);
+        return noticeManagementService.updateCategory(notice_category,notice_no);
+
+    }
+    //드롭다운으로 타입 변경
+    @PostMapping("/admin/updateType")
+    @ResponseBody
+    public String updateType(@RequestParam("type") String type, @RequestParam("notice_no") Long notice_no) {
+        System.out.println("컨트롤"+type);
+        System.out.println("컨트롤"+notice_no);
+        return noticeManagementService.updateType(type,notice_no);
+
+    }
+
+    //드롭다운으로 예약일 변경
+    @PostMapping("/admin/updateReservation")
+    @ResponseBody
+    public String updateReservation(@RequestParam("notice_reservation") LocalDate notice_reservation, @RequestParam("notice_no") Long notice_no) {
+        System.out.println("컨트롤"+notice_reservation);
+        System.out.println("컨트롤"+notice_no);
+        return noticeManagementService.updateReservation(notice_reservation,notice_no);
+
+    }
+
+
 
 
 

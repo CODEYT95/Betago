@@ -10,7 +10,6 @@
     margin-bottom: 15px;
 }
 
-
 .pagination-container a {
     float: left;
     display: flex;
@@ -68,7 +67,6 @@ table {
     border-radius: 5px;
     overflow: hidden;
 }
-
 th {
     text-align: left;
 }
@@ -87,6 +85,7 @@ td, th {
 td {
     border-bottom: 1px solid rgba(0,0,0,.1);
     background: #fff;
+    height: 68px;
 }
 
 .tableColor{
@@ -95,11 +94,10 @@ td {
 
 
 
-.button-container {
+.top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
 }
 
 .size-container {
@@ -107,28 +105,39 @@ td {
 }
 
 .search-container {
-    order: 2;
-    margin: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    order: 1;
 }
 
 .writeBtn {
-    order: 3;
+
     margin: 0;
+}
+.button-container {
+    order: 2; /* 버튼과 표기 위치 변경을 위한 order 설정 */
 }
 
 .btnWrite{
     width: 70px;
+    order: 3;
     height: 35px;
     border-radius: 5px;
     border: none;
     background: #ccc;
     cursor: pointer;
-
+    margin-left: auto;
 }
 
+.delete-btn{
+    text-align: right;
+}
 .search-box{
     padding: 7px;
     text-align: center;
+    flex: 1;
+    margin-right: 10px;
 }
 
 .search-text{
@@ -143,6 +152,7 @@ td {
     border: none;
     background: #ccc;
     cursor: pointer;
+    margin-left: auto;
 }
 
 .bt_search:hover{
@@ -165,4 +175,6 @@ td {
     color: #fff;
 }
 
-
+.selectC, .selectT, .selectR, .selectI{
+    border: none;
+}

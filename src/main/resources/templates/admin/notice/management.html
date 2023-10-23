@@ -4,30 +4,28 @@
     <meta charset="UTF-8">
     <title>둑며들다|공지 관리</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/admin/notice/noticelist.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/notice/management.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
     <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
-    <form class="button-container" action="/admin/noticeManage/delete" method="post">
     <div class="content-wrap">
         <div id="bbsList">
             <div id="bbsList_title">
                 <h2 class="head">공지 관리 게시판</h2>
             </div>
-
+            <div class="top">
             <div class="button-container">
                 <div class="writeBtn right-aligned">
                     <a class="btnWrite" th:href="@{/admin/notice/write}">
                         <button class="btnWrite">글쓰기</button>
                     </a>
                 </div>
+
+
             </div>
-
-                <button type="submit" class="btnWrite" id="delete-button">삭제</button>
-
 
                 <div class="search-container">
                     <form id="searchForm" method="get" th:action="@{/admin/noticeManage/list}" autocomplete="off">
@@ -51,29 +49,45 @@
                         </div>
                     </form>
                 </div>
+
                 <form id="pageSizeForm" action="/admin/noticeManage/list" method="get">
-                    <select class="form-control form-control-sm" name="size" id="listSize" th:value="${listSize}"
+                   <select class="form-control form-control-sm" name="size" id="listSize" th:value="${listSize}"
                             onchange="changePageSize()">
                         <option value="10" th:selected="${noticePage.getAllNoticeList().size() == 10}">10개</option>
                         <option value="15" th:selected="${noticePage.getAllNoticeList().size() == 15}">15개</option>
                         <option value="20" th:selected="${noticePage.getAllNoticeList().size() == 20}">20개</option>
                     </select>
+
                 </form>
-            </div>
+                </div>
+        </div>
+        <form action="/admin/noticeManage/delete" method="post">
+            <div class="delete-btn">
+        <button type="submit" class="btnWrite" id="delete-button">삭제</button></div>
 
-
-
-            <div id="bbsList_list">
+                 <div id="bbsList_list">
                 <table>
                     <thead>
                     <tr>
                         <th>선택</th>
-                        <th>분류</th>
-                        <th>제목</th>
-                        <th>노출</th>
-                        <th>등록일시</th>
-                        <th>예약일시</th>
-                        <th>삭제여부</th>
+                        <th id="categoryHeader" ondblclick="sortTable('category')">분류
+                            <span id="categorySortIcon" class="arrow-icon category-icon">&#9650;</span>
+                        </th>
+                        <th id="titleHeader" ondblclick="sortTable('title')">제목
+                            <span id="titleSortIcon" class="arrow-icon title-icon">&#9650;</span>
+                        </th>
+                        <th id="showHeader" ondblclick="sortTable('show')">노출
+                            <span id="showSortIcon" class="arrow-icon show-icon">&#9650;</span>
+                        </th>
+                        <th id="regdateHeader" ondblclick="sortTable('regdate')">등록일시
+                            <span id="regdateSortIcon" class="arrow-icon regdate-icon">&#9650;</span>
+                        </th>
+                        <th id="reservationHeader" ondblclick="sortTable('reservation')">예약일시
+                            <span id="reservationSortIcon" class="arrow-icon reservation-icon">&#9650;</span>
+                        </th>
+                        <th id="deletionHeader" ondblclick="sortTable('deletion')">삭제여부
+                            <span id="deletionSortIcon" class="arrow-icon deletion-icon">&#9650;</span>
+                        </th>
                     </tr>
                     </thead>
 
@@ -87,11 +101,16 @@
 
                         <td>
                             <input type="checkbox" class="checkbox" name="allCheck" th:value="${notice.notice_no}" th:data-id="${notice.notice_no}" />
-
                         </td>
 
+
                         <td>
-                            <span class="type" name="type" th:text="${notice.notice_category}"></span>
+                            <label>
+                                <select class="selectC" th:data-id="${notice.notice_no}" th:name="notice_category" onchange="updateCategory(this)">
+                                    <option value="공지" th:selected="${notice.notice_category == '공지'}">공지</option>
+                                    <option value="FAQ" th:selected="${notice.notice_category == 'FAQ'}">FAQ</option>
+                                </select>
+                            </label>
                         </td>
                         <td>
                             <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
@@ -99,31 +118,43 @@
                             </a>
                         </td>
                         <td>
-                            <span class="writer" th:text="${notice.type}"></span>
+                            <label>
+                                <select class="selectT" th:data-id="${notice.notice_no}" th:name="notice.type" onchange="updateType(this)">
+                                    <option value="upView" th:selected="${notice.type == 'upView'}">상단고정</option>
+                                    <option value="일반" th:selected="${notice.type == '일반'}">일반</option>
+                                    <option value="allView" th:selected="${notice.type == 'allView'}">전체공개</option>
+                                    <option value="upView,allView" th:selected="${notice.type == 'upView,allView'}">상단전체공개</option>
+                                </select>
+                            </label>
                         </td>
                         <td>
                             <span class="writer"
                                   th:text="${#temporals.format(notice.notice_regdate, 'yyyy-MM-dd HH:mm')}"></span>
                         </td>
                         <td>
-                            <span class="writer"
-                                  th:text="${#temporals.format(notice.notice_reservation, 'yyyy-MM-dd HH:mm')}"></span>
+                            <label>
+                                <input class="selectR" type="date" th:data-id="${notice.notice_no}" id="dateInput"
+                                       th:name="notice.notice_reservation" onchange="updateReservation(this)">
+                            </label>
+                            <div>
+                                <span th:text="${#temporals.format(notice.notice_reservation, 'yyyy-MM-dd HH:mm')}"></span>
+                            </div>
                         </td>
 
                         <td>
-                            <select th:name="deletionStatus" th:data-id="${notice.notice_no}" onchange="updateDeletionStatus(this)">
-                                <option value="N" th:selected="${notice.notice_isshow == 'N'}">N</option>
-                                <option value="Y" th:selected="${notice.notice_isshow == 'Y'}">Y</option>
-                            </select>
+                            <label>
+                                <select class="selectI" th:data-id="${notice.notice_no}" th:name="notice_isshow" onchange="updateStatus(this)">
+                                    <option value="N" th:selected="${notice.notice_isshow == 'N'}">N</option>
+                                    <option value="Y" th:selected="${notice.notice_isshow == 'Y'}">Y</option>
+                                </select>
+                            </label>
                         </td>
-
-
-
                     </tr>
                 </table>
             </div>
+        </form>
+
         </div>
-    </form>
         <!--페이징-->
         <div class="pagination">
             <div class="paging">
@@ -154,46 +185,171 @@
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 <script>
+
     //페이지 표기 수 변경
     function changePageSize() {
         document.getElementById("pageSizeForm").submit();
 
-        var selectedSize = document.getElementById("listSize").value;
-
+        var selectElement = document.getElementById("listSize");
         // 페이지 이동
         var currentPage = document.getElementById("currentPage").value; // 현재 페이지 번호 가져오기
         var searchType = document.getElementById("searchType").value; // 현재 검색 타입 가져오기
         var keyword = document.getElementById("keyword").value; // 현재 키워드 가져오기
 
-        var newURL = '/admin/noticeManage/list?page=' + currentPage + '&size=' + selectedSize + '&searchType=' + searchType + '&keyword=' + keyword;
-
         // 페이지 이동
-        window.location.href = newURL;
+        window.location.href = '/admin/noticeManage/list?page=' + currentPage + '&size=' + selectElement + '&searchType=' + searchType + '&keyword=' + keyword;
+
     }
 
-    function updateDeletionStatus(select) {
-        const noticeNo = select.getAttribute("data-id"); // 해당 행의 notice_no 가져오기
-        const newStatus = select.value; // 새로 선택한 값(Y 또는 N) 가져오기
 
-        // AJAX 요청을 사용하여 서버에 변경된 상태 업데이트를 요청
+
+    //드롭다운 삭제 변경
+    function updateStatus(select) {
+        const notice_no = select.getAttribute("data-id");
+        const notice_isshow = select.value;
+        console.log(notice_no);
+        console.log(notice_isshow);
         $.ajax({
             type: "POST",
-            url: "/admin/noticeManage/updateStatus",
+            url: "/admin/updateStatus",
             data: {
-                noticeNo: noticeNo,
-                newStatus: newStatus
+                notice_isshow: notice_isshow,
+                notice_no: notice_no
             },
-            success: function (response) {
-                if (response === "success") {
-                    // 업데이트 성공 시 추가 동작 수행
-                    console.log("업데이트 성공!");
-                } else {
-                    console.error("업데이트 실패!");
-                }
+            success: function (NY) {
+                location.reload();
             }
         });
     }
 
+    //드롭다운 카테고리 변경
+    function updateCategory(select) {
+        const notice_no = select.getAttribute("data-id");
+        const notice_category = select.value;
+        console.log(notice_no);
+        console.log(notice_category);
+        $.ajax({
+            type: "POST",
+            url: "/admin/updateCategory",
+            data: {
+                notice_category: notice_category,
+                notice_no: notice_no
+            },
+
+            success: function (NY) {
+                location.reload();
+            }
+        });
+    }
+
+    //드롭다운 타입(전체공개&회원공개) 변경
+    function updateType(select) {
+        const notice_no = select.getAttribute("data-id");
+        const type = select.value;
+        console.log(notice_no);
+        console.log(type);
+        $.ajax({
+            type: "POST",
+            url: "/admin/updateType",
+            data: {
+                type: type,
+                notice_no: notice_no
+            },
+
+            success: function (NY) {
+                location.reload();
+            }
+        });
+    }
+
+    //드롭다운 미래날짜 변경
+    function updateReservation(dateInput) {
+        const notice_no = dateInput.getAttribute("data-id");
+        const notice_reservation = dateInput.value;
+        console.log(notice_reservation);
+        console.log(notice_no);
+        $.ajax({
+            type: "POST",
+            url: "/admin/updateReservation",
+            data: {
+                notice_reservation: notice_reservation,
+                notice_no: notice_no
+            },
+
+            success: function (NY) {
+                location.reload();
+            }
+        });
+    }
+    //오늘 기준 이전 날짜 선택 불가
+    document.addEventListener('DOMContentLoaded', function () {
+        var dateInputs = document.querySelectorAll("#dateInput");
+        var today = new Date().toISOString().split("T")[0];
+        dateInputs.forEach(function (dateInput) {
+            dateInput.setAttribute("min", today);
+        });
+    });
+
+
+
+    //정렬
+    function sortTable(columnName) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("bbsList_list"); // 테이블 ID에 맞게 변경
+        switching = true;
+        // 정렬 방향을 결정 (오름차순 또는 내림차순)
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.getElementsByTagName("tr");
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                // 현재 행 및 다음 행의 값을 가져옴
+                x = rows[i].getElementsByTagName("td")[columnIndex[columnName]].innerHTML;
+                y = rows[i + 1].getElementsByTagName("td")[columnIndex[columnName]].innerHTML;
+                // 오름차순으로 정렬
+                if (dir === "asc") {
+                    if (x.toLowerCase() > y.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") { // 내림차순으로 정렬
+                    if (x.toLowerCase() < y.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+        // 화살표 버튼의 방향을 토글
+        var sortButton = document.getElementById(`${columnName}SortIcon`);
+        if (dir === "asc") {
+            sortButton.textContent = "▲";
+        } else {
+            sortButton.textContent = "▼";
+        }
+    }
+
+    // 각 열의 인덱스를 저장하는 객체
+    var columnIndex = {
+        "category": 1, // 분류 열의 인덱스
+        "title": 2,    // 제목 열의 인덱스
+        "show": 3,     // 노출 열의 인덱스
+        "regdate": 4,  // 등록일시 열의 인덱스
+        "reservation": 5, // 예약일시 열의 인덱스
+        "deletion": 6  // 삭제여부 열의 인덱스
+    };
 </script>
 
 </html>
