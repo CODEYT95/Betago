@@ -115,7 +115,7 @@
                             <li><a th:href="@{/edupost/list}">학습자료 조회</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="hasRole('USER')">
+                    <li class="first_li" sec:authorize="hasAnyRole('USER','ANONYMOUS')">
                         <a>운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
                             <li class="mismatch">권한이 없습니다</li>
