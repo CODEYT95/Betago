@@ -6,6 +6,9 @@
     85% { color: #8B00FF; }      /* 자주 */
 }
 
+body{
+    background: url("/image/bg.png");
+}
 
 .maincontent-wrap{
     height: auto;

@@ -20,12 +20,12 @@
             <input type="hidden" name="game_no" th:value="${groupInfo.game_no}" th:if="${groupInfo.game_no != null}">
             <input type="hidden" class="game_start" th:value="${groupInfo.pay_date}">
             <input type="hidden" class="game_end" th:value="${groupInfo.pay_enddate}">
+            <input type="hidden" class="readOnly" th:value="${groupInfo.group_nowcnt}">
             <header class="content-header">
                 <div class="header-container">
                     <span>게임 콘텐츠명 : <span th:text="${groupInfo.game_title}"></span></span>
                     <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.group_cnt}-${groupInfo.group_nowcnt}+명"></span></span>
                     <span>그룹 총배정인원 : <span class="currentNum" th:text="${groupInfo.group_nowcnt}+명"></span></span>
-                    <input hidden="hidden" class="readOnly" th:value="${groupInfo.group_nowcnt}">
                 </div>
             </header>
             <div class="main-container">
