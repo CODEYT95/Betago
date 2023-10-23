@@ -20,6 +20,12 @@
     color: #8f8f8f;
 }
 
+.edu {
+    margin-left: 55px !important;
+    width: 183px;
+    padding: 17px !important;
+}
+
 .idInput{
     padding: 6px 0 0 16px;
     width: 382px;

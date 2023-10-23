@@ -31,8 +31,11 @@ public interface MemberDAO {
     //핸드폰 중복체크
     int phoneCheck(String phone);
 
-    //회원코드 일치체크
-    RoleDTO checkCode(@Param("role_code") int role_code,@Param("role_name") String role_name);
+    //코드 중복체크
+    int codeDuplicate(String edu_code);
+
+    //코드 조회
+    int codeCheck(String edu_code);
 
     //question 글등록 유저 아이디
     MemberDTO findUserByUsername(String username);

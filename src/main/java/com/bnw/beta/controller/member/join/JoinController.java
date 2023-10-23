@@ -53,6 +53,9 @@ public class JoinController {
     public String memberJoin(@Valid JoinForm joinForm, HttpSession session,
                              @RequestParam("member_birth") String birth,Model model) {
 
+        System.out.println("조인폼 값"+joinForm.getMember_email());
+        System.out.println("birth 값"+birth);
+
         //생년월일 session에 담기
         JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");
         String[] retrievedAgreedTerms = (String[]) session.getAttribute("agreedTerms");
@@ -93,10 +96,19 @@ public class JoinController {
     //회원코드 일치확인
     @PostMapping("/codeCheck")
     @ResponseBody
-    public RoleDTO checkCode(@Param("role_code") int role_code, @Param("role_name") String role_name) {
-        RoleDTO role = memberService.codeCheck(role_code,role_name);
-        System.out.println("컨트롤"+role);
-        return role;
+    public int checkCode(@Param("edu_code") String edu_code) {
+        int checkResult = memberService.codeCheck(edu_code);
+        if(checkResult > 0){
+
+            int dupliResult = memberService.codeDuplicate(edu_code);
+            if(dupliResult > 0){
+                return 1; //다른 교육자의 코드
+            } else {
+                return 2; //일치
+            }
+        } else {
+            return 0; //교육자 코드가 일치하지 않음
+        }
     }
 
 
