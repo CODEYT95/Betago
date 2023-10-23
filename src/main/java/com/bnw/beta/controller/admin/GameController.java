@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 
 @RequestMapping("/game")
@@ -50,8 +51,11 @@ public class GameController {
         String projectDir = System.getProperty("user.dir"); // 현재 프로젝트 디렉토리 가져오기
         Path uploadPath = Paths.get(projectDir, "src", "main", "resources", "static", "image", "guide", "game");
 
+        Random random = new Random();
+        int randomNumber = random.nextInt(9000) + 1000;
+
         if (!imageFile.isEmpty()) {
-            String fileName = imageFile.getOriginalFilename()+principal.getName();
+            String fileName = randomNumber+"_"+imageFile.getOriginalFilename();
             String filePath = String.valueOf(uploadPath.resolve(fileName));
             try {
                 GameFileDTO gameFileDTO = new GameFileDTO();

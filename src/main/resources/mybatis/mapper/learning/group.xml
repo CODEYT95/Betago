@@ -196,6 +196,20 @@
         ]]>
     </select>
 
+    <!--  -->
+    <select id="currentGroupCnt">
+        <![CDATA[
+        SELECT
+        SUM(CASE WHEN sg.group_no <> 1 THEN sg.group_cnt ELSE 0 END) AS total_group_cnt
+        FROM
+        studygroup sg
+        WHERE
+        sg.game_no = 15 AND sg.member_id = 'educator3'
+        GROUP BY
+        sg.game_no, sg.member_id;
+        ]]>
+    </select>
+
     <!-- 학습 그룹 수정 -->
     <update id="updateGroup">
         UPDATE studygroup
