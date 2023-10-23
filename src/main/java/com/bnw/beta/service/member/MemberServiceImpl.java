@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
             memberDTO.setMember_agreeM(joinForm.getMember_agreeM());
             memberDTO.setMember_agreeP(joinForm.getMember_agreeP());
             int info = memberDAO.memberJoin(memberDTO);
-
+            System.out.println("휴대폰 번호 전송 Service : "+joinForm.getMember_phone());
             //약관동의(선택) 저장
             for (String agreedTerm : retrievedAgreedTerms) {
                 System.out.println(agreedTerm);
