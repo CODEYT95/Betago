@@ -14,8 +14,10 @@
 }
 
 .foot {
-    width: 100%
+    max-width: 1905px;
+    min-width: 1431px;
 }
+
 
 .f_layout {
   padding: 0 36px;
