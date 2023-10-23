@@ -1,5 +1,6 @@
 /* login.css */
 
+
 /* 이미지 겹치기 */
 /*.logo-container {
   text-align: center; *//* 이미지를 센터에 정렬합니다. *//*
@@ -148,6 +149,7 @@ position: absolute;
   margin: 10 auto;
   margin-bottom: 37px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  border-radius: 8px;
 }
 
 .btn span {
