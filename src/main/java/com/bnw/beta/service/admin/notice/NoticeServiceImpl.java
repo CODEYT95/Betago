@@ -146,7 +146,7 @@ public class NoticeServiceImpl implements NoticeService {
         noticeDAO.delete(notice_no);
     }
 
-    //조회수 증가 + 중복 방지
+    //조회수 증가
     @Override
     public void viewCnt(NoticeDTO noticeDTO) {
         noticeDAO.viewCnt(noticeDTO);

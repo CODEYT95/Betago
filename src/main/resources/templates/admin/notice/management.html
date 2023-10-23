@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>둑며들다|공지 목록</title>
+    <title>둑며들다|공지 관리</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/admin/notice/noticelist.css}">
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
@@ -10,10 +11,11 @@
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
 <div class="content">
     <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <form class="button-container" action="/admin/noticeManage/delete" method="post">
     <div class="content-wrap">
         <div id="bbsList">
             <div id="bbsList_title">
-                <h2 class="head">공지 게시판</h2>
+                <h2 class="head">공지 관리 게시판</h2>
             </div>
 
             <div class="button-container">
@@ -22,9 +24,13 @@
                         <button class="btnWrite">글쓰기</button>
                     </a>
                 </div>
+            </div>
+
+                <button type="submit" class="btnWrite" id="delete-button">삭제</button>
+
 
                 <div class="search-container">
-                    <form id="searchForm" method="get" th:action="@{/notice/list}" autocomplete="off">
+                    <form id="searchForm" method="get" th:action="@{/admin/noticeManage/list}" autocomplete="off">
                         <div class="sch_group">
                             <label>
                                 <select class="search-box" name="searchType">
@@ -45,7 +51,7 @@
                         </div>
                     </form>
                 </div>
-                <form id="pageSizeForm" action="/notice/list" method="get">
+                <form id="pageSizeForm" action="/admin/noticeManage/list" method="get">
                     <select class="form-control form-control-sm" name="size" id="listSize" th:value="${listSize}"
                             onchange="changePageSize()">
                         <option value="10" th:selected="${noticePage.getAllNoticeList().size() == 10}">10개</option>
@@ -61,12 +67,13 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>NO</th>
+                        <th>선택</th>
                         <th>분류</th>
                         <th>제목</th>
-                        <th>작성자</th>
+                        <th>노출</th>
                         <th>등록일시</th>
-                        <th>조회수</th>
+                        <th>예약일시</th>
+                        <th>삭제여부</th>
                     </tr>
                     </thead>
 
@@ -76,12 +83,13 @@
                         </td>
                     </tr>
 
-                    <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice, index: ${noticePage.allNoticeList}">
+                    <tr th:each="notice, index: ${noticePage.allNoticeList}">
 
                         <td>
-                           <span class="no"
-                                 th:text="${noticePage.total - (index.index+ noticePage.startIndex) -3}"></span>
+                            <input type="checkbox" class="checkbox" name="allCheck" th:value="${notice.notice_no}" th:data-id="${notice.notice_no}" />
+
                         </td>
+
                         <td>
                             <span class="type" name="type" th:text="${notice.notice_category}"></span>
                         </td>
@@ -91,19 +99,31 @@
                             </a>
                         </td>
                         <td>
-                            <span class="writer" th:text="${notice.member_name}"></span>
+                            <span class="writer" th:text="${notice.type}"></span>
                         </td>
                         <td>
                             <span class="writer"
                                   th:text="${#temporals.format(notice.notice_regdate, 'yyyy-MM-dd HH:mm')}"></span>
                         </td>
                         <td>
-                            <span th:text="${notice.view_cnt}"></span>
+                            <span class="writer"
+                                  th:text="${#temporals.format(notice.notice_reservation, 'yyyy-MM-dd HH:mm')}"></span>
                         </td>
+
+                        <td>
+                            <select th:name="deletionStatus" th:data-id="${notice.notice_no}" onchange="updateDeletionStatus(this)">
+                                <option value="N" th:selected="${notice.notice_isshow == 'N'}">N</option>
+                                <option value="Y" th:selected="${notice.notice_isshow == 'Y'}">Y</option>
+                            </select>
+                        </td>
+
+
+
                     </tr>
                 </table>
             </div>
         </div>
+    </form>
         <!--페이징-->
         <div class="pagination">
             <div class="paging">
@@ -112,18 +132,18 @@
                         <ul class="pagination-container" id="pagination">
                             <li th:if="${noticePage.startPage > 5}" class="page-item">
                                 <a class="page-link" th:with="prevPage=${noticePage.startPage - 1}"
-                                   th:href="@{/notice/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}">Prev</a>
+                                   th:href="@{/admin/noticeManage/list(page=${prevPage}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}">Prev</a>
                             </li>
                             <li class="page-link" th:if="${pageNum > 0}"
                                 th:each="pageNum : ${#numbers.sequence(noticePage.startPage, noticePage.endPage)}">
-                                <a th:href="@{/notice/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}"
+                                <a th:href="@{/admin/noticeManage/list(page=${pageNum}, searchType=${searchType}, keyword=${keyword}, size=${listSize})}"
                                    th:classappend="${currentPage == pageNum} ? 'active-page' : ''">
                                     <span class="page" th:text="${pageNum}"></span>
                                 </a>
                             </li>
                             <li th:if="${noticePage.endPage < noticePage.totalPages}" class="page-item">
                                 <a class="page-link" th:with="nextPage=${noticePage.startPage + 5}"
-                                   th:href="@{/notice/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword} , size=${listSize})}">Next</a>
+                                   th:href="@{/admin/noticeManage/list(page=${nextPage}, searchType=${searchType}, keyword=${keyword} , size=${listSize})}">Next</a>
                             </li>
                         </ul>
                     </div>
@@ -131,7 +151,6 @@
             </div>
         </div>
     </div>
-</div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 <script>
@@ -146,12 +165,35 @@
         var searchType = document.getElementById("searchType").value; // 현재 검색 타입 가져오기
         var keyword = document.getElementById("keyword").value; // 현재 키워드 가져오기
 
-        var newURL = '/notice/list?page=' + currentPage + '&size=' + selectedSize + '&searchType=' + searchType + '&keyword=' + keyword;
+        var newURL = '/admin/noticeManage/list?page=' + currentPage + '&size=' + selectedSize + '&searchType=' + searchType + '&keyword=' + keyword;
 
         // 페이지 이동
         window.location.href = newURL;
-
     }
+
+    function updateDeletionStatus(select) {
+        const noticeNo = select.getAttribute("data-id"); // 해당 행의 notice_no 가져오기
+        const newStatus = select.value; // 새로 선택한 값(Y 또는 N) 가져오기
+
+        // AJAX 요청을 사용하여 서버에 변경된 상태 업데이트를 요청
+        $.ajax({
+            type: "POST",
+            url: "/admin/noticeManage/updateStatus",
+            data: {
+                noticeNo: noticeNo,
+                newStatus: newStatus
+            },
+            success: function (response) {
+                if (response === "success") {
+                    // 업데이트 성공 시 추가 동작 수행
+                    console.log("업데이트 성공!");
+                } else {
+                    console.error("업데이트 실패!");
+                }
+            }
+        });
+    }
+
 </script>
 
 </html>

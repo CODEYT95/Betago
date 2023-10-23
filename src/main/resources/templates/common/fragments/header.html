@@ -104,7 +104,7 @@
                             <li><a th:href="@{/game/insert}" sec:authorize="hasRole('ROLE_ADMIN')">게임컨텐츠 등록</a></li>
                             <li><a th:href="@{/edupost/insert}" sec:authorize="hasRole('ROLE_ADMIN')">학습자료 등록</a></li>
                             <li><a th:href="@{/edupost/list}">학습자료 조회</a></li>
-                            <li><a th:href="@{/admin/notice/management}" sec:authorize="hasRole('ROLE_ADMIN')">공지 관리</a></li>
+                            <li><a th:href="@{/admin/noticeManage/list}" sec:authorize="hasRole('ROLE_ADMIN')">공지 관리</a></li>
                             <li><a href="#">Q&A</a></li>
                             <li><a th:href="@{/member/list}" sec:authorize="hasRole('ROLE_ADMIN')">회원조회</a></li>
                             <li><a th:href="@{/game/salesList}" sec:authorize="hasRole('ROLE_ADMIN')">매출 조회</a></li>

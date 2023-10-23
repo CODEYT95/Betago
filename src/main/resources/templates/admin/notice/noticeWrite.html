@@ -18,7 +18,7 @@
         <div class="edupost_cont">
             <form id="notice" th:action="@{/admin/notice/write}" enctype="multipart/form-data" method="post">
                 <div class="edupost_write_box">
-                    <h2 class="head">공지 등록창</h2>
+                    <h2 class="head">공지 등록</h2>
 
                     <div class="opt">
                         <laber for="notice_title" style="font-size: 16px; margin-right: 9px;">제목</laber>
@@ -49,9 +49,8 @@
                     </div>
                 </div>
                 <div class="opt">
-                    <label for="notice_content"
-                           style="position: relative; font-size: 16px; bottom: 19rem">내용</label>
-                    <textarea class="texarea2" id="notice_content" name="notice_content"  required></textarea>
+                    <label for="notice_content" style="position: relative; font-size: 16px; bottom: 19rem;">내용</label>
+                    <textarea class="texarea2" id="notice_content" name="notice_content" required style="resize: none;"></textarea>
                 </div>
 
                 <div class="file_input">
@@ -78,6 +77,7 @@
         </div>
     </div>
 </div>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 
 <script>
