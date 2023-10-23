@@ -47,6 +47,7 @@ font-weight: bold;
     padding: 50px;
     align-items: center;
     font-size: 19px;
+    border-bottom: 1px dashed;
     gap: 30px;
 }
 .third-contents .title{
@@ -58,9 +59,21 @@ font-weight: bold;
     padding: 50px;
     align-items: center;
     font-size: 19px;
+    border-bottom: 1px dashed;
     gap: 30px;
 }
 .fourth-contents .title{
+font-size: 30px;
+font-weight: bold;
+}
+.fifth-contents {
+    display: flex;
+    padding: 50px;
+    align-items: center;
+    font-size: 19px;
+    gap: 30px;
+}
+.fifth-contents .title{
 font-size: 30px;
 font-weight: bold;
 }
