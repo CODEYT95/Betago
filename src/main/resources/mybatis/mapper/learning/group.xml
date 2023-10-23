@@ -183,12 +183,15 @@
     <select id="selectGroupUpdate" parameterType="GroupDTO" resultType="GroupDTO">
         <![CDATA[
         SELECT
-        g.game_title, m.member_name,
+        p.pay_date, p.pay_enddate,
+        g.game_title, g.game_no,
+        m.member_name,
         sg.group_no, sg.group_name, sg.group_intro, sg.group_startdate, sg.group_enddate, sg.group_cnt, sg.group_nowcnt
-        FROM studygroup AS sg
-        JOIN game AS g ON sg.game_no = g.game_no
-        JOIN member  AS m ON sg.member_id = m.member_id
-        WHERE sg.group_no = #{group_no};
+        FROM pay p
+        INNER JOIN game g ON p.game_no = g.game_no
+        INNER JOIN studygroup sg ON p.game_no = sg.game_no
+        INNER JOIN member m ON p.member_id = m.member_id
+        WHERE p.member_id = #{member_id} AND sg.group_no = #{group_no};
         ]]>
     </select>
 
