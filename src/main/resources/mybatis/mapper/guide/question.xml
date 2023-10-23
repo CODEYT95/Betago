@@ -141,7 +141,7 @@
 
     <select id="findQuestionsByUserId" resultType="QuestionDTO" parameterType="map">
         SELECT * FROM question
-        WHERE member_id = #{userId}
+        WHERE member_id = #{userId} AND qna_isshow = 'Y'
         LIMIT #{pageSize} OFFSET #{offset}
     </select>
 

@@ -266,8 +266,10 @@ public class QuestionController {
         MemberDTO memberDTO = memberService.getUser(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));//user정보를 가져오기
 
-        questionService.add(questionForm.getSubject(), questionForm.getContent(), questionForm.getPw(), file, memberDTO);
-        return "redirect:/question/list";
+        int qna_no=questionService.add(questionForm.getSubject(), questionForm.getContent(), questionForm.getPw(), file, memberDTO);
+
+        return String.format("redirect:/question/detail/%d?afterEdit=true", qna_no);
+        /*return "redirect:/question/list";*/
     }
 
 

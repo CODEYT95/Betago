@@ -19,7 +19,7 @@ public interface QuestionService {
 
     /*기존꺼
     void add(String subject, String content, MemberDTO memberDTO);*/
-    void add(String subject, String content, String pw, MultipartFile file, MemberDTO memberDTO);
+    int add(String subject, String content, String pw, MultipartFile file, MemberDTO memberDTO);
 
 
     void deleteY(QuestionDTO question);

@@ -35,7 +35,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     /*파일업로드 용*/
     @Transactional
-    public void add(String subject, String content, String pw, MultipartFile file, MemberDTO memberDTO) {
+    public int add(String subject, String content, String pw, MultipartFile file, MemberDTO memberDTO) {
         QuestionDTO question = new QuestionDTO();
         question.setQna_title(subject);
         question.setQna_content(content);
@@ -66,7 +66,9 @@ public class QuestionServiceImpl implements QuestionService {
 
             questionDAO.insertFileQuestion(fileQuestion);  // 파일 정보 데이터베이스에 저장
 
+
         }
+        return qna_no;
     }
 
 

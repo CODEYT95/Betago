@@ -1,5 +1,5 @@
 body {
-  font-family: 'Arial', sans-serif; /* 사용자의 시스템에 따라 원하는 글꼴로 변경 가능 */
+  font-family: 'Noto Sans', 'Arial', sans-serif; /* 사용자의 시스템에 따라 원하는 글꼴로 변경 가능 */
   background-color: #f5f5f5;
   margin: 0;
   padding: 0;
@@ -7,6 +7,38 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
+
+.find-title {
+    font-family: 'Poppins', sans-serif;
+    display: block;
+    /*background-color: #e0e0e0;*/ /* 회색 배경 */
+    color: #000000; /* 검은색 글씨 */
+    font-weight: 700; /* 더 굵은 글씨체 적용 */
+    font-size: 20px; /* 텍스트 크기, 원하는 크기로 조정 가능 */
+    border-radius: 15px; /* 동그란 모서리 생성, 원하는 값으로 조정 가능 */
+    padding: 13px 15px; /* 내부 여백, 텍스트 주변의 공간 제공 */
+    margin-bottom: 20px; /* 타이틀 아래에 여백 제공. 필요에 따라 조정 */
+    text-align: left;
+    width: fit-content; /* 내용에 맞게 너비를 조절 */
+
+
+    /* 필요한 경우 추가적인 스타일 속성을 이곳에 추가하세요 */
+}
+
+
+.end-title {
+    font-family: 'Poppins', sans-serif;
+    display: block;
+    background-color: #ffffff; /* 회색 배경 */
+    color: #000000; /* 검은색 글씨 */
+    font-weight: 700; /* 더 굵은 글씨체 적용 */
+    font-size: 20px; /* 텍스트 크기, 원하는 크기로 조정 가능 */
+    border-radius: 15px; /* 동그란 모서리 생성, 원하는 값으로 조정 가능 */
+    padding: 13px 15px; /* 내부 여백, 텍스트 주변의 공간 제공 */
+    margin-bottom: -15px; /* 타이틀 아래에 여백 제공. 필요에 따라 조정 */
+    width: fit-content; /* 내용에 맞게 너비를 조절 */
+    /* 필요한 경우 추가적인 스타일 속성을 이곳에 추가하세요 */
 }
 
 .find-account {
@@ -25,14 +57,14 @@ h2 {
 }
 
 .input-group {
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .input-group input {
   width: calc(100% - 20px);
   padding: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
+  border: 9px solid #e0e0e0;
+  border-radius: 15px;
   font-size: 16px;
   outline: none;
 }
@@ -41,18 +73,55 @@ h2 {
   border-color: #7289da; /* 포커스 된 상태에서의 테두리 색상 */
 }
 
-.submit button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background-color: #7289da; /* 버튼 배경 색상 */
-  color: #ffffff;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  outline: none;
+.centered {
+  display: flex; /* Flexbox 레이아웃 사용 */
+  justify-content: center; /* 컨텐츠를 수평 중앙에 배치 */
+  align-items: center; /* 컨텐츠를 수직 중앙에 배치 */
+  height: 50px; /* 컨테이너의 높이. 실제 레이아웃에 맞게 조정할 수 있습니다. */
 }
 
-.submit button:hover {
-  background-color: #5b6eae; /* 마우스 오버 시의 배경 색상 */
+/* 로그인 버튼 스타일 */
+.btn {
+  border: none;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 350;
+  font-size: 15px;
+  background-color: #222;
+  padding: 8px 30px;
+  margin: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
 }
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  /*background: #78c7d2;*/
+  background: #7289da;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
