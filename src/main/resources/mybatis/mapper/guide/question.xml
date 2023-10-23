@@ -139,9 +139,25 @@
         WHERE member_id = #{username}
     </select>
 
-    <select id="findQuestionsByUserId" resultType="QuestionDTO" parameterType="map">
+    <!--<select id="findQuestionsByUserId" resultType="QuestionDTO" parameterType="map">
         SELECT * FROM question
         WHERE member_id = #{userId} AND qna_isshow = 'Y'
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>-->
+
+    <select id="findQuestionsByUserId" resultType="QuestionDTO" parameterType="map">
+        SELECT
+        question.*,
+        COUNT(ans_no) AS answerCount
+        FROM
+        question
+        LEFT JOIN
+        answer ON answer.qna_no = question.qna_no
+        WHERE question.member_id = #{userId} AND question.qna_isshow = 'Y'
+        GROUP BY
+        question.qna_no
+        ORDER BY
+        question.qna_no DESC
         LIMIT #{pageSize} OFFSET #{offset}
     </select>
 

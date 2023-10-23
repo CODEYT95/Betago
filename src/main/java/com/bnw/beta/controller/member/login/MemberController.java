@@ -129,6 +129,8 @@ public class MemberController {
         boolean isCurrentPasswordCorrect = memberService.checkPassword(email, currentPassword);
         if (!isCurrentPasswordCorrect) {
             model.addAttribute("error", "현재 비밀번호가 잘못되었습니다.");
+            model.addAttribute("email", email);
+            System.out.println("현재 비밀번호가 잘못되었습니다");
             return "member/login/resetPassword"; // 비밀번호 재설정 페이지로 다시 리다이렉트
         }
 
@@ -136,7 +138,10 @@ public class MemberController {
          String validationResult = validateNewPassword(newPassword, confirmPassword);
         if (validationResult != null) {
             model.addAttribute("error", validationResult);
+            model.addAttribute("email", email);
+            System.out.println("유효성검사 실패");
             return "member/login/resetPassword"; // 비밀번호 재설정 페이지로 다시 리다이렉트
+
         }
 
         // 비밀번호 변경 로직
@@ -145,6 +150,8 @@ public class MemberController {
             System.out.println("비밀번호 최종변경완료");
         } catch (Exception e) {
             model.addAttribute("error", "비밀번호 변경 중 문제가 발생했습니다.");
+            model.addAttribute("email", email);
+            System.out.println("비밀번호 변경중 오류발생");
             return "member/login/resetPassword";
         }
 
