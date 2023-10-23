@@ -110,33 +110,45 @@ font-weight: bold;
     text-align: center;
 }
 .qa-box{
-display: flex;
     width: 100%;
     height: 50%;
+    position: relative;
     }
 .qaimg{
 display: flex;
     width: 44%;
     height: 100%;
     margin-top: 30px;
-
 }
+
+.baduktitle{
+display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
 .fourth-contents {
     display: flex;
     padding: 20px;
     width: 100%;
     align-items: center;
     font-size: 19px;
-
-    color: #fff;
+}
+.fourth-contents .title{
+font-size: 30px;
+font-weight: bold;
 }
 .q1-box{
     position: relative;
-    right: 350px;
+    right: 160px;
     font-size: 20px;
     color: black;
     font-weight: bold;
-    bottom: 200px;
+    bottom: 150px;
     width: 70%;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
         height: 180px;
@@ -144,15 +156,16 @@ display: flex;
         align-items: center;
         border-radius:10px;
         background-color:#f6eac2;
+        padding: 30px;
 }
 
 .a1-box{
     position: relative;
-    left: 350px;
+    left: 160px;
     font-size: 20px;
     color: black;
     font-weight: bold;
-    bottom: 160px;
+    bottom: 190px;
     width: 70%;
         box-shadow: 0 0 5px rgba(0,0,0,0.1);
             height: 180px;
@@ -160,6 +173,7 @@ display: flex;
             display:flex;
             border-radius:10px;
             background-color:#d4f0f0;
+            padding: 30px;
 }
 .Q1{
 
@@ -171,7 +185,7 @@ display: flex;
 
 .q2-box{
     position: relative;
-    right: 350px;
+    right: 180px;
     font-size: 20px;
     color: black;
     font-weight: bold;
@@ -183,15 +197,16 @@ display: flex;
             display:flex;
             border-radius:10px;
             background-color:#f6eac2;
+            padding: 30px;
 }
 
 .a2-box{
     position: relative;
-    left: 350px;
+    left: 160px;
     font-size: 20px;
     color: black;
     font-weight: bold;
-    bottom: 80px;
+    bottom: 138px;
     width: 70%;
         box-shadow: 0 0 5px rgba(0,0,0,0.1);
             height: 180px;
@@ -199,6 +214,7 @@ display: flex;
             display:flex;
             border-radius:10px;
             background-color:#d4f0f0;
+            padding: 30px;
 }
 
 .Q2{
@@ -210,7 +226,7 @@ display: flex;
 
 .q3-box{
     position: relative;
-    right: 350px;
+    right: 180px;
     font-size: 20px;
     color: black;
     font-weight: bold;
@@ -222,11 +238,12 @@ display: flex;
         border-radius:10px;
         background-color:#f6eac2;
         bottom:50px;
+        padding: 30px;
 }
 
 .a3-box{
     position: relative;
-    left: 350px;
+    left: 160px;
     font-size: 20px;
     color: black;
     font-weight: bold;
@@ -237,7 +254,8 @@ display: flex;
     display:flex;
     border-radius:10px;
     background-color:#d4f0f0;
-        bottom: 20px;
+    bottom: 90px;
+    padding: 30px;
 }
 
 .Q3{
@@ -245,4 +263,15 @@ display: flex;
 }
 .A3{
 
+}
+
+.fourth-contents .interview{
+    width: 100%;
+    height: 700px;
+    display: flex;
+    opacity: 0.5;
+    z-index: -1;
+}
+.q-letter {
+    font-size: 115%;
 }
