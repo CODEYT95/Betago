@@ -126,6 +126,10 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
+    //학습 그룹 수정
+    @Override
+    public int updateGroup(GroupDTO groupDTO){return groupDAO.updateGroup(groupDTO);}
+
     //그룹 학생 가입 승인 목록
     @Override
     public GroupPageDTO selectGroupApprove(String member_id, Integer group_no, int pageNum, int size){

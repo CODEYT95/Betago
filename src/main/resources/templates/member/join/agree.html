@@ -383,7 +383,6 @@
         if (!koreanPattern.test(nameValue)) {
             // 입력값이 한글이 아닌 경우
             document.getElementById("error-message").style.display = "block";
-            nameInput.value = ""; // 입력값 초기화
             nameInput.focus(); // 다시 입력 필드로 초점 이동
         } else {
             document.getElementById("error-message").style.display = "none";
