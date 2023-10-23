@@ -104,10 +104,10 @@ public class GameController {
 
     // 게임콘텐츠 제목 검색
     @PostMapping("/list")
-    @ResponseBody
     public List<GameDTO> gameListMore(@RequestParam(value = "game_title", defaultValue = "") String game_title,
                                       @RequestParam(value = "offset", defaultValue = "0") int offset,
                                       Model model) {
+        System.out.println("조회컨트롤러");
         int limit = 6;
         return gameService.selectGameList(game_title, limit, offset);
     }
