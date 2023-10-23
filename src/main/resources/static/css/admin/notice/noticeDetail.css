@@ -15,7 +15,6 @@ body {
     border-collapse: collapse;
     background-color: white;
     width: 1000px;
-    margin-top: 250px;
     height: 150px;
 }
 
@@ -26,16 +25,16 @@ body {
     text-align: left;
 }
 
-.content{
+.content1{
     background-color: white;
     width: 1000px;
     margin-top:20px;
     position: initial;
     text-align: center;
-    white-space: pre-wrap;
     border: none;
     max-height: 600px;
     overflow: auto;
+    padding-top: 30px;
 }
 
 

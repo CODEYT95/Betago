@@ -201,3 +201,16 @@ button:disabled {
     color:red;
     display: none;
 }
+
+#roleCode{
+    padding: 8px 0 0 16px;
+    width: 386px;
+    height: 53.5px;
+    margin-top: 2px;
+    margin-left: 42px;
+}
+
+.code_ok, .code_no {
+    color: red;
+    display: none;
+}
