@@ -20,7 +20,6 @@ public class TaskDTO {
     private int group_no;
     private String task_state;
     private String game_title;
-    private Date task_senddate;
 
     //숙제 제출
     private int tasksubmit_no;
