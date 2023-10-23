@@ -14,7 +14,7 @@
                                 member_id LIKE CONCAT('%', #{keyword}, '%')
                             </when>
                             <when test="searchType == 'member_phone'">
-                                member_phone LIKE CONCAT('%', #{keyword}, '%')
+                               member_phone LIKE CONCAT('%', #{keyword}, '%')
                             </when>
                             <when test="searchType == 'member_name'">
                                 member_name LIKE CONCAT('%', #{keyword}, '%')

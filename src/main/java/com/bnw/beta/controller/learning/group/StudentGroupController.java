@@ -29,7 +29,7 @@ public class StudentGroupController {
 
         int member_no = (int) session.getAttribute("member_no");
 
-        int limit = 1;
+        int limit = 6;
 
         model.addAttribute("joinList", 1);
         model.addAttribute("groupTitle", group_name);
@@ -51,7 +51,7 @@ public class StudentGroupController {
 
         int member_no = (int) session.getAttribute("member_no");
 
-        int limit = 1;
+        int limit = 6;
 
         return groupService.selectJoinGroup(member_no, educator_name, group_name,limit,offset);
     }

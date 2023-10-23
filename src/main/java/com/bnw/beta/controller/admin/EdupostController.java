@@ -4,13 +4,16 @@ import com.bnw.beta.config.post.FileUtils;
 import com.bnw.beta.domain.admin.dto.EdupostDTO;
 import com.bnw.beta.domain.admin.dto.FilepostDTO;
 import com.bnw.beta.domain.common.paging.EdupostPageDTO;
+import com.bnw.beta.domain.member.dto.MemberDTO;
 import com.bnw.beta.service.admin.edupost.EdupostService;
 import com.bnw.beta.service.admin.edupost.FileEduService;
+import com.bnw.beta.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
@@ -24,6 +27,7 @@ public class EdupostController {
     private static final Logger logger = Logger.getLogger(EdupostController.class.getName());
 
     private final String uploadPath = Paths.get("C:", "develop", "upload-files").toString();
+    private final MemberService memberService;
     private final EdupostService edupostService;
     private final FileEduService fileEduService;
     private final FileUtils fileUtils;
@@ -55,12 +59,13 @@ public class EdupostController {
                            @RequestParam(value = "searchType", defaultValue = "") String searchType,
                            @RequestParam(value = "searchType2", defaultValue = "") String searchType2,
                            @RequestParam(value = "searchType3", defaultValue = "") String searchType3,
+                           @RequestParam(value = "searchType4", defaultValue = "") String searchType4,
                            @RequestParam(value = "keyword", defaultValue = "") String keyword,
                            Model model) {
 
-        System.out.println("s1"+searchType+"s2"+searchType2+"s3"+searchType3+"k"+keyword);
+        System.out.println("s1 : "+searchType+"s2 : "+searchType2+"s3 : "+searchType3+"s4 : "+searchType4+"k : "+keyword );
 
-        EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, searchType2, searchType3, keyword);
+        EdupostPageDTO edupostList = edupostService.edulist(page, size, searchType, searchType2, searchType3, searchType4, keyword);
 
         model.addAttribute("currentPage", edupostList.getCurrentPage());
         model.addAttribute("listCount", edupostList.getListCount());
@@ -68,17 +73,28 @@ public class EdupostController {
         model.addAttribute("searchType", searchType);
         model.addAttribute("searchType2", searchType2);
         model.addAttribute("searchType3", searchType3);
+        model.addAttribute("searchType4", searchType4);
         model.addAttribute("keyword", keyword);
             return "admin/edupost/eduboardlist";
     }
     //학습자료 세부내용
     @GetMapping("/detail/{edupost_no}")
-    public String postView(@PathVariable("edupost_no") final Long edupost_no, Model model) {
+    public String postView(@PathVariable("edupost_no") final Long edupost_no, Model model, Principal principal) {
+        String username = principal.getName();
+        System.out.println(username);
+        MemberDTO member = memberService.getMemberInfo(username);
         EdupostDTO post = edupostService.findPostId(edupost_no);
         model.addAttribute("post", post);
-        System.out.println("조회 값 : "+post);
-        return "admin/edupost/eduboarddetail";
+        if("유료".equals(member.getLicense())) {
+            System.out.println("조회 값 : "+post);
+            return "admin/edupost/eduboarddetail";
+        }else if("무료".equals(member.getLicense()) && "무료".equals(post.getEdupost_service())) {
+            return "admin/edupost/eduboarddetail";
+        } else {
+            return "error2";
+        }
     }
+
     @GetMapping("/update/{edupost_no}")
     public String updateForm(@PathVariable("edupost_no") final Long edupost_no, Model model) {
         EdupostDTO post = edupostService.findPostId(edupost_no);
@@ -92,7 +108,6 @@ public class EdupostController {
     @PostMapping("/update/{edupost_no}")
     public String update(@PathVariable("edupost_no") Long edupost_no, @ModelAttribute EdupostDTO dto, Model model) {
         //게시글 수정
-
         edupostService.update(dto);
         // 파일 업로드
         List<FilepostDTO> uploadFiles = fileUtils.uploadFiles(dto.getFiles());
