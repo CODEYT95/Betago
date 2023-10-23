@@ -49,7 +49,8 @@
                             </td>
 
                             <td th:text="${question.member_id}"></td>
-                            <td th:text="${question.qna_regdate}"></td>
+                            <!--<td th:text="${question.qna_regdate}"></td>-->
+                            <td th:text="${#temporals.format(question.qna_regdate, 'yyyy-MM-dd HH:mm')}"></td>
 
                         </tr><!--1페이지당 출력할 게시물수만큼 반복끝-->
 
@@ -64,7 +65,7 @@
 
                     <div class="pagination">
                         <div class="paging">
-                            <div class="text-center clearfix">
+                            <div class="text-center clearfix" th:if="${totalPages > 0}">
                                 <div class="pagingNum">
                                     <ul class="pagination-container" id="pagination">
 
