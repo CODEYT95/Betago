@@ -43,7 +43,7 @@
     </select>
 
     <!--다중 삭제-->
-    <delete id="managementDelete" parameterType="Long">
+    <delete id="managementDelete" parameterType="Integer">
         UPDATE notice
         SET notice_isshow = 'N'
         WHERE notice_no IN
@@ -52,18 +52,34 @@
             </foreach>
 </delete>
 
-    <!-- N에서 Y로 변경 -->
-    <update id="updateStatusFromNtoY" parameterType="Long">
+    <!-- 드롭다운으로 Y/N 변경 -->
+    <update id="updateStatus" parameterType="NoticeDTO" >
         UPDATE notice
-        SET notice_isshow = 'Y'
+        SET notice_isshow = #{notice_isshow}
         WHERE notice_no = #{notice_no}
     </update>
 
-    <!-- Y에서 N로 변경 -->
-    <update id="updateStatusFromYtoN" parameterType="Long">
+    <!-- 드롭다운으로 공지&FAQ 변경 -->
+    <update id="updateCategory" parameterType="NoticeDTO" >
         UPDATE notice
-        SET notice_isshow = 'N'
+        SET notice_category = #{notice_category}
         WHERE notice_no = #{notice_no}
     </update>
+
+    <!-- 드롭다운으로 공개 변경 -->
+    <update id="updateType" parameterType="NoticeDTO" >
+        UPDATE notice
+        SET type = #{type}
+        WHERE notice_no = #{notice_no}
+    </update>
+
+    <!-- 드롭다운으로 예약일 변경 -->
+    <update id="updateReservation" parameterType="NoticeDTO" >
+        UPDATE notice
+        SET notice_reservation = #{notice_reservation}
+        WHERE notice_no = #{notice_no}
+    </update>
+
+
 
 </mapper>

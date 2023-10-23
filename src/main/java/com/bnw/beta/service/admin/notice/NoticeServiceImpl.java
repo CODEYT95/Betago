@@ -39,7 +39,8 @@ public class NoticeServiceImpl implements NoticeService {
         List<NoticeDTO> noticeList = noticeDAO.noticeList(offset, size, searchType, keyword, topNoticeList);
         allNoticeList.addAll(noticeList);
         int listCnt = noticeDAO.listCnt(searchType, keyword);
-        NoticePage noticePage = new NoticePage(listCnt, pageNum, size, allNoticeList, topNoticeList, searchType, keyword);
+        //NoticePage noticePage = new NoticePage(listCnt, pageNum, size, allNoticeList, topNoticeList, searchType, keyword);
+        NoticePage noticePage = new NoticePage(listCnt, pageNum, size, allNoticeList, topNoticeList);
         noticePage.setListCnt(listCnt);
         noticePage.setAllNoticeList(noticeList);
         return noticePage;

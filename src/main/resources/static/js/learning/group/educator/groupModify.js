@@ -108,17 +108,5 @@ document.addEventListener("DOMContentLoaded", function() {
         // 모달 띄우기
         completeModal.style.display = "block"; // 모달 표시
       });
-
-      // "확인" 버튼 클릭 이벤트 처리
-      confirmButton.addEventListener("click", function() {
-        // 모달 닫기
-        completeModal.style.display = "none"; // 모달 숨기기
-
-        // 폼 요소 가져오기
-        var form = document.querySelector("form");
-
-        // 폼을 수동으로 제출
-        form.submit();
-      });
     });
 });

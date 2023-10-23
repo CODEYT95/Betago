@@ -292,7 +292,7 @@ nav .header-navi .links li:hover .admin-sub-menu {
 
 .content-wrap{
   height: auto;
-  min-height: 66vh;
+  min-height: 100vh;
   width: 1080px;
   margin-left: 253px;
   padding: 20px 30px 20px 30px;

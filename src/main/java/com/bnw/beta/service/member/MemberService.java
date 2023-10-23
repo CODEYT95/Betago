@@ -28,8 +28,11 @@ public interface MemberService {
         //핸드폰 중복체크
         int phoneCheck(String phone);
 
-        //회원 코드 체크
-        RoleDTO codeCheck(int role_code, String role_name);
+        //코드 중복체크
+        int codeDuplicate(String edu_code);
+
+        //코드 조회
+        int codeCheck(String edu_code);
 
 
 

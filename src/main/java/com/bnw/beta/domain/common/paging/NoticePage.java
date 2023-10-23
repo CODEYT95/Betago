@@ -25,13 +25,11 @@ public class NoticePage {
     private String searchType;
     private String keyword = "";
 
-    public NoticePage(int total, int currentPage, int size, List<NoticeDTO> noticeList,List<NoticeDTO> topNoticeList, String searchType, String keyword){
+    public NoticePage(int total, int currentPage, int size, List<NoticeDTO> noticeList,List<NoticeDTO> topNoticeList){
         this.total=total;
         this.currentPage=currentPage;
         this.noticeList=noticeList;
         this.topNoticeList=topNoticeList;
-        this.searchType = searchType;
-        this.keyword = keyword;
         if(total==0) {
             totalPages=0;
             startPage=0;
