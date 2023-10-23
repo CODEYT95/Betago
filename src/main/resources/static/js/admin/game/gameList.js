@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = "/pay/cartList?game_no=" + selectedGameNo;
         }
     }
-
     // 페이지 초기화 함수
     function initializePage() {
         $(".checkbox-input:checked").prop("checked", false); // jQuery 사용 제거

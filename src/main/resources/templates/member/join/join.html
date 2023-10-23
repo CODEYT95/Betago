@@ -78,9 +78,9 @@
                     <span class="spanName">회원유형</span>
                     <select th:field="*{role}" class="role" id="roleSelect" name="role_name">
                         <option value="">회원 유형을 선택해주세요.</option>
-                        <option value="ROLE_ADMIN" >관리자</option>
-                        <option value="ROLE_TEACHER" >선생님</option>
-                        <option value="ROLE_USER">학생</option>
+                        <option value="ROLE_TEACHER" >교육자</option>
+                        <option value="ROLE_STUDENT">학생</option>
+                        <option value="ROLE_USER">일반회원</option>
                     </select>
                     <span class="role_required" style="display: none; color: red;">회원 유형을 선택해주세요.</span>
                 </label><br/>
@@ -458,7 +458,7 @@
 
     roleSelect.addEventListener("change", function () {
         var selectedRole = roleSelect.value;
-        if (selectedRole === "ROLE_ADMIN" || selectedRole === "ROLE_TEACHER" || selectedRole === "ROLE_USER") {
+        if (selectedRole === "ROLE_STUDENT" || selectedRole === "ROLE_TEACHER") {
             codeInput.style.display = "block"; // 코드 입력 필드 표시
         } else {
             codeInput.style.display = "none"; // 코드 입력 필드 숨김
@@ -492,5 +492,32 @@
             }
         });
     }
+    function calculateAge() {
+        var birthDate = new Date(document.getElementById('year').value, document.getElementById('month').value - 1, document.getElementById('day').value);
+        var today = new Date();
+        var age = today.getFullYear() - birthDate.getFullYear();
 
+        // Check if the birthdate hasn't happened yet this year
+        if (today.getMonth() < birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    }
+
+    function setRoleBasedOnAge2() {
+        var age = calculateAge();
+
+        if (age >= 6 && age <= 12) {
+            document.querySelector('select[name="role"]').value = 'ROLE_STUDENT';
+            document.getElementById('codeInput').style.display = 'block'; // 코드 입력란 보이기
+        } else {
+            document.getElementById('codeInput').style.display = 'none'; // 코드 입력란 숨기기
+        }
+    }
+
+    // Attach the setRoleBasedOnAge function to the change event of the birthdate selects
+    document.getElementById('year').addEventListener('change', setRoleBasedOnAge2);
+    document.getElementById('month').addEventListener('change', setRoleBasedOnAge2);
+    document.getElementById('day').addEventListener('change', setRoleBasedOnAge2);
 </script>
