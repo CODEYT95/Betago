@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return Array.from(checkboxes).some(checkbox => checkbox.checked);
     }
 
+
     // '구독' 버튼 상태 업데이트 함수
     function updateSubscribeButtonState() {
         if (isAnyCheckboxChecked()) {
@@ -74,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = "/pay/cartList?game_no=" + selectedGameNo;
         }
     }
-
     // 페이지 초기화 함수
     function initializePage() {
         $(".checkbox-input:checked").prop("checked", false); // jQuery 사용 제거
@@ -103,7 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
         checkbox.addEventListener('change', handleCheckboxChange);
     });
     searchButton.addEventListener('click', handleGameTitleChange);
-    subscribeButton.addEventListener('click', handleSubscribeButtonClick);
+    if (subscribeButton) {
+        subscribeBtn.addEventListener('click', handleSubscribeButtonClick);
+    }
     myButton.addEventListener("click", topFunction);
     window.onload = initializePage;
     window.onpageshow = function(event) {

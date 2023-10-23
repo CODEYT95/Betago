@@ -1,10 +1,8 @@
 package com.bnw.beta.domain.admin.dto;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -14,7 +12,7 @@ public class NoticeDTO {
     private String notice_content;
     private String notice_category;
     private LocalDateTime notice_regdate;
-    private Date notice_reservation = null; //예약글 시간
+    private LocalDate notice_reservation = null; //예약글 시간
     private String notice_isshow;
     private String member_name;
     int view_cnt;

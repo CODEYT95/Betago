@@ -41,12 +41,14 @@
 
     <!--게시글 수정-->
     <update id="update" parameterType="NoticeDTO">
-       <![CDATA[
+   <![CDATA[
         UPDATE notice
-        SET notice_title = #{notice_title}, notice_content = #{notice_content}, notice_category = #{notice_category}
+        SET notice_title = #{notice_title}, notice_content = #{notice_content}, notice_category = #{notice_category}, type = #{type},
+            notice_reservation = #{notice_reservation}
         WHERE notice_no = #{notice_no}
         ]]>
-    </update>
+</update>
+
     <!--사진 삭제-->
     <delete id="deleteFile" parameterType="NoticeFileDTO">
         <![CDATA[
@@ -86,7 +88,7 @@
             AND (notice_title LIKE CONCAT('%', #{keyword}, '%') OR notice_content LIKE CONCAT('%', #{keyword}, '%'))
         </if>
         <![CDATA[
-        ORDER BY notice_regdate DESC
+            ORDER BY notice_regdate DESC
         LIMIT #{page}, #{size};
         ]]>
     </select>
@@ -96,7 +98,7 @@
         <![CDATA[
         SELECT * FROM notice
         WHERE notice_isshow = 'Y' AND (type = 'upView' OR type ='upView,allView') AND (notice_reservation < now() OR notice_reservation IS NULL)
-        ORDER BY notice_regdate DESC
+        ORDER BY notice_regdate
         LIMIT 0, 3;
         ]]>
     </select>
@@ -106,7 +108,7 @@
         <![CDATA[
         SELECT count(*) as listCnt
         FROM notice
-        WHERE notice_category = '공지'
+        WHERE notice_category = '공지' AND notice_isshow = 'Y'
          ]]>
         <if test='searchType.equals("notice_title")'>
             AND notice_title LIKE CONCAT('%', #{keyword}, '%')

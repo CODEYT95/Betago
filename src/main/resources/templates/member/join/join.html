@@ -76,14 +76,23 @@
 
                 <label>
                     <span class="spanName">회원유형</span>
-                    <select th:field="*{role}" class="role">
+                    <select th:field="*{role}" class="role" id="roleSelect" name="role_name">
                         <option value="">회원 유형을 선택해주세요.</option>
-                        <option value="ROLE_ADMIN" >관리자</option>
-                        <option value="ROLE_TEACHER" >선생님</option>
-                        <option value="ROLE_USER">학생</option>
+                        <option value="ROLE_TEACHER" >교육자</option>
+                        <option value="ROLE_STUDENT">학생</option>
+                        <option value="ROLE_USER">일반회원</option>
                     </select>
                     <span class="role_required" style="display: none; color: red;">회원 유형을 선택해주세요.</span>
                 </label><br/>
+                <div id="codeInput" style="display: none;">
+                    <label>
+                        <span class="spanName">코드</span>
+                        <input type="text" class="input" name="role_code" id="roleCode" onchange="checkCode()">
+                        <span class="code_ok" style="display: none;">코드가 일치합니다.</span>
+                        <span class="code_no" style="display: none;">코드가 일치하지 않습니다.</span>
+                    </label>
+                </div>
+
 
 
                 <div class="radiodiv">
@@ -225,7 +234,7 @@
     //아이디 동기화방식 중복체크
     function checkId(){
         var id = $('#id').val();
-        if (idValue === "") {
+        if (id === "") {
             // 아이디가 비어있으면 중복 검사를 실행하지 않음
             return;
         }
@@ -412,7 +421,7 @@
         });
     });
 
-    // 회원가입 버튼 비활성화
+    // 회원가입 버튼 및 필드 초기화
     $(document).ready(function () {
         // 회원가입 버튼과 필드를 선택합니다.
         var submitButton = $("button[type='submit']");
@@ -443,4 +452,72 @@
         });
     });
 
+    //ROLE 선택시 코드 입력칸 출력
+    var roleSelect = document.getElementById("roleSelect");
+    var codeInput = document.getElementById("codeInput");
+
+    roleSelect.addEventListener("change", function () {
+        var selectedRole = roleSelect.value;
+        if (selectedRole === "ROLE_STUDENT" || selectedRole === "ROLE_TEACHER") {
+            codeInput.style.display = "block"; // 코드 입력 필드 표시
+        } else {
+            codeInput.style.display = "none"; // 코드 입력 필드 숨김
+        }
+    });
+
+    function checkCode() {
+        var role_code = $('#roleCode').val();
+        var role_name = $('#roleSelect').val();
+        console.log(role_code);
+        console.log(role_name);
+        // 데이터를 서버로 전송
+        $.ajax({
+            url: 'codeCheck', // 서버의 컨트롤러 엔드포인트로 변경
+            type: 'post',
+            data: { role_code: role_code, role_name: role_name },
+            success: function (role) {
+                if (role != null) {
+                    if (role.role_name != null && role.role_code == role_code && role.role_name === role_name) {
+                        $('.code_ok').show(); // 코드가 일치할 때 메시지 표시
+                        $('.code_no').hide();
+                    } else {
+                        $('.code_ok').hide();
+                        $('.code_no').show(); // 코드가 일치하지 않을 때 메시지 표시
+                        $('#roleCode').val(''); // 코드를 초기화
+                    }
+                }
+            },
+            error: function () {
+                alert("에러가 발생했습니다.");
+            }
+        });
+    }
+    function calculateAge() {
+        var birthDate = new Date(document.getElementById('year').value, document.getElementById('month').value - 1, document.getElementById('day').value);
+        var today = new Date();
+        var age = today.getFullYear() - birthDate.getFullYear();
+
+        // Check if the birthdate hasn't happened yet this year
+        if (today.getMonth() < birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    }
+
+    function setRoleBasedOnAge2() {
+        var age = calculateAge();
+
+        if (age >= 6 && age <= 12) {
+            document.querySelector('select[name="role"]').value = 'ROLE_STUDENT';
+            document.getElementById('codeInput').style.display = 'block'; // 코드 입력란 보이기
+        } else {
+            document.getElementById('codeInput').style.display = 'none'; // 코드 입력란 숨기기
+        }
+    }
+
+    // Attach the setRoleBasedOnAge function to the change event of the birthdate selects
+    document.getElementById('year').addEventListener('change', setRoleBasedOnAge2);
+    document.getElementById('month').addEventListener('change', setRoleBasedOnAge2);
+    document.getElementById('day').addEventListener('change', setRoleBasedOnAge2);
 </script>

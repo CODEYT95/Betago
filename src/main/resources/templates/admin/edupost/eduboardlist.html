@@ -64,6 +64,12 @@
                             <option value="묘수풀이">묘수풀이</option>
                         </select>
 
+                        <select name="searchType4" class="selectField">
+                            <option value="" th:classappend="${(searchType == 'edupost_service') ? 'selected' : ''}">서비스</option>
+                            <option value="무료">무료</option>
+                            <option value="유료">유료</option>
+                        </select>
+
                         <!-- 검색어 입력 -->
                         <input type="text" name="keyword" class="textField"/>
                         <!-- 검색 버튼 -->
@@ -80,6 +86,7 @@
                         <th class="subject">자료구분</th>
                         <th class="type">자료유형</th>
                         <th class="eduname">학습자료명</th>
+                        <th class="eduservice">서비스</th>
                         <th class="user">작성자</th>
                         <th class="createdate">등록일시</th>
                     </tr>
@@ -101,6 +108,7 @@
                                     <span class="" th:text="${list.edupost_title}"></span>
                                 </a>
                             </td>
+                            <td class="type" th:text="${list.edupost_service}">서비스</td>
                             <td class="writer" th:text="${list.member_id}">작성자</td>
                             <td class="writer" th:text="${list.edupost_date}">등록일시</td>
                         </tr>
@@ -115,15 +123,15 @@
                                 <ul class="pagination-container" id="pagination">
                                     <!-- 이전 페이지 링크 -->
                                     <li th:if="${edupostPageDTO.startPage > 5}" class="page-item">
-                                        <a class="page-link" th:with="prevPage=${edupostPageDTO.startPage - 1}" th:href="@{/edupost/list(page=${prevPage}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}"><</a>
+                                        <a class="page-link" th:with="prevPage=${edupostPageDTO.startPage - 1}" th:href="@{/edupost/list(page=${prevPage}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, searchType4=${searchType4}, keyword=${keyword})}"><</a>
                                     </li>
                                     <!-- 페이지 번호 링크 -->
                                     <li th:if="${pageNum > 0}" th:each="pageNum : ${#numbers.sequence(edupostPageDTO.startPage, edupostPageDTO.endPage)}" class="page-item">
-                                        <a th:href="@{/edupost/list(page=${pageNum}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
+                                        <a th:href="@{/edupost/list(page=${pageNum}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, searchType4=${searchType4}, keyword=${keyword})}" class="page-link" th:classappend="${currentPage == pageNum} ? 'active-page' : ''"><span th:text="${pageNum}"></span></a>
                                     </li>
                                     <!-- 다음 페이지 링크 -->
                                     <li th:if="${edupostPageDTO.endPage < edupostPageDTO.totalPages}" class="page-item">
-                                        <a class="page-link" th:with="nextPage=${edupostPageDTO.startPage + 5}" th:href="@{/edupost/list(page=${nextPage}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, keyword=${keyword})}">></a>
+                                        <a class="page-link" th:with="nextPage=${edupostPageDTO.startPage + 5}" th:href="@{/edupost/list(page=${nextPage}, searchType=${searchType}, searchType2=${searchType2}, searchType3=${searchType3}, searchType4=${searchType4}, keyword=${keyword})}">></a>
                                     </li>
                                 </ul>
                             </div>
@@ -137,5 +145,6 @@
 <!-- JavaScript 파일 링크 -->
 <script th:src="@{/js/admin/edupost/function.js}"></script>
 <script type="text/javascript" th:src="@{/js/admin/edupost/common.js}"></script>
+<div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

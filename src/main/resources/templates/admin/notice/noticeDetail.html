@@ -8,9 +8,11 @@
 </head>
 <body>
 <div th:replace="~{common/fragments/header :: headerFragment}"></div>
-<form enctype="multipart/form-data" method="post">
+<div class="content">
+<div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
+    <div class="content-wrap">
+    <form enctype="multipart/form-data" method="post">
     <div class="row">
-        <div th:replace="~{common/sidebar/guide_sidebar :: guide_sidebarFragment}"></div>
         <div class="table1">
             <table class="table">
                 <tr class="tab">
@@ -31,7 +33,7 @@
                 </tr>
             </table>
         </div>
-        <div class="content">
+        <div class="content1">
             <div class="content-container" >
                 <div th:each="noticefile : ${noticeDTO.getNoticeFiles()}" style="text-align: center;">
                     <img th:src="@{|/image/notice/${noticefile.getFile_rename()}|}" alt="image">
@@ -58,7 +60,8 @@
         </div>
     </div>
 </form>
-
+    </div>
+</div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

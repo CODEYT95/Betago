@@ -14,7 +14,8 @@
 }
 
 .foot {
-    width: 100%
+  max-width: 1905px;
+  min-width: 1431px;
 }
 
 .f_layout {
@@ -113,5 +114,9 @@
 @media (max-width: 800px) {
   #footer {
        width: 100%;
+  }
+  .foot {
+      max-width: 1080px;
+      min-width: 800px;
   }
 }

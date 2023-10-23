@@ -22,25 +22,24 @@ public class EdupostServiceImpl implements EdupostService {
     }
     //학습자료 목록보기
     @Override
-    public EdupostPageDTO edulist(int pageNum, int size, String searchType, String searchType2, String searchType3, String keyword) {
+    public EdupostPageDTO edulist(int pageNum, int size, String searchType, String searchType2, String searchType3, String searchType4, String keyword) {
 
         if(pageNum <= 0) {
             pageNum = 1;
         }
         int offset = (pageNum-1) * size;
-        List<EdupostDTO> edupostList = edupostDao.edulist(offset, size, searchType, searchType2, searchType3, keyword);
-        int listCount = edupostDao.count(searchType,searchType2,searchType3, keyword);
+        List<EdupostDTO> edupostList = edupostDao.edulist(offset, size, searchType, searchType2, searchType3, searchType4, keyword);
+        int listCount = edupostDao.count(searchType,searchType2,searchType3, searchType4, keyword);
 
         EdupostPageDTO edupostPageDTO = new EdupostPageDTO(listCount, pageNum, size, edupostList);
         edupostPageDTO.setListCount(listCount);
 
         return edupostPageDTO;
     }
-
-
+    //페이징
     @Override
-    public int count(String searchType,String searchType2, String searchType3, String keyword) {
-        return edupostDao.count(searchType, searchType2, searchType3, keyword);
+    public int count(String searchType,String searchType2, String searchType3, String searchType4, String keyword) {
+        return edupostDao.count(searchType, searchType2, searchType3, searchType4, keyword);
     }
     //학습자료 상세정보
     @Override

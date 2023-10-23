@@ -13,6 +13,11 @@ input[type="checkbox"] {
     display: block;
 }
 
+.btn_sub:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
 .head {
     font-size: 18px;
     font-weight: bold;

@@ -4,8 +4,8 @@
 <mapper namespace="com.bnw.beta.domain.admin.dao.EdupostDAO">
     <sql id="search">
         <choose>
-            <!-- 분류랑 유형이 없을 때 -->
-            <when test="(searchType2 == null or searchType2 == '') and (searchType3 == null or searchType3 == '')">
+            <!-- 분류랑 유형 서비스가 없을 때 -->
+            <when test="(searchType2 == null or searchType2 == '') and (searchType3 == null or searchType3 == '') and (searchType4 == null or searchType4 == '')">
                 <choose>
                     <when test="searchType != null and searchType != ''">
                         <choose>
@@ -22,6 +22,28 @@
                     </when>
                     <otherwise>
                         (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+                    </otherwise>
+                </choose>
+            </when>
+
+            <!-- 분류랑 유형 서비스가 있을 때 -->
+            <when test="searchType2 != null and searchType2 != '' and searchType3 != null and searchType3 != '' and searchType4 != null and searchType4 != ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') AND edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                (edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                        </choose>
+                    </when>
+                    <otherwise>
+                        (edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
                     </otherwise>
                 </choose>
             </when>
@@ -48,24 +70,113 @@
                 </choose>
             </when>
 
-            <!-- 유형이 있을 때 -->
-            <when test="searchType3 != null and searchType3 != ''">
+            <!-- 분류랑 서비스가 있을 때 -->
+            <when test="searchType2 != null and searchType2 != '' and searchType4 != null and searchType4 != ''">
                 <choose>
                     <when test="searchType != null and searchType != ''">
                         <choose>
                             <when test="'edupost_title'.equals(searchType)">
-                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') AND edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
                             </when>
                             <when test="'edupost_content'.equals(searchType)">
-                                (edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                                (edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
                             </when>
                             <when test="'title_content'.equals(searchType)">
-                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
                             </when>
                         </choose>
                     </when>
                     <otherwise>
-                        (edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                        (edupost_category LIKE CONCAT('%', #{searchType2}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                    </otherwise>
+                </choose>
+            </when>
+
+            <!-- 유형과 서비스가 있을 때 -->
+            <when test="searchType3 != null and searchType3 != '' and searchType4 != null and searchType4 != ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                (edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                        </choose>
+                    </when>
+                    <otherwise>
+                        (edupost_type LIKE CONCAT('%', #{searchType3}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                    </otherwise>
+                </choose>
+            </when>
+
+            <!-- 분류랑 유형이 없을 때 -->
+            <when test="searchType2 == null and searchType2 == '' and searchType3 == null and searchType3 == ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                edupost_title LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                (edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+                            </when>
+                        </choose>
+                    </when>
+                    <otherwise>
+                        (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+
+                    </otherwise>
+                </choose>
+            </when>
+
+            <!-- 분류랑 서비스가 없을 때 -->
+            <when test="searchType2 == null and searchType2 == '' and searchType4 == null and searchType4 == ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                edupost_title LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                edupost_content LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}))
+                            </when>
+                        </choose>
+                    </when>
+                    <otherwise>
+                        (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
+                    </otherwise>
+                </choose>
+            </when>
+
+            <!-- 유형과 서비스가 없을 때 -->
+            <when test="searchType3 == null and searchType3 == '' and searchType4 == null and searchType4 == ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                edupost_title LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                edupost_content LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}))
+                            </when>
+                        </choose>
+                    </when>
+                    <otherwise>
+                        (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%'))
                     </otherwise>
                 </choose>
             </when>
@@ -91,6 +202,50 @@
                     </otherwise>
                 </choose>
             </when>
+
+            <!-- 유형이 있을 때 -->
+            <when test="searchType3 != null and searchType3 != ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                (edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                            </when>
+                        </choose>
+                    </when>
+                    <otherwise>
+                        (edupost_type LIKE CONCAT('%', #{searchType3}, '%'))
+                    </otherwise>
+                </choose>
+            </when>
+
+            <!-- 서비스가 있을 때 -->
+            <when test="searchType4 != null and searchType4 != ''">
+                <choose>
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="'edupost_title'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                            <when test="'edupost_content'.equals(searchType)">
+                                (edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                            <when test="'title_content'.equals(searchType)">
+                                (edupost_title LIKE CONCAT('%', #{keyword}, '%') OR edupost_content LIKE CONCAT('%', #{keyword}, '%') AND edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                            </when>
+                        </choose>
+                    </when>
+                    <otherwise>
+                        (edupost_service LIKE CONCAT('%', #{searchType4}, '%'))
+                    </otherwise>
+                </choose>
+            </when>
         </choose>
     </sql>
 
@@ -103,12 +258,11 @@
     </insert>
     <!--교육자료 목록보기-->
     <select id="edulist" parameterType="map" resultType="EdupostDTO">
-        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id, edupost_content
+        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, edupost_service, member_id, edupost_content
         from edupost
         <where>
             <include refid="search"></include>
         </where>
-        order by edupost_date DESC
         LIMIT #{page}, #{size};
     </select>
 
@@ -118,12 +272,6 @@
         <where>
             <include refid="search"></include>
         </where>
-    </select>
-<!--카테고리로 조회-->
-    <select id="selectEduCategory" parameterType="EdupostDTO">
-        select edupost_no, edupost_category, edupost_type, edupost_title, edupost_date, member_id, edupost_content
-        from edupost
-
     </select>
 
     <select id="findById" parameterType="long" resultType="EdupostDTO">

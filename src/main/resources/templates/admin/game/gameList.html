@@ -22,15 +22,13 @@
         <div class="main-content">
 
             <div class="gameContent-search">
-                <form th:action="@{/game/searchByTitle}" method="get" class="form-container" id="searchForm">
-                    <div class="searchReq">
-                        <select name="game_title"  class="titlelist" id="gameTitleSelect">
-                            <option selected value = "">게임 선택</option>
-                            <option th:each="game : ${gameTitle}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
-                        </select>
-                        <input type="submit" value="조회하기" id="searchButton" onsubmit="handleGameTitleChange(event)"/>
-                    </div>
-                </form>
+                <div class="searchReq">
+                    <select name="game_title"  class="titlelist" id="gameTitleSelect">
+                        <option selected value = "">게임 선택</option>
+                        <option th:each="game : ${gameTitle}" th:value="${game.game_title}" th:text="${game.game_title}"></option>
+                    </select>
+                    <input type="submit" value="조회하기" id="searchButton"/>
+                </div>
                 <div class="subscribe" sec:authorize="!hasRole('ADMIN')" >
                     <button id="subscribeButton" class="submit-button">구독하기</button>
                 </div>
@@ -40,7 +38,7 @@
             </div>
             <div class="content-container">
                 <ul class="list-box">
-                    <li th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}">
+                    <li th:each="content : ${gameList}" th:attr="data-game-no=${content.game_no}, data-game-title=${content.game_title}">
                         <div class="checkbox">
                             <label class="checkbox-wrapper">
                                 <input type="checkbox" class="checkbox-input" th:attr="data-game-no=${content.game_no}" name="game_nos" th:value="${content.game_no}" />
@@ -77,7 +75,7 @@
         <button id="moreBtn">더보기(<span class="currentCnt"></span>/<span class="totalCnt" th:text="${totalCount}"></span>)<i class="ri-arrow-down-s-line"></i></button>
     </div>
 </div>
-<button id="myBtn" title="Go to top">Top</button>
+<button id="myBtn" class= "Go to top">Top</button>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>
 </body>
 </html>

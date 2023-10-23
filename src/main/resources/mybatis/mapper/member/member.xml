@@ -14,7 +14,7 @@
                                 member_id LIKE CONCAT('%', #{keyword}, '%')
                             </when>
                             <when test="searchType == 'member_phone'">
-                                member_phone LIKE CONCAT('%', #{keyword}, '%')
+                               member_phone LIKE CONCAT('%', #{keyword}, '%')
                             </when>
                             <when test="searchType == 'member_name'">
                                 member_name LIKE CONCAT('%', #{keyword}, '%')
@@ -205,6 +205,16 @@
         SELECT COUNT(member_phone) FROM member WHERE member_phone = #{phone}
         ]]>
     </select>
+
+    <!--회원코드일치확인-->
+    <select id="checkCode" resultType="RoleDTO">
+    <![CDATA[
+        SELECT * FROM role
+        WHERE role_code = #{role_code}
+        And role_name = #{role_name};
+        ]]>
+    </select>
+
 
     <!--///////////member_no & member_name 불러오기 -->
     <select id="getMemberInfo" parameterType="String">

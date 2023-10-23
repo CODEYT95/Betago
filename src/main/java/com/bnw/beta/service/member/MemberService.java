@@ -3,6 +3,7 @@ package com.bnw.beta.service.member;
 import com.bnw.beta.config.vaildation.member.JoinForm;
 import com.bnw.beta.domain.common.paging.MemberPageDTO;
 import com.bnw.beta.domain.member.dto.MemberDTO;
+import com.bnw.beta.domain.member.dto.RoleDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,18 @@ public interface MemberService {
         }
 
         //아이디 중복체크
-        public int idCheck(String id);
+        int idCheck(String id);
 
         //이메일 중복체크
-        public int emailCheck(String email);
+        int emailCheck(String email);
 
         //핸드폰 중복체크
-        public int phoneCheck(String phone);
+        int phoneCheck(String phone);
+
+        //회원 코드 체크
+        RoleDTO codeCheck(int role_code, String role_name);
+
+
 
         //Question 글작성 회원 아이디 정보
         Optional<MemberDTO> getUser(String username);

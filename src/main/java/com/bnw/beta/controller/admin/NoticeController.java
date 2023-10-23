@@ -10,13 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 @Controller
 @AllArgsConstructor
 public class NoticeController {
     private final NoticeServiceImpl noticeService;
+
     //리스트 목록 + 페이징 + 검색
     @GetMapping("/notice/list")
     public String noticeList(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -27,7 +30,6 @@ public class NoticeController {
         System.out.println(size);
         //상단고정 게시물
         List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
-        System.out.println("공지목록 컨트롤러"+topNoticeList);
         NoticePage noticePage = noticeService.noticeList(page, size, searchType, keyword);
         noticePage.setKeyword(keyword);
         noticePage.setSearchType(searchType);
@@ -56,11 +58,11 @@ public class NoticeController {
     public String noticeWrite(@ModelAttribute NoticeDTO noticeDTO,
                               @RequestParam("file") MultipartFile[] file,
                               @RequestParam(name = "type", defaultValue = "일반") String type,
-                              @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")Date timeWrite,
+                              @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate timeWrite,
                               Model model,HttpSession session) throws IOException {
         String memberName = (String) session.getAttribute("member_name");
         noticeDTO.setMember_name(memberName);
-        System.out.println(noticeDTO);
+
         try {
             System.out.println(noticeDTO);
             noticeService.insert(noticeDTO, file, type, timeWrite, session);
@@ -81,6 +83,7 @@ public class NoticeController {
         System.out.println("컨트롤DTO=" + noticeDTO);
         return "admin/notice/noticeDetail";
     }
+
     //공지게시판 수정폼
     @GetMapping("/admin/edit/{notice_no}")
     public String edit(@PathVariable("notice_no") Long notice_no, Model model) {
@@ -95,10 +98,16 @@ public class NoticeController {
     @PostMapping("/admin/notice/update")
     public String update(@RequestParam("notice_no") Long notice_no,
                          @ModelAttribute NoticeDTO noticeDTO,
-                         @RequestParam("file") MultipartFile[] file,HttpSession session) throws IOException {
+                         @RequestParam("file") MultipartFile[] file,HttpSession session,
+                         @RequestParam(name = "type", defaultValue = "일반") String type,
+                         @RequestParam(name = "timeWrite", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate timeWrite) throws IOException {
+        System.out.println("dddddddddgggggg");
         String memberName = (String) session.getAttribute("member_name");
         noticeDTO.setMember_name(memberName);
-        noticeService.update(notice_no, noticeDTO, file);
+        System.out.println("왓두유원"+timeWrite);
+
+        // String을 LocalDateTime으로 변환
+        noticeService.update(notice_no, noticeDTO, file, type, timeWrite);
         return "redirect:/notice/list";
     }
     //공지게시판 삭제
