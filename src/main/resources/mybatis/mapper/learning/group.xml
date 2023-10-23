@@ -112,7 +112,8 @@
         SELECT
         MAX(p.pay_no) AS pay_no,
         g.game_title, g.game_total, g.game_level, g.game_no,
-        m.member_name, COALESCE(SUM(s.group_cnt), 0) AS group_cnt
+        m.member_name, COALESCE(SUM(s.group_cnt), 0) AS group_cnt,
+        p.pay_date, p.pay_enddate
         FROM
         pay p
         JOIN
@@ -358,7 +359,7 @@
 
     <!-- 그룹 신청 가능 실시간 체크2 -->
     <select id="checkJoin2" parameterType="GroupDTO" resultType="Integer">
-        SELECT group_no
+        SELECT count(*)
         FROM groupmember
         WHERE group_no = #{group_no} AND member_no = #{member_no};
     </select>

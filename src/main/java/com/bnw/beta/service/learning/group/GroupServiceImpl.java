@@ -223,6 +223,8 @@ public class GroupServiceImpl implements GroupService {
         groupDTO.setMember_no(member_no);
         groupDTO.setGame_no(game_no);
 
+        System.out.println("test"+groupDAO.checkJoin2(groupDTO));
+
         if(groupDAO.checkJoin2(groupDTO) > 0){
             return "already";
         }else{
