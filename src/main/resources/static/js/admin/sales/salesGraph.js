@@ -16,12 +16,6 @@
             transactions.push(totalSalesValues[i].value);
             console.log(transactions);
         }
-
-        // 데이터를 역순으로 정렬
-        years.reverse();
-        sales.reverse();
-        transactions.reverse();
-
         // Google Charts 로드
         google.charts.load('current', { 'packages': ['bar'] });
         google.charts.setOnLoadCallback(drawChart);
