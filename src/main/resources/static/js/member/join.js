@@ -277,7 +277,28 @@ document.addEventListener("DOMContentLoaded", function() {
         email_required.hide();
         email_pattern.hide();
     });
+$(document).ready(function() {
+    $('#email').keyup(function() {
+        var email = $(this).val();
 
+        $.ajax({
+            url: '/member/emailCheck',
+            type: 'POST',
+            data: {email: email},
+            success: function(response) {
+                if(response === 1) {
+                $('.email_pattern').hide();
+                    $('.email_duplicate').show();
+                } else if(response === 0) {
+                    $('.email_duplicate').hide();
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
         // 라디오 버튼 변경 이벤트 핸들러
         $('.typeRadio').change(function () {
             if ($(this).val() === 'ROLE_TEACHER') {
