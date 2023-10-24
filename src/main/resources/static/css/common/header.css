@@ -48,9 +48,9 @@ a {
 
 .header-image{
     width: 140px;
-    position: absolute;
-    left:220px;
-    margin-top: 20px;
+    position: relative;
+    float: left;
+    bottom: 10px;
 }
 
 nav {
@@ -320,10 +320,19 @@ nav .header-navi .links li:hover .admin-sub-menu {
 
 @media (max-width: 800px) {
 
+  body{
+    background: url(/image/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
   nav {
     height: 90px;
   }
-
+  .header-image{
+    display: none;
+  }
   .content{
     right: 0;
     padding-top: 90px;
