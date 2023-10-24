@@ -95,6 +95,7 @@ public class EducatorGroupController {
     @GetMapping("/modify")
     public String groupModify(@RequestParam(name = "group_no") int group_no,Principal principal, Model model){
         model.addAttribute("groupInfo", groupService.selectGroupUpdate(group_no, principal.getName()));
+        model.addAttribute("currentCnt", groupService.currentGroupCnt(group_no, groupService.selectGroupUpdate(group_no,principal.getName()).getGame_no(), principal.getName()));
         System.out.println(groupService.selectGroupUpdate(group_no, principal.getName()));
         return "/learning/group/educator/groupModify";
     }

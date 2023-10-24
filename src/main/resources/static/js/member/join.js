@@ -7,17 +7,17 @@ document.addEventListener("DOMContentLoaded", function() {
         $("#emailField").hide();
         $("#phoneField").hide()
 
-        var phone = $("span#phoneInfo2").text();
-        var email = $("span#emailInfo2").text();
+        var phone = $("#phoneInfo2").text();
+        var email = $("#emailInfo2").text();
 
 
         if (email !== "") {
-            $("#emailInfo").hide();
+            $("#emailInfo").show();
             $("#email").prop("disabled", true);
             $("#phoneField").show();
         }
         if (phone !== "") {
-            $("#phoneInfo").hide();
+            $("#phoneInfo").show();
             $("#phone").prop("disabled", true);
             $("#emailField").show();
         }
@@ -278,28 +278,6 @@ document.addEventListener("DOMContentLoaded", function() {
         email_pattern.hide();
     });
 
-$(document).ready(function() {
-    $('#email').keyup(function() {
-        var email = $(this).val();
-
-        $.ajax({
-            url: '/member/emailCheck',
-            type: 'POST',
-            data: {email: email},
-            success: function(response) {
-                if(response === 1) {
-                $('.email_pattern').hide();
-                    $('.email_duplicate').show();
-                } else if(response === 0) {
-                    $('.email_duplicate').hide();
-                }
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-});
         // 라디오 버튼 변경 이벤트 핸들러
         $('.typeRadio').change(function () {
             if ($(this).val() === 'ROLE_TEACHER') {

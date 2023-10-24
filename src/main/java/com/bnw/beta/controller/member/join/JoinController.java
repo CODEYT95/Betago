@@ -29,6 +29,8 @@ public class JoinController {
                          @RequestParam("next") String next, @RequestParam("check_3") String check3,
                          @RequestParam("check_4") String check4, @RequestParam("check_5") String check5, HttpSession session) {
 
+        System.out.println("폰"+joinForm.getMember_phone());
+        System.out.println("이메일"+joinForm.getMember_email());
 
         model.addAttribute("name", joinForm.getMember_name());
         model.addAttribute("email", joinForm.getMember_email());

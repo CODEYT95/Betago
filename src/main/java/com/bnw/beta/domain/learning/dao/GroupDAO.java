@@ -44,6 +44,9 @@ public interface GroupDAO {
     //학습 그룹 수정
     int updateGroup(GroupDTO groupDTO);
 
+    //그룹 등록 가능한 인원수 구하기 위한 쿼리
+    int currentGroupCnt(GroupDTO groupDTO);
+
     //그룹 학생 가입 승인 목록
     List<GroupDTO> selectGroupApprove(@Param("member_id") String member_id, @Param("group_no") Integer group_no, @Param("page") int page, @Param("size") int size);
 
