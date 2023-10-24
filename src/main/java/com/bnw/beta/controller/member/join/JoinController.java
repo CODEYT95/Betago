@@ -61,14 +61,10 @@ public class JoinController {
         //생년월일 session에 담기
         JoinForm agreeDate = (JoinForm) session.getAttribute("joinForm");
         String[] retrievedAgreedTerms = (String[]) session.getAttribute("agreedTerms");
-        if (agreeDate != null && retrievedAgreedTerms != null) {
             joinForm.setMember_birth(birth);
             memberService.memberJoin(agreeDate, joinForm, retrievedAgreedTerms);
             session.invalidate();
-            return "redirect:/login";
-        }
-        
-       return " ";
+        return "redirect:/login";
     }
 
     //ID중복체크
