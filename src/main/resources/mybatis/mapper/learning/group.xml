@@ -185,7 +185,7 @@
         <![CDATA[
         SELECT
         p.pay_date, p.pay_enddate,
-        g.game_title, g.game_no,
+        g.game_title, g.game_no, g.game_total,
         m.member_name,
         sg.group_no, sg.group_name, sg.group_intro, sg.group_startdate, sg.group_enddate, sg.group_cnt, sg.group_nowcnt
         FROM pay p

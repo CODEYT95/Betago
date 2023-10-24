@@ -21,6 +21,8 @@
             <input type="hidden" class="game_start" th:value="${groupInfo.pay_date}">
             <input type="hidden" class="game_end" th:value="${groupInfo.pay_enddate}">
             <input type="hidden" class="readOnly" th:value="${groupInfo.group_nowcnt}">
+            <input type="hidden" class="readOnly" th:value="${groupInfo.game_total}">
+            <input type="hidden" class="readOnly" th:value="${currentCnt}">
             <header class="content-header">
                 <div class="header-container">
                     <span>게임 콘텐츠명 : <span th:text="${groupInfo.game_title}"></span></span>
@@ -54,7 +56,7 @@
                         <label>
                             <div class="date-wrap">
                                 <span>시작일</span>
-                                <input class="startDate" th:value="${groupInfo.group_startdate}" type="date" name="group_startdate" th:attr="readonly=${groupInfo.group_nowcnt > 0} ? 'readonly' : null">
+                                <input class="startDate" th:value="${groupInfo.group_startdate}" type="date" name="group_startdate" th:attr="readonly=${groupInfo.group_nowcnt > 0} ? 'readonly' : null" id="startDate">
                             </div>
                             <div class="date-wrap">
                                 <span>종료일</span>

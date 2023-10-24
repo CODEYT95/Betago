@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function() {
   var endDateInput = document.querySelector(".endDate");
   var submitButton = document.getElementById("submitButton");
   var groupIntroTextarea = document.querySelector(".content");
+  var startDateInput = document.getElementById("startDate");
+  var currentDate = new Date().toISOString().split("T")[0];
+
+  // min 속성을 현재 날짜로 설정합니다.
+  startDateInput.min = currentDate;
+
 
   // 게임 옵션 설정
   var gameTotalElement = document.querySelector(".totalNum");
