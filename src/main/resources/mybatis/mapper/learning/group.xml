@@ -196,15 +196,15 @@
         ]]>
     </select>
 
-    <!--  -->
-    <select id="currentGroupCnt">
+    <!-- 그룹 등록 가능한 인원수 구하기 위한 쿼리 -->
+    <select id="currentGroupCnt" parameterType="GroupDTO" resultType="Integer">
         <![CDATA[
         SELECT
-        SUM(CASE WHEN sg.group_no <> 1 THEN sg.group_cnt ELSE 0 END) AS total_group_cnt
+        SUM(CASE WHEN sg.group_no <> #{group_no} THEN sg.group_cnt ELSE 0 END) AS total_group_cnt
         FROM
         studygroup sg
         WHERE
-        sg.game_no = 15 AND sg.member_id = 'educator3'
+        sg.game_no = #{game_no} AND sg.member_id = #{member_id}
         GROUP BY
         sg.game_no, sg.member_id;
         ]]>

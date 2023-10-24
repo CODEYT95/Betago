@@ -24,7 +24,7 @@
             <header class="content-header">
                 <div class="header-container">
                     <span>게임 콘텐츠명 : <span th:text="${groupInfo.game_title}"></span></span>
-                    <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.group_cnt}+명"></span></span>
+                    <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.game_total}-${currentCnt}+명"></span></span>
                     <span>그룹 총배정인원 : <span class="currentNum" th:text="${groupInfo.group_nowcnt}+명"></span></span>
                 </div>
             </header>
