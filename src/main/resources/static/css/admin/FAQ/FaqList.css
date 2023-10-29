@@ -70,18 +70,44 @@ area[alt="비밀번호 찾기"] {
     margin-bottom: 15px;
 }
 
-.pagination-container li{
-    display: flex;
+.pagination-container a {
     float: left;
-    margin-right: 5px;
-    padding: 8px 13px;
+    display: flex;
     text-decoration: none;
+    width: 55px;
+    height: 100%;
+    align-items: center;
+    justify-content: center; /* 추가: 수평 중앙 정렬 */
+}
+
+.pagination-container li{
+    margin: 0;
+    text-align: center;
+    width: 35px;
+    height: 30px;
+    display: flex; /* 추가: flexbox 레이아웃 적용 */
+    justify-content: center;
 }
 
 .pagination-container a:hover:not(.active) {
     background-color: #ddd;
     border-radius : 8px;
     width: 36px;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.active-page {
+    background: #b2d3ff;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
 }
 
 #searchForm{

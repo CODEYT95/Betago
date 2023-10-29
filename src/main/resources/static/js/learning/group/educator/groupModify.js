@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function() {
   var endDateInput = document.querySelector(".endDate");
   var submitButton = document.getElementById("submitButton");
   var groupIntroTextarea = document.querySelector(".content");
+  var startDateInput = document.getElementById("startDate");
+  var currentDate = new Date().toISOString().split("T")[0];
+
+  // min 속성을 현재 날짜로 설정합니다.
+  startDateInput.min = currentDate;
+
 
   // 게임 옵션 설정
   var gameTotalElement = document.querySelector(".totalNum");
@@ -107,18 +113,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // 모달 띄우기
         completeModal.style.display = "block"; // 모달 표시
-      });
-
-      // "확인" 버튼 클릭 이벤트 처리
-      confirmButton.addEventListener("click", function() {
-        // 모달 닫기
-        completeModal.style.display = "none"; // 모달 숨기기
-
-        // 폼 요소 가져오기
-        var form = document.querySelector("form");
-
-        // 폼을 수동으로 제출
-        form.submit();
       });
     });
 });

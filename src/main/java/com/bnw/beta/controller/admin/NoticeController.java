@@ -31,13 +31,11 @@ public class NoticeController {
         //상단고정 게시물
         List<NoticeDTO> topNoticeList = noticeService.getTopNoticeList();
         NoticePage noticePage = noticeService.noticeList(page, size, searchType, keyword);
-        noticePage.setKeyword(keyword);
-        noticePage.setSearchType(searchType);
 
         // 모든 게시물 목록을 모델에 추가
         model.addAttribute("noticeList",1);
+        model.addAttribute("currentPage",noticePage.getCurrentPage());
         model.addAttribute("allNoticeList", noticePage.getAllNoticeList());
-        System.out.println(noticePage.getAllNoticeList());
         model.addAttribute("listSize", size);
         model.addAttribute("currentPage", page);
         model.addAttribute("size", size);

@@ -67,7 +67,7 @@
     </delete>
 
     <!--게시글 목록 조회-->
-    <select id="noticeList"  parameterType="NoticeDTO">
+    <select id="noticeList"  parameterType="NoticeDTO" resultType="NoticeDTO">
         <![CDATA[
         SELECT notice_no,notice_category,notice_title,member_name,notice_regdate,view_cnt, type, notice_reservation
         FROM notice

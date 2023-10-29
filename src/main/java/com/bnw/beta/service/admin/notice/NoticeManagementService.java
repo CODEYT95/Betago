@@ -1,11 +1,13 @@
 package com.bnw.beta.service.admin.notice;
 
 import com.bnw.beta.domain.admin.dto.NoticeDTO;
+import com.bnw.beta.domain.admin.dto.NoticeManagementDTO;
 import com.bnw.beta.domain.common.paging.NoticePage;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,8 +19,17 @@ public interface NoticeManagementService {
     int listCnt(String searchType, String keyword);
 
     //공지게시판 삭제
-    void delete(@Param("notice_no") List<Long> notice_no);
+    void delete(@Param("notice_no") List<Integer> notice_no);
 
-    //공지게시판 삭제
-    void delete1(@Param("notice_no") String notice_no);
+    //드롭다운으로 삭제여부 Y/N
+    String updateStatus(String notice_isshow, Long notice_no);
+
+    //드롭다운으로 카테고리 변경
+    String updateCategory(String notice_category, Long notice_no);
+
+    //드롭다운으로 타입 변경
+    String updateType(String type, Long notice_no);
+
+    //드롭다운으로 예약일 변경
+    String updateReservation(LocalDate notice_reservation, Long notice_no);
 }

@@ -21,10 +21,12 @@
             <input type="hidden" class="game_start" th:value="${groupInfo.pay_date}">
             <input type="hidden" class="game_end" th:value="${groupInfo.pay_enddate}">
             <input type="hidden" class="readOnly" th:value="${groupInfo.group_nowcnt}">
+            <input type="hidden" class="readOnly" th:value="${groupInfo.game_total}">
+            <input type="hidden" class="readOnly" th:value="${currentCnt}">
             <header class="content-header">
                 <div class="header-container">
                     <span>게임 콘텐츠명 : <span th:text="${groupInfo.game_title}"></span></span>
-                    <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.group_cnt}+명"></span></span>
+                    <span>학습 가능 인원 : <span class="totalNum" th:text="${groupInfo.game_total}-${currentCnt}+명"></span></span>
                     <span>그룹 총배정인원 : <span class="currentNum" th:text="${groupInfo.group_nowcnt}+명"></span></span>
                 </div>
             </header>
@@ -54,7 +56,7 @@
                         <label>
                             <div class="date-wrap">
                                 <span>시작일</span>
-                                <input class="startDate" th:value="${groupInfo.group_startdate}" type="date" name="group_startdate" th:attr="readonly=${groupInfo.group_nowcnt > 0} ? 'readonly' : null">
+                                <input class="startDate" th:value="${groupInfo.group_startdate}" type="date" name="group_startdate" th:attr="readonly=${groupInfo.group_nowcnt > 0} ? 'readonly' : null" id="startDate">
                             </div>
                             <div class="date-wrap">
                                 <span>종료일</span>
@@ -72,17 +74,17 @@
                 <span style="color:red;">그룹에 등록된 학생이 있을 경우 그룹명만 수정이 가능합니다.</span>
             </div>
             <div class="addBtn-container">
-                <button id="submitButton" type="button">학습 수정하기</button>
+                <input id="submitButton" type="button" value="학습 수정하기">
+            </div>
+            <div id="completeModal" class="complete-modal">
+                <div class="modal-wrap">
+                    <div class="modal-content">
+                        <p>수정이 완료 되었습니다.</p>
+                        <button id="confirmButton" class="confirm-btn">확인</button>
+                    </div>
+                </div>
             </div>
         </form>
-    </div>
-    <div id="completeModal" class="complete-modal">
-        <div class="modal-wrap">
-            <div class="modal-content">
-                <p>수정이 완료 되었습니다.</p>
-                <button id="confirmButton" class="confirm-btn">확인</button>
-            </div>
-        </div>
     </div>
 </div>
 <div th:replace="~{common/fragments/footer :: footerFragment}"></div>

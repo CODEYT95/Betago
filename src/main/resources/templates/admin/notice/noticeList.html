@@ -35,7 +35,7 @@
                                             th:classappend="${(searchType == 'notice_content') ? 'selected' : ''}">내용
                                     </option>
                                     <option value="title_content"
-                                            th:classappend="${(searchType == 'title_content') ? 'selected' : ''}">제목+내용
+                                            th:classappend="${(searchType == 'title_content' || searchType == 'notice_content') ? 'selected' : ''}">제목+내용
                                     </option>
                                 </select>
                             </label>
@@ -69,9 +69,68 @@
                         <th>조회수</th>
                     </tr>
                     </thead>
+                    <!--로그인 안 했을ㄸㅐ-->
+                    <tbody >
+                    <tr sec:authorize="hasAnyRole('ANONYMOUS')" th:if="${notice.type == 'upView,allView' && notice.notice_category != 'FAQ'}" th:each="notice: ${topNoticeList}">
+                    <td>
+                            <span class="no">
+                                <img src="/image/star.png" width="30px" height="20px" alt="별 이미지">
+                            </span>
+                    </td>
+                    <td>
+                        <span class="type" name="type" th:text="${notice.notice_category}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
+                            <span th:text="${notice.notice_title}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <span class="writer" th:text="${notice.member_name}"></span>
+                    </td>
+
+                    <td>
+                        <span class="writer" th:text="${#temporals.format(notice.notice_regdate, 'yyyy-MM-dd HH:mm')}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${notice.view_cnt}"></span>
+                    </td>
+                    </tr>
+
+                    <tr sec:authorize="hasAnyRole('ANONYMOUS')" th:if="${notice.type == 'allView' && notice.notice_category != 'FAQ' }"  th:each="notice, index: ${noticePage.allNoticeList}">
+                        <td>
+                           <span class="no"
+                                 th:text="${noticePage.total - (index.index+ noticePage.startIndex) -3}"></span>
+                        </td>
+                        <!-- <td>
+                             <span class="no" th:utext="${noticePage.total - (index.index)}"></span>
+                         </td> -->
+                        <td>
+                            <span class="type" name="type" th:text="${notice.notice_category}"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/notice/detail/'+ ${notice.notice_no}}">
+                                <span th:text="${notice.notice_title}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="writer" th:text="${notice.member_name}"></span>
+                        </td>
+
+                        <td>
+                            <span class="writer"
+                                  th:text="${#temporals.format(notice.notice_regdate, 'yyyy-MM-dd HH:mm')}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${notice.view_cnt}"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <!--로그인했을ㄸㅐ-->
                     <tbody id="list">
-                    <tr th:if="${notice.notice_category != 'FAQ' && notice.type != '일반' } "
-                        th:each="notice: ${topNoticeList}" class="tableColor">
+                    <tr sec:authorize="!hasAnyRole('ANONYMOUS')" th:if="${(notice.notice_category != 'FAQ' && notice.type != '일반')}"
+                        th:each="notice: ${topNoticeList}" th:class="tableColor">
                         <td>
                             <span class="no">
                                 <img src="/image/star.png" width="30px" height="20px" alt="별 이미지">
@@ -103,15 +162,12 @@
                         </td>
                     </tr>
 
-                    <tr th:if="${notice.notice_category != 'FAQ'}" th:each="notice, index: ${noticePage.allNoticeList}">
+                    <tr sec:authorize="!hasAnyRole('ANONYMOUS')"  th:if="${notice.notice_category != 'FAQ'}" th:each="notice, loop: ${noticePage.allNoticeList}">
 
                     <td>
                            <span class="no"
-                                 th:text="${noticePage.total - (index.index+ noticePage.startIndex) -3}"></span>
+                                 th:text="${noticePage.total - (loop.index+ noticePage.startIndex) - topNoticeList.size()}"></span>
                         </td>
-                       <!-- <td>
-                            <span class="no" th:utext="${noticePage.total - (index.index)}"></span>
-                        </td> -->
                         <td>
                             <span class="type" name="type" th:text="${notice.notice_category}"></span>
                         </td>
@@ -133,6 +189,7 @@
                         </td>
                     </tr>
                     </tbody>
+
                 </table>
             </div>
         </div>

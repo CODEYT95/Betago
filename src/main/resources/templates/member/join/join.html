@@ -6,6 +6,7 @@
     <title>둑며들다|회원 가입</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/member/join/join.css}">
+    <script type="text/javascript" th:src="@{/js/member/join.js}"></script>
     <div th:replace="~{common/fragments/config :: configFragment}"></div>
 </head>
 <body>
@@ -14,8 +15,8 @@
     <div class="container__form container--signup">
         <form id="joinForm" class="form" th:action="@{/member/join}" th:object="${joinForm}" method="post">
             <input type="hidden" name="member_name" th:value="${name}">
-            <input type="hidden" name="member_email" th:value="${email}">
-            <input type="hidden" name="member_phone" th:value="${phone}">
+            <input type="hidden" th:value="${email}">
+            <input type="hidden" th:value="${phone}">
 
             <h1 class="h1">회원 가입</h1>
             <h6 class="h6">나머지 개인정보를 입력해주세요.</h6>
@@ -37,7 +38,7 @@
             <h2 class="form__title">정보 입력</h2><hr class="line1">
             <div class="inputInfo">
                 <span class="spanName">아이디</span> <input type="text" class="idInput" id="id" th:field="*{member_id}" onchange = "checkId()" placeholder="아이디를 입력하세요.">
-                <span class="id_ok">사용 가능한 아이디입니다.</span>
+                <span class="id_ok" style="display:none; color:green;">사용 가능한 아이디입니다.</span>
                 <span class="id_already">이미 사용중인 아이디입니다.</span>
                 <span class="id_required" style="display: none; color: red;">아이디를 입력해주세요.</span>
                 <span class="id_pattern" style="display: none; color: red;">아이디는 영어 소문자와 숫자를 사용하여 4~20자리여야 합니다.</span>
@@ -48,7 +49,7 @@
                 <span class="pw_pattern" style="display: none; color: red;">비밀번호는 최소 8자 이상, 영어, 숫자, 특수 문자가 포함되어야 합니다.</span><br/>
 
                 <span class="spanName">비밀번호 확인</span><input type="password" id="repw" class="pwReInput" th:field="*{member_repw}" onchange = "checkPwd()" placeholder="비밀번호를 확인해주세요.">
-                <span class="pwCheck">입력하신 비밀번호와 일치하지 않습니다.</span><br/>
+                <span class="pwCheck" style="display: none; color: red;">입력하신 비밀번호와 일치하지 않습니다.</span><br/>
 
                 <div class="birth" id="info__birth">
                 <input type="hidden" name="member_birth" id="member_birth" th:field="*{member_birth}">
@@ -69,30 +70,31 @@
 
                 <div id="emailField">
                     <span class="emailName">이메일</span>
-                    <input type="text" class="emainInput" id="email" th:field="*{member_email}" placeholder="이메일을 입력해주세요."><br/>
+                    <input type="text" class="emainInput" id="email" th:field="*{member_email}" placeholder="이메일을 입력해주세요.">
                     <span class="email_required" style="display: none; color: red;">이메일을 입력해주세요.</span>
                     <span class="email_pattern" style="display: none; color: red;">이메일을 다시 확인해주세요.</span>
+                    <span class="email_duplicate" style="display: none; color: red;">이미 사용중인 이메일입니다.</span>
                 </div>
 
-                <label>
-                    <span class="spanName">회원유형</span>
-                    <select th:field="*{role}" class="role" id="roleSelect" name="role_name">
-                        <option value="">회원 유형을 선택해주세요.</option>
-                        <option value="ROLE_TEACHER" >교육자</option>
-                        <option value="ROLE_STUDENT">학생</option>
-                        <option value="ROLE_USER">일반회원</option>
-                    </select>
-                    <span class="role_required" style="display: none; color: red;">회원 유형을 선택해주세요.</span>
-                </label><br/>
+
+                <div class="radiodiv">
+                    <span class="memberType">회원유형</span>
+                    <label for="teacher" class="radio">
+                        <input type="radio" class="typeRadio" id="teacher" th:field="*{role}" value="ROLE_TEACHER" >
+                        <span class="edu">교육자</span></label>
+                    <label for="user" class="radio">
+                        <input type="radio" class="typeRadio" id="user" th:field="*{role}" checked="checked" value="ROLE_USER">
+                        <span>회원</span></label><br/>
+                </div>
                 <div id="codeInput" style="display: none;">
                     <label>
                         <span class="spanName">코드</span>
-                        <input type="text" class="input" name="role_code" id="roleCode" onchange="checkCode()">
-                        <span class="code_ok" style="display: none;">코드가 일치합니다.</span>
+                        <input type="text" class="input" name="edu_code" id="roleCode" onchange="checkCode()">
+                        <span class="role_required" style="display: none; color: red;">회원 유형을 선택해주세요.</span>
+                        <span class="code_dup" style="display: none;">본인 코드를 입력해주세요.</span>
                         <span class="code_no" style="display: none;">코드가 일치하지 않습니다.</span>
                     </label>
                 </div>
-
 
 
                 <div class="radiodiv">
@@ -121,7 +123,7 @@
             </div>
 
             <div class="button">
-                <button type="submit" class="btn" onclick="birth()">회원가입</button>
+                <button type="submit" id="submitBtn" class="btn" onclick="birth()" disabled>회원가입</button>
                 <input type="hidden" name="next" value="2">
             </div>
     </form>
@@ -129,395 +131,3 @@
 </div>
 </body>
 </html>
-
-<script>
-    //본인 인증 값에 따라 input 변경
-    $(document).ready(function () {
-        $("#phoneInfo").hide();
-        $("#emailInfo").hide();
-
-        $("#emailField").hide();
-        $("#phoneField").hide()
-
-        var phone = $("span#phoneInfo2").text();
-        var email = $("span#emailInfo2").text();
-
-
-        if (email !== "") {
-            $("#emailInfo").show();
-            $("#phoneField").show();
-        }
-        if (phone !== "") {
-            $("#phoneInfo").show();
-            $("#emailField").show();
-        }
-    });
-
-    //생년월일 드롭다운
-    $(document).ready(function () {
-        var now = new Date();
-        var year = now.getFullYear();
-        var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
-        var day = (now.getDate()) > 9 ? '' + (now.getDate()) : '0' + (now.getDate());
-
-        //년도
-        for (var i = 1900; i <= year; i++) {
-            $('#year').append('<option value="' + i + '">' + i + '년</option>');
-
-        }
-
-        //월
-        for (var i = 1; i <= 12; i++) {
-            var mm = i > 9 ? i : "0" + i;
-            $('#month').append('<option value="' + mm + '">' + mm + '월</option>');
-        }
-
-        //일
-        for (var i = 1; i <= 31; i++) {
-            var dd = i > 9 ? i : "0" + i;
-            $('#day').append('<option value="' + dd + '">' + dd + '일</option>');
-        }
-        $("#year > option[value=" + year + "]").attr("selected", "true");
-        $("#month > option[value=" + mon + "]").attr("selected", "true");
-        $("#day > option[value=" + day + "]").attr("selected", "true");
-
-        // 각 드롭다운을 "출생 연도", "월", "일"로 기본 값으로 설정
-        $('#year').val('출생 연도'); // "출생 연도"로 설정
-        $('#month').val('월'); // "월"로 설정
-        $('#day').val('일'); // "일"로 설정
-    });
-
-    //생년월일 합치기
-    function birth() {
-        const year = document.getElementById("year").value;
-        const month = document.getElementById("month").value;
-        const day = document.getElementById("day").value;
-
-        // 년, 월, 일을 하나의 문자열로 합칩니다. (예: "2023-09-26")
-        const birth = year + "-" + month + "-" + day;
-
-        // member_birth 필드에 값을 설정합니다.
-        document.getElementById("member_birth").value = birth;
-
-    }
-
-    //아이디 유효성
-    $("#id").keyup(function() {
-        var idValue = $(this).val();
-        var idPattern = /^(?=.*[a-z])(?=.*\d)[a-z0-9]{4,20}$/;
-        var id_ok = $(".id_ok");
-        var id_required = $(".id_required");
-        var id_pattern = $(".id_pattern");
-
-        if (idValue === "") {
-            id_required.show();
-            id_pattern.hide();
-            id_ok.hide();
-            return;
-        }
-
-        if (!idPattern.test(idValue)) {
-            id_required.hide();
-            id_pattern.show();
-            id_ok.hide();
-            return;
-        }
-
-        id_required.hide();
-        id_pattern.hide();
-        id_ok.show();
-
-        //아이디 중복검사
-        checkId(idValue);
-    });
-
-    //아이디 동기화방식 중복체크
-    function checkId(){
-        var id = $('#id').val();
-        if (id === "") {
-            // 아이디가 비어있으면 중복 검사를 실행하지 않음
-            return;
-        }
-        $.ajax({
-            url:'idCheck', //controller요청주소
-            type:'post',
-            data:{id:id},
-            success:function (cnt){
-                console.log(cnt)
-                if(cnt == 0){ //cnt 1 = 중복 0 사용가능
-                    $('.id_ok').css("display","inline-block");
-                    $('.id_already').css("display","none");
-                }else{
-                    $('.id_already').css("display","inline-block");
-                    $('.id_ok').css("display","none");
-                    $('#id').val('');
-                }
-            },
-            error:function (){
-                alert("error")
-            }
-        });
-    }
-
-    //비밀번호 유효성
-    $("#pw").keyup(function() {
-        var pwValue = $(this).val();
-        var pwPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-        var pw_required = $(".pw_required");
-        var pw_pattern = $(".pw_pattern");
-
-        if (pwValue === "") {
-            pw_required.show();
-            pw_pattern.hide();
-            return;
-        }
-
-        if (!pwPattern.test(pwValue)) {
-            pw_required.hide();
-            pw_pattern.show();
-            return;
-        }
-
-        pw_required.hide();
-        pw_pattern.hide();
-
-    });
-
-    //비밀번호 일치여부 확인
-    function checkPwd(){
-        var pw = $("#pw").val();
-        var repw = $('#repw').val();
-
-        if(pw !== repw){
-            $('.pwCheck').css("display","inline-block");
-        }else {
-            $('.pwCheck').css("display","none");
-        }
-    }
-
-    //생년월일 유효성
-    const birthArr = [-1, -1, -1];
-    const birthErrorMsgEl = document.querySelector('.error-msg');
-
-    const birthYearEl = document.querySelector('#year');
-    const birthMonthEl = document.querySelector('#month');
-    const birthDayEl = document.querySelector('#day');
-
-    birthYearEl.addEventListener('change', () => {
-        birthArr[0] = birthYearEl.value;
-        checkBirthValid(birthArr);
-    });
-
-    birthMonthEl.addEventListener('change', () => {
-        birthArr[1] = birthMonthEl.value;
-        checkBirthValid(birthArr);
-    });
-
-    birthDayEl.addEventListener('change', () => {
-        birthArr[2] = birthDayEl.value;
-        checkBirthValid(birthArr);
-    });
-
-    function checkBirthValid(birthArr) {
-        let isBirthValid = true;
-        const y = parseInt(birthArr[0]);
-        const m = parseInt(birthArr[1]);
-        const d = parseInt(birthArr[2]);
-
-        if (y > 0 && m > 0 && d > 0) {
-            if (m === 4 || m === 6 || m === 9 || m === 11) {
-                if (d === 31) {
-                    isBirthValid = false;
-                }
-            } else if (m === 2) {
-                if (((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0)) {
-                    if (d > 29) {
-                        isBirthValid = false;
-                    }
-                } else {
-                    if (d > 28) {
-                        isBirthValid = false;
-                    }
-                }
-            } else {
-                if (d > 31) {
-                    isBirthValid = false;
-                }
-            }
-
-            if (isBirthValid) {
-                birthErrorMsgEl.textContent = "";
-                // 이 부분에서 생년월일을 취합할 수 있습니다.
-                const birthDate = y + '-' + (m < 10 ? '0' : '') + m + '-' + (d < 10 ? '0' : '') + d;
-                document.getElementById('member_birth').value = birthDate;
-            } else {
-                birthErrorMsgEl.textContent = "생년월일을 다시 확인해주세요";
-                birthErrorMsgEl.style.color = "red";
-                document.getElementById('member_birth').value = "";
-            }
-        }
-    }
-
-    //핸드폰번호 유효성
-    $("#phone").keyup(function() {
-        var phoneValue = $(this).val();
-        var phonePattern = /^01[016789]\d{3,4}\d{4}$/;
-        var phone_required = $(".phone_required");
-        var phone_pattern = $(".phone_pattern");
-
-        if (phoneValue === "") {
-            phone_required.show();
-            phone_pattern.hide();
-            return;
-        }
-
-        if (!phonePattern.test(phoneValue)) {
-            phone_required.hide();
-            phone_pattern.show();
-            return;
-        }
-
-        phone_required.hide();
-        phone_pattern.hide();
-    });
-
-    //이메일 유효성
-    $("#email").keyup(function() {
-        var emailValue = $(this).val();
-        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        var email_required = $(".email_required");
-        var email_pattern = $(".email_pattern");
-
-        if (emailValue === "") {
-            email_required.show();
-            email_pattern.hide();
-            return;
-        }
-
-        if (!emailPattern.test(emailValue)) {
-            email_required.hide();
-            email_pattern.show();
-            return;
-        }
-
-        email_required.hide();
-        email_pattern.hide();
-    });
-
-    //회원유형 유효성
-    $(document).ready(function () {
-        var roleSelect = $(".role");
-        var roleRequired = $(".role_required");
-
-        roleSelect.change(function () {
-            var selectedRole = roleSelect.val();
-
-            // 유효성 검사
-            if (selectedRole === "") {
-                roleRequired.show();
-            } else {
-                roleRequired.hide();
-            }
-        });
-    });
-
-    // 회원가입 버튼 및 필드 초기화
-    $(document).ready(function () {
-        // 회원가입 버튼과 필드를 선택합니다.
-        var submitButton = $("button[type='submit']");
-        var fields = $("input[type='text'], input[type='password'], select");
-        var noPhoneNumber = $("#noPhoneNumber");
-
-        // 초기에 버튼을 비활성화합니다.
-        submitButton.prop("disabled", true);
-
-        // 필드가 변경될 때마다 확인합니다.
-        fields.on("change keyup", function () {
-            var allFieldsFilled = true;
-
-            // 각 필드를 확인합니다.
-            fields.each(function () {
-                if ($(this).val() === "") {
-                    allFieldsFilled = false;
-                    return false; // 하나라도 빈 필드가 있으면 종료합니다.
-                }
-            });
-
-            // 모든 필드가 값으로 채워졌을 때 버튼을 활성화합니다.
-            if (allFieldsFilled || (noPhoneNumber.val() === "none")) {
-                submitButton.prop("disabled", false);
-            } else {
-                submitButton.prop("disabled", true);
-            }
-        });
-    });
-
-    //ROLE 선택시 코드 입력칸 출력
-    var roleSelect = document.getElementById("roleSelect");
-    var codeInput = document.getElementById("codeInput");
-
-    roleSelect.addEventListener("change", function () {
-        var selectedRole = roleSelect.value;
-        if (selectedRole === "ROLE_STUDENT" || selectedRole === "ROLE_TEACHER") {
-            codeInput.style.display = "block"; // 코드 입력 필드 표시
-        } else {
-            codeInput.style.display = "none"; // 코드 입력 필드 숨김
-        }
-    });
-
-    function checkCode() {
-        var role_code = $('#roleCode').val();
-        var role_name = $('#roleSelect').val();
-        console.log(role_code);
-        console.log(role_name);
-        // 데이터를 서버로 전송
-        $.ajax({
-            url: 'codeCheck', // 서버의 컨트롤러 엔드포인트로 변경
-            type: 'post',
-            data: { role_code: role_code, role_name: role_name },
-            success: function (role) {
-                if (role != null) {
-                    if (role.role_name != null && role.role_code == role_code && role.role_name === role_name) {
-                        $('.code_ok').show(); // 코드가 일치할 때 메시지 표시
-                        $('.code_no').hide();
-                    } else {
-                        $('.code_ok').hide();
-                        $('.code_no').show(); // 코드가 일치하지 않을 때 메시지 표시
-                        $('#roleCode').val(''); // 코드를 초기화
-                    }
-                }
-            },
-            error: function () {
-                alert("에러가 발생했습니다.");
-            }
-        });
-    }
-    function calculateAge() {
-        var birthDate = new Date(document.getElementById('year').value, document.getElementById('month').value - 1, document.getElementById('day').value);
-        var today = new Date();
-        var age = today.getFullYear() - birthDate.getFullYear();
-
-        // Check if the birthdate hasn't happened yet this year
-        if (today.getMonth() < birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-
-        return age;
-    }
-
-    function setRoleBasedOnAge2() {
-        var age = calculateAge();
-
-        if (age >= 6 && age <= 12) {
-            document.querySelector('select[name="role"]').value = 'ROLE_STUDENT';
-            document.getElementById('codeInput').style.display = 'block'; // 코드 입력란 보이기
-        } else {
-            document.getElementById('codeInput').style.display = 'none'; // 코드 입력란 숨기기
-        }
-    }
-
-    // Attach the setRoleBasedOnAge function to the change event of the birthdate selects
-    document.getElementById('year').addEventListener('change', setRoleBasedOnAge2);
-    document.getElementById('month').addEventListener('change', setRoleBasedOnAge2);
-    document.getElementById('day').addEventListener('change', setRoleBasedOnAge2);
-</script>

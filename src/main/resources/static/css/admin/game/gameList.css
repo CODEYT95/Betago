@@ -241,7 +241,7 @@ height: 40px;
     margin-top:10px;
 }
 
-.details h5{
+.details h5 {
     font-size: 14px;
     margin-bottom: 10px;
 }
@@ -263,6 +263,7 @@ height: 40px;
     height: auto;
     font-size: 17px;
     font-weight: bold;
+    background: none;
     margin-bottom: 20px;
     cursor: pointer;
     border: none;
