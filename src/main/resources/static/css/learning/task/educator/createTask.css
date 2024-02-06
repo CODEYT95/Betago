@@ -307,9 +307,9 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     margin: 10px 10px 0 10px;
 }
 
-.modal-content-title {
-    font-weight: bold;
+.modal-title-content {
     font-size: 20px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
@@ -324,11 +324,11 @@ tr:nth-child(even) {background-color: #e4e9ec;}
     margin-bottom: 10px;
 }
 
-.conceal {
-    width: 50px;
-    height: 30px;
+.cancel {
+    width: 70px;
+    height: 35px;
     border: none;
     border-radius: 5px;
-    background: #f9ecbe;
+    background: #ccc;
     cursor: pointer;
 }

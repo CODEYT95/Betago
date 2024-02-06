@@ -10,19 +10,47 @@
     margin-bottom: 15px;
 }
 
-.pagination-container li{
-    display: flex;
+
+.pagination-container a {
     float: left;
-    margin-right: 5px;
-    padding: 8px 13px;
+    display: flex;
     text-decoration: none;
+    width: 55px;
+    height: 100%;
+    align-items: center;
+    justify-content: center; /* 추가: 수평 중앙 정렬 */
+}
+
+.pagination-container li{
+    margin: 0;
+    text-align: center;
+    width: 35px;
+    height: 30px;
+    display: flex; /* 추가: flexbox 레이아웃 적용 */
+    justify-content: center;
 }
 
 .pagination-container a:hover:not(.active) {
     background-color: #ddd;
     border-radius : 8px;
     width: 36px;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
 }
+
+.active-page {
+    background: #b2d3ff;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
 .head {
     font-size: 18px;
     font-weight: bold;
@@ -66,54 +94,7 @@ td {
 }
 
 
-@media all and (max-width: 768px) {
 
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
-
-    th {
-        text-align: right;
-    }
-
-    table {
-        position: relative;
-        padding-bottom: 0;
-        border: none;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    }
-
-    thead {
-        float: left;
-        white-space: nowrap;
-    }
-
-    tbody {
-        overflow-x: auto;
-        overflow-y: hidden;
-        position: relative;
-        white-space: nowrap;
-    }
-
-    tr {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    th {
-        border-bottom: 1px solid #0078FF;
-    }
-
-    td {
-        border-bottom: 1px solid #e5e5e5;
-    }
-
-    .active-page {
-        background: #f9ecbe;
-        border-radius: 8px;
-    }
-
-}
 .button-container {
     display: flex;
     justify-content: space-between;
@@ -183,3 +164,5 @@ td {
     background-color: #007bff;
     color: #fff;
 }
+
+

@@ -64,7 +64,7 @@
             <hr class="line">
             <div class="info">
                 <span class="spanName">이름</span>
-                <input type="text" class="input" name="name" id="name" th:field="*{member_name}" placeholder="이름을 입력해주세요." oninput="validateInput()">
+                <input type="text" class="input" name="name" id="name" th:field="*{member_name}" placeholder="이름을 입력해주세요." onblur="validateInput()">
                 <span id="error-message" style="display: none; color: red;">한글만 입력이 가능합니다.</span>
                 <div class="radiodiv"><span class="spanTitle">인증수단</span>
                     <label for="phone" class="radio">
@@ -383,7 +383,6 @@
         if (!koreanPattern.test(nameValue)) {
             // 입력값이 한글이 아닌 경우
             document.getElementById("error-message").style.display = "block";
-            nameInput.value = ""; // 입력값 초기화
             nameInput.focus(); // 다시 입력 필드로 초점 이동
         } else {
             document.getElementById("error-message").style.display = "none";

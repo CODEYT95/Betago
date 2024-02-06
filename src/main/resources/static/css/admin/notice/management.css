@@ -1,0 +1,180 @@
+@charset "UTF-8";
+.paging {
+    margin-top: 15px;
+    display: flex;
+}
+#pagination{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.pagination-container a {
+    float: left;
+    display: flex;
+    text-decoration: none;
+    width: 55px;
+    height: 100%;
+    align-items: center;
+    justify-content: center; /* 추가: 수평 중앙 정렬 */
+}
+
+.pagination-container li{
+    margin: 0;
+    text-align: center;
+    width: 35px;
+    height: 30px;
+    display: flex; /* 추가: flexbox 레이아웃 적용 */
+    justify-content: center;
+}
+
+.pagination-container a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius : 8px;
+    width: 36px;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.active-page {
+    background: #b2d3ff;
+    border-radius: 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 30px;
+    align-items: center;
+}
+
+.head {
+    font-size: 18px;
+    font-weight: bold;
+    color: #454545;
+    margin-bottom: 30px;
+    line-height: 35px;
+}
+
+table {
+    border: 1px #a39485 solid;
+    font-size: .9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+}
+th {
+    text-align: left;
+}
+
+thead {
+    background: #b2d3ff;
+    line-height: 40px;
+
+}
+
+td, th {
+    padding: 1em .5em;
+    vertical-align: middle;
+}
+
+td {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    background: #fff;
+    height: 68px;
+}
+
+.tableColor{
+    background-color:#EBF5FF;
+}
+
+
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.size-container {
+    order: 1;
+}
+
+.search-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    order: 1;
+}
+
+.writeBtn {
+
+    margin: 0;
+}
+.button-container {
+    order: 2; /* 버튼과 표기 위치 변경을 위한 order 설정 */
+}
+
+.btnWrite{
+    width: 70px;
+    order: 3;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.delete-btn{
+    text-align: right;
+}
+.search-box{
+    padding: 7px;
+    text-align: center;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.search-text{
+    padding: 7px;
+    width: 220px;
+    text-align: center;
+}
+.bt_search{
+    width: 70px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.bt_search:hover{
+    background-color: #007bff;
+    color: #fff;
+}
+
+.form-control{
+    padding: 5px;
+    width: 80px;
+    text-align: center;
+}
+
+#pageSizeForm{
+    margin: 0;
+}
+
+.btnWrite:hover{
+    background-color: #007bff;
+    color: #fff;
+}
+
+.selectC, .selectT, .selectR, .selectI{
+    border: none;
+}

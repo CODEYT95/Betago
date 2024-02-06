@@ -11,9 +11,9 @@
 <th:block th:fragment="headerFragment">
     <nav>
         <section class="header-navi">
-            <img th:src="@{/image/main/main-logo.png}" alt="Betago Header Image" class="header-image">
             <i id="main_sideBtn" class='bx bx-menu'></i>
             <section class="header_top">
+                <img th:src="@{/image/main/main-logo.png}" alt="Betago Header Image" class="header-image">
                 <span class="top_info">Betago를 보다 편리하고 안전하게 이용하세요.</span>
                 <a href="/login" class="loginBtn" sec:authorize="isAnonymous()">로그인/회원가입</a>
                 <!--임시로그아웃 김현민-->
@@ -51,7 +51,7 @@
                             <li><a th:href="@{/question/list}">Q&A</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="!hasRole('USER')">
+                    <li class="first_li" sec:authorize="!hasRole('STUDENT')">
                         <a th:href="@{/game/list}">구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
@@ -59,14 +59,14 @@
                             <li sec:authorize="!hasRole('ADMIN')"><a th:href="@{/list}">내 게임 컨텐츠 조회</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="hasRole('USER')">
+                    <li class="first_li" sec:authorize="hasRole('STUDENT')">
                         <a>구독서비스</a>
                         <i class='bx bxs-chevron-up subscribe-arrow arrow'></i>
                         <ul class="subscribe-sub-menu sub-menu">
                             <li class="mismatch">권한이 없습니다.</li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="hasRole('USER')">
+                    <li class="first_li" sec:authorize="hasRole('STUDENT')">
                         <a th:href="@{/student/group/joinList}">학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
                         <ul class="learning-sub-menu sub-menu">
                             <li><a th:href="@{/student/group/joinList}">학습그룹 가입신청</a></li>
@@ -75,7 +75,7 @@
                             <li><a th:href="@{/student/submitTaskList}">숙제 제출 목록</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="!hasRole('USER')">
+                    <li class="first_li" sec:authorize="!hasRole('STUDENT')">
                         <a>학습서비스</a><i class='bx bxs-chevron-up learning-arrow arrow'></i>
                         <ul class="learning-sub-menu sub-menu">
                             <li class="mismatch">권한이 없습니다.</li>
@@ -105,11 +105,12 @@
                             <li><a th:href="@{/edupost/insert}">학습자료 등록</a></li>
                             <li><a th:href="@{/edupost/list}">학습자료 조회</a></li>
                             <li><a th:href="@{/admin/notice/write}">공지 등록</a></li>
+                            <li><a th:href="@{/admin/noticeManage/list}">공지 관리</a></li>
                             <li><a th:href="@{/member/list}">회원조회</a></li>
                             <li><a th:href="@{/game/salesList}">매출 조회</a></li>
                         </ul>
                     </li>
-                    <li class="first_li" sec:authorize="hasRole('TEACHER')">
+                    <li class="first_li" sec:authorize="hasAnyRole('TEACHER','USER')">
                         <a th:href="@{/edupost/list}">운영마당</a><i class='bx bxs-chevron-up admin-arrow arrow'></i>
                         <ul class="admin-sub-menu sub-menu">
                             <li><a th:href="@{/edupost/list}">학습자료 조회</a></li>

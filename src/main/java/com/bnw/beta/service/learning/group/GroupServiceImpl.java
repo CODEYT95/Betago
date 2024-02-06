@@ -126,6 +126,21 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
+    //그룹 등록 가능한 인원수 구하기 위한 쿼리
+    public int currentGroupCnt(int group_no, int game_no, String member_id){
+
+        GroupDTO groupDTO = new GroupDTO();
+        groupDTO.setGroup_no(group_no);
+        groupDTO.setGame_no(game_no);
+        groupDTO.setMember_id(member_id);
+
+        return groupDAO.currentGroupCnt(groupDTO);
+    }
+
+    //학습 그룹 수정
+    @Override
+    public int updateGroup(GroupDTO groupDTO){return groupDAO.updateGroup(groupDTO);}
+
     //그룹 학생 가입 승인 목록
     @Override
     public GroupPageDTO selectGroupApprove(String member_id, Integer group_no, int pageNum, int size){
@@ -218,6 +233,8 @@ public class GroupServiceImpl implements GroupService {
         groupDTO.setGroup_no(group_no);
         groupDTO.setMember_no(member_no);
         groupDTO.setGame_no(game_no);
+
+        System.out.println("test"+groupDAO.checkJoin2(groupDTO));
 
         if(groupDAO.checkJoin2(groupDTO) > 0){
             return "already";

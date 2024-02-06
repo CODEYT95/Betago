@@ -1,5 +1,84 @@
 @charset "UTF-8";
 
+.fixed-width-label {
+    display: inline-block;
+    width: 100px; /* 원하는 너비로 조정 */
+    text-align: right;
+    margin-right: 10px; /* 라벨과 입력 필드 사이의 간격 조정 */
+}
+
+.form-group-horizontal {
+    display: flex; /* flexbox 레이아웃 활성화 */
+    align-items: flex-start; /* 변경됨: 레이블과 입력 필드를 컨테이너의 위쪽에 정렬 */
+    justify-content: flex-start; /* 항목을 컨테이너의 왼쪽에 정렬 */
+    gap: 10px; /* 레이블과 입력 필드 사이의 간격 설정 */
+    margin-bottom: 10px; /* 각 .form-group 사이의 여백 */
+    align-items: baseline;
+}
+
+.form-label {
+    margin: 0; /* 불필요한 마진 제거 */
+    white-space: nowrap; /* 레이블이 여러 줄에 걸쳐 표시되지 않도록 함 */
+}
+
+
+.questionDetailDiv{
+display:flex;
+}
+
+.questiontitle{
+
+}
+
+.group-title{
+    display: flex;
+    align-items: center;
+}
+
+.member{
+    display: flex;
+    align-items: center;
+}
+
+.date{
+    display: flex;
+    align-items: center;
+}
+
+/*.form-group{
+display:flex;
+}*/
+
+.qnatitle{
+display:flex;
+
+}
+.form-label {
+    argin-top: 5px;
+    white-space: nowrap; /* 레이블이 여러 줄에 걸쳐 표시되지 않도록 함 */
+}
+label{
+margin:0;
+}
+
+
+.content-wrap {
+   /* border-radius: 5px; *//* 모서리를 둥글게하여 현대적인 디자인 표현 */
+
+  /*  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); *//* 약간의 그림자로 깊이감 추가 */
+
+}
+
+.password-form {
+    max-width: 350px;
+    margin: 10% auto;
+    padding: 3rem;
+   /* background: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+    border-radius: 8px;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
 .head {
     font-size: 18px;
     font-weight: bold;
@@ -7,95 +86,87 @@
     margin-bottom: 30px;
     line-height: 35px;
 }
-.question_category {
-    height: 29px;
-    border: 1px solid #d1d1d1;
-    text-align: center;
-    width: 20%;
-    margin-left: 31px;
-    font-size: 16px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
-}
-.question_type {
-    height: 29px;
-    border: 1px solid #d1d1d1;
-    text-align: center;
-    width: 20%;
-    margin-left: 31px;
-    font-size: 16px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
-}
-.question_service {
-    height: 29px;
-    border: 1px solid #d1d1d1;
-    text-align: center;
-    width: 20%;
-    margin-left: 16px;
-    font-size: 16px;
-}
-.textarea1 {
-    border: 1px solid #d1d1d1;
-    width: 80%;
-    margin-left: 31px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
-    font-size: 16px;
-    text-align: left;
-    padding-left: 10px;
+.qnatitle{
 
 }
-.textarea2 {
+.textarea1 {
+    resize: none;
     border: 1px solid #d1d1d1;
-    height: 300px;
     width: 80%;
-    margin-left: 31px;
-    margin-bottom: 20px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin-left: 0px;
     font-size: 16px;
     text-align: left;
     padding-left: 10px;
     padding-top: 10px;
 }
 
+.textarea11 {
+    resize: none;
+    border: 1px solid #d1d1d1;
+    width: 30%;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin-left: 0px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+}
 
+.textarea2 {
+    resize: none;
+    border: 1px solid #d1d1d1;
+    height: 300px;
+    width: 80%;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+}
 
 .textarea3 {
+    resize: none;
       border: 1px solid #d1d1d1;
        width: 40%;
        margin-left: 10px;
        box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-       box-radius : 5px;
+       border-radius: 8px;
        font-size: 16px;
        text-align: left;
        padding-left: 10px;
-
 }
 
 .textarea4 {
+    resize: none;
     border: 1px solid #d1d1d1;
     height: 200px;
     width: 80%;
-    margin-left: 31px;
+    margin-left: 0px;
     margin-bottom: 20px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
+    border-radius: 8px;
     font-size: 16px;
     text-align: left;
     padding-left: 10px;
     padding-top: 10px;
 }
 
+
 .textarea5 {
+    resize: none;
     border: 1px solid #d1d1d1;
     height: 200px;
     width: 80%;
     margin-left: -10%px;
     margin-bottom: 20px;
     box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
+    border-radius: 8px;
     font-size: 16px;
     text-align: left;
     padding-left: 10px;
@@ -103,17 +174,18 @@
 }
 
 .textarea6 {
-    border: 1px solid #d1d1d1;
-    height: 200px;
-    width: 80%;
-    margin-left: 102px;
-    margin-bottom: 20px;
-    box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
-    box-radius : 5px;
-    font-size: 16px;
-    text-align: left;
-    padding-left: 10px;
-    padding-top: 10px;
+  resize: none;
+      border: 1px solid #d1d1d1;
+      height: 200px;
+      width: 80%;
+      margin-left: 0px;
+      margin-bottom: 20px;
+      box-shadow : 1px 1px 3px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      font-size: 16px;
+      text-align: left;
+      padding-left: 10px;
+      padding-top: 10px;
 }
 
 .opt {
@@ -123,12 +195,6 @@
 .fileselect {
     position: relative;
     right: -4px;
-}
-.fileup {
-    position: relative;
-    right: -35px;
-    width: 234px;
-    font-size: 12px;
 }
 
 .bt_1 {
@@ -140,29 +206,56 @@
 .btn_sub {
     position: relative;
     border: none;
-    left: 45rem;
+    left: 4.5rem;
     width: 100px;
     height: 36px;
     color: white;
     background: black;
+    border-radius: 8px;
     cursor: pointer;
 }
 
 .btn_update {
-    border: none;
+    border: 7px solid dodgerblue;
     color: white;
-    background: black;
-    width: 100px;
-    height: 36px;
+    background: dodgerblue;
+    width: 50%px;
+    height: 30%px;
     cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
-.btn_del {
-    border: none;
+
+.delete-button{
+border: 7px solid darkred; /* 테두리 두께를 늘리고 색을 조정합니다. */
     color: white;
     background: darkred;
-    width: 100px;
-    height: 36px;
+    width: 50%px;
+    height: 30%px;
     cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    }
+
+.btn_del {
+    border: 7px solid darkred; /* 테두리 두께를 늘리고 색을 조정합니다. */
+    color: white;
+    background: darkred;
+    width: 50%px;
+    height: 30%px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease; /* 선택적: 버튼 상태 변화에 애니메이션 효과를 줍니다. */
+}
+
+.btn_del:active {
+    border-color: black; /* 버튼이 눌리면 테두리 색이 바뀝니다. */
+    background: maroon; /* 어두운 빨간색 계열의 다른 색으로 변경하여 눌림 효과를 줍니다. */
+}
+
+.btn_update:active {
+    border-color: black;
+    background: dodgerblue;
 }
 
 .fileup {
@@ -172,19 +265,20 @@
     font-size: 12px;
 }
 
-.form-container{
+/*.form-container{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40px;
     width: 100%;
     margin-top:10px;
-}
+}*/
 
 input{
     height: 30px;
-    width: 200px;
+    width: 80%;
     text-align: center;
+    border-radius: 8px;
 }
 
 .submit-button{
@@ -192,11 +286,13 @@ input{
     height: 32px;
 }
 
-.contain {
+/*.contain {
     display: flex;
     justify-content: center;
     float: left;
-}
+}*/
+
+/*
 td {
     text-align: right;
     padding-right: 10px;
@@ -205,15 +301,21 @@ td {
 th, td {
     padding-left: 15px;
 }
+*/
 
+/*
 .cont {
     display: flex;
     flex-direction: column;
 }
+*/
 
 .btn_box {
-    margin-bottom: 51px;
-    position: relative;
-    right: -372px;
-    bottom: -30px;
+     display: flex;
+     justify-content: center; /* 가로 축에서 중앙 정렬 */
+     align-items: center; /* 세로 축에서 중앙 정렬 (필요한 경우) */
+     flex-direction: row; /* 버튼을 가로로 나열합니다. */
+     gap: 10px; /* 버튼 사이의 간격을 조정합니다. */
+     padding: 20px; /* 컨테이너 내부의 패딩을 추가합니다. */
+
 }

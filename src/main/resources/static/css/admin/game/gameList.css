@@ -65,9 +65,8 @@ height: 40px;
 }
 
 .submit-button{
-height: 40px;
+    height: 40px;
     background: #fff;
-    padding: 20px;
     font-size: 18px;
     border: none;
     font-weight: bold;
@@ -76,6 +75,7 @@ height: 40px;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
     color: black;
+    width: 105px;
     font-family: 'Binggrae', sans-serif;
 }
 .submit-button:hover {
@@ -241,7 +241,7 @@ height: 40px;
     margin-top:10px;
 }
 
-.details h5{
+.details h5 {
     font-size: 14px;
     margin-bottom: 10px;
 }
@@ -263,6 +263,7 @@ height: 40px;
     height: auto;
     font-size: 17px;
     font-weight: bold;
+    background: none;
     margin-bottom: 20px;
     cursor: pointer;
     border: none;

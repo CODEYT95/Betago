@@ -13,6 +13,10 @@ body {
   height: 100%;
   width: 100%;
   background-color: #F1F1F1;
+  background: url(/image/bg.png);
+  background-size: contain;
+  background-repeat: round;
+  background-attachment: fixed;
 
 }
 
@@ -44,9 +48,9 @@ a {
 
 .header-image{
     width: 140px;
-    position: absolute;
-    left:220px;
-    margin-top: 20px;
+    position: relative;
+    float: left;
+    bottom: 10px;
 }
 
 nav {
@@ -288,7 +292,7 @@ nav .header-navi .links li:hover .admin-sub-menu {
 
 .content-wrap{
   height: auto;
-  min-height: 66vh;
+  min-height: 100vh;
   width: 1080px;
   margin-left: 253px;
   padding: 20px 30px 20px 30px;
@@ -316,10 +320,19 @@ nav .header-navi .links li:hover .admin-sub-menu {
 
 @media (max-width: 800px) {
 
+  body{
+    background: url(/image/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
   nav {
     height: 90px;
   }
-
+  .header-image{
+    display: none;
+  }
   .content{
     right: 0;
     padding-top: 90px;
@@ -330,7 +343,11 @@ nav .header-navi .links li:hover .admin-sub-menu {
     margin-left: 0px;
     width: 1080px;
   }
-  
+
+  .foot {
+    width: 1080px !important;
+  }
+
   nav .header-navi {
     max-width: 100%;
     padding: 0 25px;

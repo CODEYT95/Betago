@@ -27,6 +27,7 @@ public class MemberDTO implements UserDetails {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate join_date;
     private String pay_count;
+    private String edu_code;
 
     private String currentPassword; // 현재 비밀번호 김현민
     private String newPassword; // 새로운 비밀번호 김현민

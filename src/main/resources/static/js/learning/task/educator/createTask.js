@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
       modalBg.style.display = "none";
     });
 
-    const cancelButton = modal.querySelector(".conceal");
+    const cancelButton = modal.querySelector(".cancel");
     cancelButton.addEventListener("click", function() {
       modal.style.display = "none";
       modalBg.style.display = "none";

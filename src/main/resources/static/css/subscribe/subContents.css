@@ -360,6 +360,7 @@ h1{
     height: auto;
     font-size: 17px;
     font-weight: bold;
+    background: none;
     margin-bottom: 20px;
     cursor: pointer;
     border: none;

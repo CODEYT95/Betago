@@ -266,8 +266,10 @@ public class QuestionController {
         MemberDTO memberDTO = memberService.getUser(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));//user정보를 가져오기
 
-        questionService.add(questionForm.getSubject(), questionForm.getContent(), questionForm.getPw(), file, memberDTO);
-        return "redirect:/question/list";
+        int qna_no=questionService.add(questionForm.getSubject(), questionForm.getContent(), questionForm.getPw(), file, memberDTO);
+
+        return String.format("redirect:/question/detail/%d?afterEdit=true", qna_no);
+        /*return "redirect:/question/list";*/
     }
 
 
@@ -289,49 +291,7 @@ public class QuestionController {
         model.addAttribute("qnaList",1);
         return "guide/question/question_list";//  templates폴더하위  question_list.html문서
     }
-/*
 
-    @GetMapping("/mypost")
-    public String getMyQuestions(Model model, Principal principal,  @RequestParam(value="page",defaultValue="1") int page) {
-        // 현재 사용자의 이름 가져오기
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        String username = principal.getName();
-
-        // 페이지당 게시물 수와 총 게시물 수를 사용하여 총 페이지 수 계산
-        int pageSize = 10; // 페이지당 표시할 게시물 수
-        int totalQuestions = this.questionService.countQuestionsByUserId(username); // 사용자의 게시물 수를 가져오는 메소드 필요
-        int totalPages = (int) Math.ceil((double) totalQuestions / pageSize);
-
-        // 수정된 서비스 메소드를 호출하여 특정 페이지의 게시물 가져오기
-        List<QuestionDTO> questionsWithAnswers = this.questionService.findQuestionsByUserId(username, page, pageSize); // 수정된 부분
-
-        model.addAttribute("questions", questionsWithAnswers);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
-
-        return "guide/question/question_list";
-    }
-*/
-
-/*
-
-    @GetMapping("/mypost")
-    public String getMyQuestions(Model model, Principal principal,  @RequestParam(value="page",defaultValue="1") int page) {
-        // 현재 사용자의 이름 가져오기
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        String username = principal.getName();
-
-        // 현재 사용자가 작성한 게시물 검색 (서비스 계층에서 처리)
-        List<QuestionDTO> questionsWithAnswers = this.questionService.getQuestionsWithAnswerCount(page - 1);
-        List<QuestionDTO> question = questionService.findQuestionsByUserId(username);
-        model.addAttribute("questions", question);
-        return "guide/question/question_list";//
-    }
-*/
 
     /*10.19꺼*/
     @GetMapping("/mypost")

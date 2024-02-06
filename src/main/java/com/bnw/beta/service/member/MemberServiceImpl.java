@@ -44,9 +44,21 @@ public class MemberServiceImpl implements MemberService {
             String password = securityConfig.encodePWD().encode(joinForm.getMember_pw());
             //회원 정보 저장
             MemberDTO memberDTO = new MemberDTO();
+
+            if (joinForm.getMember_email() != null && !joinForm.getMember_email().isEmpty()) {
+                memberDTO.setMember_email(joinForm.getMember_email());
+            } else if (agreeDate.getMember_email() != null && !agreeDate.getMember_email().isEmpty()) {
+                memberDTO.setMember_email(agreeDate.getMember_email());
+            }
+
+            // 전화번호 설정
+            if (joinForm.getMember_phone() != null && !joinForm.getMember_phone().isEmpty()) {
+                memberDTO.setMember_phone(joinForm.getMember_phone());
+            } else if (agreeDate.getMember_phone() != null && !agreeDate.getMember_phone().isEmpty()) {
+                memberDTO.setMember_phone(agreeDate.getMember_phone());
+            }
+
             memberDTO.setMember_name(agreeDate.getMember_name());
-            memberDTO.setMember_email(agreeDate.getMember_email());
-            memberDTO.setMember_phone(joinForm.getMember_phone());
             memberDTO.setMember_id(joinForm.getMember_id());
             memberDTO.setMember_pw(password);
             memberDTO.setMember_birth(joinForm.getMember_birth());
@@ -55,6 +67,8 @@ public class MemberServiceImpl implements MemberService {
             memberDTO.setMember_tell(joinForm.getMember_tell());
             memberDTO.setMember_agreeM(joinForm.getMember_agreeM());
             memberDTO.setMember_agreeP(joinForm.getMember_agreeP());
+
+            System.out.println(memberDTO);
             int info = memberDAO.memberJoin(memberDTO);
             System.out.println("휴대폰 번호 전송 Service : "+joinForm.getMember_phone());
             //약관동의(선택) 저장
@@ -97,28 +111,17 @@ public class MemberServiceImpl implements MemberService {
         return cnt;
     }
 
-    //회원코드 일치체크
+    //강사코드 중복 체크
     @Override
-    public RoleDTO codeCheck(int role_code, String role_name) {
-        System.out.println("서비스"+role_code);
-        System.out.println("서비스"+role_name);
-
-        RoleDTO rolename = memberDAO.checkCode(role_code, role_name);
-
-        if (rolename != null) {
-            System.out.println("RoleDTO is not null");
-        } else {
-            System.out.println("RoleDTO is null");
-        }
-
-        if (rolename != null && rolename.getRole_name() != null && rolename.getRole_name().equals(role_name) && rolename.getRole_code() == role_code) {
-            System.out.println("RoleDTO values match");
-            return rolename;
-        }
-        System.out.println("RoleDTO values do not match");
-        return rolename;
+    public int codeDuplicate(String edu_code) {
+        return memberDAO.codeDuplicate(edu_code);
     }
 
+    //강사코드 조회
+    @Override
+    public int codeCheck(String edu_code) {
+        return memberDAO.codeCheck(edu_code);
+    }
 
     //글등록 유저 아이디 가져오기
     public Optional<MemberDTO> getUser(String username){

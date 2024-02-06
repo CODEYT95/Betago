@@ -94,16 +94,16 @@ public class EducatorGroupController {
     //학습 그룹 수정
     @GetMapping("/modify")
     public String groupModify(@RequestParam(name = "group_no") int group_no,Principal principal, Model model){
-        System.out.println("들어옴");
         model.addAttribute("groupInfo", groupService.selectGroupUpdate(group_no, principal.getName()));
+        model.addAttribute("currentCnt", groupService.currentGroupCnt(group_no, groupService.selectGroupUpdate(group_no,principal.getName()).getGame_no(), principal.getName()));
         System.out.println(groupService.selectGroupUpdate(group_no, principal.getName()));
         return "/learning/group/educator/groupModify";
     }
 
     @PostMapping("/modify")
     public String groupModify(GroupDTO groupDTO){
-
-        return "";
+        groupService.updateGroup(groupDTO);
+        return "redirect:/educator/group/list";
     }
 
     //학습 그룹 삭제

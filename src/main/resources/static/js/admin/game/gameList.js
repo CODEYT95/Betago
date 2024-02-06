@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     searchButton.addEventListener('click', handleGameTitleChange);
     if (subscribeButton) {
-        subscribeBtn.addEventListener('click', handleSubscribeButtonClick);
+        subscribeButton.addEventListener('click', handleSubscribeButtonClick);
     }
     myButton.addEventListener("click", topFunction);
     window.onload = initializePage;
