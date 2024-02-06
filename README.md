@@ -19,15 +19,17 @@ Betago는 바둑을 모르는 다양한 연령층의 사람들이 바둑을 배�
 
 ### 👩‍💻 멤버 구성
 - 최도훈(팀장)
-- 전재권(기술팀장)
 - 박윤태(기술팀장)
-- 이윤지
-- 김수빈
+- 이윤지(기술팀장)
+- 김현민
+- 이희민
+- 허유진
 - 홍진호
 
 ### 📌 기술
-- HTML5, CSS3, JavaScript, Ajax, jQuery
-- Java, JSP, Spring Boot
-- MySQL, Lombok, Gradle
+- HTML5, CSS3, JavaScript, Ajax, jQuery, Thtmeleaf
+- Java, Spring Boot
+- Gradle, Mybatis, Security, Validation
+- MySQL
 
 ### 📌 Jeans-[자세히 보기](https://yuntae.notion.site/Jeans-Academy-753067b45bf74ce2aa9ccd61e95ab143)
