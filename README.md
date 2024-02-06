@@ -32,4 +32,4 @@ Betago는 바둑을 모르는 다양한 연령층의 사람들이 바둑을 배�
 - Gradle, Mybatis, Security, Validation
 - MySQL
 
-### 📌 Betago-[자세히 보기]()
+### 📌 Betago-[자세히 보기](https://yuntae.notion.site/Betago-35f0b011ec5c4668916c11c1a42c0bce)
