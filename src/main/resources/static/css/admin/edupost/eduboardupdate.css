@@ -6,6 +6,29 @@
     margin-bottom: 30px;
     line-height: 35px;
 }
+.btns_fn_add_btn  {
+    width: 80px;
+    font-size: 15px;
+    height: 35px;
+    border:none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    background: #8a8aff;
+    color:white;
+    cursor: pointer;
+}
+.btns_del_btn  {
+    width: 65px;
+    font-size: 15px;
+    height: 35px;
+    border:none;
+    border-radius: 5px;
+    background: red;
+    color:white;
+    margin-left: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
 .OOO {
     display: flex;
     flex-direction: column;
@@ -31,8 +54,33 @@
     width: 20%;
 }
 
-.file_input{
-    margin: 0;
+.file_list .file_input {
+    display: flex;
+    height: 50px;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 0 10px;
+    vertical-align: middle;
+    width: 80%;
+    color: #999999;
+}
+.file_list label {
+    display: inline-table;
+    padding: 7px 14px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.file_list input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
 }
 
 .edupost_category {
@@ -94,29 +142,36 @@
 }
 
 .fileselect {
-    position: relative;
-    right: -4px;
 }
 .fileup {
-    position: relative;
-    right: -35px;
-    width: 234px;
-    font-size: 12px;
+    display: flex;
+    border: none;
+    margin: 0;
+    background: none;
 }
 .bt_1 {
     position: relative;
-    right: -342px;
-    bottom: 29px;
+    right: 178px;
+    display: flex;
+    flex-direction: row-reverse;
 }
 .btn_sub {
     position: relative;
-    border: none;
-    left: 45rem;
-    width: 100px;
+    left: 51rem;
+    width: 120px;
     height: 36px;
-    color: white;
-    background: black;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    background: #ccc;
     cursor: pointer;
+    line-height: 0;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    color: black;
+    font-family: 'Binggrae', sans-serif;
 }
 .btn_update {
     border: none;

@@ -15,9 +15,7 @@
     <div class="container__form container--signup">
         <form id="joinForm" class="form" th:action="@{/member/join}" th:object="${joinForm}" method="post">
             <input type="hidden" name="member_name" th:value="${name}">
-            <input type="hidden" th:value="${email}">
-            <input type="hidden" th:value="${phone}">
-
+            <input type="hidden" name="member_email" th:value="${email}">
             <h1 class="h1">회원 가입</h1>
             <h6 class="h6">나머지 개인정보를 입력해주세요.</h6>
             <hr class="line1">

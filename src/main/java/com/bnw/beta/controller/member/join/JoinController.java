@@ -63,6 +63,7 @@ public class JoinController {
         String[] retrievedAgreedTerms = (String[]) session.getAttribute("agreedTerms");
             joinForm.setMember_birth(birth);
             memberService.memberJoin(agreeDate, joinForm, retrievedAgreedTerms);
+            System.out.println("휴대폰 번호 전송 : "+joinForm.getMember_phone());
             session.invalidate();
         return "redirect:/login";
     }

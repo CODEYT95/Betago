@@ -263,6 +263,7 @@
         <where>
             <include refid="search"></include>
         </where>
+        ORDER BY edupost_date DESC
         LIMIT #{page}, #{size};
     </select>
 

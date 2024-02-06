@@ -57,24 +57,26 @@
                               name="edupost_content"></textarea>
                 </div>
             </div>
-            <div>
-                <label class="fileselect" style="font-size: 16px;"> 파일등록
+            <div class="file_list" style="display: flex; flex-direction: column; width: 100%;" >
+            <div class="file_input">
+               <input class="fileup" value="첨부파일" placeholder="첨부파일" style="margin: 0;"/>
+                <label class="fileselect" style="font-size: 15px;"> 파일등록
                     <input type="file" class="fileup" id="files" name="files" onchange="selectFile(this);" />
                 </label>
-                <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
+                <button type="button" onclick="addFile();" class="btns_fn_add_btn" style="position: relative; right: 232px;"><span>파일 추가</span></button>
             </div>
-            <div class="file_list" th:each="fileList : ${fileList}">
-                <div>
-                    <div class="file_input">
-                        <label>파일명
-                            <input type="text" th:value="${fileList.edupost_name}" style="border: none" readonly />
+            <div class="file_list" style="margin-left: 100px;" th:each="fileList : ${fileList}">
+                <div style="display: flex;">
+                    <div class="file_li" style="width: 360px;">
+                        <label style="width: 300px;">파일명
+                            <input type="text" th:value="${fileList.edupost_name}" style="border: none; background: none;" readonly />
                         </label>
                     </div>
+                <button type="button" th:onclick="remove([[${fileList.filepost_no}]]);" class="btns_del_btn" style="position: relative; left: -23px; width: 80px; height: 35px;">삭제</button>
                 </div>
-                <button type="button" th:onclick="remove([[${fileList.filepost_no}]]);" class="btns_del_btn"><span>삭제</span></button>
             </div>
-            <div class="addfile-wrap">
-
+            <div class="addfile-wrap" style="display: flex; margin: 0; flex-direction: column;">
+            </div>
             </div>
             <button type="submit" id="saveBtn" class="btn_sub">저장하기</button>
         </form>
@@ -84,7 +86,10 @@
 </div>
 </body>
 <script th:inline="javascript">
-
+    $("#file").on('change',function(){
+        var fileName = $("#file").val();
+        $(".fileup").val(fileName);
+    });
     // 파일 선택
     function selectFile(element) {
         const file = element.files[0];
@@ -112,13 +117,15 @@
     function addFile() {
         const fileDiv = document.createElement('div');
         fileDiv.innerHTML = `
-                    <div class="file_input">
-                        <input type="text"  readonly onchange="selectFile(this);"/>
-                        <label> 첨부파일
-                            <input type="file" name="files" onchange="selectFile(this);" />
-                        </label>
-                    <button type="button" class="btns del_btn"><span>삭제</span></button>
-                    </div>
+             <div class="file_list" style="display: flex; width: 431px; align-items: center;">
+                <div class="file_input" style="position: relative; right: 196px;">
+                    <input class="fileup" value="첨부파일" placeholder="첨부파일"/>
+                <label class="fileselect">파일 등록
+                    <input class="fileup" type="file" name="files" onchange="selectFile(this);"/>
+                </label>
+            </div>
+            <button type="button" onclick="removeFile(this);" class="btns_del_btn" style="position: relative; right: 189px; width: 83px; height: 35px;"><span>삭제</span></button>
+            </div>
                 `;
         document.querySelector('.addfile-wrap').appendChild(fileDiv);
     }

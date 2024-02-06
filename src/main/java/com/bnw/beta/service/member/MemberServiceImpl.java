@@ -70,7 +70,7 @@ public class MemberServiceImpl implements MemberService {
 
             System.out.println(memberDTO);
             int info = memberDAO.memberJoin(memberDTO);
-
+            System.out.println("휴대폰 번호 전송 Service : "+joinForm.getMember_phone());
             //약관동의(선택) 저장
             for (String agreedTerm : retrievedAgreedTerms) {
                 System.out.println(agreedTerm);
