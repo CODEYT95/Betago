@@ -209,7 +209,6 @@
         sg.game_no, sg.member_id;
         ]]>
     </select>
-
     <!-- 학습 그룹 수정 -->
     <update id="updateGroup">
         UPDATE studygroup
