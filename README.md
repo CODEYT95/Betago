@@ -1,4 +1,4 @@
-# 중앙인재기술개발원 3차 프로젝트(Betago)
+# 중앙인재기술개발원 3차 프로젝트(Betago) 
 
 <p align="center"><img src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F919089e2-ea1d-4aee-a82c-bcc7b08f6289%2Feab67736-566e-4ae5-b300-c43d8663dc4d%2F2.png?table=block&id=35f0b011-ec5c-4668-916c-11c1a42c0bce&spaceId=919089e2-ea1d-4aee-a82c-bcc7b08f6289&width=2000&userId=8e26c7bd-f6ab-4d8d-ae3a-a85fc0fa7c3e&cache=v2" height="200px" width="300px"></p>
 
